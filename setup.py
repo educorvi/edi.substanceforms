@@ -52,6 +52,9 @@ setup(
         'plone.api>=1.8.4',
         'plone.restapi',
         'plone.app.dexterity',
+        'requests',
+        'psycopg2',
+        'collective.wtforms',
     ],
     extras_require={
         'test': [

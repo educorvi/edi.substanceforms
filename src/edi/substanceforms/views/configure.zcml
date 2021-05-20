@@ -8,8 +8,8 @@
 
   <browser:page
     name="search-form"
-    for="Products.CMFCore.interfaces.IFolderish"
-    class=".search_form.SearchForm"
+    for="*"
+    class=".search_form.SearchFormView"
     template="search_form.pt"
     permission="zope2.View"
     />

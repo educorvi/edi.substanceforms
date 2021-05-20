@@ -1,17 +1,36 @@
 # -*- coding: utf-8 -*-
+from wtforms import Form, TextField
+from wtforms import validators
+from collective.wtforms.views import WTFormView
+import requests
+import psycopg2
 
-from edi.substanceforms import _
-from Products.Five.browser import BrowserView
+class SearchForm(Form):
+    search = TextField("Suchbegriff", [validators.required()])
+    two = TextField("Field Two")
+    three = TextField("Field Three")
 
-# from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+class SearchFormView(WTFormView):
+    formClass = SearchForm
+    buttons = ('Suche', 'Cancel')
 
+    def submit(self, button):
+        if button == 'Suche' and self.validate():
+            # do fun stuff here
+            login = {'login': 'restaccess', 'password': 'H9jCg768'}
+            authurl = u'http://emissionsarme-produkte.bgetem.de/@login'
+            searchurl = u'http://emissionsarme-produkte.bgetem.de/@search'
 
-class SearchForm(BrowserView):
-    # If you want to define a template here, please remove the template from
-    # the configure.zcml registration of this view.
-    # template = ViewPageTemplateFile('search_form.pt')
+            hostname = 'localhost'
+            username = 'seppowalther'
+            database = 'gefahrstoff'
 
-    def __call__(self):
-        # Implement your own actions:
-        self.msg = _(u'A small message')
-        return self.index()
+            conn = psycopg2.connect(host=hostname, user=username, dbname=database)
+
+            cur = conn.cursor()
+            cur.execute("SELECT title FROM manufacturer WHERE title = '%s';" % (self.form.search.data))
+            self.ergs = cur.fetchall()
+            cur.close()
+            conn.close()
+
+            #self.ergs = 'Leider wurde nichts gefunden'
