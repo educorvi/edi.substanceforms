@@ -1,0 +1,18 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    i18n_domain="edi.substanceforms">
+
+  -*- extra stuff goes here -*-
+
+  <browser:page
+    name="search-form"
+    for="Products.CMFCore.interfaces.IFolderish"
+    class=".search_form.SearchForm"
+    template="search_form.pt"
+    permission="zope2.View"
+    />
+
+
+</configure>
