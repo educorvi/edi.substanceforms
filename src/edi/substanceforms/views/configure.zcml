@@ -7,6 +7,14 @@
   -*- extra stuff goes here -*-
 
   <browser:page
+    name="update-view"
+    for="Products.CMFCore.interfaces.IFolderish"
+    class=".update_view.UpdateView"
+    template="update_view.pt"
+    permission="zope2.View"
+    />
+
+  <browser:page
     name="create-view"
     for="*"
     class=".create_view.CreateFormView"
