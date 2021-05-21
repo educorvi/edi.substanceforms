@@ -8,8 +8,8 @@
 
   <browser:page
     name="update-view"
-    for="Products.CMFCore.interfaces.IFolderish"
-    class=".update_view.UpdateView"
+    for="*"
+    class=".update_view.UpdateFormView"
     template="update_view.pt"
     permission="zope2.View"
     />
