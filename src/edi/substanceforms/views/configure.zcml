@@ -7,6 +7,14 @@
   -*- extra stuff goes here -*-
 
   <browser:page
+    name="create-view"
+    for="Products.CMFCore.interfaces.IFolderish"
+    class=".create_view.CreateView"
+    template="create_view.pt"
+    permission="zope2.View"
+    />
+
+  <browser:page
     name="search-form"
     for="*"
     class=".search_form.SearchFormView"
