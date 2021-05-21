@@ -1,14 +1,33 @@
 # -*- coding: utf-8 -*-
-from wtforms import Form, TextField
+from wtforms import Form, TextField, SelectField
 from wtforms import validators
 from collective.wtforms.views import WTFormView
 import requests
 import psycopg2
 
 class SearchForm(Form):
+
+    login = {'login': 'restaccess', 'password': 'H9jCg768'}
+    authurl = u'http://emissionsarme-produkte.bgetem.de/@login'
+    searchurl = u'http://emissionsarme-produkte.bgetem.de/@search'
+
+    hostname = 'localhost'
+    username = 'seppowalther'
+    database = 'gefahrstoff'
+
+    conn = psycopg2.connect(host=hostname, user=username, dbname=database)
+    cur = conn.cursor()
+    cur.execute("SELECT manufacturer_id, title FROM manufacturer;")
+    manus = cur.fetchall()
+    #import pdb; pdb.set_trace()
+    cur.close()
+    conn.close()
+
+
     search = TextField("Suchbegriff", [validators.required()])
-    two = TextField("Field Two")
+    manu = SelectField(u'Hersteller:', choices=manus)
     three = TextField("Field Three")
+
 
 class SearchFormView(WTFormView):
     formClass = SearchForm
@@ -16,6 +35,7 @@ class SearchFormView(WTFormView):
 
     def submit(self, button):
         if button == 'Suche' and self.validate():
+            import pdb; pdb.set_trace()
             # do fun stuff here
             login = {'login': 'restaccess', 'password': 'H9jCg768'}
             authurl = u'http://emissionsarme-produkte.bgetem.de/@login'
