@@ -5,8 +5,7 @@ from collective.wtforms.views import WTFormView
 import requests
 import psycopg2
 
-class SearchForm(Form):
-
+class logincredentials:
     login = {'login': 'restaccess', 'password': 'H9jCg768'}
     authurl = u'http://emissionsarme-produkte.bgetem.de/@login'
     searchurl = u'http://emissionsarme-produkte.bgetem.de/@search'
@@ -15,42 +14,33 @@ class SearchForm(Form):
     username = 'seppowalther'
     database = 'gefahrstoff'
 
-    conn = psycopg2.connect(host=hostname, user=username, dbname=database)
+class SearchForm(logincredentials, Form):
+
+    conn = psycopg2.connect(host=logincredentials.hostname, user=logincredentials.username, dbname=logincredentials.database)
     cur = conn.cursor()
     cur.execute("SELECT manufacturer_id, title FROM manufacturer;")
     manus = cur.fetchall()
-    #import pdb; pdb.set_trace()
     cur.close()
     conn.close()
 
-
-    search = TextField("Suchbegriff", [validators.required()])
+    #search = TextField("Suchbegriff", [validators.required()])
     manu = SelectField(u'Hersteller:', choices=manus)
-    three = TextField("Field Three")
+    #three = TextField("Field Three")
 
-
-class SearchFormView(WTFormView):
+class SearchFormView(logincredentials, WTFormView):
     formClass = SearchForm
     buttons = ('Suche', 'Cancel')
 
     def submit(self, button):
         if button == 'Suche' and self.validate():
-            import pdb; pdb.set_trace()
-            # do fun stuff here
-            login = {'login': 'restaccess', 'password': 'H9jCg768'}
-            authurl = u'http://emissionsarme-produkte.bgetem.de/@login'
-            searchurl = u'http://emissionsarme-produkte.bgetem.de/@search'
 
-            hostname = 'localhost'
-            username = 'seppowalther'
-            database = 'gefahrstoff'
-
-            conn = psycopg2.connect(host=hostname, user=username, dbname=database)
+            conn = psycopg2.connect(host=logincredentials.hostname, user=logincredentials.username, dbname=logincredentials.database)
 
             cur = conn.cursor()
-            cur.execute("SELECT title FROM manufacturer WHERE title = '%s';" % (self.form.search.data))
+            cur.execute("SELECT title FROM manufacturer WHERE manufacturer_id = '%s';" % (self.form.manu.data))
             self.ergs = cur.fetchall()
+            if self.ergs == '[]':
+                self.ergs = 'Leider wurde nichts gefunden'
+
             cur.close()
             conn.close()
-
-            #self.ergs = 'Leider wurde nichts gefunden'
