@@ -11,7 +11,7 @@ class logincredentials:
     searchurl = u'http://emissionsarme-produkte.bgetem.de/@search'
 
     hostname = 'localhost'
-    username = 'seppowalther'
+    username = 'postgres'
     database = 'gefahrstoff'
 
 class SearchForm(logincredentials, Form):
