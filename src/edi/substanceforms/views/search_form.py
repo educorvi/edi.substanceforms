@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from wtforms import Form, TextField, SelectField
+from wtforms import Form, TextField, SelectField, IntegerField, TextAreaField, FloatField, BooleanField, DateField, DateTimeField
 from wtforms import validators
 from collective.wtforms.views import WTFormView
 import requests
@@ -23,9 +23,14 @@ class SearchForm(logincredentials, Form):
     cur.close()
     conn.close()
 
-    #search = TextField("Suchbegriff", [validators.required()])
-    manu = SelectField(u'Hersteller:', choices=manus)
-    #three = TextField("Field Three")
+    search = TextField("TextField", [validators.required()])
+    text = TextAreaField("TextAreaField")
+    manu = SelectField(u'Hersteller (SelectField):', choices=manus)
+    zahl = IntegerField("IntegerField")
+    float = FloatField("FloatField")
+    boool = BooleanField("BooeleanField")
+    date = DateField("DateField")
+    datetime = DateTimeField("DateTimeField")
 
 class SearchFormView(logincredentials, WTFormView):
     formClass = SearchForm
