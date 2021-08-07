@@ -7,6 +7,14 @@
   -*- extra stuff goes here -*-
 
   <browser:page
+    name="datenbank-view"
+    for="Products.CMFCore.interfaces.IFolderish"
+    class=".datenbank_view.DatenbankView"
+    template="datenbank_view.pt"
+    permission="zope2.View"
+    />
+
+  <browser:page
     name="types-view"
     for="*"
     class=".types_view.TypesView"
