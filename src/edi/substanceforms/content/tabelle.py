@@ -29,6 +29,7 @@ class ITabelle(model.Schema):
             required = False
             )
 
+    #TODO: Vielleicht kann man hier noch den Suchstring redaktionell zusammenbauen?
 
 @implementer(ITabelle)
 class Tabelle(Container):
