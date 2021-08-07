@@ -24,7 +24,7 @@ class ITabelle(model.Schema):
             required = False
             )
 
-    schlusstext = RichText(
+    endtext = RichText(
             title = u"Text nach dem View auf die Datenbanktabelle",
             required = False
             )
