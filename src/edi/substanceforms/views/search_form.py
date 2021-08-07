@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from wtforms import Form, TextField, SelectField, IntegerField, TextAreaField, FloatField, BooleanField, DateField, DateTimeField
+from wtforms import Form, TextField, SelectField
 from wtforms import validators
 from collective.wtforms.views import WTFormView
 import requests
@@ -16,32 +16,49 @@ class LoginCredentials:
     database = 'gefahrstoffdb'
     password = 'reldbpassword'
 
-class SearchForm(LoginCredentials, Form):
+class SearchForm(Form):
 
-    conn = psycopg2.connect(host=LoginCredentials.hostname, user=LoginCredentials.username, dbname=LoginCredentials.database, password=LoginCredentials.password)
-    cur = conn.cursor()
-    cur.execute("SELECT manufacturer_id, title FROM manufacturer;")
-    manus = cur.fetchall()
-    cur.close()
-    conn.close()
+    search = TextField("Suchbegriff")
+    manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[])
 
-    #search = TextField("TextField", [validators.required()])
-    manu = SelectField(u'Hersteller (SelectField):', choices=manus)
-
-class SearchFormView(LoginCredentials, WTFormView):
+class SearchFormView(WTFormView):
     formClass = SearchForm
     buttons = ('Suche', 'Cancel')
 
+    def __call__(self):
+        self.ergs = []
+        self.host = self.context.aq_parent.host
+        self.dbname = self.context.aq_parent.database
+        self.username = self.context.aq_parent.username
+        self.password = self.context.aq_parent.password
+        return self.index()
+
+    def renderForm(self):
+        try:
+            conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
+            cur = conn.cursor()
+            cur.execute("SELECT manufacturer_id, title FROM manufacturer;")
+            #TODO: Manufacturer must have a valid reference in self.context.tablename 
+            manus = cur.fetchall()
+            cur.close
+            conn.close()
+        except:
+            manus = []
+        self.form.manu.choices = manu
+        self.form.process()
+        return self.formTemplate()
+
+
     def submit(self, button):
         if button == 'Suche' and self.validate():
-
-            conn = psycopg2.connect(host=LoginCredentials.hostname, user=LoginCredentials.username, password=LoginCredentials.password, dbname=LoginCredentials.database)
-
-            cur = conn.cursor()
-            cur.execute("SELECT substance_mixture_id, title FROM substance_mixture WHERE manufacturer_id = '%s';" % (self.form.manu.data))
-            self.ergs = cur.fetchall()
-            if self.ergs == '[]':
-                self.ergs = 'Leider wurde nichts gefunden'
-
-            cur.close()
-            conn.close()
+            manu_id = self.form.manu.data
+            select = "SELECT substance_mixture_id, title FROM substance_mixture WHERE manufacturer_id = '%s';" %manu_id
+            try:
+                conn = psycopg2.connect(host=self.host, user=self.username, password=self.password, dbname=self.dbname)
+                cur = conn.cursor()
+                cur.execute(select)
+                self.ergs = cur.fetchall() #TODO: In welchem Format lesen wir die Ergebnisse? String? Liste?
+                cur.close
+                conn.close()
+            except:
+                self.ergs = []

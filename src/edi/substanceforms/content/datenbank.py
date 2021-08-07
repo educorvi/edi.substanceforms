@@ -13,11 +13,15 @@ class IDatenbank(model.Schema):
     """ Marker interface and Dexterity Python Schema for Datenbank
     """
 
-    adresse = schema.TextLine(
+    host = schema.TextLine(
             title = u"IP-Adresse oder DNS-Name der Datenbank"
             )
 
-    portnummer = schema.TextLine(
+    database = schema.TextLine(
+            title = u"Name der Datenbank auf die zugegriffen werden soll"
+            )
+
+    port = schema.TextLine(
             title = u"Portnummer für die Verbindung zur Datenbank",
             description = u"Keine Angabe entspricht Standardportnummer",
             required = False
@@ -36,7 +40,7 @@ class IDatenbank(model.Schema):
             required = False
             )
 
-    schlusstext = RichText(
+    endtext = RichText(
             title = u"Text nach der Auflistung der Datenbanktabellen",
             required = False
             )

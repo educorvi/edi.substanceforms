@@ -63,8 +63,8 @@
           <span class="col-lg-9 col-12" tal:content="structure provider:nva.contentcards" />
         </div>
 
-        <div class="row" tal:condition="context/schlusstext">
-          <div class="col-lg-9 col-12" tal:content="structure context/schlusstext/output"/>
+        <div class="row" tal:condition="context/endtext">
+          <div class="col-lg-9 col-12" tal:content="structure context/endtext/output"/>
         </div>
 
         <div class="row">
