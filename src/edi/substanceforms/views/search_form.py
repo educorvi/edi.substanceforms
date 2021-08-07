@@ -5,41 +5,37 @@ from collective.wtforms.views import WTFormView
 import requests
 import psycopg2
 
-class logincredentials:
+class LoginCredentials:
+
     login = {'login': 'restaccess', 'password': 'H9jCg768'}
     authurl = u'http://emissionsarme-produkte.bgetem.de/@login'
     searchurl = u'http://emissionsarme-produkte.bgetem.de/@search'
 
     hostname = 'localhost'
-    username = 'postgres'
-    database = 'gefahrstoff'
+    username = 'seppo'
+    database = 'gefahrstoffdb'
+    password = 'reldbpassword'
 
-class SearchForm(logincredentials, Form):
+class SearchForm(LoginCredentials, Form):
 
-    conn = psycopg2.connect(host=logincredentials.hostname, user=logincredentials.username, dbname=logincredentials.database)
+    conn = psycopg2.connect(host=LoginCredentials.hostname, user=LoginCredentials.username, dbname=LoginCredentials.database, password=LoginCredentials.password)
     cur = conn.cursor()
     cur.execute("SELECT manufacturer_id, title FROM manufacturer;")
     manus = cur.fetchall()
     cur.close()
     conn.close()
 
-    search = TextField("TextField", [validators.required()])
-    text = TextAreaField("TextAreaField")
+    #search = TextField("TextField", [validators.required()])
     manu = SelectField(u'Hersteller (SelectField):', choices=manus)
-    zahl = IntegerField("IntegerField")
-    float = FloatField("FloatField")
-    boool = BooleanField("BooeleanField")
-    date = DateField("DateField")
-    datetime = DateTimeField("DateTimeField")
 
-class SearchFormView(logincredentials, WTFormView):
+class SearchFormView(LoginCredentials, WTFormView):
     formClass = SearchForm
     buttons = ('Suche', 'Cancel')
 
     def submit(self, button):
         if button == 'Suche' and self.validate():
 
-            conn = psycopg2.connect(host=logincredentials.hostname, user=logincredentials.username, dbname=logincredentials.database)
+            conn = psycopg2.connect(host=LoginCredentials.hostname, user=LoginCredentials.username, dbname=LoginCredentials.database)
 
             cur = conn.cursor()
             cur.execute("SELECT title FROM manufacturer WHERE manufacturer_id = '%s';" % (self.form.manu.data))

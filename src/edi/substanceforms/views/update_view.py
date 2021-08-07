@@ -3,18 +3,16 @@
 from wtforms import Form, TextField, SelectField
 from wtforms import validators
 from collective.wtforms.views import WTFormView
+from edi.substanceforms.views.search_form import LoginCredentials
 import requests
 import psycopg2
 
-class logincredentials:
-    hostname = 'localhost'
-    username = 'seppowalther'
-    database = 'gefahrstoff'
+myconn = LoginCredentials()
 
-class UpdateForm(logincredentials, Form):
+class UpdateForm(LoginCredentials, Form):
 
-    conn = psycopg2.connect(host=logincredentials.hostname, user=logincredentials.username,
-                            dbname=logincredentials.database)
+    conn = psycopg2.connect(host=LoginCredentials.hostname, user=LoginCredentials.username,
+                            dbname=LoginCredentials.database, password=LoginCredentials.password)
     cur = conn.cursor()
     cur.execute("SELECT manufacturer_id, title FROM manufacturer;")
     manus = cur.fetchall()
@@ -27,14 +25,14 @@ class UpdateForm(logincredentials, Form):
     field = SelectField(u'Hersteller:', choices=fields)
     newvalue = TextField("Neuer Wert", [validators.required()])
 
-class UpdateFormView(logincredentials, WTFormView):
+class UpdateFormView(LoginCredentials, WTFormView):
     formClass = UpdateForm
     buttons = ('Update', 'Cancel')
 
     def submit(self, button):
         if button == 'Update' and self.validate():
 
-            conn = psycopg2.connect(host=logincredentials.hostname, user=logincredentials.username, dbname=logincredentials.database)
+            conn = psycopg2.connect(host=LoginCredentials.hostname, user=LoginCredentials.username, dbname=LoginCredentials.database)
             cur = conn.cursor()
             #cur.execute("INSERT INTO manufacturer VALUES (DEFAULT, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', NULL);" % (self.form.title.data, self.form.description.data, self.form.webcode.data, self.form.address1.data, self.form.address2.data, self.form.address3.data, self.form.country.data, self.form.phone.data, self.form.fax.data, self.form.email.data, self.form.homepage.data))
             cur.execute("UPDATE manufacturer SET %s = '%s' WHERE manufacturer_id = %s;" % (self.form.field.data, self.form.newvalue.data, self.form.manu.data))

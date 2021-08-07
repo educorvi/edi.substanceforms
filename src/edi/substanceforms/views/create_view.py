@@ -3,15 +3,11 @@
 from wtforms import Form, TextField, SelectField
 from wtforms import validators
 from collective.wtforms.views import WTFormView
+from edi.substanceforms.views.search_form import LoginCredentials
 import requests
 import psycopg2
 
-class logincredentials:
-    hostname = 'localhost'
-    username = 'seppowalther'
-    database = 'gefahrstoff'
-
-class CreateForm(logincredentials, Form):
+class CreateForm(LoginCredentials, Form):
 
     title = TextField("Titel", [validators.required()])
     description = TextField("Beschreibung", [validators.required()])
@@ -25,14 +21,14 @@ class CreateForm(logincredentials, Form):
     email = TextField("E-Mail Adresse")
     homepage = TextField("Homepage")
 
-class CreateFormView(logincredentials, WTFormView):
+class CreateFormView(LoginCredentials, WTFormView):
     formClass = CreateForm
     buttons = ('Create', 'Cancel')
 
     def submit(self, button):
         if button == 'Create' and self.validate():
 
-            conn = psycopg2.connect(host=logincredentials.hostname, user=logincredentials.username, dbname=logincredentials.database)
+            conn = psycopg2.connect(host=LoginCredentials.hostname, user=LoginCredentials.username, dbname=LoginCredentials.database, password=LoginCredentials.password)
             cur = conn.cursor()
             cur.execute("INSERT INTO manufacturer VALUES (DEFAULT, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', NULL);" % (self.form.title.data, self.form.description.data, self.form.webcode.data, self.form.address1.data, self.form.address2.data, self.form.address3.data, self.form.country.data, self.form.phone.data, self.form.fax.data, self.form.email.data, self.form.homepage.data))
             cur.execute("UPDATE manufacturer SET address1 = NULL WHERE address1 = '';")
