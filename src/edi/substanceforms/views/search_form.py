@@ -38,7 +38,7 @@ class SearchFormView(LoginCredentials, WTFormView):
             conn = psycopg2.connect(host=LoginCredentials.hostname, user=LoginCredentials.username, password=LoginCredentials.password, dbname=LoginCredentials.database)
 
             cur = conn.cursor()
-            cur.execute("SELECT title FROM manufacturer WHERE manufacturer_id = '%s';" % (self.form.manu.data))
+            cur.execute("SELECT substance_mixture_id, title FROM substance_mixture WHERE manufacturer_id = '%s';" % (self.form.manu.data))
             self.ergs = cur.fetchall()
             if self.ergs == '[]':
                 self.ergs = 'Leider wurde nichts gefunden'
