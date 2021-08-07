@@ -35,7 +35,7 @@ class SearchFormView(LoginCredentials, WTFormView):
     def submit(self, button):
         if button == 'Suche' and self.validate():
 
-            conn = psycopg2.connect(host=LoginCredentials.hostname, user=LoginCredentials.username, dbname=LoginCredentials.database)
+            conn = psycopg2.connect(host=LoginCredentials.hostname, user=LoginCredentials.username, password=LoginCredentials.password, dbname=LoginCredentials.database)
 
             cur = conn.cursor()
             cur.execute("SELECT title FROM manufacturer WHERE manufacturer_id = '%s';" % (self.form.manu.data))
