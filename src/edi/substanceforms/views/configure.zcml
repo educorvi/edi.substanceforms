@@ -7,8 +7,8 @@
   -*- extra stuff goes here -*-
 
   <browser:page
-    name="datenbank-view"
-    for="Products.CMFCore.interfaces.IFolderish"
+    name="view"
+    for="edi.substanceforms.content.datenbank.IDatenbank"
     class=".datenbank_view.DatenbankView"
     template="datenbank_view.pt"
     permission="zope2.View"

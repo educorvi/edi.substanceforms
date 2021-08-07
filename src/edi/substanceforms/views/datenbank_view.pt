@@ -1,13 +1,80 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:metal="http://xml.zope.org/namespaces/metal"
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
       xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-      i18n:domain="edi.substanceforms"
-      metal:use-macro="context/main_template/macros/master">
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="example.conference">
 <body>
-  <metal:block fill-slot="content-core">
-      <h2 i18n:translate="">Sample View</h2>
-      <p tal:content="view/msg">this gets replaced</p>
-  </metal:block>
+
+<metal:main fill-slot="main">
+    <tal:main-macro metal:define-macro="main">
+
+      <div class="container"
+	   id="main-content"
+           tal:define="results view/objectlist;
+           batchvalue view/batchvalue;
+           Batch python:modules['plone.batching'].Batch;
+           b_size python:batchvalue;b_start python:0;b_start request/b_start | b_start;
+           batch python:Batch(results, b_size, int(b_start), orphan=0);">
+
+        <div class="row">
+          <span class="col-12" tal:content="structure provider:plone.abovecontenttitle" />
+        </div>
+
+        <div class="row">
+
+          <div class="col-lg-9 col-12">
+            <h1 tal:content="context/title"/>
+	    <!--<span tal:content="structure provider:plone.belowcontenttitle" />-->
+            <p tal:condition="context/description" class="lead mt-5">
+              <img class="icon" src="++theme++plonetheme.siguv/icons/siguv/dot.svg">
+              <span tal:content="context/description"/>
+            </p>
+            <span tal:content="structure provider:plone.abovecontentbody" />
+            <div class="mt-5" tal:condition="context/text" tal:content="structure context/text/output"/>
+            <div class="list-item" tal:repeat="item batch">                 
+              <hr class="media-default"/>
+              <a href="#" tal:attributes="href item/url">
+                <h3 class="newsDescription">
+                  <span tal:replace="item/title"/>
+                  <span tal:condition="python: item['review_state'] == 'private'" class="badge badge-danger">privat</span>
+                  <span tal:condition="python: item['review_state'] == 'pending'" class="badge badge-info">Review</span>
+                  <span tal:condition="python: item['review_state'] == 'internal'" class="badge badge-warning">interner Entwurf</span>
+                </h3>
+              </a>
+            </div>
+
+          <tal:batchnavigation
+             define="batchnavigation nocall:context/@@batchnavigation"
+             replace="structure python:batchnavigation(batch)" />
+
+          </div>
+
+          <!-- Portlets -->
+          <div class="col-lg-3 col-12">
+            <div tal:replace="structure context/@@portlet-cards-view"/>
+          </div>
+          <!-- Ende Portlets -->	  
+
+        </div>
+
+        <div class="row">
+          <span class="col-lg-9 col-12" tal:content="structure provider:nva.contentcards" />
+        </div>
+
+        <div class="row" tal:condition="context/schlusstext">
+          <div class="col-lg-9 col-12" tal:content="structure context/schlusstext/output"/>
+        </div>
+
+        <div class="row">
+          <span class="col-lg-9 col-12" tal:content="structure provider:plone.belowcontentbody" />
+        </div>
+
+      </div>
+
+    </tal:main-macro>
+</metal:main>
+
 </body>
 </html>
