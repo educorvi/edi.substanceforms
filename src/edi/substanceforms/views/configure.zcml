@@ -39,12 +39,19 @@
     />
 
   <browser:page
-    name="create-view"
+    name="create-manufacturer-form"
     for="*"
-    class=".create_view.CreateFormView"
-    template="create_view.pt"
+    class=".create_manufacturer_form.CreateFormView"
     permission="zope2.View"
     />
+
+  <browser:page
+    name="create-substance_mixture-form"
+    for="*"
+    class=".create_mixture_form.CreateFormView"
+    permission="zope2.View"
+    />
+
 
 
 </configure>

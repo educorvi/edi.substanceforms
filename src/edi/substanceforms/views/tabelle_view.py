@@ -38,7 +38,7 @@ class TabelleFormView(WTFormView):
             current = ploneapi.user.get_current()
             roles = ploneapi.user.get_roles(user=current)
             if addrole = roles:
-                return self.context.absolute_url() + '/addform'
+                return self.context.absolute_url() + '/create-%s-form' % self.context.tablename
         return False
 
     def renderForm(self):
