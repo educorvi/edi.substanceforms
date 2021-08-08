@@ -3,7 +3,7 @@
 from wtforms import Form, TextField, SelectField
 from wtforms import validators
 from collective.wtforms.views import WTFormView
-from edi.substanceforms.views.search_form import LoginCredentials
+from edi.substanceforms.views.tabelle_view import LoginCredentials
 import requests
 import psycopg2
 

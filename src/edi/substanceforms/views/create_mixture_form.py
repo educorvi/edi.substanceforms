@@ -7,7 +7,7 @@ from collective.wtforms.views import WTFormView
 import requests
 import psycopg2
 
-class CreateForm(LoginCredentials, Form):
+class CreateForm(Form):
 
     title = StringField(u"Titel", [validators.required()])
     description = StringField(u"Beschreibung", [validators.required()])
@@ -36,7 +36,7 @@ class CreateForm(LoginCredentials, Form):
     comments = TextAreaField("Bemerkungen")
 
 
-class CreateFormView(LoginCredentials, WTFormView):
+class CreateFormView(WTFormView):
     formClass = CreateForm
     buttons = ('Speichern', 'Abbrechen')
 
