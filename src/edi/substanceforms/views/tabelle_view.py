@@ -33,6 +33,14 @@ class TabelleFormView(WTFormView):
         self.password = self.context.aq_parent.password
         return self.index()
 
+    def userCanAdd(self):
+        if not ploneapi.user.is_anonymous():
+            current = ploneapi.user.get_current()
+            roles = ploneapi.user.get_roles(user=current)
+            if addrole = roles:
+                return self.context.absolute_url() + '/addform'
+        return False
+
     def renderForm(self):
         try:
             conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
