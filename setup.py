@@ -54,6 +54,7 @@ setup(
         'plone.app.dexterity',
         'requests',
         'psycopg2',
+        #'psycopg2-binary',
         'collective.wtforms',
     ],
     extras_require={
