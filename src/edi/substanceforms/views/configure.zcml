@@ -7,10 +7,10 @@
   -*- extra stuff goes here -*-
 
   <browser:page
-    name="substance_mixture_view"
+    name="single_view"
     for="Products.CMFCore.interfaces.IFolderish"
-    class=".substance_mixture_view.SubstanceMixtureView"
-    template="substance_mixture_view.pt"
+    class=".single_view.SingleView"
+    template="single_templates/substance_mixture_view.pt"
     permission="zope2.View"
     />
 

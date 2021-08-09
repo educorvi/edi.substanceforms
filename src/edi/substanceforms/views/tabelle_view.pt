@@ -34,7 +34,7 @@
               <h2>Suchergebnisse</h2>
 	      <div tal:condition="view/ergs | nothing" class="list-item" tal:repeat="item view/ergs">
 	        <hr class="media-default" />
-		<a tal:attributes="href python: '%s/%s?item=%s' %(context.absolute_url(), view.viewname, item[0]">
+		<a tal:attributes="href python: '%s/single_view?item=%s' %(context.absolute_url(), item[0]">
 		  <h3 class="newsDescription">
 		    <span tal:replace="python: item[1]"/>
 	          </h3>
