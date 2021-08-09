@@ -28,6 +28,7 @@ class TabelleFormView(WTFormView):
     buttons = ('Suche', 'Abbrechen')
 
     def __call__(self):
+        self.viewname = self.context.tablename + '_view'
         self.host = self.context.aq_parent.host
         self.dbname = self.context.aq_parent.database
         self.username = self.context.aq_parent.username
