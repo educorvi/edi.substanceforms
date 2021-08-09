@@ -5,11 +5,11 @@ from plone.supermodel import model
 from zope import schema
 from zope.interface import implementer
 from zope.interface import provider
+from zope.schema.vocabulary import SimpleVocabulary
 from zope.schema.interfaces import IContextSourceBinder
 import psycopg2
 
-
-# from edi.substanceforms import _
+from edi.substanceforms import _
 
 @provider(IContextSourceBinder)
 def possibleTables(context):
@@ -17,7 +17,6 @@ def possibleTables(context):
     dbname = context.database
     username = context.username
     password = context.password
-    import pdb;pdb.set_trace()
 
     conn = psycopg2.connect(host=host, user=username, dbname=dbname, password=password)
     cur = conn.cursor()
@@ -26,6 +25,12 @@ def possibleTables(context):
     tables = cur.fetchall()
     cur.close()
     conn.close()
+
+    terms = []
+    for i in tables:
+        table = i[0]
+        terms.append(SimpleVocabulary.createTerm(table,table,table)
+    return SimpleVocabulary(terms)
 
 
 class ITabelle(model.Schema):
