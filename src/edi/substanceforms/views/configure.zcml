@@ -53,16 +53,23 @@
     />
 
   <browser:page
-    name="create-substance_mixture-form"
+    name="create-substance-form"
     for="*"
-    class=".create_mixture_form.CreateFormView"
+    class=".create_substance_form.CreateFormView"
     permission="zope2.View"
     />
 
   <browser:page
-    name="create-substance-form"
+    name="create-printing_machine-form"
     for="*"
-    class=".create_substance_form.CreateFormView"
+    class=".create_machine_form.CreateFormView"
+    permission="zope2.View"
+    />
+
+  <browser:page
+    name="create-substance_mixture-form"
+    for="*"
+    class=".create_mixture_form.CreateFormView"
     permission="zope2.View"
     />
 
