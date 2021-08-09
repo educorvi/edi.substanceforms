@@ -53,7 +53,7 @@ class SingleView(BrowserView):
         substances = []
         conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
         cur = conn.cursor()
-        select = "SELECT subtance_id, concentration from recipes WHERE mixture_id = %s" %self.itemid
+        select = "SELECT substance_id, concentration from recipes WHERE mixture_id = %s" %self.itemid
         cur.execute(select)
         substance_ids = cur.fetchall() #TODO: muss evenutell noch behandelt werden
         cur.close()
