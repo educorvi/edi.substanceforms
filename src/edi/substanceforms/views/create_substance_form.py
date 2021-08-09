@@ -46,9 +46,9 @@ class CreateFormView(WTFormView):
                                                            self.form.branch.data)
           
                 cur.execute(insert)
-                cur.execute("UPDATE substance SET casnr = NULL WHERE casnr = '';")
-                cur.execute("UPDATE substance SET skin_category = NULL WHERE skin_category = '';")
-                cur.execute("UPDATE substance SET branch = NULL WHERE branch = '';")
+                #cur.execute("UPDATE substance SET casnr = NULL WHERE casnr = '';")
+                #cur.execute("UPDATE substance SET skin_category = NULL WHERE skin_category = '';")
+                #cur.execute("UPDATE substance SET branch = NULL WHERE branch = '';")
                 conn.commit()
                 cur.close()
                 conn.close()

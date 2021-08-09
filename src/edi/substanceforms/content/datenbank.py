@@ -6,6 +6,7 @@ from zope import schema
 from zope.interface import implementer
 import random
 from datetime import datetime
+import psycopg2
 
 
 from edi.substanceforms import _
@@ -70,9 +71,12 @@ class Datenbank(Container):
         for i in tables:
             table = i[0]
             cur = conn.cursor()
-            select = "SELECT webcode from %s WHERE webcode = %s" % (table, generated_webcode)
-            cur.execute(select)
-            erg = cur.fetchall()
+            select = "SELECT webcode from %s WHERE webcode = '%s'" % (table, generated_webcode)
+            try:
+                cur.execute(select)
+                erg = cur.fetchall()
+            except:
+                erg = False
             cur.close()
             if erg:
                 return False
