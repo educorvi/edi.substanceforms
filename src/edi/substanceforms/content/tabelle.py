@@ -13,10 +13,11 @@ import psycopg2
 
 @provider(IContextSourceBinder)
 def possibleTables(context):
-    host = self.context.host
-    dbname = self.context.database
-    username = self.context.username
-    password = self.context.password
+    host = context.host
+    dbname = context.database
+    username = context.username
+    password = context.password
+    import pdb;pdb.set_trace()
 
     conn = psycopg2.connect(host=host, user=username, dbname=dbname, password=password)
     cur = conn.cursor()
@@ -25,7 +26,6 @@ def possibleTables(context):
     tables = cur.fetchall()
     cur.close()
     conn.close()
-    import pdb;pdb.set_trace()
 
 
 class ITabelle(model.Schema):
