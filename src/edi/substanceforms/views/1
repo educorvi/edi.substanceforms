@@ -10,7 +10,6 @@ class SingleView(BrowserView):
     index = ViewPageTemplateFile('klaus.pt')
 
     def __call__(self):
-        self.index = ViewPageTemplateFile('klaus.pt')
         self.itemid = self.request.get('item')
         self.host = self.context.aq_parent.host
         self.dbname = self.context.aq_parent.database

@@ -7,10 +7,17 @@
   -*- extra stuff goes here -*-
 
   <browser:page
+    name="test1"
+    for="Products.CMFCore.interfaces.IFolderish"
+    class=".test1.Test1"
+    template="test1.pt"
+    permission="zope2.View"
+    />
+
+  <browser:page
     name="single_view"
     for="Products.CMFCore.interfaces.IFolderish"
     class=".single_view.SingleView"
-    template="single_templates/substance_mixture_view.pt"
     permission="zope2.View"
     />
 
