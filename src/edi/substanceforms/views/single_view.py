@@ -26,7 +26,7 @@ class SingleView(BrowserView):
         tablename = self.context.tablename
         select = "SELECT * from %s WHERE %s_id = %s" %(tablename, tablename, self.itemid)
         cur.execute(select)
-        article = cur.fetchall()
+        article = cur.fetchall()[0]
         cur.close
         conn.close()
         return article

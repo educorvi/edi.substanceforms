@@ -14,7 +14,7 @@
 	   id="main-content"
 	   tal:define="article view/article;
 	               machines view/machines;
-		       substances view/substances">
+		       substances view/secsheet">
 
         <div class="row">
           <span class="col-12" tal:content="structure provider:plone.abovecontenttitle" />
