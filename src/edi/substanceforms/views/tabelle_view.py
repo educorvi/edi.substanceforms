@@ -2,6 +2,7 @@
 from wtforms import Form, TextField, SelectField
 from wtforms import validators
 from collective.wtforms.views import WTFormView
+from plone import api as ploneapi
 import requests
 import psycopg2
 
