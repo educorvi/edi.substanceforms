@@ -12,11 +12,7 @@
 
       <div class="container"
 	   id="main-content"
-           tal:define="results view/objectlist;
-           batchvalue view/batchvalue;
-           Batch python:modules['plone.batching'].Batch;
-           b_size python:batchvalue;b_start python:0;b_start request/b_start | b_start;
-           batch python:Batch(results, b_size, int(b_start), orphan=0);">
+	   tal:define="results view/objectlist">
 
         <div class="row">
           <span class="col-12" tal:content="structure provider:plone.abovecontenttitle" />
@@ -33,7 +29,7 @@
             </p>
             <span tal:content="structure provider:plone.abovecontentbody" />
             <div class="mt-5" tal:condition="context/text" tal:content="structure context/text/output"/>
-            <div class="list-item" tal:repeat="item batch">                 
+            <div class="list-item" tal:repeat="item results">                 
               <hr class="media-default"/>
               <a href="#" tal:attributes="href item/url">
                 <h3 class="newsDescription">
