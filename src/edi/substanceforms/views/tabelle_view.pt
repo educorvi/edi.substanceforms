@@ -43,7 +43,7 @@
 	      </div>-->
 	    </section>
 
-            <section tal:condition="view/userCanAdd">
+            <section class="mt-3" tal:condition="view/userCanAdd">
 	      <a class="btn btn-primary" tal:attributes="href view/userCanAdd" role="button">Artikel hinzufügen</a>
 	    </section>
 
