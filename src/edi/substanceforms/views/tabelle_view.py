@@ -27,13 +27,13 @@ class TabelleFormView(WTFormView):
     formClass = SearchForm
     buttons = ('Suche', 'Abbrechen')
 
-    def __call__(self):
-        self.ergs = []
-        self.host = self.context.aq_parent.host
-        self.dbname = self.context.aq_parent.database
-        self.username = self.context.aq_parent.username
-        self.password = self.context.aq_parent.password
-        return self.index()
+    #def __call__(self):
+    #    self.ergs = []
+    #    self.host = self.context.aq_parent.host
+    #    self.dbname = self.context.aq_parent.database
+    #    self.username = self.context.aq_parent.username
+    #    self.password = self.context.aq_parent.password
+    #    return self.index()
 
     def userCanAdd(self):
         if not ploneapi.user.is_anonymous():
@@ -44,6 +44,11 @@ class TabelleFormView(WTFormView):
         return False
 
     def renderForm(self):
+        self.ergs = []
+        self.host = self.context.aq_parent.host
+        self.dbname = self.context.aq_parent.database
+        self.username = self.context.aq_parent.username
+        self.password = self.context.aq_parent.password
         try:
             conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
             cur = conn.cursor()
@@ -60,24 +65,26 @@ class TabelleFormView(WTFormView):
 
 
     def submit(self, button):
-        if button == 'Suche' and self.validate():
+        import pdb; pdb.set_trace()
+        #if button == 'Suche' and self.validate():
+        if button == 'Suche':
 
             searchkey = self.context.tablename + '_id'
             searchtable = self.context.tablename
             manu_id = self.form.manu.data
 
             select = "SELECT %s, title FROM %s WHERE manufacturer_id = '%s';" % (searchkey, searchtable, manu_id)
-            try:
+            #try:
+            if True:
                 conn = psycopg2.connect(host=self.host, user=self.username, password=self.password, dbname=self.dbname)
                 cur = conn.cursor()
                 cur.execute(select)
                 self.ergs = cur.fetchall() #TODO: In welchem Format lesen wir die Ergebnisse? String? Liste?
-                import pdb;pdb.set_trace()
                 cur.close
                 conn.close()
 
-            except:
-                self.ergs = []
+            #except:
+                #self.ergs = []
         elif button == 'Abbrechen':
             url = self.context.aq_parent.absolute_url()
             return self.request.response.redirect(url)
