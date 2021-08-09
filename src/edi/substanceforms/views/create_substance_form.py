@@ -34,7 +34,7 @@ class CreateFormView(WTFormView):
     def submit(self, button):
         if button == 'Speichern': #and self.validate():
 
-            try:
+            if True:
                 conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
                 cur = conn.cursor()
                 insert = """INSERT INTO substance VALUES (DEFAULT, '%s', '%s', '%s', 
@@ -52,5 +52,5 @@ class CreateFormView(WTFormView):
                 conn.commit()
                 cur.close()
                 conn.close()
-            except:
-                print(u'Fehler beim Einfügen in die Datenbank')
+            #except:
+            #    print(u'Fehler beim Einfügen in die Datenbank')
