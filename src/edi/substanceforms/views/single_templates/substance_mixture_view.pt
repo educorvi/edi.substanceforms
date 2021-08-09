@@ -12,7 +12,9 @@
 
       <div class="container"
 	   id="main-content"
-	   tal:define="article view/article">
+	   tal:define="article view/article;
+	               machines view/machines;
+		       substances view/substances">
 
         <div class="row">
           <span class="col-12" tal:content="structure provider:plone.abovecontenttitle" />
@@ -21,25 +23,27 @@
         <div class="row">
 
           <div class="col-lg-9 col-12">
-            <h1 tal:content="context/title"/>
+            <h1 tal:content="python:article[1]"/>
 	    <!--<span tal:content="structure provider:plone.belowcontenttitle" />-->
-            <p tal:condition="context/description" class="lead mt-5">
+            <p tal:condition="python:article[2]" class="lead mt-5">
               <img class="icon" src="++theme++plonetheme.siguv/icons/siguv/dot.svg">
-              <span tal:content="context/description"/>
+              <span tal:content="python:article[2]"/>
             </p>
             <span tal:content="structure provider:plone.abovecontentbody" />
-            <div class="mt-5" tal:condition="context/text" tal:content="structure context/text/output"/>
-            <div class="list-item" tal:repeat="item results">                 
-              <hr class="media-default"/>
-              <a href="#" tal:attributes="href item/getURL">
-                <h3 class="newsDescription">
-                  <span tal:replace="item/Title"/>
-                  <span tal:condition="python: item.review_state == 'private'" class="badge badge-danger">privat</span>
-                  <span tal:condition="python: item.review_state == 'pending'" class="badge badge-info">Review</span>
-                  <span tal:condition="python: item.review_state == 'internal'" class="badge badge-warning">interner Entwurf</span>
-                </h3>
-              </a>
-            </div>
+
+            <!-- TODO: Hier müssen alle anderen Attribute reingeschrieben werden -->		    
+	    <table class="table table-bordered">
+	      <thead>
+	        <th>Attribut</th>
+		<th>Ausprägung</th>
+	      </thead>
+              <tbody>
+	        <tr>
+	          <td>Typ des Wasch- und Reinigungsmittels</td>
+	          <td tal:content="python: view.get_substance_type(article[4])"/>
+	        </tr>
+	      </tbody>
+	    </table>
 
           </div>
 
@@ -53,10 +57,6 @@
 
         <div class="row">
           <span class="col-lg-9 col-12" tal:content="structure provider:nva.contentcards" />
-        </div>
-
-        <div class="row" tal:condition="context/endtext">
-          <div class="col-lg-9 col-12" tal:content="structure context/endtext/output"/>
         </div>
 
         <div class="row">
