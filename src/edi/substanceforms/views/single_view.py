@@ -69,7 +69,7 @@ class SingleView(BrowserView):
         return substances
 
     def get_substance_type(self, substance_type):
-        substance_types = {'detergent_label': u'Reinigungsmittel Etiketten',
+        substance_types = {'detergent_labels': u'Reinigungsmittel Etiketten',
                            'detergent_heatset': u'Heatsetwaschmittel',
                            'detergent_manual' : u'Reinigungsmittel manueller Gebrauch',
                            'product_datasheet': u'Wasch- und Reinigungsmittel für den Offsetdruck'}
