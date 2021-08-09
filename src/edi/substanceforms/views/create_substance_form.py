@@ -40,7 +40,7 @@ class CreateFormView(WTFormView):
                 insert = """INSERT INTO substance VALUES (DEFAULT, '%s', '%s', '%s', 
                             '%s', '%s', '%s', NULL);""" % (self.form.title.data, 
                                                            self.form.description.data,
-                                                           self.self.context.aq_parent.get_webcode(),
+                                                           self.context.aq_parent.get_webcode(),
                                                            self.form.casnr.data,
                                                            self.form.skin_category.data,
                                                            self.form.branch.data)
