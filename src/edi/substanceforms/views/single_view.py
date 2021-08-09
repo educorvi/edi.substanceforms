@@ -2,15 +2,15 @@
 from edi.substanceforms import _
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from zope.browserpage.viewpagetemplatefile import BoundPageTemplate
 import psycopg2
 
 
 class SingleView(BrowserView):
 
-    index = ViewPageTemplateFile('klaus.pt')
+    index = ViewPageTemplateFile('standard.pt')
 
     def __call__(self):
-        self.index = ViewPageTemplateFile('klaus.pt')
         self.itemid = self.request.get('item')
         self.host = self.context.aq_parent.host
         self.dbname = self.context.aq_parent.database
@@ -22,7 +22,13 @@ class SingleView(BrowserView):
         if self.context.tablename == 'substance_mixture':
             self.machines = self.get_machines()
             self.secsheet = self.get_recipes()
-            self.index = ViewPageTemplateFile('substance_mixture_view.pt')
+            template = ViewPageTemplateFile('substance_mixture_view.pt')
+            self.template = BoundPageTemplate(template, self)
+            return self.template()
+        elif self.context.tablename == 'spray_powder':
+            template = ViewPageTemplateFile('spray_powder_view.pt')
+            self.template = BoundPageTemplate(template, self)
+            return self.template()
         return self.index()
 
     def get_article(self):
@@ -32,6 +38,7 @@ class SingleView(BrowserView):
         select = "SELECT * from %s WHERE %s_id = %s" %(tablename, tablename, self.itemid)
         cur.execute(select)
         article = cur.fetchall()[0]
+        print(article)
         cur.close
         conn.close()
         return article
