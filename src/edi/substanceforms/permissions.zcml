@@ -6,6 +6,18 @@
   <configure zcml:condition="installed AccessControl.security">
   <!-- -*- extra stuff goes here -*- -->
 
+    <permission
+        id="edi.substanceforms.AddTabelle"
+        title="edi.substanceforms: Add Tabelle"
+    />
+
+
+    <permission
+        id="edi.substanceforms.AddDatenbank"
+        title="edi.substanceforms: Add Datenbank"
+    />
+
+
 
   </configure>
 
