@@ -77,7 +77,6 @@ class TabelleFormView(WTFormView):
                 cur = conn.cursor()
                 cur.execute(select)
                 self.ergs = cur.fetchall()
-                import pdb;pdb.set_trace()
                 cur.close
                 conn.close()
 
