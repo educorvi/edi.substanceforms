@@ -39,7 +39,7 @@ class TabelleFormView(WTFormView):
         if not ploneapi.user.is_anonymous():
             current = ploneapi.user.get_current()
             roles = ploneapi.user.get_roles(user=current)
-            if addrole in roles:
+            if addrole in roles or 'Manager' in roles or 'Site Administrator' in roles:
                 return self.context.absolute_url() + '/create-%s-form' % self.context.tablename
         return False
 
