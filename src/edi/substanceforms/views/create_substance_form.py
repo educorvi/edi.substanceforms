@@ -32,7 +32,7 @@ class CreateFormView(WTFormView):
         return self.index()
 
     def submit(self, button):
-        if button == 'Speichern' and self.validate():
+        if button == 'Speichern': #and self.validate():
 
             try:
                 conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
@@ -44,7 +44,7 @@ class CreateFormView(WTFormView):
                                                            self.form.casnr.data,
                                                            self.form.skin_category.data,
                                                            self.form.branch.data)
-
+          
                 cur.execute(insert)
                 cur.execute("UPDATE substance SET casnr = NULL WHERE casnr = '';")
                 cur.execute("UPDATE substance SET skin_category = NULL WHERE skin_category = '';")

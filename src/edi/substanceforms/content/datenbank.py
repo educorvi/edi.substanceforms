@@ -80,7 +80,7 @@ class Datenbank(Container):
         return True
                 
     def get_webcode(self, webcode=False):
-        while webcode == False:
+        while not webcode:
             random_number = random.randint(100000, 999999)
             shortyear = datetime.now().strftime('%Y')[2:]
             generated_webcode = "PD%s%s" %(shortyear+random_number)
