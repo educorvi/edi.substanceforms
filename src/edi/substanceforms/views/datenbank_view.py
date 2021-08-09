@@ -7,6 +7,6 @@ from plone import api as ploneapi
 class DatenbankView(BrowserView):
 
     def __call__(self):
-        self.objectlist = self.context.listFolderContents(contentFilter={"portal_type" : "Tabelle"})
+        self.objectlist = self.context.getFolderContents()
         return self.index()
 

@@ -31,12 +31,12 @@
             <div class="mt-5" tal:condition="context/text" tal:content="structure context/text/output"/>
             <div class="list-item" tal:repeat="item results">                 
               <hr class="media-default"/>
-              <a href="#" tal:attributes="href item/absolute_url">
+              <a href="#" tal:attributes="href item/getURL">
                 <h3 class="newsDescription">
-                  <span tal:replace="item/title"/>
-                  <span tal:condition="python: item['review_state'] == 'private'" class="badge badge-danger">privat</span>
-                  <span tal:condition="python: item['review_state'] == 'pending'" class="badge badge-info">Review</span>
-                  <span tal:condition="python: item['review_state'] == 'internal'" class="badge badge-warning">interner Entwurf</span>
+                  <span tal:replace="item/Title"/>
+                  <span tal:condition="python: item.review_state == 'private'" class="badge badge-danger">privat</span>
+                  <span tal:condition="python: item.review_state == 'pending'" class="badge badge-info">Review</span>
+                  <span tal:condition="python: item.review_state == 'internal'" class="badge badge-warning">interner Entwurf</span>
                 </h3>
               </a>
             </div>
