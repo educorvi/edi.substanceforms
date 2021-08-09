@@ -35,7 +35,7 @@ class ITabelle(model.Schema):
     tablename = schema.Choice(
             title = u"Name der Datenbanktabelle",
             description = u"Der Name der Datenbanktabelle wird nur für interne Zugriffe verwendet\
-                    und dem Benutzer nicht angezeigt."
+                    und dem Benutzer nicht angezeigt.",
             source = possibleTables,
             )
 
