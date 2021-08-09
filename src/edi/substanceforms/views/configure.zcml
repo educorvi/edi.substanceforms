@@ -59,6 +59,11 @@
     permission="zope2.View"
     />
 
-
+  <browser:page
+    name="create-substance-form"
+    for="*"
+    class=".create_substance_form.CreateFormView"
+    permission="zope2.View"
+    />
 
 </configure>
