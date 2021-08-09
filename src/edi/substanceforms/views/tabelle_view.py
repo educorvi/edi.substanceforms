@@ -52,7 +52,7 @@ class TabelleFormView(WTFormView):
             conn.close()
         except:
             manus = []
-        self.form.manu.choices = manu
+        self.form.manu.choices = manus
         self.form.process()
         return self.formTemplate()
 
