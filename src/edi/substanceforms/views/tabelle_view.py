@@ -25,7 +25,7 @@ class SearchForm(Form):
 
 class TabelleFormView(WTFormView):
     formClass = SearchForm
-    buttons = ('Suche', 'Cancel')
+    buttons = ('Suche', 'Abbrechen')
 
     def __call__(self):
         self.ergs = []
@@ -61,14 +61,23 @@ class TabelleFormView(WTFormView):
 
     def submit(self, button):
         if button == 'Suche' and self.validate():
+
+            searchkey = self.context.tablename + '_id'
+            searchtable = self.context.tablename
             manu_id = self.form.manu.data
-            select = "SELECT substance_mixture_id, title FROM substance_mixture WHERE manufacturer_id = '%s';" %manu_id
+
+            select = "SELECT %s, title FROM %s WHERE manufacturer_id = '%s';" % (searchkey, searchtable, manu_id)
             try:
                 conn = psycopg2.connect(host=self.host, user=self.username, password=self.password, dbname=self.dbname)
                 cur = conn.cursor()
                 cur.execute(select)
                 self.ergs = cur.fetchall() #TODO: In welchem Format lesen wir die Ergebnisse? String? Liste?
+                import pdb;pdb.set_trace()
                 cur.close
                 conn.close()
+
             except:
                 self.ergs = []
+        elif button == 'Abbrechen':
+            url = self.context.aq_parent.absolute_url()
+            return self.request.response.redirect(url)
