@@ -10,8 +10,8 @@ class CreateForm(Form):
     title = StringField("Titel", [validators.required()])
     description = StringField("Beschreibung", [validators.required()])
     casnr = IntegerField("CAS-Nummer")
-    skin_category = SelectField("Hautschutzkategorie" choices = [])
-    branch = SelectField("Branche" choices = [])
+    skin_category = SelectField("Hautschutzkategorie", choices = [])
+    branch = SelectField("Branche", choices = [])
     image = FileField("Bild hochladen")
 
 class CreateFormView(WTFormView):
