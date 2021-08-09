@@ -30,7 +30,7 @@
             <div class="mt-5" tal:condition="context/text" tal:content="structure context/text/output"/>
             <h2 i18n:translate="">Suche</h2>
             <form tal:replace="structure view/renderForm" />
-            <section tal:condition="view/ergs">
+            <section tal:condition="view/ergs | nothing">
               <h2>Suchergebnisse</h2>
               <p tal:content="view/ergs |nothing"/>
 	      <!--<div class="list-item" tal:repeat="item view/ergs">
