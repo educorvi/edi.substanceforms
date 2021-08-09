@@ -3,6 +3,7 @@ from wtforms import Form, TextField, SelectField
 from wtforms import validators
 from collective.wtforms.views import WTFormView
 from plone import api as ploneapi
+from edi.substanceforms.config import addrole
 import requests
 import psycopg2
 
