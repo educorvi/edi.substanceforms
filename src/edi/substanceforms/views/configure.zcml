@@ -30,14 +30,6 @@
     />
 
   <browser:page
-    name="types-view"
-    for="*"
-    class=".types_view.TypesView"
-    template="types_view.pt"
-    permission="zope2.View"
-    />
-
-  <browser:page
     name="update-view"
     for="*"
     class=".update_view.UpdateFormView"
@@ -49,6 +41,23 @@
     name="create-manufacturer-form"
     for="*"
     class=".create_manufacturer_form.CreateFormView"
+    template = "create_view.pt"
+    permission="zope2.View"
+    />
+
+  <browser:page
+    name="create-substance-form"
+    for="*"
+    class=".create_substance_form.CreateFormView"
+    template = "create_view.pt"
+    permission="zope2.View"
+    />
+
+  <browser:page
+    name="create-printing_machine-form"
+    for="*"
+    class=".create_machine_form.CreateFormView"
+    template = "create_view.pt"
     permission="zope2.View"
     />
 
@@ -56,9 +65,8 @@
     name="create-substance_mixture-form"
     for="*"
     class=".create_mixture_form.CreateFormView"
+    template = "create_view.pt"
     permission="zope2.View"
     />
-
-
 
 </configure>

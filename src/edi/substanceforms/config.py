@@ -2,8 +2,8 @@
 
 addrole = 'Contributor'
 
-updaterole = u'Editor'
+editrole = u'Editor'
 
 reviewrole = u'Reviewer'
 
-redaroles = [addrole, updaterole, reviewrole]
+redaroles = [addrole, editrole, reviewrole]
