@@ -4,6 +4,7 @@ from wtforms import validators
 from collective.wtforms.views import WTFormView
 from edi.substanceforms.helpers import check_value
 from edi.substanceforms.vocabularies import hskategorie, branchen
+from plone import api as ploneapi
 import requests
 import psycopg2
 
@@ -37,7 +38,7 @@ class CreateFormView(WTFormView):
         redirect_url = self.context.aq_parent.absolute_url()
         if button == 'Speichern': #and self.validate():
 
-            try:
+            if True:
                 conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
                 cur = conn.cursor()
                 insert = """INSERT INTO substance VALUES (DEFAULT, '%s', '%s', '%s', 
@@ -52,10 +53,10 @@ class CreateFormView(WTFormView):
                 conn.commit()
                 cur.close()
                 conn.close()
-            except:
-                print(u'Fehler beim Einfügen in die Datenbank')
-            message=u'Der Gefahrstoff wurde erfolgreich gespeichert.'    
-            ploneapi.portal.show_message(message=message, type='info', request=self.request)    
+                message=u'Der Gefahrstoff wurde erfolgreich gespeichert.'    
+                ploneapi.portal.show_message(message=message, type='info', request=self.request)    
+            #except:
+            #    print(u'Fehler beim Einfügen in die Datenbank')
             return self.request.response.redirect(redirect_url)
 
         elif button == 'Abbrechen':

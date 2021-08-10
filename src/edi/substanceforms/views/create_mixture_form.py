@@ -7,6 +7,7 @@ from collective.wtforms.views import WTFormView
 from edi.substanceforms.helpers import check_value
 from edi.substanceforms.vocabularies import substance_types, hskategorie, produktkategorien, produktklassen 
 from edi.substanceforms.vocabularies import classifications, usecases, application_areas
+from plone import api as ploneapi
 import requests
 import psycopg2
 
