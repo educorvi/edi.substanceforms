@@ -16,7 +16,7 @@ class CreateForm(Form):
     title = StringField(u"Titel", [validators.required()])
     description = StringField(u"Beschreibung", [validators.required()])
     manufacturer_id = SelectField(u"Hersteller des Wasch- und Reinigungsmittels", [validators.required()])
-    substance_type = StringField(u"Art des Wasch- und Reinigungsmittels", [validators.required()])
+    substance_type = RadioField(u"Art des Wasch- und Reinigungsmittels", [validators.required()], choices=substance_types)
     evaporation_lane_150 = FloatField(u"Verdampfungsfaktor bei 150 Grad Celsius")
     evaporation_lane_160 = FloatField(u"Verdampfungsfaktor bei 160 Grad Celsius")
     evaporation_lane_170 = FloatField(u"Verdampfungsfaktor bei 170 Grad Celsius")
@@ -33,9 +33,9 @@ class CreateForm(Form):
     material_compatibility = RadioField(u"Materialverträglichkeit", choices = [('fogra', 'FOGRA'), ('not', 'nicht getestet')])
     classifications = RadioField(u"Klassifikation", choices=classifications)
     safety_instructions = TextAreaField(u"Sicherheitshinweise")
-    usescases = SelectMultipleField(u"Anwendungsfälle", choices=usecases)
+    usecases = SelectMultipleField(u"Anwendungsfälle", choices=usecases)
     application_areas = SelectMultipleField(u"Anwendungsbereiche", choices=application_areas)
-    image = FileField("Bilddatei hochladen")
+    image_url = FileField("Bilddatei hochladen")
     comments = TextAreaField("Bemerkungen")
 
 class CreateFormView(WTFormView):
@@ -71,21 +71,21 @@ class CreateFormView(WTFormView):
 
     def submit(self, button):
         redirect_url = self.context.aq_parent.absolute_url()
-        if button == 'Speichern' and self.validate():
+        if button == 'Speichern': #and self.validate():
 
-            try:
+            if True:
                 conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
                 cur = conn.cursor()
-                insert = """INSERT INTO substance_mixture VALUES (DEFAULT, '%s', '%s', '%s', '%s', '%s', '%s', '%s', 
-                         '%s', '%s', '%s', '%s', %s, %s, %s, %s, %s, %s, %s, 
-                          %s, %s, %s, %s, %s, %s, %s);""" % (self.form.title.data,
+                insert = """INSERT INTO substance_mixture VALUES (DEFAULT, '%s', '%s', '%s', '%s', %s, %s, %s, 
+                         %s, %s, %s, %s, %s, '%s', %s, %s, %s, '%s', %s, 
+                          %s, %s, %s, %s, %s, %s, '%s');""" % (self.form.title.data,
                                                             self.form.description.data,
                                                             self.context.aq_parent.get_webcode(),
                                                             self.form.substance_type.data,
-                                                            check_value(self.form.evaporation_lane_150),
-                                                            check_value(self.form.evaporation_lane_160),
-                                                            check_value(self.form.evaporation_lane_170),
-                                                            check_value(self.form.evaporation_lane_180),
+                                                            check_value(self.form.evaporation_lane_150.data),
+                                                            check_value(self.form.evaporation_lane_160.data),
+                                                            check_value(self.form.evaporation_lane_170.data),
+                                                            check_value(self.form.evaporation_lane_180.data),
                                                             check_value(self.form.ueg.data),
                                                             check_value(self.form.response.data),
                                                             check_value(self.form.skin_category.data),
@@ -107,11 +107,11 @@ class CreateFormView(WTFormView):
                 conn.commit()
                 cur.close()
                 conn.close()
-            except:
-                print(u'Fehler beim Einfügen in die Datenbank')
+                message=u'Das Wasch- und Reinigungsmittel wurde erfolgreich gespeichert.'
+                ploneapi.portal.show_message(message=message, type='info', request=self.request)
+            #except:
+            #    print(u'Fehler beim Einfügen in die Datenbank')
 
-
-            print('Speichern')
             return self.request.response.redirect(redirect_url)
 
         elif button == 'Abbrechen':

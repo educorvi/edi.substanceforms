@@ -41,7 +41,7 @@
               <tbody>
 	        <tr>
 	          <td>Typ des Wasch- und Reinigungsmittels</td>
-	          <td tal:content="python: view.get_attr_translation('substance_type', article[4])"/>
+	          <td tal:content="python: view.get_attr_translation('substance_types', article[4])"/>
 	        </tr>
 	      </tbody>
 	    </table>

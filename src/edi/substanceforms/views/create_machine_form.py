@@ -49,22 +49,24 @@ class CreateFormView(WTFormView):
         redirect_url = self.context.aq_parent.absolute_url()
         if button == 'Speichern': #and self.validate():
 
-            try:
+            if True:
                 conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
                 cur = conn.cursor()
-                insert = """INSERT INTO substance VALUES (DEFAULT, '%s', '%s', '%s', 
-                            '%s', '%s');""" % (self.form.title.data, 
-                                                           self.form.description.data,
-                                                           self.context.aq_parent.get_webcode(),
-                                                           check_value(self.form.image.data),
-                                                           check_value(self.form.manufacturer_id.data))
+                insert = """INSERT INTO printing_machine VALUES (DEFAULT, '%s', '%s', '%s', 
+                            %s, %s);""" % (self.form.title.data, 
+                                           self.form.description.data,
+                                           self.context.aq_parent.get_webcode(),
+                                           check_value(self.form.image.data),
+                                           check_value(self.form.manufacturer_id.data))
           
                 cur.execute(insert)
                 conn.commit()
                 cur.close()
                 conn.close()
-            except:
-                print(u'Fehler beim Einfügen in die Datenbank')
+                message=u'Die Maschine wurde erfolgreich gespeichert.'
+                ploneapi.portal.show_message(message=message, type='info', request=self.request)
+            #except:
+            #    print(u'Fehler beim Einfügen in die Datenbank')
             return self.request.response.redirect(redirect_url)
 
         elif button == 'Abbrechen':

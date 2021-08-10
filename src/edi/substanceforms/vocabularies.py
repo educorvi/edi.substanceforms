@@ -31,7 +31,7 @@ produktklassen = [
     (u'uv-waschmittel', u'UV-Waschmittel'),
     (u'waschmittel_kohlenwasserstoff', u'Waschmittel auf Kohlenwasserstoffbasis'),
     (u'waschmittel_testbenzin', u'Waschmittel auf Basis von Testbenzin'),
-    (u'waschmittel_emulsionen' u'Waschmittel auf wässriger Basis/Emulsionen')
+    (u'waschmittel_emulsionen', u'Waschmittel auf wässriger Basis/Emulsionen')
     ]
 
 classifications = [

@@ -15,7 +15,7 @@ class CreateForm(Form):
     casnr = IntegerField("CAS-Nummer")
     skin_category = SelectField("Hautschutzkategorie", choices = hskategorie)
     branch = SelectField("Branche", choices = branchen)
-    image = FileField("Bild hochladen")
+    image_id = FileField("Bild hochladen")
 
 class CreateFormView(WTFormView):
     formClass = CreateForm
@@ -42,12 +42,13 @@ class CreateFormView(WTFormView):
                 conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
                 cur = conn.cursor()
                 insert = """INSERT INTO substance VALUES (DEFAULT, '%s', '%s', '%s', 
-                            '%s', '%s', '%s', NULL);""" % (self.form.title.data, 
+                            %s, %s, %s, %s);""" % (self.form.title.data, 
                                                            self.form.description.data,
                                                            self.context.aq_parent.get_webcode(),
                                                            check_value(self.form.casnr.data),
                                                            check_value(self.form.skin_category.data),
-                                                           check_value(self.form.branch.data))
+                                                           check_value(self.form.branch.data),
+                                                           check_value(self.form.image_id.data))
           
                 cur.execute(insert)
                 conn.commit()
