@@ -44,6 +44,12 @@ class ITabelle(model.Schema):
             source = possibleTables,
             )
 
+    artikeltyp = schema.TextLine(
+            title = u"Name des Artikeltyps der in dieser Tabelle gespeichert wird",
+            default = u"Produkt",
+            required = False
+            )
+
     text = RichText(
             title = "Text vor dem View auf die Datenbanktabelle",
             required = False

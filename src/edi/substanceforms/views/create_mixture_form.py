@@ -69,5 +69,50 @@ class CreateFormView(WTFormView):
         return self.formTemplate()
 
     def submit(self, button):
+        redirect_url = self.context.aq_parent.absolute_url()
         if button == 'Speichern' and self.validate():
+
+            try:
+                conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
+                cur = conn.cursor()
+                insert = """INSERT INTO substance_mixture VALUES (DEFAULT, '%s', '%s', '%s', '%s', '%s', '%s', '%s', 
+                         '%s', '%s', '%s', '%s', %s, %s, %s, %s, %s, %s, %s, 
+                          %s, %s, %s, %s, %s, %s, %s);""" % (self.form.title.data,
+                                                            self.form.description.data,
+                                                            self.context.aq_parent.get_webcode(),
+                                                            self.form.substance_type.data,
+                                                            check_value(self.form.evaporation_lane_150),
+                                                            check_value(self.form.evaporation_lane_160),
+                                                            check_value(self.form.evaporation_lane_170),
+                                                            check_value(self.form.evaporation_lane_180),
+                                                            check_value(self.form.ueg.data),
+                                                            check_value(self.form.response.data),
+                                                            check_value(self.form.skin_category.data),
+                                                            check_value(self.form.date_checked.data),
+                                                            self.form.checked_emissions.data,
+                                                            check_value(self.form.product_category.data),
+                                                            check_value(self.form.product_class.data),
+                                                            check_value(self.form.flashpoint.data),
+                                                            self.form.values_range.data,
+                                                            check_value(self.form.material_compatibility.data),
+                                                            check_value(self.form.comments.data),
+                                                            check_value(self.form.classifications.data),
+                                                            check_value(self.form.safety_instructions.data),
+                                                            check_value(self.form.usecases.data),
+                                                            check_value(self.form.application_areas.data),
+                                                            check_value(self.form.image_url.data),
+                                                            self.form.manufacturer_id.data)
+                cur.execute(insert)
+                conn.commit()
+                cur.close()
+                conn.close()
+            except:
+                print(u'Fehler beim Einfügen in die Datenbank')
+
+
             print('Speichern')
+            return self.request.response.redirect(redirect_url)
+
+        elif button == 'Abbrechen':
+            return self.request.response.redirect(redirect_url)
+

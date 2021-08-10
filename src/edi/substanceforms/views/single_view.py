@@ -3,6 +3,8 @@ from edi.substanceforms import _
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope.browserpage.viewpagetemplatefile import BoundPageTemplate
+from edi.substanceforms.config import editrole
+from edi.substanceforms.helpers import get_vocabulary
 import psycopg2
 
 
@@ -30,6 +32,14 @@ class SingleView(BrowserView):
             self.template = BoundPageTemplate(template, self)
             return self.template()
         return self.index()
+
+    def userCanEdit(self):
+        if not ploneapi.user.is_anonymous():
+            current = ploneapi.user.get_current()
+            roles = ploneapi.user.get_roles(user=current)
+            if editrole in roles or 'Manager' in roles or 'Site Administrator' in roles:
+                return self.context.absolute_url() + '/update-%s-form' % self.context.tablename
+        return False
 
     def get_article(self):
         conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
@@ -80,10 +90,9 @@ class SingleView(BrowserView):
         conn.close()
         return substances
 
-    def get_substance_type(self, substance_type):
-        substance_types = {'detergent_labels': u'Reinigungsmittel Etiketten',
-                           'detergent_heatset': u'Heatsetwaschmittel',
-                           'detergent_manual' : u'Reinigungsmittel manueller Gebrauch',
-                           'product_datasheet': u'Wasch- und Reinigungsmittel für den Offsetdruck'}
-        return substance_types.get(substance_type)
-
+    def get_attr_translation(self, attribute, value):
+        vocabulary = get_vocabulary(attribute)
+        for i in vocabulary:
+            if i[0] == value:
+                return i[1]
+        return value

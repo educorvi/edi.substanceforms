@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
-
 hskategorie = [
-    (u"wasserloeslich", u"gegen wasserlösliche Arbeitsstoffe"),
-    (u"nichtwasserloeslich", u"gegen wasserunlösliche Arbeitsstoffe"),
-    (u"wechselnd", u"gegen wechselnde Arbeitsstoffe")
+    (u"id_wasserloeslich", u"gegen wasserlösliche Arbeitsstoffe"),
+    (u"id_nichtwasserloeslich", u"gegen wasserunlösliche Arbeitsstoffe"),
+    (u"id_wechselnd", u"gegen wechselnde Arbeitsstoffe")
     ]
 
 branchen = [
@@ -70,3 +69,13 @@ application_areas = [
     (u'Klebstoffreiniger', u'Klebstoffreiniger')
     ]
 
+vocabularies = {
+        'hskategorie':hskategorie,
+        'branchen':branchen,
+        'substance_types':substance_types,
+        'produktkategorien':produktkategorien,
+        'produktklassen':produktklassen,
+        'classifications':classifications,
+        'usecases':usecases,
+        'application_areas':application_areas
+    }

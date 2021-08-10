@@ -39,6 +39,7 @@ class CreateFormView(WTFormView):
         return self.index()
 
     def submit(self, button):
+        redirect_url = self.context.aq_parent.absolute_url()
         if button == 'Speichern' and self.validate():
 
             try:
@@ -63,3 +64,8 @@ class CreateFormView(WTFormView):
                 conn.close()
             except:
                 print(u'Fehler beim Einfügen in die Datenbank')
+            return self.request.response.redirect(redirect_url)
+
+        elif button == 'Abbrechen':
+            return self.request.response.redirect(redirect_url)
+
