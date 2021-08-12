@@ -41,7 +41,59 @@
               <tbody>
 	        <tr>
 	          <td>Typ des Wasch- und Reinigungsmittels</td>
-	          <td tal:content="python: view.get_attr_translation('substance_types', article[4])"/>
+	          <td tal:content="python: view.get_attr_translation('substance_types', article[5])"/>
+	        </tr>
+                <tr>
+	          <td>Verdampfungsfaktor 150 Grad</td>
+	          <td tal:content="python:article[10]"/>
+	        </tr>
+	        <tr>
+	          <td>Verdampfungsfaktor 160 Grad</td>
+	          <td tal:content="python:article[11]"/>
+	        </tr>
+	        <tr>
+	          <td>Verdampfungsfaktor 170 Grad</td>
+	          <td tal:content="python:article[12]"/>
+	        </tr>
+	        <tr>
+	          <td>Verdampfungsfaktor 180 Grad</td>
+	          <td tal:content="python:article[13]"/>
+	        </tr>
+	        <tr>
+	          <td>UEG in g/m3</td>
+	          <td tal:content="python:article[14]"/>
+	        </tr>
+	        <tr>
+	          <td>Responsefaktor</td>
+	          <td tal:content="python:article[15]"/>
+	        </tr>
+	        <tr>
+	          <td>Hautschutzmittelgruppe</td>
+	          <td tal:content="python: view.get_attr_translation('hskategorie', article[16])"/>
+	        </tr>
+	        <tr>
+	          <td>Prüfdatum</td>
+	          <td tal:content="python:article[18]"/>
+	        </tr>
+	        <tr>
+	          <td>Emissionsarmes Produkt</td>
+	          <td tal:content="python: view.get_attr_translation('boolvocab', str(article[17]))"/>
+	        </tr>
+	        <tr>
+	          <td>Flammpunkt</td>
+	          <td tal:content="python:article[19]"/>
+	        </tr>
+	        <tr>
+	          <td>Wertebereich für den Flammpunkt</td>
+	          <td tal:content="python: view.get_attr_translation('boolvocab', str(article[20]))"/>
+	        </tr>
+	        <tr>
+	          <td>Bemerkungen</td>
+	          <td tal:content="python:article[21]"/>
+	        </tr>
+	        <tr>
+	          <td>Verwendungszwecke</td>
+	          <td tal:content="python:article[9]"/>
 	        </tr>
 	      </tbody>
 	    </table>
@@ -57,7 +109,7 @@
           <div class="col-lg-3 col-12">
             <div tal:replace="structure context/@@portlet-cards-view"/>
           </div>
-          <!-- Ende Portlets -->	  
+          <!-- Ende Portlets -->
 
         </div>
 

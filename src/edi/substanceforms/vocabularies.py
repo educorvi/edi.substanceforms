@@ -69,6 +69,11 @@ application_areas = [
     (u'Klebstoffreiniger', u'Klebstoffreiniger')
     ]
 
+boolvocab = [
+    (u'True', u'Ja'),
+    (u'False', u'Nein')
+    ]
+
 vocabularies = {
         'hskategorie':hskategorie,
         'branchen':branchen,
@@ -77,5 +82,6 @@ vocabularies = {
         'produktklassen':produktklassen,
         'classifications':classifications,
         'usecases':usecases,
-        'application_areas':application_areas
+        'application_areas':application_areas,
+        'boolvocab':boolvocab
     }
