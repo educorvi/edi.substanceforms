@@ -97,4 +97,12 @@ class SingleView(BrowserView):
         for i in vocabulary:
             if i[0] == value:
                 return i[1]
+        import pdb; pdb.set_trace()
+        return value
+
+    def usecase_translation(self, attribute, value):
+        vocabulary = get_vocabulary(attribute)
+        for i in vocabulary:
+            if i[0] == value:
+                return i[1]
         return value
