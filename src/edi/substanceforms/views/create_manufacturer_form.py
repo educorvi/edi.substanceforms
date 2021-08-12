@@ -10,7 +10,7 @@ import psycopg2
 class CreateForm(Form):
 
     title = StringField("Titel", [validators.required()])
-    description = StringField("Beschreibung", [validators.required()])
+    description = StringField("Beschreibung")
     homepage = StringField("Homepage")
 
 class CreateFormView(WTFormView):
