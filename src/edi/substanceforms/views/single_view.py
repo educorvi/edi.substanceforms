@@ -23,7 +23,7 @@ class SingleView(BrowserView):
         self.machines = []
         self.secsheet = []
         if self.context.tablename == 'substance_mixture':
-            self.machines = self.get_machines()
+            #self.machines = self.get_machines()
             self.secsheet = self.get_recipes()
             template = ViewPageTemplateFile('substance_mixture_view.pt')
             self.template = BoundPageTemplate(template, self)
