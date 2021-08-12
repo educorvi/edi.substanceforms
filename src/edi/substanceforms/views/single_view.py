@@ -106,5 +106,5 @@ class SingleView(BrowserView):
             for i in vocabulary:
                 if i[0] == v:
                     newlist.append(i[1])
-        import pdb; pdb.set_trace()
-        return value
+        result = ', '.join(newlist)
+        return result
