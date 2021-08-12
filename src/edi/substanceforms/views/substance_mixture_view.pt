@@ -93,7 +93,7 @@
 	        </tr>
 	        <tr>
 	          <td>Verwendungszwecke</td>
-	          <td tal:content="python:article[9]"/>
+	          <td tal:content="python: view.usecase_translation('boolvocab', str(article[9]))"/>
 	        </tr>
 	      </tbody>
 	    </table>
