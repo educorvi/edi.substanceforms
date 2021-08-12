@@ -40,7 +40,7 @@ class CreateFormView(WTFormView):
                 insert = """INSERT INTO manufacturer VALUES (DEFAULT, '%s', '%s', '%s', %s);""" % (self.form.title.data,
                                                             self.form.description.data,
                                                             self.context.aq_parent.get_webcode(),
-                                                            check_value(self.form.homepage.data),
+                                                            check_value(self.form.homepage.data))
                 cur.execute(insert)
                 conn.commit()
                 cur.close()
