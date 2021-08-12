@@ -43,7 +43,11 @@
 	          <td>Typ des Wasch- und Reinigungsmittels</td>
 	          <td tal:content="python: view.get_attr_translation('substance_types', article[5])"/>
 	        </tr>
-                <tr>
+          <tr>
+	          <td>Branche</td>
+	          <td tal:content="python:article[4]"/>
+	        </tr>
+          <tr>
 	          <td>Verdampfungsfaktor 150 Grad</td>
 	          <td tal:content="python:article[10]"/>
 	        </tr>
