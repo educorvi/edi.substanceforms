@@ -53,7 +53,7 @@ class SingleView(BrowserView):
         cur.close
         conn.close()
         return article
-
+    """
     def get_machines(self):
         machine_titles = []
         conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
@@ -69,8 +69,9 @@ class SingleView(BrowserView):
             machine_title = cur.fetchall()
             cur.close()
             machine_titles.append(machine_title)
-        conn.close()    
+        conn.close()
         return machine_titles
+    """
 
     def get_recipes(self):
         substances = []
