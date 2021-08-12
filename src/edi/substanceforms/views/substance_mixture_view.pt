@@ -43,77 +43,57 @@
 	          <td>Typ des Wasch- und Reinigungsmittels</td>
 	          <td tal:content="python: view.get_attr_translation('substance_types', article[5])"/>
 	        </tr>
-          <tr>
+                <tr>
 	          <td>Verdampfungsfaktor 150 Grad</td>
-	          <td tal:content="python:article[5]"/>
-	        </tr>
-	        <tr>
-	          <td>Verdampfungsfaktor 160 Grad</td>
-	          <td tal:content="python:article[6]"/>
-	        </tr>
-	        <tr>
-	          <td>Verdampfungsfaktor 170 Grad</td>
-	          <td tal:content="python:article[7]"/>
-	        </tr>
-	        <tr>
-	          <td>Verdampfungsfaktor 180 Grad</td>
-	          <td tal:content="python:article[8]"/>
-	        </tr>
-	        <tr>
-	          <td>UEG in g/m3</td>
-	          <td tal:content="python:article[9]"/>
-	        </tr>
-	        <tr>
-	          <td>Responsefaktor</td>
 	          <td tal:content="python:article[10]"/>
 	        </tr>
 	        <tr>
-	          <td>Hautschutzmittelgruppe</td>
-	          <td tal:content="python: view.get_attr_translation('hskategorie', article[11])"/>
+	          <td>Verdampfungsfaktor 160 Grad</td>
+	          <td tal:content="python:article[11]"/>
 	        </tr>
 	        <tr>
-	          <td>Prüfdatum</td>
+	          <td>Verdampfungsfaktor 170 Grad</td>
 	          <td tal:content="python:article[12]"/>
 	        </tr>
 	        <tr>
-	          <td>Emissionsarmes Produkt</td>
-	          <td tal:content="python: view.get_attr_translation('boolvocab', str(article[13]))"/>
+	          <td>Verdampfungsfaktor 180 Grad</td>
+	          <td tal:content="python:article[13]"/>
 	        </tr>
 	        <tr>
-	          <td>Produktkategorie</td>
-	          <td tal:content="python: view.get_attr_translation('produktkategorien', article[14])"/>
+	          <td>UEG in g/m3</td>
+	          <td tal:content="python:article[14]"/>
 	        </tr>
 	        <tr>
-	          <td>Produktklasse</td>
-	          <td tal:content="python: view.get_attr_translation('produktklassen', article[15])"/>
+	          <td>Responsefaktor</td>
+	          <td tal:content="python:article[15]"/>
 	        </tr>
 	        <tr>
-	          <td>Flammpunkt</td>
-	          <td tal:content="python:article[16]"/>
+	          <td>Hautschutzmittelgruppe</td>
+	          <td tal:content="python: view.get_attr_translation('hskategorie', article[16])"/>
 	        </tr>
 	        <tr>
-	          <td>Wertebereich für den Flammpunkt</td>
-	          <td tal:content="python: view.get_attr_translation('boolvocab', str(article[17]))"/>
-	        </tr>
-	        <tr>
-	          <td>Materialverträglichkeit</td>
+	          <td>Prüfdatum</td>
 	          <td tal:content="python:article[18]"/>
 	        </tr>
 	        <tr>
-	          <td>Bemerkungen</td>
+	          <td>Emissionsarmes Produkt</td>
+	          <td tal:content="python: view.get_attr_translation('boolvocab', str(article[17]))"/>
+	        </tr>
+	        <tr>
+	          <td>Flammpunkt</td>
 	          <td tal:content="python:article[19]"/>
 	        </tr>
 	        <tr>
-	          <td>Einstufungen</td>
-	          <td tal:content="python:article[20]"/>
+	          <td>Wertebereich für den Flammpunkt</td>
+	          <td tal:content="python: view.get_attr_translation('boolvocab', str(article[20]))"/>
 	        </tr>
 	        <tr>
-	          <td>Sicherheitshinweise für Gefahrstoffe</td>
+	          <td>Bemerkungen</td>
 	          <td tal:content="python:article[21]"/>
 	        </tr>
 	        <tr>
 	          <td>Verwendungszwecke</td>
-	          <td tal:content="python:article[22]"/>
+	          <td tal:content="python:article[9]"/>
 	        </tr>
 	      </tbody>
 	    </table>
