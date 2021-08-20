@@ -8,7 +8,7 @@
 
   <browser:page
     name="migrationview"
-    for="Products.CMFCore.interfaces.IFolderish"
+    for="*"
     class=".migrationview.Migrationview"
     permission="zope2.View"
     />
