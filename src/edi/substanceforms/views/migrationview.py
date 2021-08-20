@@ -166,12 +166,184 @@ class Migrationview(BrowserView):
             cur = conn.cursor()
             # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
             cur.execute("INSERT INTO manufacturer (title, description, webcode, homepage) VALUES (%s, %s, %s, %s);",
-                        (hersteller_title, hersteller_desc, hersteller_uid, "www.test.de"))
+                        (hersteller_title, hersteller_desc, hersteller_uid, hersteller_homepage))
             conn.commit()
             # print(hersteller_title)# correct
             cur.close()
 
         print('Successfully migrated MANUFACTURER')
+
+        for i in erg3:
+            powder_title = i.get('title')
+            powder_desc = i.get('description')
+            powder_uid = i.get('UID')
+            powder_link = i.get('@id')
+            powder_product_class = i.get('produktklasse')
+            powder_starting_material = i.get('ausgangsmaterial')
+            powder_median_value = i.get('medianwert')
+            powder_volume_share = i.get('volumenanteil')
+            powder_checked_emissions = i.get('emissionsgeprueft')
+            powder_date_checked = i.get('pruefdateum')
+            powder_manufacturer_name = i.get('hersteller')['title']
+
+            successfuluid = False
+            while successfuluid == False:
+                random_number = str(random.randint(100000, 999999))
+
+                fullyear = datetime.datetime.now().year
+                shortyear = str(fullyear)[2:]
+
+                generated_uid = "PD" + shortyear + random_number
+
+                cur = conn.cursor()
+                cur.execute("SELECT spray_powder_id FROM spray_powder WHERE title = '{0}';".format(generated_uid))
+                useduid = cur.fetchall()
+                cur.close()
+
+                if useduid == []:
+                    successfuluid = True
+
+            cur = conn.cursor()
+            cur.execute(
+                "SELECT manufacturer_id FROM manufacturer WHERE title = '{0}';".format(powder_manufacturer_name))
+            powder_manufacturer_id = cur.fetchall()
+            cur.close()
+
+            cur = conn.cursor()
+            cur.execute(
+                "INSERT INTO spray_powder (title, description, webcode, manufacturer_id, image_url, product_class, starting_material, median_value, volume_share, checked_emissions, date_checked) VALUES (%s, %s, %s, %s, NULL, %s, %s, %s, %s, %s, %s);",
+                (powder_title, powder_desc, generated_uid, powder_manufacturer_id[0], powder_product_class,
+                 powder_starting_material, powder_median_value, powder_volume_share, powder_checked_emissions,
+                 powder_date_checked))
+            conn.commit()
+            cur.close()
+
+        print('Successfully migrated SPRAY_POWDER')
+
+        for i in erg4:
+            etikett_title = i.get('title')
+            etikett_desc = i.get('description')
+            etikett_uid = i.get('UID')
+            etikett_skin_category = i.get('hskategorie')
+            etikett_checked_emissions = i.get('emissionsgeprueft')
+            etikett_flashpoint = i.get('flammpunkt')
+            etikett_values_range = i.get('wertebereich')
+            etikett_classifications = i.get('einstufungen')
+            etikett_usecases = i.get('verwendungszweck')
+            etikett_manufacturer_name = i.get('hersteller')['title']
+
+            cur = conn.cursor()
+            cur.execute(
+                "SELECT manufacturer_id FROM manufacturer WHERE title = '{0}';".format(etikett_manufacturer_name))
+            etikett_manufacturer_id = cur.fetchall()
+            cur.close()
+
+            cur = conn.cursor()
+            # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
+            cur.execute(
+                "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, usecases, manufacturer_id) VALUES (%s, %s, %s, 'branch', 'detergent_labels', NULL, %s, %s, %s, %s, %s, %s);",
+                (etikett_title, etikett_desc, etikett_uid, etikett_skin_category, etikett_checked_emissions,
+                 etikett_flashpoint, etikett_values_range, etikett_usecases, etikett_manufacturer_id[0]))
+            conn.commit()
+            # print(etikett_title)  # correct
+            cur.close()
+
+        print('Successfully migrated DETERGENT_LABELS')
+
+        for i in erg5:
+            manuell_title = i.get('title')
+            manuell_desc = i.get('description')
+            manuell_uid = i.get('UID')
+            manuell_link = i.get('@id')
+            manuell_skin_category = i.get('hskategorie')
+            manuell_checked_emissions = i.get('emissionsgeprueft')
+            manuell_flashpoint = i.get('flammpunkt')
+            manuell_values_range = i.get('wertebereich')
+            manuell_usecases = i.get('verwendungszweck')
+            manuell_application_areas = i.get('anwendungsgebiete')
+            manuell_manufacturer_name = i.get('hersteller')['title']
+
+            cur = conn.cursor()
+            cur.execute(
+                "SELECT manufacturer_id FROM manufacturer WHERE title = '{0}';".format(manuell_manufacturer_name))
+            manuell_manufacturer_id = cur.fetchall()
+            cur.close()
+
+            cur = conn.cursor()
+            # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
+            cur.execute(
+                "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, usecases, application_areas, manufacturer_id) VALUES (%s, %s, %s, 'branch', 'detergent_manual', NULL, %s, %s, %s, %s, %s, %s, %s);",
+                (manuell_title, manuell_desc, manuell_uid, manuell_skin_category, manuell_checked_emissions,
+                 manuell_flashpoint, manuell_values_range, manuell_usecases, manuell_application_areas,
+                 manuell_manufacturer_id[0]))
+            conn.commit()
+            # print(manuell_title)  # correct
+            cur.close()
+
+        print('Successfully migrated DETERGENT_MANUAL')
+
+        for i in erg6:
+            datenblatt_title = i.get('title')
+            datenblatt_desc = i.get('description')
+            datenblatt_uid = i.get('UID')
+            datenblatt_link = i.get('@id')
+            datenblatt_skin_category = i.get('hskategorie')
+            datenblatt_checked_emissions = i.get('emissionsgeprueft')
+            datenblatt_product_category = i.get('produktkategorie')
+            datenblatt_product_class = i.get('produktklasse')
+            datenblatt_flashpoint = i.get('flammpunkt')
+            datenblatt_values_range = i.get('wertebereich')
+            datenblatt_material_compatibility = i.get('materialvertraeglichkeit')
+            datenblatt_comments = i.get('bemerkungen')
+
+            if datenblatt_skin_category:
+                pass
+            else:
+                datenblatt_skin_category = ''
+
+            # import pdb; pdb.set_trace()
+            cur = conn.cursor()
+            # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
+            cur.execute(
+                "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, comments) VALUES (%s, %s, %s, 'branch', 'product_datasheet', NULL, %s, %s, %s, %s, %s);",
+                (datenblatt_title, datenblatt_desc, datenblatt_uid, datenblatt_skin_category,
+                 datenblatt_checked_emissions, datenblatt_flashpoint, datenblatt_values_range,
+                 str(datenblatt_comments)))
+            conn.commit()
+            # print(datenblatt_title)  # correct
+            cur.close()
+
+        print('Successfully migrated PRODUCT_DATASHEET')
+
+        for i in erg7:
+            heatset_title = i.get('title')
+            heatset_desc = i.get('description')
+            heatset_uid = i.get('UID')
+            heatset_link = i.get('@id')
+            heatset_ueg = i.get('ueg')
+            heatset_response = i.get('response')
+            heatset_skin_category = i.get('hskategorie')
+            heatset_date_checked = i.get('pruefdateum')
+            heatset_checked_emissions = i.get('emissionsgeprueft')
+
+            if heatset_skin_category:
+                pass
+            else:
+                heatset_skin_category = ''
+
+            cur = conn.cursor()
+            # import pdb; pdb.set_trace()
+            # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
+            cur.execute(
+                "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, ueg, response, skin_category, date_checked, checked_emissions) VALUES (%s, %s, %s, 'branch', 'detergent_heatset', NULL, %s, %s, %s, %s, %s);",
+                (heatset_title, heatset_desc, heatset_uid, heatset_ueg, heatset_response, heatset_skin_category,
+                 heatset_date_checked, heatset_checked_emissions))
+            conn.commit()
+            # print(heatset_title)  # correct
+            cur.close()
+
+        print('Successfully migrated DETERGENT_HEATSET')
+        print('CHEERS! DATA MIGRATION SUCCESSFULLY COMPLETED :)')
 
 
         return template
