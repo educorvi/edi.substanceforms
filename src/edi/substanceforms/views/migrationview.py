@@ -21,7 +21,7 @@ class Migrationview(BrowserView):
         self.password = self.context.aq_parent.password
         import pdb; pdb.set_trace()
         return self.index()
-    """
+"""
     def submit(self, button):
         redirect_url = self.context.aq_parent.absolute_url()
         if button == 'Speichern' and self.validate():
@@ -46,4 +46,4 @@ class Migrationview(BrowserView):
 
         elif button == 'Abbrechen':
             return self.request.response.redirect(redirect_url)
-        """
+"""
