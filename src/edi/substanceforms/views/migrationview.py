@@ -141,7 +141,7 @@ class Migrationview(BrowserView):
 
         print("Starting data migration...")
         hostname = self.host
-        username = self.usernmae
+        username = self.username
         password = self.password
         database = self.dbname
 
