@@ -199,7 +199,7 @@ class Migrationview(BrowserView):
         for i in erg:
             hersteller_title = i.get('title')
             hersteller_desc = i.get('description')
-            hersteller_uid = i.get('UID')
+            hersteller_uid = get_webcode(self)
             hersteller_homepage = i.get('homepage')
             cur = conn.cursor()
             # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
