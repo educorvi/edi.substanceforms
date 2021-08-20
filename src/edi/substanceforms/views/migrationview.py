@@ -143,7 +143,7 @@ class Migrationview(BrowserView):
 
         def check_webcode(self, generated_webcode):
             host = self.host
-            dbname = self.database
+            dbname = self.dbname
             username = self.username
             password = self.password
 
