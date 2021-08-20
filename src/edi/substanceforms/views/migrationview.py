@@ -16,6 +16,10 @@ class Migrationview(BrowserView):
 
     def __call__(self):
 
+        template = '''<li class="heading" i18n:translate="">
+                  Migration erfolgreich
+                </li>'''
+
         login = {'login': 'restaccess', 'password': 'H9jCg768'}
         authurl = u'http://emissionsarme-produkte.bgetem.de/@login'
         searchurl = u'http://emissionsarme-produkte.bgetem.de/@search'
@@ -162,7 +166,7 @@ class Migrationview(BrowserView):
             cur = conn.cursor()
             # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
             cur.execute("INSERT INTO manufacturer (title, description, webcode, homepage) VALUES (%s, %s, %s, %s);",
-                        (hersteller_title, hersteller_desc, hersteller_uid, hersteller_homepage))
+                        (hersteller_title, hersteller_desc, hersteller_uid, "www.test.de"))
             conn.commit()
             # print(hersteller_title)# correct
             cur.close()
@@ -170,4 +174,4 @@ class Migrationview(BrowserView):
         print('Successfully migrated MANUFACTURER')
 
 
-        return self.index()
+        return template
