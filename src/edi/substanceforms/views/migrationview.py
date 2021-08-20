@@ -317,8 +317,6 @@ class Migrationview(BrowserView):
             datenblatt_material_compatibility = i.get('materialvertraeglichkeit')
             datenblatt_comments = i.get('bemerkungen')
 
-            import pdb; pdb.set_trace()
-
             if datenblatt_skin_category:
                 pass
             else:
