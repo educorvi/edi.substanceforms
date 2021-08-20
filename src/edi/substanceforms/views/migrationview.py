@@ -284,8 +284,6 @@ class Migrationview(BrowserView):
             manuell_application_areas = i.get('anwendungsgebiete')
             manuell_manufacturer_name = i.get('hersteller')['title']
 
-            import pdb; pdb.set_trace()
-
             cur = conn.cursor()
             cur.execute(
                 "SELECT manufacturer_id FROM manufacturer WHERE title = '{0}';".format(manuell_manufacturer_name))
@@ -318,6 +316,8 @@ class Migrationview(BrowserView):
             datenblatt_values_range = i.get('wertebereich')
             datenblatt_material_compatibility = i.get('materialvertraeglichkeit')
             datenblatt_comments = i.get('bemerkungen')
+
+            import pdb; pdb.set_trace()
 
             if datenblatt_skin_category:
                 pass
