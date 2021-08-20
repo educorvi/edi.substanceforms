@@ -139,9 +139,35 @@ class Migrationview(BrowserView):
 
         import pdb; pdb.set_trace()
 
-        def getAuthToken():
-            headers = {'Accept': 'application/json'}
-            token = requests.post(authurl, headers=headers, json=login)
-            return token.json().get('token')
+        print("Starting data migration...")
+        hostname = self.host
+        username = self.usernmae
+        password = self.password
+        database = self.dbname
+
+        erg = getHersteller()
+        # erg2 = getMachines()
+        erg3 = getPowders()
+        erg4 = getEtiketten()
+        erg5 = getManuell()
+        erg6 = getProduktdatenblatt()
+        erg7 = getHeatset()
+        conn = psycopg2.connect(host=hostname, user=username, password=password, dbname=database)
+
+        for i in erg:
+            hersteller_title = i.get('title')
+            hersteller_desc = i.get('description')
+            hersteller_uid = i.get('UID')
+            hersteller_homepage = i.get('homepage')
+            cur = conn.cursor()
+            # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
+            cur.execute("INSERT INTO manufacturer (title, description, webcode, homepage) VALUES (%s, %s, %s, %s);",
+                        (hersteller_title, hersteller_desc, hersteller_uid, hersteller_homepage))
+            conn.commit()
+            # print(hersteller_title)# correct
+            cur.close()
+
+        print('Successfully migrated MANUFACTURER')
+
 
         return self.index()
