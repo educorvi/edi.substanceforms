@@ -214,7 +214,7 @@ class Migrationview(BrowserView):
         for i in erg3:
             powder_title = i.get('title')
             powder_desc = i.get('description')
-            powder_uid = i.get('UID')
+            powder_uid = get_webcode(self)
             powder_link = i.get('@id')
             powder_product_class = i.get('produktklasse')
             powder_starting_material = i.get('ausgangsmaterial')
@@ -223,23 +223,6 @@ class Migrationview(BrowserView):
             powder_checked_emissions = i.get('emissionsgeprueft')
             powder_date_checked = i.get('pruefdateum')
             powder_manufacturer_name = i.get('hersteller')['title']
-
-            successfuluid = False
-            while successfuluid == False:
-                random_number = str(random.randint(100000, 999999))
-
-                fullyear = datetime.datetime.now().year
-                shortyear = str(fullyear)[2:]
-
-                generated_uid = "PD" + shortyear + random_number
-
-                cur = conn.cursor()
-                cur.execute("SELECT spray_powder_id FROM spray_powder WHERE title = '{0}';".format(generated_uid))
-                useduid = cur.fetchall()
-                cur.close()
-
-                if useduid == []:
-                    successfuluid = True
 
             cur = conn.cursor()
             cur.execute(
@@ -250,7 +233,7 @@ class Migrationview(BrowserView):
             cur = conn.cursor()
             cur.execute(
                 "INSERT INTO spray_powder (title, description, webcode, manufacturer_id, image_url, product_class, starting_material, median_value, volume_share, checked_emissions, date_checked) VALUES (%s, %s, %s, %s, NULL, %s, %s, %s, %s, %s, %s);",
-                (powder_title, powder_desc, generated_uid, powder_manufacturer_id[0], powder_product_class,
+                (powder_title, powder_desc, powder_uid, powder_manufacturer_id[0], powder_product_class,
                  powder_starting_material, powder_median_value, powder_volume_share, powder_checked_emissions,
                  powder_date_checked))
             conn.commit()
@@ -261,7 +244,7 @@ class Migrationview(BrowserView):
         for i in erg4:
             etikett_title = i.get('title')
             etikett_desc = i.get('description')
-            etikett_uid = i.get('UID')
+            etikett_uid = get_webcode(self)
             etikett_skin_category = i.get('hskategorie')
             etikett_checked_emissions = i.get('emissionsgeprueft')
             etikett_flashpoint = i.get('flammpunkt')
@@ -291,7 +274,7 @@ class Migrationview(BrowserView):
         for i in erg5:
             manuell_title = i.get('title')
             manuell_desc = i.get('description')
-            manuell_uid = i.get('UID')
+            manuell_uid = get_webcode(self)
             manuell_link = i.get('@id')
             manuell_skin_category = i.get('hskategorie')
             manuell_checked_emissions = i.get('emissionsgeprueft')
@@ -323,7 +306,7 @@ class Migrationview(BrowserView):
         for i in erg6:
             datenblatt_title = i.get('title')
             datenblatt_desc = i.get('description')
-            datenblatt_uid = i.get('UID')
+            datenblatt_uid = get_webcode(self)
             datenblatt_link = i.get('@id')
             datenblatt_skin_category = i.get('hskategorie')
             datenblatt_checked_emissions = i.get('emissionsgeprueft')
@@ -356,7 +339,7 @@ class Migrationview(BrowserView):
         for i in erg7:
             heatset_title = i.get('title')
             heatset_desc = i.get('description')
-            heatset_uid = i.get('UID')
+            heatset_uid = get_webcode(self)
             heatset_link = i.get('@id')
             heatset_ueg = i.get('ueg')
             heatset_response = i.get('response')
