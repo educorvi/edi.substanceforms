@@ -175,7 +175,7 @@ class Migrationview(BrowserView):
                 random_number = random.randint(100000, 999999)
                 shortyear = datetime.datetime.now().strftime('%Y')[2:]
                 generated_webcode = "PD%s%s" % (shortyear, random_number)
-                webcode = self.check_webcode(generated_webcode)
+                webcode = check_webcode(generated_webcode)
                 if webcode:
                     return generated_webcode
 
