@@ -322,13 +322,14 @@ class Migrationview(BrowserView):
             else:
                 datenblatt_skin_category = ''
 
-            import pdb; pdb.set_trace()
-
-            if datenblatt_product_category[0] == 'Konventionell':
-                offsetprintmanner = 'without_spec'
-            elif datenblatt_product_category[0] == 'UV-Druck':
-                offsetprintmanner = 'uv_print'
-            else:
+            try:
+                if datenblatt_product_category[0] == 'Konventionell':
+                    offsetprintmanner = 'without_spec'
+                elif datenblatt_product_category[0] == 'UV-Druck':
+                    offsetprintmanner = 'uv_print'
+                else:
+                    offsetprintmanner = 'without_spec'
+            except:
                 offsetprintmanner = 'without_spec'
 
             # import pdb; pdb.set_trace()
