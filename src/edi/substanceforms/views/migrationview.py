@@ -336,7 +336,7 @@ class Migrationview(BrowserView):
                 "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, comments, offset_print_manner) VALUES (%s, %s, %s, 'branch', 'offset', NULL, %s, %s, %s, %s, %s, %s);",
                 (datenblatt_title, datenblatt_desc, datenblatt_uid, datenblatt_skin_category,
                  datenblatt_checked_emissions, datenblatt_flashpoint, datenblatt_values_range,
-                 str(datenblatt_comments, datenblatt_product_category)))
+                 str(datenblatt_comments),datenblatt_product_category))
             conn.commit()
             # print(datenblatt_title)  # correct
             cur.close()
