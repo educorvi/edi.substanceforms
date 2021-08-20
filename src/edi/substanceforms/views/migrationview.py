@@ -6,13 +6,10 @@ import psycopg2
 import random
 import datetime
 
-import pdb; pdb.set_trace()
-
-"""
 class Migrationview(BrowserView):
     def __call__(self):
+        import pdb; pdb.set_trace()
         template = '''<li class="heading" i18n:translate="">
           Sample View
         </li>'''
         return template
-"""
