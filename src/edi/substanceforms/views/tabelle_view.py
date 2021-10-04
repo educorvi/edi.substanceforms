@@ -21,7 +21,7 @@ class LoginCredentials:
 class GeneralizedForm(Form):
 
     search = TextField("Suchbegriff")
-    #manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[])
+    manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[])
 
 class TabelleFormView(WTFormView):
     formClass = GeneralizedForm
@@ -58,7 +58,7 @@ class TabelleFormView(WTFormView):
             conn.close()
         except:
             manus = []
-        self.form.manu.choices = manus
+        #self.form.manu.choices = manus
         self.form.process()
         return self.formTemplate()
 
@@ -69,7 +69,7 @@ class TabelleFormView(WTFormView):
 
             searchkey = self.context.tablename + '_id'
             searchtable = self.context.tablename
-            manu_id = self.form.manu.data
+            #manu_id = self.form.manu.data
 
             select = "SELECT %s, title FROM %s WHERE manufacturer_id = '%s';" % (searchkey, searchtable, manu_id)
             try:
