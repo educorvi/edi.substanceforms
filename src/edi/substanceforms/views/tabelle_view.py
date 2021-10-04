@@ -130,3 +130,20 @@ class SubstancemixtureFormView(TabelleFormView):
         self.form.manu.choices = manus
         self.form.process()
         return self.formTemplate()
+
+class SpraypowderFormView(TabelleFormView):
+    formClass = SprayPowderForm
+
+    def renderForm(self):
+        try:
+            conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
+            cur = conn.cursor()
+            cur.execute("SELECT manufacturer_id, title FROM manufacturer;")
+            manus = cur.fetchall()
+            cur.close
+            conn.close()
+        except:
+            manus = []
+        self.form.manu.choices = manus
+        self.form.process()
+        return self.formTemplate()
