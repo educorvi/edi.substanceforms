@@ -18,13 +18,13 @@ class LoginCredentials:
     database = 'gefahrstoffdb'
     password = 'reldbpassword'
 
-class SearchForm(Form):
+class GeneralizedForm(Form):
 
     search = TextField("Suchbegriff")
-    manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[])
+    #manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[])
 
 class TabelleFormView(WTFormView):
-    formClass = SearchForm
+    formClass = GeneralizedForm
     buttons = ('Suche', 'Abbrechen')
 
     def __call__(self):
