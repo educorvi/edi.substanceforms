@@ -113,3 +113,10 @@ class SubstanceFormView(TabelleFormView):
     def renderForm(self):
         self.form.process()
         return self.formTemplate()
+
+class SubstancemixtureFormView(TabelleFormView):
+    formClass = SubstanceMixtureForm
+
+    def renderForm(self):
+        self.form.process()
+        return self.formTemplate()
