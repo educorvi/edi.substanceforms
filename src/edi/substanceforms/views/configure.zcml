@@ -28,6 +28,14 @@
     permission="zope2.View"
     />
 
+    <browser:page
+    name="hersteller-form-view"
+    for="edi.substanceforms.content.tabelle.ITabelle"
+    class=".tabelle_view.HerstellerFormView"
+    template="tabelle_view.pt"
+    permission="zope2.View"
+    />
+
   <browser:page
     name="view"
     for="edi.substanceforms.content.datenbank.IDatenbank"

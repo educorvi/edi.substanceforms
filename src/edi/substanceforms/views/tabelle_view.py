@@ -18,13 +18,13 @@ class LoginCredentials:
     database = 'gefahrstoffdb'
     password = 'reldbpassword'
 
-class GeneralizedForm(Form):
+class BaseForm(Form):
 
     search = TextField("Suchbegriff")
     #manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[])
 
 class TabelleFormView(WTFormView):
-    formClass = GeneralizedForm
+    formClass = BaseForm
     buttons = ('Suche', 'Abbrechen')
 
     def __call__(self):
@@ -87,20 +87,23 @@ class TabelleFormView(WTFormView):
             url = self.context.aq_parent.absolute_url()
             return self.request.response.redirect(url)
 
-class HerstellerForm (TabelleFormView):
+class HerstellerForm (BaseForm):
     manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[])
 
-class SubstanceForm (TabelleFormView):
+class SubstanceForm (BaseForm):
     casnr = IntegerField(u'Bitte geben Sie eine CAS-Nummer an:')
-    concentration = IntegerField(u'Bitte geben Sie eine Konzentration an:')
+    concentration = IntegerField(u'Bitte geben Sie eine Konzentration in wässriger Lösung an:')
 
-class SubstanceMixtureForm (TabelleFormView):
+class SubstanceMixtureForm (BaseForm):
     manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[])
     detergent_special = BooleanField(u'Handelt es sich um einen Sonderreiniger?')
     checked_emissions = BooleanField(u'Ist das Gefahrstoffgemisch emissionsgeprueft?')
 
-class SprayPowderForm (TabelleFormView):
+class SprayPowderForm (BaseForm):
     manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[])
     checked_emissions = BooleanField(u'Ist das Gefahrstoffgemisch emissionsgeprueft?')
     median_value = FloatField(u'Bitte geben Sie den Medianwert ein')
     volume_share = FloatField(u'Bitte geben Sie den Volumenanteil ein')
+
+class HerstellerFormView(TabelleFormView):
+    formClass = HerstellerForm
