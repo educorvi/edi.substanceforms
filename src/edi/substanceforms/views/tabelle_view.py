@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from wtforms import Form, TextField, SelectField
+from wtforms import Form, TextField, SelectField, IntegerField, BooleanField, FloatField
 from wtforms import validators
 from collective.wtforms.views import WTFormView
 from plone import api as ploneapi
@@ -89,3 +89,18 @@ class TabelleFormView(WTFormView):
 
 class HerstellerForm (TabelleFormView):
     manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[])
+
+class SubstanceForm (TabelleFormView):
+    casnr = IntegerField(u'Bitte geben Sie eine CAS-Nummer an:')
+    concentration = IntegerField(u'Bitte geben Sie eine Konzentration an:')
+
+class SubstanceMixtureForm (TabelleFormView):
+    manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[])
+    detergent_special = BooleanField(u'Handelt es sich um einen Sonderreiniger?')
+    checked_emissions = BooleanField(u'Ist das Gefahrstoffgemisch emissionsgeprueft?')
+
+class SprayPowderForm (TabelleFormView):
+    manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[])
+    checked_emissions = BooleanField(u'Ist das Gefahrstoffgemisch emissionsgeprueft?')
+    median_value = FloatField(u'Bitte geben Sie den Medianwert ein')
+    volume_share = FloatField(u'Bitte geben Sie den Volumenanteil ein')
