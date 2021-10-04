@@ -21,7 +21,7 @@ class LoginCredentials:
 class GeneralizedForm(Form):
 
     search = TextField("Suchbegriff")
-    manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[])
+    #manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[])
 
 class TabelleFormView(WTFormView):
     formClass = GeneralizedForm
