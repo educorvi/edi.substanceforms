@@ -40,9 +40,6 @@ class TabelleFormView(WTFormView):
                     return result
         return self.index()
 
-class HerstellerSearchForm(TabelleFormView):
-    manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[])
-
     def userCanAdd(self):
         if not ploneapi.user.is_anonymous():
             current = ploneapi.user.get_current()
@@ -89,3 +86,6 @@ class HerstellerSearchForm(TabelleFormView):
         elif button == 'Abbrechen':
             url = self.context.aq_parent.absolute_url()
             return self.request.response.redirect(url)
+
+class HerstellerForm (TabelleFormView):
+    manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[])
