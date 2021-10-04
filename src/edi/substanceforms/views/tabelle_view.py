@@ -48,21 +48,6 @@ class TabelleFormView(WTFormView):
                 return self.context.absolute_url() + '/create-%s-form' % self.context.tablename
         return False
 
-    def renderForm(self):
-        try:
-            conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
-            cur = conn.cursor()
-            cur.execute("SELECT manufacturer_id, title FROM manufacturer;")
-            manus = cur.fetchall()
-            cur.close
-            conn.close()
-        except:
-            manus = []
-        #self.form.manu.choices = manus
-        self.form.process()
-        return self.formTemplate()
-
-
     def submit(self, button):
         #if button == 'Suche' and self.validate():
         if button == 'Suche':
