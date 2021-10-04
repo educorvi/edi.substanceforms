@@ -10,16 +10,8 @@ import psycopg2
 class CreateForm(Form):
 
     title = StringField("Titel", [validators.required()])
-    description = StringField("Beschreibung", [validators.required()])
-    address1 = StringField("Adresse 1")
-    address2 = StringField("Adresse 2")
-    address3 = StringField("Adresse 3")
-    country = StringField("Land")
-    phone = StringField("Telefon")
-    fax = StringField("Telefax")
-    email = StringField("E-Mail Adresse")
+    description = StringField("Beschreibung")
     homepage = StringField("Homepage")
-    image_id = FileField("Bild hochladen")
 
 class CreateFormView(WTFormView):
     formClass = CreateForm
@@ -45,19 +37,10 @@ class CreateFormView(WTFormView):
             if True:
                 conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
                 cur = conn.cursor()
-                insert = """INSERT INTO manufacturer VALUES (DEFAULT, '%s', '%s', '%s', %s, %s, %s, %s, 
-                         %s, %s, %s, %s, %s);""" % (self.form.title.data, 
+                insert = """INSERT INTO manufacturer VALUES (DEFAULT, '%s', '%s', '%s', %s);""" % (self.form.title.data,
                                                             self.form.description.data,
                                                             self.context.aq_parent.get_webcode(),
-                                                            check_value(self.form.address1.data),
-                                                            check_value(self.form.address2.data),
-                                                            check_value(self.form.address3.data),
-                                                            check_value(self.form.country.data), 
-                                                            check_value(self.form.phone.data),
-                                                            check_value(self.form.fax.data),
-                                                            check_value(self.form.email.data),
-                                                            check_value(self.form.homepage.data),
-                                                            check_value(self.form.image_id.data))
+                                                            check_value(self.form.homepage.data))
                 cur.execute(insert)
                 conn.commit()
                 cur.close()
