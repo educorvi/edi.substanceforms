@@ -111,6 +111,7 @@ class SubstanceFormView(TabelleFormView):
     formClass = SubstanceForm
 
     def renderForm(self):
+        """
         try:
             conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
             cur = conn.cursor()
@@ -121,5 +122,6 @@ class SubstanceFormView(TabelleFormView):
         except:
             manus = []
         #self.form.manu.choices = manus
+        """
         self.form.process()
         return self.formTemplate()
