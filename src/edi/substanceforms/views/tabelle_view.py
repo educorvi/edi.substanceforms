@@ -164,7 +164,11 @@ class SubstancemixtureFormView(TabelleFormView):
             is_detergent_special = self.form.detergent_special.data
             import pdb; pdb.set_trace()
 
-            select = "SELECT %s, title FROM %s WHERE manufacturer_id = '%s';" % (searchkey, searchtable, manu_id)
+            if is_detergent_special == True:
+                select = "SELECT %s, title FROM %s WHERE manufacturer_id = '%s' AND detergent_special = True;" % (searchkey, searchtable, manu_id)
+            else:
+                select = "SELECT %s, title FROM %s WHERE manufacturer_id = '%s';" % (searchkey, searchtable, manu_id)
+
             try:
                 conn = psycopg2.connect(host=self.host, user=self.username, password=self.password, dbname=self.dbname)
                 cur = conn.cursor()
