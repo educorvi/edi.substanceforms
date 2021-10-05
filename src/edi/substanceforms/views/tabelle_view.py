@@ -171,9 +171,14 @@ class SubstanceFormView(TabelleFormView):
             casnr = self.form.casnr.data
             concentration = self.form.concentration.data
 
-            import pdb; pdb.set_trace()
+            if casnr and concentration:
+                select = "SELECT %s, title FROM %s WHERE casnr = '%s' AND concentration = '%s';" % (searchkey, searchtable, casnr, concentration)
+            elif casnr:
+                select = "SELECT %s, title FROM %s WHERE casnr = '%s';" % (searchkey, searchtable, casnr)
+            elif concentration:
+                select = "SELECT %s, title FROM %s WHERE concentration = '%s';" % (searchkey, searchtable, concentration)
+            else:
 
-            select = "SELECT %s, title FROM %s WHERE manufacturer_id = '%s';" % (searchkey, searchtable, manu_id)
             try:
                 conn = psycopg2.connect(host=self.host, user=self.username, password=self.password, dbname=self.dbname)
                 cur = conn.cursor()
