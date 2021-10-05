@@ -81,7 +81,7 @@ class SubstanceForm (BaseForm):
 
 class SubstanceMixtureForm (BaseForm):
     manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[])
-    detergent_special = BooleanField(u'Handelt es sich um einen Sonderreiniger?')
+    detergent_special = BooleanField(u'Nur Sonderreiniger anzeigen?')
 
 class SprayPowderForm (BaseForm):
     manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[])
@@ -161,6 +161,8 @@ class SubstancemixtureFormView(TabelleFormView):
             searchkey = self.context.tablename + '_id'
             searchtable = self.context.tablename
             manu_id = self.form.manu.data
+            is_detergent_special = self.form.detergent_special.data
+            import pdb; pdb.set_trace()
 
             select = "SELECT %s, title FROM %s WHERE manufacturer_id = '%s';" % (searchkey, searchtable, manu_id)
             try:
