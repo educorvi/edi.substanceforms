@@ -161,6 +161,27 @@ class SubstanceFormView(TabelleFormView):
         self.form.process()
         return self.formTemplate()
 
+    def submit(self, button):
+        if button == 'Alle anzeigen':
+            self.ergs = self.show_all()
+        elif button == 'Suche':
+
+            searchkey = self.context.tablename + '_id'
+            searchtable = self.context.tablename
+            manu_id = self.form.manu.data
+
+            select = "SELECT %s, title FROM %s WHERE manufacturer_id = '%s';" % (searchkey, searchtable, manu_id)
+            try:
+                conn = psycopg2.connect(host=self.host, user=self.username, password=self.password, dbname=self.dbname)
+                cur = conn.cursor()
+                cur.execute(select)
+                self.ergs = cur.fetchall()
+                cur.close
+                conn.close()
+
+            except:
+                self.ergs = []
+
 class SubstancemixtureFormView(TabelleFormView):
     formClass = SubstanceMixtureForm
 
