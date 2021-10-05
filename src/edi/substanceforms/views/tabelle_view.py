@@ -25,7 +25,7 @@ class BaseForm(Form):
 
 class TabelleFormView(WTFormView):
     formClass = BaseForm
-    buttons = ('Suche', 'Abbrechen')
+    buttons = ('Suche', 'Alle anzeigen', 'Abbrechen')
 
     def __call__(self):
         self.host = self.context.aq_parent.host
@@ -48,8 +48,16 @@ class TabelleFormView(WTFormView):
                 return self.context.absolute_url() + '/create-%s-form' % self.context.tablename
         return False
 
+    def show_all(self):
+        results = []
+        #results = select um alle Produkte der Tabelle auszuwählen
+        return results
+
+
     def submit(self, button):
         #if button == 'Suche' and self.validate():
+        if button == 'Alle anzeigen':
+            self.ergs = self.show_all()
         if button == 'Suche':
 
             searchkey = self.context.tablename + '_id'
@@ -109,8 +117,9 @@ class HerstellerFormView(TabelleFormView):
         return self.formTemplate()
 
     def submit(self, button):
-        #if button == 'Suche' and self.validate():
-        if button == 'Suche':
+        if button == 'Alle anzeigen':
+            self.ergs = self.show_all()
+        elif button == 'Suche':
 
             searchkey = self.context.tablename + '_id'
             searchtable = self.context.tablename
