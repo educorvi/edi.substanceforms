@@ -168,7 +168,10 @@ class SubstanceFormView(TabelleFormView):
 
             searchkey = self.context.tablename + '_id'
             searchtable = self.context.tablename
-            manu_id = self.form.manu.data
+            casnr = self.form.casnr.data
+            concentration = self.form.concentration.data
+
+            import pdb; pdb.set_trace()
 
             select = "SELECT %s, title FROM %s WHERE manufacturer_id = '%s';" % (searchkey, searchtable, manu_id)
             try:
@@ -207,7 +210,6 @@ class SubstancemixtureFormView(TabelleFormView):
             searchtable = self.context.tablename
             manu_id = self.form.manu.data
             is_detergent_special = self.form.detergent_special.data
-            import pdb; pdb.set_trace()
 
             if is_detergent_special == True:
                 select = "SELECT %s, title FROM %s WHERE manufacturer_id = '%s' AND detergent_special = True;" % (searchkey, searchtable, manu_id)
