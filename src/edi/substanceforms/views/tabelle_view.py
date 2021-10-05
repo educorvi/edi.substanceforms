@@ -93,16 +93,18 @@ class HerstellerFormView(TabelleFormView):
     formClass = HerstellerForm
 
     def renderForm(self):
+        manus = [('alle, 'Alle anzeigen')]
         try:
             conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
             cur = conn.cursor()
             cur.execute("SELECT manufacturer_id, title FROM manufacturer;")
-            manus = cur.fetchall()
+            manus += cur.fetchall()
             cur.close
             conn.close()
         except:
-            manus = []
+            manus += []
         self.form.manu.choices = manus
+        #self.form.manu.default = 'alle'
         self.form.process()
         return self.formTemplate()
 
