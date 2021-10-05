@@ -50,6 +50,19 @@ class TabelleFormView(WTFormView):
 
     def show_all(self):
         results = []
+        searchkey = self.context.tablename + '_id'
+        searchtable = self.context.tablename
+        select = "SELECT %s, title FROM %s;" % (searchkey, searchtable)
+        try:
+            conn = psycopg2.connect(host=self.host, user=self.username, password=self.password, dbname=self.dbname)
+            cur = conn.cursor()
+            cur.execute(select)
+            results = cur.fetchall()
+            cur.close
+            conn.close()
+
+        except:
+            results = []
         #results = select um alle Produkte der Tabelle auszuwählen
         return results
 
