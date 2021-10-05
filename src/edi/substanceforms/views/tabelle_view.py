@@ -82,7 +82,6 @@ class SubstanceForm (BaseForm):
 class SubstanceMixtureForm (BaseForm):
     manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[])
     detergent_special = BooleanField(u'Handelt es sich um einen Sonderreiniger?')
-    checked_emissions = BooleanField(u'Ist das Gefahrstoffgemisch emissionsgeprueft?')
 
 class SprayPowderForm (BaseForm):
     manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[])
