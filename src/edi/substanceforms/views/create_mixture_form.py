@@ -18,6 +18,7 @@ class CreateForm(Form):
     branch = SelectField("Branche", choices=branchen)
     manufacturer_id = SelectField(u"Hersteller des Wasch- und Reinigungsmittels", [validators.required()])
     substance_type = RadioField(u"Art des Wasch- und Reinigungsmittels", [validators.required()], choices=substance_types)
+    offset_print_manner = StringField(u"Offsetdruckverfahren")
     evaporation_lane_150 = FloatField(u"Verdampfungsfaktor bei 150 Grad Celsius")
     evaporation_lane_160 = FloatField(u"Verdampfungsfaktor bei 160 Grad Celsius")
     evaporation_lane_170 = FloatField(u"Verdampfungsfaktor bei 170 Grad Celsius")
@@ -77,13 +78,14 @@ class CreateFormView(WTFormView):
             if True:
                 conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
                 cur = conn.cursor()
-                insert = """INSERT INTO substance_mixture VALUES (DEFAULT, '%s', '%s', '%s', '%s', '%s', %s, %s, %s,
+                insert = """INSERT INTO substance_mixture VALUES (DEFAULT, '%s', '%s', '%s', '%s', '%s', '%s', %s, %s, %s,
                          %s, %s, %s, %s, %s, '%s', %s, '%s',
                           %s, %s, %s, %s, '%s');""" % (self.form.title.data,
                                                             self.form.description.data,
                                                             check_value(self.form.branch.data),
                                                             self.context.aq_parent.get_webcode(),
                                                             self.form.substance_type.data,
+                                                            self.form.offset_print_manner.data,
                                                             check_value(self.form.evaporation_lane_150.data),
                                                             check_value(self.form.evaporation_lane_160.data),
                                                             check_value(self.form.evaporation_lane_170.data),
