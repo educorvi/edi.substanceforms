@@ -100,11 +100,11 @@ class SingleView(BrowserView):
         return value
 
     def usecase_translation(self, value):
-        import pdb; pdb.set_trace()
         vocabulary = get_vocabulary('usecases')
         newlist = list()
         for v in value:
             for i in vocabulary:
+                import pdb; pdb.set_trace()
                 if i[0] == v:
                     newlist.append(i[1])
         result = ', '.join(newlist)
