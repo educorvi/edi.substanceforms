@@ -220,7 +220,11 @@ class SubstancemixtureFormView(TabelleFormView):
             manu_id = self.form.manu.data
             is_detergent_special = self.form.detergent_special.data
 
-            if is_detergent_special == True:
+            if manu_id == 'alle' and is_detergent_special == True:
+                select = "SELECT %s, title FROM %s WHERE detergent_special = True;" % (searchkey, searchtable)
+            elif manu_id == 'alle':
+                select = "SELECT %s, title FROM %s;" % (searchkey, searchtable)
+            elif is_detergent_special == True:
                 select = "SELECT %s, title FROM %s WHERE manufacturer_id = '%s' AND detergent_special = True;" % (searchkey, searchtable, manu_id)
             else:
                 select = "SELECT %s, title FROM %s WHERE manufacturer_id = '%s';" % (searchkey, searchtable, manu_id)
