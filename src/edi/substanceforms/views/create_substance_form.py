@@ -13,6 +13,7 @@ class CreateForm(Form):
     title = StringField("Titel", [validators.required()])
     description = StringField("Beschreibung", [validators.required()])
     casnr = IntegerField("CAS-Nummer")
+    concentration = IntegerField("Konzentration in wässriger Lösung")
     skin_category = SelectField("Hautschutzkategorie", choices = hskategorie)
     branch = SelectField("Branche", choices = branchen)
     image_id = FileField("Bild hochladen")
@@ -41,21 +42,22 @@ class CreateFormView(WTFormView):
             if True:
                 conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
                 cur = conn.cursor()
-                insert = """INSERT INTO substance VALUES (DEFAULT, '%s', '%s', '%s', 
-                            %s, %s, %s, %s);""" % (self.form.title.data, 
+                insert = """INSERT INTO substance VALUES (DEFAULT, '%s', '%s', '%s',
+                            %s, %s, %s, %s, %s);""" % (self.form.title.data,
                                                            self.form.description.data,
                                                            self.context.aq_parent.get_webcode(),
                                                            check_value(self.form.casnr.data),
+                                                           self.form.concentration.data,
                                                            check_value(self.form.skin_category.data),
                                                            check_value(self.form.branch.data),
                                                            check_value(self.form.image_id.data))
-          
+
                 cur.execute(insert)
                 conn.commit()
                 cur.close()
                 conn.close()
-                message=u'Der Gefahrstoff wurde erfolgreich gespeichert.'    
-                ploneapi.portal.show_message(message=message, type='info', request=self.request)    
+                message=u'Der Gefahrstoff wurde erfolgreich gespeichert.'
+                ploneapi.portal.show_message(message=message, type='info', request=self.request)
             #except:
             #    print(u'Fehler beim Einfügen in die Datenbank')
             return self.request.response.redirect(redirect_url)
