@@ -210,8 +210,9 @@ class SubstancemixtureFormView(TabelleFormView):
         return self.formTemplate()
 
     def submit(self, button):
-        #if button == 'Suche' and self.validate():
-        if button == 'Suche':
+        if button == 'Alle anzeigen':
+            self.ergs = self.show_all()
+        elif button == 'Suche':
 
             searchkey = self.context.tablename + '_id'
             searchtable = self.context.tablename
