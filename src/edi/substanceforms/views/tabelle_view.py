@@ -291,7 +291,8 @@ class SpraypowderFormView(TabelleFormView):
 
             except:
                 self.ergs = []
-        """
+
         elif button == 'Abbrechen':
             url = self.context.aq_parent.absolute_url()
             return self.request.response.redirect(url)
+        """
