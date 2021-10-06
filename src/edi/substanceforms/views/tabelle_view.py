@@ -106,7 +106,6 @@ class SubstanceMixtureForm (BaseForm):
 
 class SprayPowderForm (BaseForm):
     manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[])
-    checked_emissions = BooleanField(u'Ist das Gefahrstoffgemisch emissionsgeprueft?')
     median_value = FloatField(u'Bitte geben Sie den Medianwert ein')
     volume_share = FloatField(u'Bitte geben Sie den Volumenanteil ein')
 
@@ -248,15 +247,51 @@ class SpraypowderFormView(TabelleFormView):
     formClass = SprayPowderForm
 
     def renderForm(self):
+        manus = [('alle', 'Alle anzeigen')]
         try:
             conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
             cur = conn.cursor()
             cur.execute("SELECT manufacturer_id, title FROM manufacturer;")
-            manus = cur.fetchall()
+            manus += cur.fetchall()
             cur.close
             conn.close()
         except:
-            manus = []
+            manus += []
         self.form.manu.choices = manus
         self.form.process()
         return self.formTemplate()
+
+    def submit(self, button):
+        if button == 'Alle anzeigen':
+            self.ergs = self.show_all()
+        """
+        elif button == 'Suche':
+
+            searchkey = self.context.tablename + '_id'
+            searchtable = self.context.tablename
+            manu_id = self.form.manu.data
+            is_detergent_special = self.form.detergent_special.data
+
+            if manu_id == 'alle' and is_detergent_special == True:
+                select = "SELECT %s, title FROM %s WHERE detergent_special = True;" % (searchkey, searchtable)
+            elif manu_id == 'alle':
+                select = "SELECT %s, title FROM %s;" % (searchkey, searchtable)
+            elif is_detergent_special == True:
+                select = "SELECT %s, title FROM %s WHERE manufacturer_id = '%s' AND detergent_special = True;" % (searchkey, searchtable, manu_id)
+            else:
+                select = "SELECT %s, title FROM %s WHERE manufacturer_id = '%s';" % (searchkey, searchtable, manu_id)
+
+            try:
+                conn = psycopg2.connect(host=self.host, user=self.username, password=self.password, dbname=self.dbname)
+                cur = conn.cursor()
+                cur.execute(select)
+                self.ergs = cur.fetchall()
+                cur.close
+                conn.close()
+
+            except:
+                self.ergs = []
+        """
+        elif button == 'Abbrechen':
+            url = self.context.aq_parent.absolute_url()
+            return self.request.response.redirect(url)
