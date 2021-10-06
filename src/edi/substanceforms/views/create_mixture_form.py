@@ -5,7 +5,7 @@ from wtforms import FileField, RadioField, SelectMultipleField
 from wtforms import validators
 from collective.wtforms.views import WTFormView
 from edi.substanceforms.helpers import check_value
-from edi.substanceforms.vocabularies import substance_types, hskategorie, produktkategorien, produktklassen 
+from edi.substanceforms.vocabularies import substance_types, hskategorie, produktkategorien, produktklassen
 from edi.substanceforms.vocabularies import classifications, usecases, application_areas
 from plone import api as ploneapi
 import requests
@@ -26,13 +26,13 @@ class CreateForm(Form):
     skin_category = SelectField(u"Hautschutz-Kategorie", choices=hskategorie)
     date_checked = DateField(u"Datum der letzten Prüfung")
     checked_emissions = BooleanField(u"Emissionsarmes Produkt")
-    product_category = SelectField(u"Produktkategorie", choices=produktkategorien)
-    product_class = SelectField(u"Produktklasse", choices=produktklassen)
+    #product_category = SelectField(u"Produktkategorie", choices=produktkategorien)
+    #product_class = SelectField(u"Produktklasse", choices=produktklassen)
     flashpoint = IntegerField(u"Flammpunkt")
     values_range = BooleanField(u"Wertebereich")
-    material_compatibility = RadioField(u"Materialverträglichkeit", choices = [('fogra', 'FOGRA'), ('not', 'nicht getestet')])
-    classifications = RadioField(u"Klassifikation", choices=classifications)
-    safety_instructions = TextAreaField(u"Sicherheitshinweise")
+    #material_compatibility = RadioField(u"Materialverträglichkeit", choices = [('fogra', 'FOGRA'), ('not', 'nicht getestet')])
+    #classifications = RadioField(u"Klassifikation", choices=classifications)
+    #safety_instructions = TextAreaField(u"Sicherheitshinweise")
     usecases = SelectMultipleField(u"Anwendungsfälle", choices=usecases)
     application_areas = SelectMultipleField(u"Anwendungsbereiche", choices=application_areas)
     image_url = FileField("Bilddatei hochladen")
@@ -76,9 +76,9 @@ class CreateFormView(WTFormView):
             if True:
                 conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
                 cur = conn.cursor()
-                insert = """INSERT INTO substance_mixture VALUES (DEFAULT, '%s', '%s', '%s', '%s', %s, %s, %s, 
-                         %s, %s, %s, %s, %s, '%s', %s, %s, %s, '%s', %s, 
-                          %s, %s, %s, %s, %s, %s, '%s');""" % (self.form.title.data,
+                insert = """INSERT INTO substance_mixture VALUES (DEFAULT, '%s', '%s', '%s', '%s', %s, %s, %s,
+                         %s, %s, %s, %s, %s, '%s', %s, '%s',
+                          %s, %s, %s, %s, '%s');""" % (self.form.title.data,
                                                             self.form.description.data,
                                                             self.context.aq_parent.get_webcode(),
                                                             self.form.substance_type.data,
@@ -91,14 +91,9 @@ class CreateFormView(WTFormView):
                                                             check_value(self.form.skin_category.data),
                                                             check_value(self.form.date_checked.data),
                                                             self.form.checked_emissions.data,
-                                                            check_value(self.form.product_category.data),
-                                                            check_value(self.form.product_class.data),
                                                             check_value(self.form.flashpoint.data),
                                                             self.form.values_range.data,
-                                                            check_value(self.form.material_compatibility.data),
                                                             check_value(self.form.comments.data),
-                                                            check_value(self.form.classifications.data),
-                                                            check_value(self.form.safety_instructions.data),
                                                             check_value(self.form.usecases.data),
                                                             check_value(self.form.application_areas.data),
                                                             check_value(self.form.image_url.data),
