@@ -138,9 +138,10 @@ class HerstellerFormView(TabelleFormView):
             searchtable = self.context.tablename
             manu_id = self.form.manu.data
 
-            import pdb; pdb.set_trace()
-
-            select = "SELECT %s, title FROM %s WHERE manufacturer_id = '%s';" % (searchkey, searchtable, manu_id)
+            if manu_id == 'alle':
+                select = "SELECT %s, title FROM %s;" % (searchkey, searchtable)
+            else:
+                select = "SELECT %s, title FROM %s WHERE manufacturer_id = '%s';" % (searchkey, searchtable, manu_id)
             try:
                 conn = psycopg2.connect(host=self.host, user=self.username, password=self.password, dbname=self.dbname)
                 cur = conn.cursor()
