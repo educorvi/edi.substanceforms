@@ -103,9 +103,12 @@ class SingleView(BrowserView):
         import pdb;pdb.set_trace()
         vocabulary = get_vocabulary('usecases')
         newlist = list()
-        for v in value:
-            for i in vocabulary:
-                if i[0] == v:
-                    newlist.append(i[1])
-        result = ', '.join(newlist)
+        try:
+            for v in value:
+                for i in vocabulary:
+                    if i[0] == v:
+                        newlist.append(i[1])
+            result = ', '.join(newlist)
+        except:
+            result = ''
         return result
