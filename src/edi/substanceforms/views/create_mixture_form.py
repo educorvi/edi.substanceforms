@@ -94,7 +94,7 @@ class CreateFormView(WTFormView):
                                                             self.form.substance_type.data,
                                                             self.form.offset_print_manner.data,
                                                             self.form.detergent_special.data,
-                                                            check_value(self.form.application_areas.data),
+                                                            self.form.application_areas.data,
                                                             check_value(self.form.usecases.data),
                                                             self.form.evaporation_lane_150.data,
                                                             self.form.evaporation_lane_160.data,
