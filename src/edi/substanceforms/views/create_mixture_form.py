@@ -85,7 +85,7 @@ class CreateFormView(WTFormView):
                                                             evaporation_lane_170, evaporation_lane_180, ueg, response,
                                                             skin_category, checked_emissions, date_checked, flashpoint,
                                                             values_range, comments, image_url, manufacturer_id)
-                                                            VALUES ('%s', '%s', '%s', %s, '%s', '%s', %s, %s,
+                                                            VALUES ('%s', '%s', '%s', %s, '%s', '%s', '%s', '%s',
                                                             %s, %s, %s, %s, %s, %s, %s, '%s', %s, %s, %s, %s, %s, %s, '%s');""" \
                                                             % (self.form.title.data,
                                                             self.form.description.data,
