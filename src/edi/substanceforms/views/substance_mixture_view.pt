@@ -103,6 +103,10 @@
 	          <td>Anwendungsgebiete</td>
 	          <td tal:content="python: view.application_areas_translation(view.unbundle_list(article[8]))"/>
 	        </tr>
+          <tr>
+	          <td>Offset-Druckverfahren</td>
+	          <td tal:content="python:article[6]"/>
+	        </tr>
 	      </tbody>
 	    </table>
 	    </section>
