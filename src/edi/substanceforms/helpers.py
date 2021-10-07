@@ -8,5 +8,9 @@ def check_value(value):
         return 'NULL'
     return "'%s'" % value
 
+def list_handler(liste):
+    result = ';'.join(liste)
+    return result
+
 def get_vocabulary(attribute):
     return vocabularies.get(attribute, [])
