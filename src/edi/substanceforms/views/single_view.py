@@ -99,6 +99,12 @@ class SingleView(BrowserView):
                 return i[1]
         return value
 
+    def get_none_translation(self, value):
+        if value == None:
+            return ''
+        else:
+            return value
+
     def usecase_translation(self, value):
         vocabulary = get_vocabulary('usecases')
         newlist = list()

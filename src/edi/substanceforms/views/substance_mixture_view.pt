@@ -93,7 +93,7 @@
 	        </tr>
 	        <tr>
 	          <td>Bemerkungen</td>
-	          <td tal:content="python:article[21]"/>
+	          <td tal:content="python:view.get_none_translation(article[21])"/>
 	        </tr>
 	        <tr>
 	          <td>Verwendungszwecke</td>
