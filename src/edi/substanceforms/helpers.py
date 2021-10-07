@@ -9,7 +9,7 @@ def check_value(value):
     return "'%s'" % value
 
 def list_handler(liste):
-    result = ','.join(liste)
+    result = '@'.join(liste)
     return result
 
 def get_vocabulary(attribute):
