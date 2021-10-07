@@ -97,11 +97,11 @@
 	        </tr>
 	        <tr>
 	          <td>Verwendungszwecke</td>
-	          <td tal:content="python: view.usecase_translation(view.unbundle_list(article[9]))"/>
+	          <td tal:content="python: view.usecase_translation(view.unbundle_list(article[9], 'usecases'))"/>
 	        </tr>
           <tr>
 	          <td>Anwendungsgebiete</td>
-	          <td tal:content="python: view.usecase_translation(view.unbundle_list(article[8]))"/>
+	          <td tal:content="python: view.usecase_translation(view.unbundle_list(article[8], 'application_ares'))"/>
 	        </tr>
 	      </tbody>
 	    </table>
