@@ -79,7 +79,7 @@ class CreateFormView(WTFormView):
             if True:
                 conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
                 cur = conn.cursor()
-                insert = """INSERT INTO substance_mixture VALUES (DEFAULT, '%s', '%s', '%s', '%s', '%s', '%s', '%s', %s, %s, %s,
+                insert = """INSERT INTO substance_mixture VALUES (DEFAULT, '%s', '%s', %s, '%s', '%s', '%s', '%s', %s, %s, %s,
                          %s, %s, %s, %s, %s, '%s', %s, '%s',
                           %s, %s, %s, %s, '%s');""" % (self.form.title.data,
                                                             self.form.description.data,
