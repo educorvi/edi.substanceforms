@@ -86,7 +86,7 @@ class CreateFormView(WTFormView):
                                                             skin_category, checked_emissions, date_checked, flashpoint,
                                                             values_range, comments, image_url, manufacturer_id)
                                                             VALUES ('%s', '%s', '%s', '%s', '%s', '%s', %s, '%s',
-                                                            %s, %s, %s, %s, %s, %s, %s, '%s', %s, '%s', %s, %s, %s, %s, '%s');""" \
+                                                            %s, %s, %s, %s, %s, %s, %s, '%s', %s, %s, %s, %s, %s, %s, '%s');""" \
                                                             % (self.form.title.data,
                                                             self.form.description.data,
                                                             self.context.aq_parent.get_webcode(),
