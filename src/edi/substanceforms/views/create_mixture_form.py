@@ -75,7 +75,7 @@ class CreateFormView(WTFormView):
     def submit(self, button):
         redirect_url = self.context.aq_parent.absolute_url()
         if button == 'Speichern': #and self.validate():
-            import pdb; pdb.set_trace()
+            #import pdb; pdb.set_trace()
             if True:
                 conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
                 cur = conn.cursor()
@@ -94,8 +94,8 @@ class CreateFormView(WTFormView):
                                                             self.form.substance_type.data,
                                                             self.form.offset_print_manner.data,
                                                             self.form.detergent_special.data,
-                                                            check_value(self.form.application_areas.data),
-                                                            check_value(self.form.usecases.data),
+                                                            list_handler(self.form.application_areas.data),
+                                                            list_handler(self.form.usecases.data),
                                                             self.form.evaporation_lane_150.data,
                                                             self.form.evaporation_lane_160.data,
                                                             self.form.evaporation_lane_170.data,
