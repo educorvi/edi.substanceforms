@@ -105,8 +105,21 @@ class SingleView(BrowserView):
         else:
             return value
 
-    def usecase_translation(self, value, vocab):
-        vocabulary = get_vocabulary(vocab)
+    def usecase_translation(self, value):
+        vocabulary = get_vocabulary('usecases')
+        newlist = list()
+        try:
+            for v in value:
+                for i in vocabulary:
+                    if i[0] == v:
+                        newlist.append(i[1])
+            result = ', '.join(newlist)
+        except:
+            result = ''
+        return result
+
+    def application_areas_translation(self, value):
+        vocabulary = get_vocabulary('application_areas')
         newlist = list()
         try:
             for v in value:
