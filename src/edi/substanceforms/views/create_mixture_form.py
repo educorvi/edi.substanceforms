@@ -62,7 +62,7 @@ class CreateFormView(WTFormView):
         try:
             conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
             cur = conn.cursor()
-            cur.execute("SELECT manufacturer_id, title FROM manufacturer;")
+            cur.execute("SELECT manufacturer_id, title FROM manufacturer ORDER BY title;")
             manus = cur.fetchall()
             cur.close
             conn.close()
@@ -75,7 +75,6 @@ class CreateFormView(WTFormView):
     def submit(self, button):
         redirect_url = self.context.aq_parent.absolute_url()
         if button == 'Speichern': #and self.validate():
-            import pdb; pdb.set_trace()
             if True:
                 conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
                 cur = conn.cursor()
@@ -86,7 +85,7 @@ class CreateFormView(WTFormView):
                                                             skin_category, checked_emissions, date_checked, flashpoint,
                                                             values_range, comments, image_url, manufacturer_id)
                                                             VALUES ('%s', '%s', '%s', %s, '%s', '%s', '%s', '%s',
-                                                            '%s', %s, %s, %s, %s, %s, %s, '%s', %s, %s, %s, %s, %s, %s, %s);""" \
+                                                            '%s', %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);""" \
                                                             % (self.form.title.data,
                                                             self.form.description.data,
                                                             self.context.aq_parent.get_webcode(),
