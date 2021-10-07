@@ -75,7 +75,7 @@ class CreateFormView(WTFormView):
     def submit(self, button):
         redirect_url = self.context.aq_parent.absolute_url()
         if button == 'Speichern': #and self.validate():
-            #import pdb; pdb.set_trace()
+            import pdb; pdb.set_trace()
             if True:
                 conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
                 cur = conn.cursor()
