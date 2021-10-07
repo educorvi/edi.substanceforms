@@ -81,7 +81,7 @@ class CreateFormView(WTFormView):
                 cur = conn.cursor()
                 insert = """INSERT INTO substance_mixture VALUES (DEFAULT, '%s', '%s', %s, '%s', '%s', '%s', '%s', %s, %s, %s,
                          %s, %s, %s, %s, %s, '%s', %s, '%s',
-                          %s, '%s', '%s', %s, '%s');""" % (self.form.title.data,
+                          %s, %s, '%s', %s, '%s');""" % (self.form.title.data,
                                                             self.form.description.data,
                                                             check_value(self.form.branch.data),
                                                             self.context.aq_parent.get_webcode(),
