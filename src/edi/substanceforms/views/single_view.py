@@ -100,7 +100,7 @@ class SingleView(BrowserView):
         return value
 
     def get_none_translation(self, value):
-        if value == None:
+        if value == None or value == 'None':
             return ''
         else:
             return value
