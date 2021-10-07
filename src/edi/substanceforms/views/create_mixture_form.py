@@ -79,15 +79,23 @@ class CreateFormView(WTFormView):
             if True:
                 conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
                 cur = conn.cursor()
-                insert = """INSERT INTO substance_mixture VALUES (DEFAULT, '%s', '%s', %s, '%s', '%s', '%s', %s, '%s', %s, %s,
-                         %s, %s, %s, %s, %s, '%s', %s, '%s',
-                          %s, %s, %s, %s, '%s');""" % (self.form.title.data,
+                insert = """INSERT INTO substance_mixture (title, description, webcode, branch, substance_type,
+                                                            offset_print_manner, detergent_special, application_areas,
+                                                            usecases, evaporation_lane_150, evaporation_lane_160,
+                                                            evaporation_lane_170, evaporation_lane_180, ueg, response,
+                                                            skin_category, checked_emissions, date_checked, flashpoint,
+                                                            values_range, comments, image_url, manufacturer_id
+                                                            VALUES (DEFAULT, '%s', '%s', %s, '%s', '%s', '%s', %s, '%s',
+                                                            %s, %s, %s, %s, %s, %s, %s, '%s', %s, '%s', %s, %s, %s, %s, '%s');""" \
+                                                            % (self.form.title.data,
                                                             self.form.description.data,
-                                                            check_value(self.form.branch.data),
                                                             self.context.aq_parent.get_webcode(),
+                                                            check_value(self.form.branch.data),
                                                             self.form.substance_type.data,
                                                             self.form.offset_print_manner.data,
                                                             self.form.detergent_special.data,
+                                                            check_value(self.form.application_areas.data),
+                                                            check_value(self.form.usecases.data),
                                                             self.form.evaporation_lane_150.data,
                                                             self.form.evaporation_lane_160.data,
                                                             self.form.evaporation_lane_170.data,
@@ -100,8 +108,6 @@ class CreateFormView(WTFormView):
                                                             check_value(self.form.flashpoint.data),
                                                             self.form.values_range.data,
                                                             check_value(self.form.comments.data),
-                                                            check_value(self.form.usecases.data),
-                                                            check_value(self.form.application_areas.data),
                                                             check_value(self.form.image_url.data),
                                                             self.form.manufacturer_id.data)
                 cur.execute(insert)
