@@ -101,7 +101,7 @@ class CreateFormView(WTFormView):
                                                             self.form.values_range.data,
                                                             check_value(self.form.comments.data),
                                                             #self.form.usecases.data,
-                                                            {Test, jawoll},
+                                                            {'Test', 'jawoll'},
                                                             #check_value(self.form.application_areas.data),
                                                             {'Test', 'jawoll'},
                                                             check_value(self.form.image_url.data),
