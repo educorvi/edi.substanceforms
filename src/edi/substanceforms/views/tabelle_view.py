@@ -117,7 +117,7 @@ class HerstellerFormView(TabelleFormView):
         try:
             conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
             cur = conn.cursor()
-            cur.execute("SELECT manufacturer_id, title FROM manufacturer;")
+            cur.execute("SELECT manufacturer_id, title FROM manufacturer ORDER BY title;")
             manus += cur.fetchall()
             cur.close
             conn.close()
@@ -199,7 +199,7 @@ class SubstancemixtureFormView(TabelleFormView):
         try:
             conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
             cur = conn.cursor()
-            cur.execute("SELECT manufacturer_id, title FROM manufacturer;")
+            cur.execute("SELECT manufacturer_id, title FROM manufacturer ORDER BY title;")
             manus += cur.fetchall()
             cur.close
             conn.close()
@@ -251,7 +251,7 @@ class SpraypowderFormView(TabelleFormView):
         try:
             conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
             cur = conn.cursor()
-            cur.execute("SELECT manufacturer_id, title FROM manufacturer;")
+            cur.execute("SELECT manufacturer_id, title FROM manufacturer ORDER BY title;")
             manus += cur.fetchall()
             cur.close
             conn.close()
