@@ -101,7 +101,7 @@ class CreateFormView(WTFormView):
                                                             self.form.values_range.data,
                                                             check_value(self.form.comments.data),
                                                             self.form.usecases.data,
-                                                            check_value(self.form.application_areas.data),
+                                                            self.form.application_areas.data,
                                                             check_value(self.form.image_url.data),
                                                             self.form.manufacturer_id.data)
                 cur.execute(insert)
