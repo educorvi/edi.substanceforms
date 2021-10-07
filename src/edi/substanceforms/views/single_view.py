@@ -117,3 +117,8 @@ class SingleView(BrowserView):
         except:
             result = ''
         return result
+
+    def unbundle_list(self, value):
+        result = value.split('@')
+        import pdb; pdb.set_trace()
+        return result

@@ -97,8 +97,7 @@
 	        </tr>
 	        <tr>
 	          <td>Verwendungszwecke</td>
-            <td tal:content="python:article[9]"/>
-	          <!--<td tal:content="python: view.usecase_translation(article[9])"/>-->
+	          <td tal:content="python: view.unbundle_list(article[9])"/>
 	        </tr>
 	      </tbody>
 	    </table>
