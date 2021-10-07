@@ -79,6 +79,10 @@
 	          <td>Prüfdatum</td>
 	          <td tal:content="python:article[18]"/>
 	        </tr>
+          <tr>
+	          <td>Sonderreiniger</td>
+	          <td tal:content="python: view.get_attr_translation('boolvocab', str(article[7]))"/>
+	        </tr>
 	        <tr>
 	          <td>Emissionsarmes Produkt</td>
 	          <td tal:content="python: view.get_attr_translation('boolvocab', str(article[17]))"/>
