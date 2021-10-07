@@ -45,7 +45,7 @@
 	        </tr>
           <tr>
 	          <td>Branche</td>
-	          <td tal:content="python:article[4]"/>
+            <td tal:content="python: view.get_attr_translation('branchen', article[4])"/>
 	        </tr>
           <tr>
 	          <td>Verdampfungsfaktor 150 Grad</td>
