@@ -99,6 +99,10 @@
 	          <td>Verwendungszwecke</td>
 	          <td tal:content="python: view.usecase_translation(view.unbundle_list(article[9]))"/>
 	        </tr>
+          <tr>
+	          <td>Anwendungsgebiete</td>
+	          <td tal:content="python: view.usecase_translation(view.unbundle_list(article[8]))"/>
+	        </tr>
 	      </tbody>
 	    </table>
 	    </section>
