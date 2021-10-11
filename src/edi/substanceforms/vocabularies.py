@@ -18,7 +18,8 @@ substance_types = [
     (u'detergent_labels', u'Reinigungsmittel Etiketten'),
     (u'detergent_heatset', u'Heatsetwaschmittel'),
     (u'detergent_manual', u'Reinigungsmittel manueller Gebrauch'),
-    ('product_datasheet', u'Wasch- und Reinigungsmittel für den Offsetdruck')
+    ('product_datasheet', u'Wasch- und Reinigungsmittel für den Offsetdruck'),
+    ('offset', u'Wasch- und Reinigungsmittel für den Offsetdruck')
     ]
 
 produktkategorien = [
