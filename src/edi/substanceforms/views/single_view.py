@@ -136,6 +136,8 @@ class SingleView(BrowserView):
         return result
 
     def unbundle_list(self, value):
-        import pdb; pdb.set_trace()
-        result = value.split('@')
+        if value:
+            result = value.split('@')
+        else:
+            result = ''
         return result
