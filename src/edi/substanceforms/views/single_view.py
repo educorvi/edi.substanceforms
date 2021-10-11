@@ -32,6 +32,10 @@ class SingleView(BrowserView):
             template = ViewPageTemplateFile('spray_powder_view.pt')
             self.template = BoundPageTemplate(template, self)
             return self.template()
+        elif self.context.tablename == 'manufacturer':
+            template = ViewPageTemplateFile('manufacturer_view.pt')
+            self.template = BoundPageTemplate(template, self)
+            return self.template()
         return self.index()
 
     def userCanEdit(self):
