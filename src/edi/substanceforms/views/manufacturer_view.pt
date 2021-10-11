@@ -25,10 +25,12 @@
           <div class="col-lg-9 col-12">
             <h1 tal:content="python:article[1]"/>
 	    <!--<span tal:content="structure provider:plone.belowcontenttitle" />-->
+            <!--
             <p tal:condition="python:article[2]" class="lead mt-5">
               <img class="icon" src="++theme++plonetheme.siguv/icons/siguv/dot.svg">
               <span tal:content="python:article[2]"/>
             </p>
+            -->
             <span tal:content="structure provider:plone.abovecontentbody" />
 
             <!-- TODO: Hier müssen alle anderen Attribute reingeschrieben werden -->
