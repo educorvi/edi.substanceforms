@@ -20,7 +20,7 @@ class LoginCredentials:
 
 class BaseForm(Form):
 
-    search = TextField("Suchbegriff")
+    search = TextField("Suchbegriff", render_kw={'class':'form-control'})
     #manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[])
 
 class TabelleFormView(WTFormView):
@@ -94,20 +94,20 @@ class TabelleFormView(WTFormView):
             return self.request.response.redirect(url)
 
 class HerstellerForm (BaseForm):
-    manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[])
+    manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[], render_kw={'class':'form-control'})
 
 class SubstanceForm (BaseForm):
-    casnr = IntegerField(u'Bitte geben Sie eine CAS-Nummer an:')
-    concentration = IntegerField(u'Bitte geben Sie eine Konzentration in wässriger Lösung an:')
+    casnr = IntegerField(u'Bitte geben Sie eine CAS-Nummer an:', render_kw={'class':'form-control'})
+    concentration = IntegerField(u'Bitte geben Sie eine Konzentration in wässriger Lösung an:', render_kw={'class':'form-control'})
 
 class SubstanceMixtureForm (BaseForm):
-    manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[])
-    detergent_special = BooleanField(u'Nur Sonderreiniger anzeigen?')
+    manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[], render_kw={'class':'form-control'})
+    detergent_special = BooleanField(u'Nur Sonderreiniger anzeigen?', render_kw={'class':'form-check-input'})
 
 class SprayPowderForm (BaseForm):
-    manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[])
-    median_value = FloatField(u'Bitte geben Sie den Medianwert ein')
-    volume_share = FloatField(u'Bitte geben Sie den Volumenanteil ein')
+    manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[], render_kw={'class':'form-control'})
+    median_value = FloatField(u'Bitte geben Sie den Medianwert ein', render_kw={'class':'form-control'})
+    volume_share = FloatField(u'Bitte geben Sie den Volumenanteil ein', render_kw={'class':'form-control'})
 
 class HerstellerFormView(TabelleFormView):
     formClass = HerstellerForm
