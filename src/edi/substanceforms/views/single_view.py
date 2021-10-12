@@ -139,5 +139,5 @@ class SingleView(BrowserView):
         if value:
             result = value.split('@')
         else:
-            result = ''
+            result = list()
         return result
