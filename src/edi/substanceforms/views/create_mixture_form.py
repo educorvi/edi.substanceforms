@@ -93,49 +93,55 @@ class CreateFormView(WTFormView):
 
         redirect_url = self.context.aq_parent.absolute_url()
         if button == 'Speichern': #and self.validate():
-            if True:
-                conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
-                cur = conn.cursor()
-                insert = """INSERT INTO substance_mixture (title, description, webcode, branch, substance_type,
-                                                            offset_print_manner, detergent_special, application_areas,
-                                                            usecases, evaporation_lane_150, evaporation_lane_160,
-                                                            evaporation_lane_170, evaporation_lane_180, ueg, response,
-                                                            skin_category, checked_emissions, date_checked, flashpoint,
-                                                            values_range, comments, image_url, manufacturer_id)
-                                                            VALUES ('%s', '%s', '%s', %s, '%s', '%s', '%s', '%s',
-                                                            '%s', %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
-                                                            %s, %s);""" \
-                                                            % (self.form.title.data,
-                                                            self.form.description.data,
-                                                            self.context.aq_parent.get_webcode(),
-                                                            check_value(self.form.branch.data),
-                                                            self.form.substance_type.data,
-                                                            self.form.offset_print_manner.data,
-                                                            self.form.detergent_special.data,
-                                                            list_handler(self.form.application_areas.data),
-                                                            list_handler(self.form.usecases.data),
-                                                            self.form.evaporation_lane_150.data,
-                                                            self.form.evaporation_lane_160.data,
-                                                            self.form.evaporation_lane_170.data,
-                                                            self.form.evaporation_lane_180.data,
-                                                            check_value(self.form.ueg.data),
-                                                            check_value(self.form.response.data),
-                                                            check_value(self.form.skin_category.data),
-                                                            self.form.checked_emissions.data,
-                                                            check_value(self.form.date_checked.data),
-                                                            check_value(self.form.flashpoint.data),
-                                                            self.form.values_range.data,
-                                                            check_value(self.form.comments.data),
-                                                            check_value(image_url),
-                                                            self.form.manufacturer_id.data)
+
+            conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
+            cur = conn.cursor()
+            insert = """INSERT INTO substance_mixture (title, description, webcode, branch, substance_type,
+                                                        offset_print_manner, detergent_special, application_areas,
+                                                        usecases, evaporation_lane_150, evaporation_lane_160,
+                                                        evaporation_lane_170, evaporation_lane_180, ueg, response,
+                                                        skin_category, checked_emissions, date_checked, flashpoint,
+                                                        values_range, comments, image_url, manufacturer_id)
+                                                        VALUES ('%s', '%s', '%s', %s, '%s', '%s', '%s', '%s',
+                                                        '%s', %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
+                                                        %s, %s);""" \
+                                                        % (self.form.title.data,
+                                                        self.form.description.data,
+                                                        self.context.aq_parent.get_webcode(),
+                                                        check_value(self.form.branch.data),
+                                                        self.form.substance_type.data,
+                                                        self.form.offset_print_manner.data,
+                                                        self.form.detergent_special.data,
+                                                        list_handler(self.form.application_areas.data),
+                                                        list_handler(self.form.usecases.data),
+                                                        self.form.evaporation_lane_150.data,
+                                                        self.form.evaporation_lane_160.data,
+                                                        self.form.evaporation_lane_170.data,
+                                                        self.form.evaporation_lane_180.data,
+                                                        check_value(self.form.ueg.data),
+                                                        check_value(self.form.response.data),
+                                                        check_value(self.form.skin_category.data),
+                                                        self.form.checked_emissions.data,
+                                                        check_value(self.form.date_checked.data),
+                                                        check_value(self.form.flashpoint.data),
+                                                        self.form.values_range.data,
+                                                        check_value(self.form.comments.data),
+                                                        check_value(image_url),
+                                                        self.form.manufacturer_id.data)
+            try:
                 cur.execute(insert)
                 conn.commit()
-                cur.close()
-                conn.close()
-                message=u'Das Wasch- und Reinigungsmittel wurde erfolgreich gespeichert.'
-                ploneapi.portal.show_message(message=message, type='info', request=self.request)
-            #except:
-            #    print(u'Fehler beim Einfügen in die Datenbank')
+            except:
+                imageobj = ploneapi.content.get(UID=image_url)
+                ploneapi.content.delete(imageobj)
+
+                message = u'Fehler beim Hinzufügen des Gefahrstoffgemisches'
+                ploneapi.portal.show_message(message=message, type='error', request=self.request)
+
+            cur.close()
+            conn.close()
+            message=u'Das Wasch- und Reinigungsmittel wurde erfolgreich gespeichert.'
+            ploneapi.portal.show_message(message=message, type='info', request=self.request)
 
             return self.request.response.redirect(redirect_url)
 
