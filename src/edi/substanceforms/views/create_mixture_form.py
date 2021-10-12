@@ -34,7 +34,7 @@ class CreateForm(Form):
     checked_emissions = BooleanField(u"Emissionsarmes Produkt", render_kw={'class': 'form-check-input'})
     flashpoint = IntegerField(u"Flammpunkt", render_kw={'class': 'form-control'})
     values_range = BooleanField(u"Wertebereich", render_kw={'class': 'form-check-input'})
-    usecases = SelectMultipleField(u"Anwendungsfälle", choices=usecases, render_kw={'class': 'form-control'}, widget=CheckboxInput)
+    usecases = SelectMultipleField(u"Anwendungsfälle", choices=usecases, render_kw={'class': 'form-control'})
     application_areas = SelectMultipleField(u"Anwendungsbereiche", choices=application_areas, render_kw={'class': 'form-control'})
     image_url = FileField("Bilddatei hochladen", render_kw={'class': 'form-control'})
     comments = TextAreaField("Bemerkungen", render_kw={'class': 'form-control'})
