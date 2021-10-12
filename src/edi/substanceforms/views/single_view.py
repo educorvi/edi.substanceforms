@@ -26,6 +26,7 @@ class SingleView(BrowserView):
             #self.machines = self.get_machines()
             self.secsheet = self.get_recipes()
             template = ViewPageTemplateFile('substance_mixture_view.pt')
+            self.image_url = self.get_image_url()
             self.template = BoundPageTemplate(template, self)
             return self.template()
         elif self.context.tablename == 'spray_powder':
@@ -57,6 +58,24 @@ class SingleView(BrowserView):
         cur.close
         conn.close()
         return article
+
+    def get_image_url(self):
+        conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
+        cur = conn.cursor()
+        tablename = self.context.tablename
+        select = "SELECT image_url from %s WHERE %s_id = %s" % (tablename, tablename, self.itemid)
+        cur.execute(select)
+        import pdb; pdb.set_trace()
+        uid = cur.fetchall()[0]
+        print(article)
+        cur.close
+        conn.close()
+
+        imageobj = ploneapi.content.get(UID=uid)
+        image_url = '%s/@@images/image/preview' % imageobj.absolute_url()
+
+        return image_url
+
     """
     def get_machines(self):
         machine_titles = []
