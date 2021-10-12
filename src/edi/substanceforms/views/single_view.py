@@ -65,7 +65,6 @@ class SingleView(BrowserView):
         tablename = self.context.tablename
         select = "SELECT image_url from %s WHERE %s_id = %s" % (tablename, tablename, self.itemid)
         cur.execute(select)
-        import pdb; pdb.set_trace()
         uid = cur.fetchall()[0][0]
         cur.close
         conn.close()
