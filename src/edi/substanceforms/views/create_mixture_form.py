@@ -19,7 +19,7 @@ class CreateForm(Form):
     description = StringField(u"Beschreibung", [validators.required()], render_kw={'class': 'form-control'})
     branch = SelectField("Branche", choices=branchen, render_kw={'class': 'form-control'})
     manufacturer_id = SelectField(u"Hersteller des Wasch- und Reinigungsmittels", [validators.required()], render_kw={'class': 'form-control'})
-    substance_type = RadioField(u"Art des Wasch- und Reinigungsmittels", [validators.required()], choices=substance_types, render_kw={'class': 'form-check-input'})
+    substance_type = RadioField(u"Art des Wasch- und Reinigungsmittels", [validators.required()], choices=substance_types)
     offset_print_manner = StringField(u"Offsetdruckverfahren", render_kw={'class': 'form-control'})
     detergent_special = BooleanField(u"Es handelt sich um einen Sonderreiniger", render_kw={'class': 'form-control'})
     evaporation_lane_150 = FloatField(u"Verdampfungsfaktor bei 150 Grad Celsius", render_kw={'class': 'form-control'})
