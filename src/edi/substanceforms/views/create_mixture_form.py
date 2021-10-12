@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import transaction
-from wtforms.widgets import CheckboxInput
+from wtforms.widgets import CheckboxInput, ListWidget
 from wtforms import Form, StringField, FloatField, SelectField, DateField, BooleanField, IntegerField, TextAreaField, FileField
 from plone.namedfile import NamedBlobImage
 from wtforms import FileField, RadioField, SelectMultipleField
@@ -13,6 +13,10 @@ from edi.substanceforms.vocabularies import classifications, usecases, applicati
 from plone import api as ploneapi
 import requests
 import psycopg2
+
+class MultiCheckboxField(SelectMultipleField):
+    widget = ListWidget(prefix_label=False)
+    option_widget = CheckboxInput()
 
 class CreateForm(Form):
 
@@ -34,8 +38,8 @@ class CreateForm(Form):
     checked_emissions = BooleanField(u"Emissionsarmes Produkt", render_kw={'class': 'form-check-input'})
     flashpoint = IntegerField(u"Flammpunkt", render_kw={'class': 'form-control'})
     values_range = BooleanField(u"Wertebereich", render_kw={'class': 'form-check-input'})
-    usecases = SelectMultipleField(u"Anwendungsfälle", choices=usecases, render_kw={'class': 'form-control'})
-    application_areas = SelectMultipleField(u"Anwendungsbereiche", choices=application_areas, render_kw={'class': 'form-control'})
+    usecases = MultiCheckboxField(u"Anwendungsfälle", choices=usecases, render_kw={'class': 'form-control'})
+    application_areas = MultiCheckboxField(u"Anwendungsbereiche", choices=application_areas, render_kw={'class': 'form-control'})
     image_url = FileField("Bilddatei hochladen", render_kw={'class': 'form-control'})
     comments = TextAreaField("Bemerkungen", render_kw={'class': 'form-control'})
 
