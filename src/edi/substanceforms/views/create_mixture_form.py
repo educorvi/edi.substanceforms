@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
+import transaction
 from wtforms import Form, StringField, FloatField, SelectField, DateField, BooleanField, IntegerField, TextAreaField, FileField
+from plone.namedfile import NamedBlobImage
 from wtforms import FileField, RadioField, SelectMultipleField
 from wtforms import validators
 from collective.wtforms.views import WTFormView
@@ -72,8 +74,24 @@ class CreateFormView(WTFormView):
         self.form.process()
         return self.formTemplate()
 
+    def create_image(self, image, title):
+        filedata = image.data.read()
+        filename = image.data.filename
+        
+        blobimage = NamedBlobImage(data=filedata, filename=filename)
+        obj = ploneapi.content.create(type='Image', title=title, image=blobimage, container=self.context)
+
+        obj.indexObject()
+        transaction.commit()
+
+        return obj.UID()
+
     def submit(self, button):
-        import pdb; pdb.set_trace()
+
+        image_url = ''
+        if self.form.image_url:
+            image_url = self.create_image(self.form.image_url, self.form.title.data)
+
         redirect_url = self.context.aq_parent.absolute_url()
         if button == 'Speichern': #and self.validate():
             if True:
@@ -86,7 +104,8 @@ class CreateFormView(WTFormView):
                                                             skin_category, checked_emissions, date_checked, flashpoint,
                                                             values_range, comments, image_url, manufacturer_id)
                                                             VALUES ('%s', '%s', '%s', %s, '%s', '%s', '%s', '%s',
-                                                            '%s', %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);""" \
+                                                            '%s', %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 
+                                                            %s, %s);""" \
                                                             % (self.form.title.data,
                                                             self.form.description.data,
                                                             self.context.aq_parent.get_webcode(),
@@ -108,7 +127,7 @@ class CreateFormView(WTFormView):
                                                             check_value(self.form.flashpoint.data),
                                                             self.form.values_range.data,
                                                             check_value(self.form.comments.data),
-                                                            check_value(self.form.image_url.data),
+                                                            check_value(image_url),
                                                             self.form.manufacturer_id.data)
                 cur.execute(insert)
                 conn.commit()
