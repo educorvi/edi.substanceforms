@@ -77,7 +77,7 @@ class CreateFormView(WTFormView):
     def create_image(self, image, title):
         filedata = image.data.read()
         filename = image.data.filename
-        
+
         blobimage = NamedBlobImage(data=filedata, filename=filename)
         obj = ploneapi.content.create(type='Image', title=title, image=blobimage, container=self.context)
 
@@ -87,7 +87,6 @@ class CreateFormView(WTFormView):
         return obj.UID()
 
     def submit(self, button):
-
         image_url = ''
         if self.form.image_url:
             image_url = self.create_image(self.form.image_url, self.form.title.data)
@@ -104,7 +103,7 @@ class CreateFormView(WTFormView):
                                                             skin_category, checked_emissions, date_checked, flashpoint,
                                                             values_range, comments, image_url, manufacturer_id)
                                                             VALUES ('%s', '%s', '%s', %s, '%s', '%s', '%s', '%s',
-                                                            '%s', %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 
+                                                            '%s', %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
                                                             %s, %s);""" \
                                                             % (self.form.title.data,
                                                             self.form.description.data,
