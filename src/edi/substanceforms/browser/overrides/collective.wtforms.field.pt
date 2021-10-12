@@ -1,6 +1,6 @@
-<div class="form-group" tal:define="field nocall:options/field; 
+<div class="form-group" tal:define="field nocall:options/field;
 	                            errors field/errors"
-		        tal:condition="python: field.type not in ['BooleanField']">
+		        tal:condition="python: field.type not in ['BooleanField', 'RadioField']">
     <label tal:attributes="for field/label/field_id" tal:content="field/label/text"></label>
       <span tal:condition="nocall: python: field.flags.required" title="Eingabe erforderlich">*</span>
     <div tal:replace="structure field" />
@@ -10,14 +10,14 @@
         <li i18n:translate="" tal:content="python: error[0]" tal:condition="python: type(error) == list"/>
       </ul>
     </div>
-    <small tal:condition="field/description" tal:attributes="id string:${field/label/field_id}Help" 
+    <small tal:condition="field/description" tal:attributes="id string:${field/label/field_id}Help"
 	    class="form-text text-muted" tal:content="field description"></small>
 </div>
 
 <div class="form-group" tal:define="field nocall:options/field;
                                     errors field/errors"
-                        tal:condition="python: field.type in ['BooleanField']">
-    <div class="form-check">	
+                        tal:condition="python: field.type in ['BooleanField', 'RadioField']">
+    <div class="form-check">
       <div tal:replace="structure field" />
       <label tal:attributes="for field/label/field_id" tal:content="field/label/text"></label>
         <span tal:condition="nocall: python: field.flags.required" title="Eingabe erforderlich">*</span>
