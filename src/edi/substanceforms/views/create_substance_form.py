@@ -52,9 +52,8 @@ class CreateFormView(WTFormView):
 
     def submit(self, button):
         image_url = ''
-        if self.form.image_url:
+        if self.form.image_url.data.filename:
             image_url = self.create_image(self.form.image_url, self.form.title.data)
-
         redirect_url = self.context.aq_parent.absolute_url()
         if button == 'Speichern': #and self.validate():
             conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
@@ -69,20 +68,32 @@ class CreateFormView(WTFormView):
                                                        check_value(self.form.branch.data),
                                                        check_value(image_url))
 
-            try:
+            if self.form.image_url.data.filename:
+
+                try:
+                    cur.execute(insert)
+                    conn.commit()
+
+                    message = u'Das Wasch- und Reinigungsmittel wurde erfolgreich gespeichert.'
+                    ploneapi.portal.show_message(message=message, type='info', request=self.request)
+                except:
+                    imageobj = ploneapi.content.get(UID=image_url)
+                    ploneapi.content.delete(imageobj)
+
+                    message = u'Fehler beim Hinzufügen des Gefahrstoffgemisches'
+                    ploneapi.portal.show_message(message=message, type='error', request=self.request)
+
+                cur.close()
+                conn.close()
+
+            else:
                 cur.execute(insert)
                 conn.commit()
-            except:
-                imageobj = ploneapi.content.get(UID=image_url)
-                ploneapi.content.delete(imageobj)
+                cur.close()
+                conn.close()
 
-                message = u'Fehler beim Hinzufügen des Gefahrstoffgemisches'
-                ploneapi.portal.show_message(message=message, type='error', request=self.request)
-
-            cur.close()
-            conn.close()
-            message=u'Der Gefahrstoff wurde erfolgreich gespeichert.'
-            ploneapi.portal.show_message(message=message, type='info', request=self.request)
+                message = u'Das Wasch- und Reinigungsmittel wurde erfolgreich gespeichert.'
+                ploneapi.portal.show_message(message=message, type='info', request=self.request)
 
             return self.request.response.redirect(redirect_url)
 
