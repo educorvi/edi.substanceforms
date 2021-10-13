@@ -89,9 +89,8 @@ class CreateFormView(WTFormView):
     def submit(self, button):
         image_url = ''
         if self.form.image_url.data.filename:
-            import pdb; pdb.set_trace()
             image_url = self.create_image(self.form.image_url, self.form.title.data)
-
+            import pdb; pdb.set_trace()
         redirect_url = self.context.aq_parent.absolute_url()
         if button == 'Speichern': #and self.validate():
 
