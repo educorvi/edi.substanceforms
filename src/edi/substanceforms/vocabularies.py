@@ -35,6 +35,12 @@ produktklassen = [
     (u'waschmittel_emulsionen', u'Waschmittel auf wässriger Basis/Emulsionen')
     ]
 
+product_class = [
+    (u'fein', u'fein'),
+    (u'mittel', u'mittel'),
+    (u'grob', u'grob')
+    ]
+
 classifications = [
     (u'xi-reizend', u'Xi; Reizend'),
     (u'xn-gesundheitsschaedlich', u'Xn; gesundheitsschädlich'),

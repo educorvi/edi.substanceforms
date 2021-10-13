@@ -4,7 +4,7 @@ from wtforms import Form, StringField, SelectField, IntegerField, FileField
 from wtforms import validators
 from collective.wtforms.views import WTFormView
 from edi.substanceforms.helpers import check_value
-from edi.substanceforms.vocabularies import hskategorie, branchen
+from edi.substanceforms.vocabularies import hskategorie, branchen, product_class
 from plone.namedfile import NamedBlobImage
 from edi.substanceforms.views.create_mixture_form import MultiCheckboxField
 from plone import api as ploneapi
@@ -15,7 +15,7 @@ class CreateForm(Form):
 
     title = StringField("Titel", [validators.required()])
     description = StringField("Beschreibung", [validators.required()])
-    casnr = IntegerField("CAS-Nummer", [validators.required()])
+    product_class = SelectField("Produktklasse", choices=product_class, render_kw={'class': 'form-control'})
     concentration = IntegerField("Konzentration in wässriger Lösung")
     skin_category = SelectField("Hautschutzkategorie", choices = hskategorie)
     branch = SelectField("Branche", choices = branchen)
