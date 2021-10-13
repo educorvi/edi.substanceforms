@@ -38,6 +38,7 @@ class SingleView(BrowserView):
             return self.template()
         elif self.context.tablename == 'spray_powder':
             template = ViewPageTemplateFile('spray_powder_view.pt')
+            self.image_url = self.get_image_url()
             self.template = BoundPageTemplate(template, self)
             return self.template()
         elif self.context.tablename == 'manufacturer':
