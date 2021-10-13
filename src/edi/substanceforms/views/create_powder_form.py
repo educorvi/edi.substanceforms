@@ -74,15 +74,18 @@ class CreateFormView(WTFormView):
         if button == 'Speichern': #and self.validate():
             conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
             cur = conn.cursor()
-            insert = """INSERT INTO substance VALUES (DEFAULT, '%s', '%s', '%s',
-                        %s, %s, %s, %s, %s);""" % (self.form.title.data,
+            insert = """INSERT INTO spray_powder VALUES (DEFAULT, '%s', '%s', '%s',
+                        %s, %s, %s, %s, %s, %s, %s, %s);""" % (self.form.title.data,
                                                        self.form.description.data,
                                                        self.context.aq_parent.get_webcode(),
-                                                       check_value(self.form.casnr.data),
-                                                       check_value(self.form.concentration.data),
-                                                       check_value(self.form.skin_category.data),
-                                                       check_value(self.form.branch.data),
-                                                       check_value(image_url))
+                                                       check_value(self.form.product_class.data),
+                                                       check_value(self.form.starting_material.data),
+                                                       check_value(self.form.median_value.data),
+                                                       check_value(self.form.volume_share.data),
+                                                       check_value(self.form.checked_emissions.data),
+                                                       check_value(self.form.date_checked.data),
+                                                       check_value(image_url),
+                                                       self.form.manufacturer_id.data)
 
             if self.form.image_url.data.filename:
 
