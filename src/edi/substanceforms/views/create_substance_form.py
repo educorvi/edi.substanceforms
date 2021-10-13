@@ -4,6 +4,7 @@ from wtforms import validators
 from collective.wtforms.views import WTFormView
 from edi.substanceforms.helpers import check_value
 from edi.substanceforms.vocabularies import hskategorie, branchen
+from plone.namedfile import NamedBlobImage
 from edi.substanceforms.views.create_mixture_form import MultiCheckboxField
 from plone import api as ploneapi
 import requests
