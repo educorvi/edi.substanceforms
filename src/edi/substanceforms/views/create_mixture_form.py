@@ -133,6 +133,7 @@ class CreateFormView(WTFormView):
 
                 #try:
                 if True:
+                    import pdb; pdb.set_trace()
                     cur.execute(insert)
                     conn.commit()
 
