@@ -62,11 +62,11 @@
 	        </tr>
           <tr>
 	          <td>Medianwert</td>
-            <td tal:content="article[6]"/>
+            <td tal:content="python:article[6]"/>
 	        </tr>
           <tr>
 	          <td>Volumenanteil</td>
-            <td tal:content="article[7]"/>
+            <td tal:content="python:article[7]"/>
           </tr>
           <tr>
 	          <td>Emissionsgeprüft</td>
