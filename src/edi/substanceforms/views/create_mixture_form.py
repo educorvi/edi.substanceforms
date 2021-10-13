@@ -130,7 +130,7 @@ class CreateFormView(WTFormView):
                                                         check_value(image_url),
                                                         self.form.manufacturer_id.data)
 
-            if self.form.image_url:
+            if self.form.image_url.data.filename:
 
                 try:
                     cur.execute(insert)
