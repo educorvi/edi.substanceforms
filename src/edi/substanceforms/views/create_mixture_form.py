@@ -87,6 +87,7 @@ class CreateFormView(WTFormView):
         return obj.UID()
 
     def submit(self, button):
+        import pdb; pdb.set_trace()
         image_url = ''
         if self.form.image_url:
             image_url = self.create_image(self.form.image_url, self.form.title.data)
