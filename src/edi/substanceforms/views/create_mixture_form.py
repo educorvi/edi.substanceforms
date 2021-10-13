@@ -128,20 +128,30 @@ class CreateFormView(WTFormView):
                                                         check_value(self.form.comments.data),
                                                         check_value(image_url),
                                                         self.form.manufacturer_id.data)
-            try:
+
+            if self.form.image_url:
+
+                try:
+                    cur.execute(insert)
+                    conn.commit()
+
+                    message = u'Das Wasch- und Reinigungsmittel wurde erfolgreich gespeichert.'
+                    ploneapi.portal.show_message(message=message, type='info', request=self.request)
+                except:
+                    imageobj = ploneapi.content.get(UID=image_url)
+                    ploneapi.content.delete(imageobj)
+
+                    message = u'Fehler beim Hinzufügen des Gefahrstoffgemisches'
+                    ploneapi.portal.show_message(message=message, type='error', request=self.request)
+
+                cur.close()
+                conn.close()
+
+            else:
                 cur.execute(insert)
                 conn.commit()
-            except:
-                imageobj = ploneapi.content.get(UID=image_url)
-                ploneapi.content.delete(imageobj)
-
-                message = u'Fehler beim Hinzufügen des Gefahrstoffgemisches'
-                ploneapi.portal.show_message(message=message, type='error', request=self.request)
-
-            cur.close()
-            conn.close()
-            message=u'Das Wasch- und Reinigungsmittel wurde erfolgreich gespeichert.'
-            ploneapi.portal.show_message(message=message, type='info', request=self.request)
+                cur.close()
+                conn.close()
 
             return self.request.response.redirect(redirect_url)
 
