@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import transaction
-from wtforms import Form, StringField, SelectField, IntegerField, FileField
+from wtforms import Form, StringField, SelectField, IntegerField, FileField, FloatField
 from wtforms import validators
 from collective.wtforms.views import WTFormView
 from edi.substanceforms.helpers import check_value
@@ -15,10 +15,12 @@ class CreateForm(Form):
 
     title = StringField("Titel", [validators.required()])
     description = StringField("Beschreibung", [validators.required()])
+    manufacturer_id = SelectField(u"Hersteller des Druckbestäubungspuders", [validators.required()])
     product_class = SelectField("Produktklasse", choices=product_class)
-    concentration = IntegerField("Konzentration in wässriger Lösung")
-    skin_category = SelectField("Hautschutzkategorie", choices = hskategorie)
-    branch = SelectField("Branche", choices = branchen)
+    starting_material = StringField("Ausgangsmaterial")
+    median_value = FloatField("Medianwert")
+    volume_share = FloatField("Volumenanteil")
+    date_checked = StringField("Prüfdatum")
     image_url = FileField("Bild hochladen")
 
 class CreateFormView(WTFormView):
@@ -37,6 +39,20 @@ class CreateFormView(WTFormView):
                 if result:
                     return result
         return self.index()
+
+    def renderForm(self):
+        try:
+            conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
+            cur = conn.cursor()
+            cur.execute("SELECT manufacturer_id, title FROM manufacturer ORDER BY title;")
+            manus = cur.fetchall()
+            cur.close
+            conn.close()
+        except:
+            manus = []
+        self.form.manufacturer_id.choices = manus
+        self.form.process()
+        return self.formTemplate()
 
     def create_image(self, image, title):
         filedata = image.data.read()
