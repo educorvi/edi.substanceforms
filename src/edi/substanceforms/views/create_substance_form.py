@@ -17,7 +17,7 @@ class CreateForm(Form):
     concentration = IntegerField("Konzentration in wässriger Lösung")
     skin_category = SelectField("Hautschutzkategorie", choices = hskategorie)
     branch = SelectField("Branche", choices = branchen)
-    image_id = FileField("Bild hochladen")
+    image_url = FileField("Bild hochladen")
 
 class CreateFormView(WTFormView):
     formClass = CreateForm
