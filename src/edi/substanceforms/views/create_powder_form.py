@@ -15,7 +15,7 @@ class CreateForm(Form):
 
     title = StringField("Titel", [validators.required()])
     description = StringField("Beschreibung", [validators.required()])
-    product_class = SelectField("Produktklasse", choices=product_class, render_kw={'class': 'form-control'})
+    product_class = SelectField("Produktklasse", choices=product_class)
     concentration = IntegerField("Konzentration in wässriger Lösung")
     skin_category = SelectField("Hautschutzkategorie", choices = hskategorie)
     branch = SelectField("Branche", choices = branchen)
