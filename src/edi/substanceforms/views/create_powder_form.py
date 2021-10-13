@@ -13,7 +13,7 @@ import psycopg2
 
 class CreateForm(Form):
 
-    title = StringField("Titel", [validators.required()])
+    title = StringField("Titel", [validators.required()], render_kw={'class': 'form-control'})
     description = StringField("Beschreibung", [validators.required()])
     manufacturer_id = SelectField(u"Hersteller des Druckbestäubungspuders", [validators.required()])
     product_class = SelectField("Produktklasse", choices=product_class)
