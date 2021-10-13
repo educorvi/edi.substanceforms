@@ -151,6 +151,8 @@ class CreateFormView(WTFormView):
                 conn.close()
 
             else:
+                import pdb;
+                pdb.set_trace()
                 cur.execute(insert)
                 conn.commit()
                 cur.close()
