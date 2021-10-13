@@ -63,7 +63,7 @@ class CreateFormView(WTFormView):
                                                        self.form.description.data,
                                                        self.context.aq_parent.get_webcode(),
                                                        check_value(self.form.casnr.data),
-                                                       self.form.concentration.data,
+                                                       check_value(self.form.concentration.data),
                                                        check_value(self.form.skin_category.data),
                                                        check_value(self.form.branch.data),
                                                        check_value(image_url))
