@@ -131,13 +131,15 @@ class CreateFormView(WTFormView):
 
             if self.form.image_url.data.filename:
 
-                try:
+                #try:
+                if True:
                     cur.execute(insert)
                     conn.commit()
 
                     message = u'Das Wasch- und Reinigungsmittel wurde erfolgreich gespeichert.'
                     ploneapi.portal.show_message(message=message, type='info', request=self.request)
-                except:
+                #except:
+                if False:
                     imageobj = ploneapi.content.get(UID=image_url)
                     ploneapi.content.delete(imageobj)
 
