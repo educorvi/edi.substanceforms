@@ -52,24 +52,29 @@
 	          <td>Beschreibung</td>
 	          <td tal:content="python:article[2]"/>
 	        </tr>
-          <!--
           <tr>
-	          <td>CAS-Nummer</td>
+	          <td>Produktklasse</td>
 	          <td tal:content="python:article[4]"/>
 	        </tr>
           <tr>
-	          <td>Konzentration in wässriger Lösung</td>
+	          <td>Ausgangsmaterial</td>
 	          <td tal:content="python:article[5]"/>
 	        </tr>
           <tr>
-	          <td>Hautschutzmittelgruppe</td>
-            <td tal:content="python: view.get_attr_translation('hskategorie', article[6])"/>
+	          <td>Medianwert</td>
+            <td tal:content="article[6]"/>
 	        </tr>
           <tr>
-	          <td>Hautschutzmittelgruppe</td>
-            <td tal:content="python: view.get_attr_translation('branchen', article[7])"/>
-	        </tr>
-	        -->
+	          <td>Volumenanteil</td>
+            <td tal:content="article[7]"/>
+          </tr>
+          <tr>
+	          <td>Emissionsgeprüft</td>
+            <td tal:content="python: view.get_attr_translation('boolvocab', str(article[8]))"/>
+          </tr>
+          <tr>
+	          <td>Prüfdatum</td>
+          </tr>
 	      </tbody>
 	    </table>
 	    </section>
