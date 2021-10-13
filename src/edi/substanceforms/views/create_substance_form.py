@@ -15,7 +15,7 @@ class CreateForm(Form):
 
     title = StringField("Titel", [validators.required()])
     description = StringField("Beschreibung", [validators.required()])
-    casnr = IntegerField("CAS-Nummer")
+    casnr = IntegerField("CAS-Nummer", [validators.required()])
     concentration = IntegerField("Konzentration in wässriger Lösung")
     skin_category = SelectField("Hautschutzkategorie", choices = hskategorie)
     branch = SelectField("Branche", choices = branchen)
