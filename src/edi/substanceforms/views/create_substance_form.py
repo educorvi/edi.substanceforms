@@ -13,13 +13,13 @@ import psycopg2
 
 class CreateForm(Form):
 
-    title = StringField("Titel", [validators.required()])
-    description = StringField("Beschreibung", [validators.required()])
-    casnr = IntegerField("CAS-Nummer", [validators.required()])
-    concentration = IntegerField("Konzentration in wässriger Lösung")
-    skin_category = SelectField("Hautschutzkategorie", choices = hskategorie)
-    branch = SelectField("Branche", choices = branchen)
-    image_url = FileField("Bild hochladen")
+    title = StringField("Titel", [validators.required()], render_kw={'class': 'form-control'})
+    description = StringField("Beschreibung", [validators.required()], render_kw={'class': 'form-control'})
+    casnr = IntegerField("CAS-Nummer", [validators.required()], render_kw={'class': 'form-control'})
+    concentration = IntegerField("Konzentration in wässriger Lösung", render_kw={'class': 'form-control'})
+    skin_category = SelectField("Hautschutzkategorie", choices = hskategorie, render_kw={'class': 'form-control'})
+    branch = SelectField("Branche", choices = branchen, render_kw={'class': 'form-control'})
+    image_url = FileField("Bild hochladen", render_kw={'class': 'form-control'})
 
 class CreateFormView(WTFormView):
     formClass = CreateForm
