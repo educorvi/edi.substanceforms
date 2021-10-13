@@ -1,0 +1,82 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="example.conference">
+<body>
+
+<metal:main fill-slot="main">
+    <tal:main-macro metal:define-macro="main">
+
+      <div class="container"
+	   id="main-content"
+	   tal:define="article view/article;
+	               machines view/machines;
+		       substances view/secsheet">
+
+        <div class="row">
+          <span class="col-12" tal:content="structure provider:plone.abovecontenttitle" />
+        </div>
+
+        <div class="row">
+
+          <div class="col-lg-9 col-12">
+            <div class="row">
+              <div class="col-7">
+                <h1 tal:content="python:article[1]"/>
+              </div>
+              <div class="col-5">
+                <img class="img-fluid" tal:condition="view/image_url" tal:attributes="src view/image_url">
+              </div>
+            </div>
+	    <!--<span tal:content="structure provider:plone.belowcontenttitle" />-->
+            <p tal:condition="python:article[2]" class="lead mt-5">
+              <img class="icon" src="++theme++plonetheme.siguv/icons/siguv/dot.svg">
+              <span tal:content="python:article[2]"/>
+            </p>
+            <span tal:content="structure provider:plone.abovecontentbody" />
+
+            <!-- TODO: Hier müssen alle anderen Attribute reingeschrieben werden -->
+	    <section class="mt-3 mb-3">
+	    <table class="table table-bordered">
+	      <thead>
+	        <th>Attribut</th>
+		<th>Ausprägung</th>
+	      </thead>
+        <tbody>
+
+	      </tbody>
+	    </table>
+	    </section>
+
+            <section class="mt-3 mb-3" tal:condition="view/userCanEdit">
+              <a class="btn btn-primary" tal:attributes="href view/userCanEdit" role="button">Artikel Bearbeiten</a>
+            </section>
+
+          </div>
+
+          <!-- Portlets -->
+          <div class="col-lg-3 col-12">
+            <div tal:replace="structure context/@@portlet-cards-view"/>
+          </div>
+          <!-- Ende Portlets -->
+
+        </div>
+
+        <div class="row">
+          <span class="col-lg-9 col-12" tal:content="structure provider:nva.contentcards" />
+        </div>
+
+        <div class="row">
+          <span class="col-lg-9 col-12" tal:content="structure provider:plone.belowcontentbody" />
+        </div>
+
+      </div>
+
+    </tal:main-macro>
+</metal:main>
+
+</body>
+</html>
