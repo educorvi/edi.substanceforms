@@ -6,6 +6,8 @@ def check_value(value):
         return 'NULL'
     if isinstance(value, list):
         return 'NULL'
+    if value == 'None':
+        return 'NULL'
     return "'%s'" % value
 
 def list_handler(liste):
