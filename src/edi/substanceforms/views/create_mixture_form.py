@@ -116,7 +116,7 @@ class CreateFormView(WTFormView):
                                                         list_handler(self.form.usecases.data),
                                                         check_value(self.form.evaporation_lane_150.data),
                                                         check_value(self.form.evaporation_lane_160.data),
-                                                        check_value(elf.form.evaporation_lane_170.data),
+                                                        check_value(self.form.evaporation_lane_170.data),
                                                         check_value(self.form.evaporation_lane_180.data),
                                                         check_value(self.form.ueg.data),
                                                         check_value(self.form.response.data),
