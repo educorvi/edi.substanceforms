@@ -69,10 +69,12 @@ class SingleView(BrowserView):
         cur.close
         conn.close()
 
-        imageobj = ploneapi.content.get(UID=uid)
-        image_url = '%s/@@images/image/preview' % imageobj.absolute_url()
-
-        return image_url
+        if uid:
+            imageobj = ploneapi.content.get(UID=uid)
+            image_url = '%s/@@images/image/preview' % imageobj.absolute_url()
+            return image_url
+        else:
+            return False
 
     """
     def get_machines(self):
