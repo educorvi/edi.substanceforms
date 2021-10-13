@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import transaction
-from wtforms import Form, StringField, SelectField, IntegerField, FileField, FloatField
+from wtforms import Form, StringField, SelectField, IntegerField, FileField, FloatField, BooleanField
 from wtforms import validators
 from collective.wtforms.views import WTFormView
 from edi.substanceforms.helpers import check_value
@@ -20,6 +20,7 @@ class CreateForm(Form):
     starting_material = StringField("Ausgangsmaterial")
     median_value = FloatField("Medianwert")
     volume_share = FloatField("Volumenanteil")
+    checked_emissions = BooleanField("Emissionsgeprüft")
     date_checked = StringField("Prüfdatum")
     image_url = FileField("Bild hochladen")
 
