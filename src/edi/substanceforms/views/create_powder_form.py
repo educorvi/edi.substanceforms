@@ -14,15 +14,15 @@ import psycopg2
 class CreateForm(Form):
 
     title = StringField("Titel", [validators.required()], render_kw={'class': 'form-control'})
-    description = StringField("Beschreibung", [validators.required()])
-    manufacturer_id = SelectField(u"Hersteller des Druckbestäubungspuders", [validators.required()])
-    product_class = SelectField("Produktklasse", choices=product_class)
-    starting_material = StringField("Ausgangsmaterial")
-    median_value = FloatField("Medianwert")
-    volume_share = FloatField("Volumenanteil")
-    checked_emissions = BooleanField("Emissionsgeprüft")
-    date_checked = StringField("Prüfdatum")
-    image_url = FileField("Bild hochladen")
+    description = StringField("Beschreibung", [validators.required()], render_kw={'class': 'form-control'})
+    manufacturer_id = SelectField(u"Hersteller des Druckbestäubungspuders", [validators.required()], render_kw={'class': 'form-control'})
+    product_class = SelectField("Produktklasse", choices=product_class, render_kw={'class': 'form-control'})
+    starting_material = StringField("Ausgangsmaterial", render_kw={'class': 'form-control'})
+    median_value = FloatField("Medianwert", render_kw={'class': 'form-control'})
+    volume_share = FloatField("Volumenanteil", render_kw={'class': 'form-control'})
+    checked_emissions = BooleanField("Emissionsgeprüft", render_kw={'class': 'form-check-input'})
+    date_checked = StringField("Prüfdatum", render_kw={'class': 'form-control'})
+    image_url = FileField("Bild hochladen", render_kw={'class': 'form-control'})
 
 class CreateFormView(WTFormView):
     formClass = CreateForm
