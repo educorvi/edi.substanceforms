@@ -70,7 +70,7 @@
           </tr>
           <tr>
 	          <td>Emissionsgeprüft</td>
-            <td tal:content="python: view.get_attr_translation('boolvocab', str(article[8]))"/>
+            <td tal:content="python: view.get_attr_translation('boolvocab', article[8])"/>
           </tr>
           <tr>
 	          <td>Prüfdatum</td>
