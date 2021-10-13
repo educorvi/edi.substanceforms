@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import transaction
 from wtforms import Form, StringField, SelectField, IntegerField, FileField
 from wtforms import validators
 from collective.wtforms.views import WTFormView
