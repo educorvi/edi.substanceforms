@@ -29,7 +29,7 @@
     />
 
     <browser:page
-    name="hersteller-form-view"
+    name="manufacturer-form-view"
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".tabelle_view.HerstellerFormView"
     template="tabelle_view.pt"
@@ -45,7 +45,7 @@
     />
 
     <browser:page
-    name="substancemixture-form-view"
+    name="substance_mixture-form-view"
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".tabelle_view.SubstancemixtureFormView"
     template="tabelle_view.pt"
@@ -53,7 +53,7 @@
     />
 
     <browser:page
-    name="spraypowder-form-view"
+    name="spray_powder-form-view"
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".tabelle_view.SpraypowderFormView"
     template="tabelle_view.pt"
