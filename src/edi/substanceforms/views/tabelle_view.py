@@ -38,8 +38,8 @@ class TabelleFormView(WTFormView):
         )
 
         if view:
-            url = "%s/@@%s" % (self.context.absolute_url(), viewname)
-            #return self.request.response.redirect(url)
+            url = "%s/%s" % (self.context.absolute_url(), viewname)
+            return self.request.response.redirect(url)
 
         self.host = self.context.aq_parent.host
         self.dbname = self.context.aq_parent.database
