@@ -100,7 +100,7 @@ class CreateFormView(WTFormView):
         elif button == 'Abbrechen':
             return self.request.response.redirect(redirect_url)
 
-    class UpdateFormView(CreateFormView):
+class UpdateFormView(CreateFormView):
 
-        def renderForm(self):
-            import pdb; pdb.set_trace()
+    def renderForm(self):
+        import pdb; pdb.set_trace()
