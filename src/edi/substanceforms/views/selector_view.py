@@ -16,7 +16,7 @@ class SelectorView(BrowserView):
                 request=self.request
             )
         except:
-            return self.request.response.redirect(url)
+            return self.request.response.redirect(self.context.absolute_url()+"/@@tabelle_view")
 
         url = "%s/@@%s" % (self.context.absolute_url(), viewname)
-        return self.request.response.redirect(self.context.absolute_url())
+        return self.request.response.redirect(url)

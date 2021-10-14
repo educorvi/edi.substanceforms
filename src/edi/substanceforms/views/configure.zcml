@@ -28,7 +28,7 @@
     />
 
   <browser:page
-    name="view"
+    name="tabelle_view"
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".tabelle_view.TabelleFormView"
     template="tabelle_view.pt"
