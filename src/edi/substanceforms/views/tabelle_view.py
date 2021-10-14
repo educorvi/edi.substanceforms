@@ -30,17 +30,6 @@ class TabelleFormView(WTFormView):
 
     def __call__(self):
 
-        viewname = "%s-form-view" % self.context.tablename
-        view = ploneapi.content.get_view(
-            name=viewname,
-            context=self.context,
-            request=self.request
-        )
-
-        if view:
-            url = "%s/@@%s" % (self.context.absolute_url(), viewname)
-            self.request.response.redirect(url)
-
         self.host = self.context.aq_parent.host
         self.dbname = self.context.aq_parent.database
         self.username = self.context.aq_parent.username
