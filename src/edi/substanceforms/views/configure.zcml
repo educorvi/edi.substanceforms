@@ -100,6 +100,14 @@
     />
 
   <browser:page
+    name="update-substance-form"
+    for="*"
+    class=".create_substance_form.UpdateFormView"
+    template = "create_view.pt"
+    permission="zope2.View"
+    />
+
+  <browser:page
     name="create-printing_machine-form"
     for="*"
     class=".create_machine_form.CreateFormView"
