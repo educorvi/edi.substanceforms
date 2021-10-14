@@ -102,5 +102,11 @@ class CreateFormView(WTFormView):
 
 class UpdateFormView(CreateFormView):
 
+    def __call__(self):
+        self.itemid = self.request.get('itemid')
+        print(self.itemid)
+
     def renderForm(self):
+        self.form.image_url.data
+        self.form.process()
         import pdb; pdb.set_trace()
