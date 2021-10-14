@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from Products.Five.browser import BrowserView
+from plone import api as ploneapi
 
 
 class SelectorView(BrowserView):
