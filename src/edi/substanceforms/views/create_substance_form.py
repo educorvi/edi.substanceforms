@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import transaction
-from wtforms import Form, StringField, SelectField, IntegerField, FileField
+from wtforms import Form, StringField, SelectField, IntegerField, FileField, BooleanField
 from wtforms import validators
 from collective.wtforms.views import WTFormView
 from edi.substanceforms.helpers import check_value
@@ -22,6 +22,17 @@ class CreateForm(Form):
     skin_category = SelectField("Hautschutzkategorie", choices = hskategorie, render_kw={'class': 'form-control'})
     branch = SelectField("Branche", choices = branchen, render_kw={'class': 'form-control'})
     image_url = FileField("Bild hochladen", render_kw={'class': 'form-control'})
+
+class UpdateForm(Form):
+
+    title = StringField("Titel", [validators.required()], render_kw={'class': 'form-control'})
+    description = StringField("Beschreibung", [validators.required()], render_kw={'class': 'form-control'})
+    casnr = IntegerField("CAS-Nummer", [validators.required()], render_kw={'class': 'form-control'})
+    concentration = IntegerField("Konzentration in wässriger Lösung", render_kw={'class': 'form-control'})
+    skin_category = SelectField("Hautschutzkategorie", choices = hskategorie, render_kw={'class': 'form-control'})
+    branch = SelectField("Branche", choices = branchen, render_kw={'class': 'form-control'})
+    image_url = FileField("Neues Bild hochladen", render_kw={'class': 'form-control'})
+    no_image = BooleanField("Vorhandenes Bild entfernen", render_kw={'class': 'form-check-input'})
 
 class CreateFormView(WTFormView):
     formClass = CreateForm
@@ -104,6 +115,8 @@ class CreateFormView(WTFormView):
 
 class UpdateFormView(CreateFormView):
 
+    formClass = UpdateForm
+
     def __call__(self):
         self.host = self.context.aq_parent.host
         self.dbname = self.context.aq_parent.database
@@ -112,7 +125,7 @@ class UpdateFormView(CreateFormView):
         self.itemid = self.request.get('itemid')
         conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
         cur = conn.cursor()
-        getter = "SELECT image_url FROM %s WHERE %s_id = %s;" % (self.context.tablename,
+        getter = "SELECT image_url, title, description, casnr, concentration, skin_category, branch FROM %s WHERE %s_id = %s;" % (self.context.tablename,
                                                                  self.context.tablename,
                                                                  self.itemid)
         cur.execute(getter)
@@ -122,6 +135,17 @@ class UpdateFormView(CreateFormView):
         return self.index()
 
     def renderForm(self):
+
+        #import pdb; pdb.set_trace()
+        extracted_title = self.result[0][1]
+
+        self.form.title.default=self.result[0][1]
+        self.form.description.default=self.result[0][2]
+        self.form.casnr.default=self.result[0][3]
+        self.form.concentration.default=self.result[0][4]
+        self.form.skin_category.default=self.result[0][5]
+        self.form.branch.default=self.result[0][6]
+        """
         image_uid = self.result[0][0]
         image_obj = ploneapi.content.get(UID=image_uid)
         image_bytes = image_obj.image.data
@@ -131,5 +155,6 @@ class UpdateFormView(CreateFormView):
         image = Image.open(image_bytes_io)
         #import pdb; pdb.set_trace()
         self.form.image_url.data = image
+        """
         self.form.process()
         return self.formTemplate()
