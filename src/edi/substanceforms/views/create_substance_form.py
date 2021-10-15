@@ -122,6 +122,5 @@ class UpdateFormView(CreateFormView):
     def renderForm(self):
         image_uid = self.result[0][0]
         image_obj = ploneapi.content.get(UID=image_uid)
-        import pdb; pdb.set_trace()
-        self.form.image_url.data
+        self.form.image_url.data = image_obj.image.data
         self.form.process()
