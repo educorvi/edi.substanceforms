@@ -103,6 +103,7 @@ class CreateFormView(WTFormView):
 class UpdateFormView(CreateFormView):
 
     def __call__(self):
+        import pdb;pdb.set_trace()
         self.host = self.context.aq_parent.host
         self.dbname = self.context.aq_parent.database
         self.username = self.context.aq_parent.username
