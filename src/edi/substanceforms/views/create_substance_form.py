@@ -104,9 +104,19 @@ class UpdateFormView(CreateFormView):
 
     def __call__(self):
         self.itemid = self.request.get('itemid')
-        print(self.itemid)
+        conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
+        cur = conn.cursor()
+        getter = "SELECT image_url FROM %s WHERE %s_id = %s;" % (self.context.tablename,
+                                                                 self.context.tablename,
+                                                                 self.itemid)
+        cur.execute(getter)
+        self.result = cur.fetchall()
+        cur.close()
+        conn.close()
 
     def renderForm(self):
+        image_uid = self.result[0][0]
+        image_obj = ploneapi.content.get(UID=image_uid)
+        import pdb; pdb.set_trace()
         self.form.image_url.data
         self.form.process()
-        import pdb; pdb.set_trace()
