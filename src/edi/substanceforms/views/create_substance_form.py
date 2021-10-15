@@ -103,6 +103,10 @@ class CreateFormView(WTFormView):
 class UpdateFormView(CreateFormView):
 
     def __call__(self):
+        self.host = self.context.aq_parent.host
+        self.dbname = self.context.aq_parent.database
+        self.username = self.context.aq_parent.username
+        self.password = self.context.aq_parent.password
         self.itemid = self.request.get('itemid')
         conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
         cur = conn.cursor()
