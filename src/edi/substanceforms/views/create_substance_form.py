@@ -117,6 +117,7 @@ class UpdateFormView(CreateFormView):
         self.result = cur.fetchall()
         cur.close()
         conn.close()
+        return self.index()
 
     def renderForm(self):
         image_uid = self.result[0][0]
