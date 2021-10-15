@@ -170,8 +170,14 @@ class UpdateFormView(CreateFormView):
             conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
             cur = conn.cursor()
             command = """UPDATE substance SET title='%s', description='%s', casnr=%s, concentration=%s,
-                         skin_category='%s', branch='%s' WHERE substance_id = self.itemid;"""
-
+                         skin_category='%s', branch='%s' WHERE substance_id = %s;""" % (self.form.title.data,
+                                                                                        self.form.description.data,
+                                                                                        self.form.casnr.data,
+                                                                                        self.form.concentration.data,
+                                                                                        self.form.skin_category.data,
+                                                                                        self.form.branch.data,
+                                                                                        self.itemid
+                                                                                        )
             try:
                 cur.execute(command)
                 conn.commit()
