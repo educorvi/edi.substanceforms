@@ -7,6 +7,7 @@ from edi.substanceforms.helpers import check_value
 from edi.substanceforms.vocabularies import hskategorie, branchen
 from plone.namedfile import NamedBlobImage
 from edi.substanceforms.views.create_mixture_form import MultiCheckboxField
+from edi.substanceforms.lib import DBConnect
 from plone import api as ploneapi
 import requests
 import psycopg2
@@ -115,14 +116,11 @@ class CreateFormView(WTFormView):
             return self.request.response.redirect(redirect_url)
 
 class UpdateFormView(CreateFormView):
-
     formClass = UpdateForm
 
     def __call__(self):
-        self.host = self.context.aq_parent.host
-        self.dbname = self.context.aq_parent.database
-        self.username = self.context.aq_parent.username
-        self.password = self.context.aq_parent.password
+        dbdata = self.context.aq_parent
+        self.db = DBConnect(host=dbdata.host, db=dbdata.database, user=dbdata.username, password=dbdata.password)
         if self.submitted:
             button = self.hasButtonSubmitted()
             if button:
@@ -130,22 +128,15 @@ class UpdateFormView(CreateFormView):
                 if result:
                     return result
         self.itemid = self.request.get('itemid')
-        conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
-        cur = conn.cursor()
-        getter = "SELECT image_url, title, description, casnr, concentration, skin_category, branch FROM %s WHERE %s_id = %s;" % (self.context.tablename,
-                                                                 self.context.tablename,
-                                                                 self.itemid)
-        cur.execute(getter)
-        self.result = cur.fetchall()
-        cur.close()
-        conn.close()
+        getter = """SELECT image_url, title, description, casnr, concentration, skin_category, branch 
+                    FROM %s WHERE %s_id = %s;""" % (self.context.tablename,
+                                                    self.context.tablename,
+                                                    self.itemid)
+        self.result = self.db.execute(getter)
+        self.db.close()
         return self.index()
 
     def renderForm(self):
-
-        #import pdb; pdb.set_trace()
-        extracted_title = self.result[0][1]
-
         self.form.title.default=self.result[0][1]
         self.form.description.default=self.result[0][2]
         self.form.casnr.default=self.result[0][3]
@@ -153,56 +144,30 @@ class UpdateFormView(CreateFormView):
         self.form.skin_category.default=self.result[0][5]
         self.form.branch.default=self.result[0][6]
         self.form.item_id.default=self.itemid
-        """
-        image_uid = self.result[0][0]
-        image_obj = ploneapi.content.get(UID=image_uid)
-        image_bytes = image_obj.image.data
-        #import pdb; pdb.set_trace()
-        image_bytes_io = BytesIO()
-        image_bytes_io.write(image_bytes)
-        image = Image.open(image_bytes_io)
-        #import pdb; pdb.set_trace()
-        self.form.image_url.data = image
-        """
         self.form.process()
         return self.formTemplate()
 
     def submit(self, button):
         """
-        image_url = ''
-        if self.form.image_url.data.filename:
-            image_url = self.create_image(self.form.image_url, self.form.title.data)
         """
-        import pdb; pdb.set_trace()
         redirect_url = self.context.aq_parent.absolute_url()
         if button == 'Speichern': #and self.validate():
-            conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
-            cur = conn.cursor()
             command = """UPDATE substance SET title='%s', description='%s', casnr=%s, concentration=%s,
-                         skin_category='%s', branch='%s' WHERE substance_id = %s;""" % (self.form.title.data,
-                                                                                        self.form.description.data,
-                                                                                        self.form.casnr.data,
-                                                                                        self.form.concentration.data,
-                                                                                        self.form.skin_category.data,
-                                                                                        self.form.branch.data,
-                                                                                        self.form.item_id.data
-                                                                                        )
-            try:
-                cur.execute(command)
-                conn.commit()
-
-                message = u'Das Wasch- und Reinigungsmittel wurde erfolgreich aktualisiert.'
-                ploneapi.portal.show_message(message=message, type='info', request=self.request)
-            except:
-                #imageobj = ploneapi.content.get(UID=image_url)
-                #ploneapi.content.delete(imageobj)
-
-                message = u'Fehler beim Aktualisieren des Gefahrstoffgemisches'
-                ploneapi.portal.show_message(message=message, type='error', request=self.request)
-
-            cur.close()
-            conn.close()
-
+                         skin_category='%s', branch='%s' 
+                         WHERE substance_id = %s;""" % (self.form.title.data,
+                                                        self.form.description.data,
+                                                        self.form.casnr.data,
+                                                        self.form.concentration.data,
+                                                        self.form.skin_category.data,
+                                                        self.form.branch.data,
+                                                        self.form.item_id.data)
+            self.db.execute(command)
+            message = u'Das Wasch- und Reinigungsmittel wurde erfolgreich aktualisiert.'
+            ploneapi.portal.show_message(message=message, type='info', request=self.request)
+            #message = u'Fehler beim Aktualisieren des Gefahrstoffgemisches'
+            #ploneapi.portal.show_message(message=message, type='error', request=self.request)
+            
+            self.db.close()
             return self.request.response.redirect(redirect_url)
 
         elif button == 'Abbrechen':
