@@ -158,3 +158,37 @@ class UpdateFormView(CreateFormView):
         """
         self.form.process()
         return self.formTemplate()
+
+    def submit(self, button):
+        """
+        image_url = ''
+        if self.form.image_url.data.filename:
+            image_url = self.create_image(self.form.image_url, self.form.title.data)
+        """
+        redirect_url = self.context.aq_parent.absolute_url()
+        if button == 'Speichern': #and self.validate():
+            conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
+            cur = conn.cursor()
+            command = """UPDATE substance SET title='%s', description='%s', casnr=%s, concentration=%s,
+                         skin_category='%s', branch='%s' WHERE substance_id = self.itemid;"""
+
+            try:
+                cur.execute(command)
+                conn.commit()
+
+                message = u'Das Wasch- und Reinigungsmittel wurde erfolgreich aktualisiert.'
+                ploneapi.portal.show_message(message=message, type='info', request=self.request)
+            except:
+                #imageobj = ploneapi.content.get(UID=image_url)
+                #ploneapi.content.delete(imageobj)
+
+                message = u'Fehler beim Aktualisieren des Gefahrstoffgemisches'
+                ploneapi.portal.show_message(message=message, type='error', request=self.request)
+
+            cur.close()
+            conn.close()
+
+            return self.request.response.redirect(redirect_url)
+
+        elif button == 'Abbrechen':
+            return self.request.response.redirect(redirect_url)
