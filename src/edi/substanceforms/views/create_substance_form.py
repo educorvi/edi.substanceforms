@@ -119,9 +119,10 @@ class UpdateFormView(CreateFormView):
         cur.close()
         conn.close()
         return self.index()
-
+"""
     def renderForm(self):
         image_uid = self.result[0][0]
         image_obj = ploneapi.content.get(UID=image_uid)
         self.form.image_url.data = image_obj.image.data
         self.form.process()
+"""
