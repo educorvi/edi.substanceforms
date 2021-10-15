@@ -10,6 +10,8 @@ from edi.substanceforms.views.create_mixture_form import MultiCheckboxField
 from plone import api as ploneapi
 import requests
 import psycopg2
+from PIL import Image
+from io import BytesIO
 
 class CreateForm(Form):
 
@@ -103,7 +105,6 @@ class CreateFormView(WTFormView):
 class UpdateFormView(CreateFormView):
 
     def __call__(self):
-        import pdb;pdb.set_trace()
         self.host = self.context.aq_parent.host
         self.dbname = self.context.aq_parent.database
         self.username = self.context.aq_parent.username
@@ -123,5 +124,12 @@ class UpdateFormView(CreateFormView):
     def renderForm(self):
         image_uid = self.result[0][0]
         image_obj = ploneapi.content.get(UID=image_uid)
-        self.form.image_url.data = image_obj.image.data
+        image_bytes = image_obj.image.data
+        #import pdb; pdb.set_trace()
+        image_bytes_io = BytesIO()
+        image_bytes_io.write(image_bytes)
+        image = Image.open(image_bytes_io)
+        #import pdb; pdb.set_trace()
+        self.form.image_url.data = image
         self.form.process()
+        return self.formTemplate()
