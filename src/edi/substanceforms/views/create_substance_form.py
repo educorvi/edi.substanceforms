@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import transaction
-from wtforms import Form, StringField, SelectField, IntegerField, FileField, BooleanField
+from wtforms import Form, StringField, SelectField, IntegerField, FileField, BooleanField, HiddenField
 from wtforms import validators
 from collective.wtforms.views import WTFormView
 from edi.substanceforms.helpers import check_value
@@ -33,6 +33,7 @@ class UpdateForm(Form):
     branch = SelectField("Branche", choices = branchen, render_kw={'class': 'form-control'})
     image_url = FileField("Neues Bild hochladen", render_kw={'class': 'form-control'})
     no_image = BooleanField("Vorhandenes Bild entfernen", render_kw={'class': 'form-check-input'})
+    item_id = HiddenField()
 
 class CreateFormView(WTFormView):
     formClass = CreateForm
@@ -122,6 +123,12 @@ class UpdateFormView(CreateFormView):
         self.dbname = self.context.aq_parent.database
         self.username = self.context.aq_parent.username
         self.password = self.context.aq_parent.password
+        if self.submitted:
+            button = self.hasButtonSubmitted()
+            if button:
+                result = self.submit(button)
+                if result:
+                    return result
         self.itemid = self.request.get('itemid')
         conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
         cur = conn.cursor()
@@ -145,6 +152,7 @@ class UpdateFormView(CreateFormView):
         self.form.concentration.default=self.result[0][4]
         self.form.skin_category.default=self.result[0][5]
         self.form.branch.default=self.result[0][6]
+        self.form.item_id.default=self.itemid
         """
         image_uid = self.result[0][0]
         image_obj = ploneapi.content.get(UID=image_uid)
@@ -177,7 +185,7 @@ class UpdateFormView(CreateFormView):
                                                                                         self.form.concentration.data,
                                                                                         self.form.skin_category.data,
                                                                                         self.form.branch.data,
-                                                                                        self.itemid
+                                                                                        self.form.item_id.data
                                                                                         )
             try:
                 cur.execute(command)
