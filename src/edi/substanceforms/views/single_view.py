@@ -111,7 +111,7 @@ class SingleView(BrowserView):
         select = "SELECT substance_id, concentration from recipes WHERE mixture_id = %s" %self.itemid
         cur.execute(select)
         substance_ids = cur.fetchall()
-        import pdb; pdb.set_trace()
+        # Continue here
         cur.close()
         for sid, concentration in substance_ids:
             cur = conn.cursor()
