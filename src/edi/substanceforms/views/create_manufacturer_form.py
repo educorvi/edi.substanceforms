@@ -4,6 +4,7 @@ from wtforms import validators
 from collective.wtforms.views import WTFormView
 from edi.substanceforms.helpers import check_value
 from plone import api as ploneapi
+from edi.substanceforms.lib import DBConnect
 import requests
 import psycopg2
 
@@ -18,6 +19,8 @@ class CreateFormView(WTFormView):
     buttons = ('Speichern', 'Abbrechen')
 
     def __call__(self):
+        dbdata = self.context.aq_parent
+        self.db = DBConnect(host=dbdata.host, db=dbdata.database, user=dbdata.username, password=dbdata.password)
         self.host = self.context.aq_parent.host
         self.dbname = self.context.aq_parent.database
         self.username = self.context.aq_parent.username
@@ -35,16 +38,12 @@ class CreateFormView(WTFormView):
         if button == 'Speichern' and self.validate():
 
             if True:
-                conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
-                cur = conn.cursor()
                 insert = """INSERT INTO manufacturer VALUES (DEFAULT, '%s', '%s', '%s', %s);""" % (self.form.title.data,
                                                             self.form.description.data,
                                                             self.context.aq_parent.get_webcode(),
                                                             check_value(self.form.homepage.data))
-                cur.execute(insert)
-                conn.commit()
-                cur.close()
-                conn.close()
+                self.db.execute(insert)
+                self.db.close()
                 message=u'Der Hersteller wurde erfolgreich gespeichert.'
                 ploneapi.portal.show_message(message=message, type='info', request=self.request)
             #except:
