@@ -127,7 +127,7 @@
     name="create-ingredient-form"
     for="*"
     class=".create_ingredient_view.CreateIngredientForm"
-    template = "create_ingredient_view.pt"
+    template = "create_view.pt"
     permission="zope2.View"
     />
 
