@@ -29,7 +29,6 @@ class CreateIngredientForm(WTFormView):
     buttons = ('Speichern', 'Abbrechen')
 
     def __call__(self):
-        import pdb; pdb.set_trace()
         dbdata = self.context.aq_parent
         self.db = DBConnect(host=dbdata.host, db=dbdata.database, user=dbdata.username, password=dbdata.password)
         self.host = self.context.aq_parent.host
@@ -64,7 +63,7 @@ class CreateIngredientForm(WTFormView):
                                                         % (self.form.substance.data,
                                                         self.form.concentration.data,
                                                         )
-
+            import pdb; pdb.set_trace()
             try:
                 self.db.execute(insert)
                 self.db.close()
