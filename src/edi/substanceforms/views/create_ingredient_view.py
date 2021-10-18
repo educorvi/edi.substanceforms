@@ -68,15 +68,15 @@ class CreateIngredientForm(WTFormView):
                                                         self.form.substance.data,
                                                         self.form.concentration.data,
                                                         )
-            import pdb; pdb.set_trace()
-            try:
+            #import pdb; pdb.set_trace()
+            if True:
                 self.db.execute(insert)
                 self.db.close()
                 message = u'Das Wasch- und Reinigungsmittel wurde erfolgreich gespeichert.'
                 ploneapi.portal.show_message(message=message, type='info', request=self.request)
-            except:
-                message = u'Fehler beim Hinzufügen des Bestandteils'
-                ploneapi.portal.show_message(message=message, type='error', request=self.request)
+            #except:
+            #    message = u'Fehler beim Hinzufügen des Bestandteils'
+            #    ploneapi.portal.show_message(message=message, type='error', request=self.request)
 
             return self.request.response.redirect(redirect_url)
 
