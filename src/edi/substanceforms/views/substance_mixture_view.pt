@@ -118,6 +118,10 @@
 	          <td>Offset-Druckverfahren</td>
 	          <td tal:content="python:article[6]"/>
 	        </tr>
+          <tr>
+	          <td>Bestandteile</td>
+            <td tal:content="python:view.get_recipes(article[0])"/>
+          </tr>
 	      </tbody>
 	    </table>
 	    </section>
