@@ -11,6 +11,7 @@ from edi.substanceforms.helpers import check_value, list_handler
 from edi.substanceforms.vocabularies import substance_types, hskategorie, produktkategorien, produktklassen, branchen
 from edi.substanceforms.vocabularies import classifications, usecases, application_areas
 from plone import api as ploneapi
+from edi.substanceforms.lib import DBConnect
 import requests
 import psycopg2
 
@@ -48,6 +49,8 @@ class CreateFormView(WTFormView):
     buttons = ('Speichern', 'Abbrechen')
 
     def __call__(self):
+        dbdata = self.context.aq_parent
+        self.db = DBConnect(host=dbdata.host, db=dbdata.database, user=dbdata.username, password=dbdata.password)
         self.host = self.context.aq_parent.host
         self.dbname = self.context.aq_parent.database
         self.username = self.context.aq_parent.username
@@ -62,12 +65,8 @@ class CreateFormView(WTFormView):
 
     def renderForm(self):
         try:
-            conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
-            cur = conn.cursor()
-            cur.execute("SELECT manufacturer_id, title FROM manufacturer ORDER BY title;")
-            manus = cur.fetchall()
-            cur.close
-            conn.close()
+            insert = "SELECT manufacturer_id, title FROM manufacturer ORDER BY title;"
+            manus = self.db.execute(insert)
         except:
             manus = []
         self.form.manufacturer_id.choices = manus
@@ -131,9 +130,7 @@ class CreateFormView(WTFormView):
             if self.form.image_url.data.filename:
 
                 try:
-                    cur.execute(insert)
-                    conn.commit()
-
+                    self.db.execute(insert)
                     message = u'Das Wasch- und Reinigungsmittel wurde erfolgreich gespeichert.'
                     ploneapi.portal.show_message(message=message, type='info', request=self.request)
                 except:
@@ -143,15 +140,11 @@ class CreateFormView(WTFormView):
                     message = u'Fehler beim Hinzufügen des Gefahrstoffgemisches'
                     ploneapi.portal.show_message(message=message, type='error', request=self.request)
 
-                cur.close()
-                conn.close()
+                self.db.close()
 
             else:
-                cur.execute(insert)
-                conn.commit()
-                cur.close()
-                conn.close()
-
+                self.db.execute(insert)
+                self.db.close()
                 message = u'Das Wasch- und Reinigungsmittel wurde erfolgreich gespeichert.'
                 ploneapi.portal.show_message(message=message, type='info', request=self.request)
 
