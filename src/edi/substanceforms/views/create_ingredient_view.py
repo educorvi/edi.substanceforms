@@ -30,6 +30,7 @@ class CreateIngredientForm(WTFormView):
     buttons = ('Speichern', 'Abbrechen')
 
     def __call__(self):
+        import pdb; pdb.set_trace()
         dbdata = self.context.aq_parent
         self.db = DBConnect(host=dbdata.host, db=dbdata.database, user=dbdata.username, password=dbdata.password)
         self.host = self.context.aq_parent.host
@@ -57,7 +58,7 @@ class CreateIngredientForm(WTFormView):
         return self.formTemplate()
 
     def submit(self, button):
-        import pdb; pdb.set_trace()
+        #import pdb; pdb.set_trace()
         self.form.itemid.default = self.request.get('itemid')
         redirect_url = self.context.aq_parent.absolute_url()
         if button == 'Speichern': #and self.validate():
