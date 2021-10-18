@@ -41,6 +41,8 @@ class CreateIngredientForm(WTFormView):
                 result = self.submit(button)
                 if result:
                     return result
+
+        self.itemid = self.request.get('itemid')
         return self.index()
 
     def renderForm(self):
