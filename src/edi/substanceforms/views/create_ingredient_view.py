@@ -23,7 +23,7 @@ class CreateForm(Form):
 
     substance = SelectField(u"Reinstoff", [validators.required()], render_kw={'class': 'form-control'})
     concentration = IntegerField(u"Konzentration", render_kw={'class': 'form-control'})
-    itemid = HiddenField
+    itemid = HiddenField(u'ReinstoffID')
 
 class CreateIngredientForm(WTFormView):
     formClass = CreateForm
