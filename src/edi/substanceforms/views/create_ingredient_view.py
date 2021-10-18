@@ -18,12 +18,12 @@ import psycopg2
 class MultiCheckboxField(SelectMultipleField):
     widget = ListWidget(prefix_label=False)
     option_widget = CheckboxInput()
-    itemid = HiddenField
 
 class CreateForm(Form):
 
     substance = SelectField(u"Reinstoff", [validators.required()], render_kw={'class': 'form-control'})
     concentration = IntegerField(u"Konzentration", render_kw={'class': 'form-control'})
+    itemid = HiddenField
 
 class CreateIngredientForm(WTFormView):
     formClass = CreateForm
