@@ -104,11 +104,11 @@ class SingleView(BrowserView):
         return machine_titles
     """
 
-    def get_recipes(self, value):
+    def get_recipes(self):
         substances = []
         conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
         cur = conn.cursor()
-        select = "SELECT substance_id, concentration from recipes WHERE mixture_id = %s" %value
+        select = "SELECT substance_id, concentration from recipes WHERE mixture_id = %s" %self.itemid
         cur.execute(select)
         substance_ids = cur.fetchall()
         import pdb; pdb.set_trace()
