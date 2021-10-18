@@ -126,7 +126,7 @@
               <a class="btn btn-primary" tal:attributes="href view/userCanEdit" role="button">Artikel Bearbeiten</a>
             </section>
             <section class="mt-3 mb-3" tal:condition="view/userCanEdit">
-              <a class="btn btn-primary" tal:attributes="href view/userCanEdit" role="button">Bestandteil hinzufügen</a>
+              <a class="btn btn-primary" tal:attributes="href python:context.absolute_url()+'/create-ingredient-form?itemid=%s' % view.itemid" role="button">Bestandteil hinzufügen</a>
             </section>
 
           </div>
