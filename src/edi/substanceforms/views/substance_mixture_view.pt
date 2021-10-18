@@ -125,6 +125,9 @@
             <section class="mt-3 mb-3" tal:condition="view/userCanEdit">
               <a class="btn btn-primary" tal:attributes="href view/userCanEdit" role="button">Artikel Bearbeiten</a>
             </section>
+            <section class="mt-3 mb-3" tal:condition="view/userCanEdit">
+              <a class="btn btn-primary" tal:attributes="href view/userCanEdit" role="button">Bestandteil hinzufügen</a>
+            </section>
 
           </div>
 
