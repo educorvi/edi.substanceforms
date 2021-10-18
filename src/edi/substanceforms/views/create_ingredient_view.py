@@ -2,7 +2,7 @@
 
 import transaction
 from wtforms.widgets import CheckboxInput, ListWidget
-from wtforms import Form, StringField, FloatField, SelectField, DateField, BooleanField, IntegerField, TextAreaField, FileField
+from wtforms import Form, StringField, FloatField, SelectField, DateField, BooleanField, IntegerField, TextAreaField, FileField, HiddenField
 from plone.namedfile import NamedBlobImage
 from wtforms import FileField, RadioField, SelectMultipleField
 from wtforms import validators
@@ -18,6 +18,7 @@ import psycopg2
 class MultiCheckboxField(SelectMultipleField):
     widget = ListWidget(prefix_label=False)
     option_widget = CheckboxInput()
+    itemid = HiddenField
 
 class CreateForm(Form):
 
