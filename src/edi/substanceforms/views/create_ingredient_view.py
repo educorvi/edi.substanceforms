@@ -30,7 +30,7 @@ class CreateIngredientForm(WTFormView):
     buttons = ('Speichern', 'Abbrechen')
 
     def __call__(self):
-        import pdb; pdb.set_trace()
+        self.form.itemid.default = self.request.get('itemid')
         dbdata = self.context.aq_parent
         self.db = DBConnect(host=dbdata.host, db=dbdata.database, user=dbdata.username, password=dbdata.password)
         self.host = self.context.aq_parent.host
@@ -44,7 +44,7 @@ class CreateIngredientForm(WTFormView):
                 if result:
                     return result
 
-        self.itemid = self.request.get('itemid')
+        #self.itemid = self.request.get('itemid')
         return self.index()
 
     def renderForm(self):
