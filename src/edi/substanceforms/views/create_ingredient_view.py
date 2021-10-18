@@ -52,7 +52,6 @@ class CreateIngredientForm(WTFormView):
             substances = self.db.execute(insert)
         except:
             substances = []
-        import pdb; pdb.set_trace()
         self.form.substance.choices = substances
         self.form.process()
         return self.formTemplate()
@@ -61,12 +60,12 @@ class CreateIngredientForm(WTFormView):
         import pdb; pdb.set_trace()
         redirect_url = self.context.aq_parent.absolute_url()
         if button == 'Speichern': #and self.validate():
-            insert = """INSERT INTO recipes (substance_id, concentration)
-                                                        VALUES ('%s', '%s');""" \
-                                                        % (self.form.substance.data,
+            insert = """INSERT INTO recipes (substance_id, ingredient_id, concentration)
+                                                        VALUES (%s, %s, %s);""" \
+                                                        % (self.form.itemid.data,
+                                                        self.form.substance.data,
                                                         self.form.concentration.data,
                                                         )
-            import pdb; pdb.set_trace()
             try:
                 self.db.execute(insert)
                 self.db.close()
