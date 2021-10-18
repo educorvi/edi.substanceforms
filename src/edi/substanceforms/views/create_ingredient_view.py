@@ -21,28 +21,8 @@ class MultiCheckboxField(SelectMultipleField):
 
 class CreateForm(Form):
 
-    title = StringField(u"Titel", [validators.required()], render_kw={'class': 'form-control'})
-    description = StringField(u"Beschreibung", [validators.required()], render_kw={'class': 'form-control'})
-    branch = SelectField("Branche", choices=branchen, render_kw={'class': 'form-control'})
-    manufacturer_id = SelectField(u"Hersteller des Wasch- und Reinigungsmittels", [validators.required()], render_kw={'class': 'form-control'})
-    substance_type = RadioField(u"Art des Wasch- und Reinigungsmittels", [validators.required()], choices=substance_types)
-    offset_print_manner = StringField(u"Offsetdruckverfahren", render_kw={'class': 'form-control'})
-    detergent_special = BooleanField(u"Es handelt sich um einen Sonderreiniger", render_kw={'class': 'form-check-input'})
-    evaporation_lane_150 = FloatField(u"Verdampfungsfaktor bei 150 Grad Celsius", render_kw={'class': 'form-control'})
-    evaporation_lane_160 = FloatField(u"Verdampfungsfaktor bei 160 Grad Celsius", render_kw={'class': 'form-control'})
-    evaporation_lane_170 = FloatField(u"Verdampfungsfaktor bei 170 Grad Celsius", render_kw={'class': 'form-control'})
-    evaporation_lane_180 = FloatField(u"Verdampfungsfaktor bei 180 Grad Celsius", render_kw={'class': 'form-control'})
-    ueg = StringField(u"UEG", render_kw={'class': 'form-control'})
-    response = StringField(u"Response-Faktor", render_kw={'class': 'form-control'})
-    skin_category = SelectField(u"Hautschutz-Kategorie", choices=hskategorie, render_kw={'class': 'form-control'})
-    date_checked = DateField(u"Datum der letzten Prüfung", render_kw={'class': 'form-control'})
-    checked_emissions = BooleanField(u"Emissionsarmes Produkt", render_kw={'class': 'form-check-input'})
-    flashpoint = IntegerField(u"Flammpunkt", render_kw={'class': 'form-control'})
-    values_range = BooleanField(u"Wertebereich", render_kw={'class': 'form-check-input'})
-    usecases = MultiCheckboxField(u"Anwendungsfälle", choices=usecases)
-    application_areas = MultiCheckboxField(u"Anwendungsbereiche", choices=application_areas)
-    image_url = FileField("Bilddatei hochladen", render_kw={'class': 'form-control'})
-    comments = TextAreaField("Bemerkungen", render_kw={'class': 'form-control'})
+    substance = SelectField("Reinstoff", choices=branchen, render_kw={'class': 'form-control'})
+    concentration = IntegerField(u"Konzentration", render_kw={'class': 'form-control'})
 
 class CreateIngredientForm(WTFormView):
     formClass = CreateForm
