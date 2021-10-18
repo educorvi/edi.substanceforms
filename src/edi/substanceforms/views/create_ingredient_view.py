@@ -57,6 +57,7 @@ class CreateIngredientForm(WTFormView):
         return self.formTemplate()
 
     def submit(self, button):
+        self.form.itemid.default = self.request.get('itemid')
         redirect_url = self.context.aq_parent.absolute_url()
         if button == 'Speichern': #and self.validate():
             insert = """INSERT INTO recipes (substance_id, ingredient_id, concentration)
