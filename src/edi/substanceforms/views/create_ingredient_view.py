@@ -44,7 +44,6 @@ class CreateIngredientForm(WTFormView):
                 if result:
                     return result
 
-        #self.itemid = self.request.get('itemid')
         return self.index()
 
     def renderForm(self):
@@ -58,7 +57,6 @@ class CreateIngredientForm(WTFormView):
         return self.formTemplate()
 
     def submit(self, button):
-        #import pdb; pdb.set_trace()
         self.form.itemid.default = self.request.get('itemid')
         redirect_url = self.context.aq_parent.absolute_url()
         if button == 'Speichern': #and self.validate():
@@ -68,15 +66,14 @@ class CreateIngredientForm(WTFormView):
                                                         self.form.substance.data,
                                                         self.form.concentration.data,
                                                         )
-            #import pdb; pdb.set_trace()
-            if True:
+            try:
                 self.db.execute(insert)
                 self.db.close()
-                message = u'Das Wasch- und Reinigungsmittel wurde erfolgreich gespeichert.'
+                message = u'Der Bestandteil wurde erfolgreich hinzugefügt.'
                 ploneapi.portal.show_message(message=message, type='info', request=self.request)
-            #except:
-            #    message = u'Fehler beim Hinzufügen des Bestandteils'
-            #    ploneapi.portal.show_message(message=message, type='error', request=self.request)
+            except:
+                message = u'Fehler beim Hinzufügen des Bestandteils'
+                ploneapi.portal.show_message(message=message, type='error', request=self.request)
 
             return self.request.response.redirect(redirect_url)
 
