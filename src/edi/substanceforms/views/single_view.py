@@ -122,8 +122,10 @@ class SingleView(BrowserView):
 
     def translate_recipes(self, recipe):
         resultstring = ""
+        index = 0
         for i in recipe:
-            resultstring = resultstring + "%s mit Konzentration %s %, " % (recipe[i]['title'][0][0], recipe[i]['concentration'])
+            resultstring = resultstring + "%s mit Konzentration %s %, " % (recipe[index]['title'][0][0], recipe[index]['concentration'])
+            index = index + 1
         #resultstring = resultstring[-2]
         import pdb; pdb.set_trace()
         return resultstring
