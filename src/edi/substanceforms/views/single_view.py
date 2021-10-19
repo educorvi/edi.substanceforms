@@ -117,7 +117,7 @@ class SingleView(BrowserView):
             substance_title = self.db.execute(select)
             entry = {'title':substance_title, 'concentration':concentration}
             substances.append(entry)
-        self.db.close()
+        #self.db.close()
         return substances
 
     def translate_recipes(self, recipe):
