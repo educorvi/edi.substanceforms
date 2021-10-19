@@ -126,8 +126,7 @@ class SingleView(BrowserView):
         for i in recipe:
             resultstring = resultstring + "%s mit Konzentration %s Pronzent, " % (recipe[index]['title'][0][0], recipe[index]['concentration'])
             index = index + 1
-        #resultstring = resultstring[-2]
-        import pdb; pdb.set_trace()
+        resultstring = resultstring[:-2]
         return resultstring
 
     def get_attr_translation(self, attribute, value):
