@@ -120,7 +120,7 @@
 	        </tr>
           <tr>
 	          <td>Bestandteile</td>
-            <td tal:content="python:view.get_recipes()"/>
+            <td tal:content="python:view.translate_recipes(view.get_recipes())"/>
           </tr>
 	      </tbody>
 	    </table>

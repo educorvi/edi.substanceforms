@@ -117,9 +117,16 @@ class SingleView(BrowserView):
             substance_title = self.db.execute(select)
             entry = {'title':substance_title, 'concentration':concentration}
             substances.append(entry)
-        import pdb; pdb.set_trace()
-        conn.close()
+        self.db.close()
         return substances
+
+    def translate_recipes(self, recipe):
+        resultstring = ""
+        for i in recipe:
+            resultstring.append("%s mit Konzentration %s %, ") % (recipe[i]['title'][0][0], recipe[i]['concentration'])
+        resultstring = resultstring[-2]
+        import pdb; pdb.set_trace()
+        return resultstring
 
     def get_attr_translation(self, attribute, value):
         vocabulary = get_vocabulary(attribute)
