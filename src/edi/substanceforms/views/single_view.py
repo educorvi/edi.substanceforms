@@ -124,7 +124,7 @@ class SingleView(BrowserView):
         resultstring = ""
         for i in recipe:
             resultstring = resultstring + "%s mit Konzentration %s %, " % (recipe[i]['title'][0][0], recipe[i]['concentration']
-        resultstring = resultstring[-2]
+        #resultstring = resultstring[-2]
         import pdb; pdb.set_trace()
         return resultstring
 
