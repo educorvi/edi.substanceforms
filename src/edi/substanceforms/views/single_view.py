@@ -6,6 +6,7 @@ from zope.browserpage.viewpagetemplatefile import BoundPageTemplate
 from edi.substanceforms.config import editrole
 from edi.substanceforms.helpers import get_vocabulary
 from plone import api as ploneapi
+from edi.substanceforms.lib import DBConnect
 import psycopg2
 
 
