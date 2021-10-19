@@ -14,6 +14,8 @@ class SingleView(BrowserView):
     index = ViewPageTemplateFile('standard.pt')
 
     def __call__(self):
+        dbdata = self.context.aq_parent
+        self.db = DBConnect(host=dbdata.host, db=dbdata.database, user=dbdata.username, password=dbdata.password)
         self.itemid = self.request.get('item')
         self.host = self.context.aq_parent.host
         self.dbname = self.context.aq_parent.database
@@ -106,13 +108,10 @@ class SingleView(BrowserView):
 
     def get_recipes(self):
         substances = []
-        conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
-        cur = conn.cursor()
         select = "SELECT substance_id, concentration from recipes WHERE mixture_id = %s" %self.itemid
-        cur.execute(select)
-        substance_ids = cur.fetchall()
+        substance_ids = self.db.execute(select)
+        import pdb; pdb.set_trace()
         # Continue here
-        cur.close()
         for sid, concentration in substance_ids:
             cur = conn.cursor()
             select = "SELECT title from substance WHERE substance_id = %s" %sid
