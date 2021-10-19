@@ -124,7 +124,7 @@ class SingleView(BrowserView):
         resultstring = ""
         index = 0
         for i in recipe:
-            resultstring = resultstring + "%s mit Konzentration %s Pronzent, " % (recipe[index]['title'][0][0], recipe[index]['concentration'])
+            resultstring = resultstring + "%s (%s \%)" % (recipe[index]['title'][0][0], recipe[index]['concentration'])
             index = index + 1
         resultstring = resultstring[:-2]
         return resultstring
