@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import transaction
-from wtforms import Form, StringField, SelectField, IntegerField, FileField, BooleanField, HiddenField
+from wtforms import Form, StringField, SelectField, IntegerField, FileField, BooleanField, HiddenField, FormField
 from wtforms import validators
 from collective.wtforms.views import WTFormView
 from edi.substanceforms.helpers import check_value
@@ -14,6 +14,12 @@ import psycopg2
 from PIL import Image
 from io import BytesIO
 
+
+class IngredientForm(Form):
+    substance = SelectField(u"Reinstoff", [validators.required()], render_kw={'class': 'form-control'})
+    concentration = IntegerField(u"Konzentration", render_kw={'class': 'form-control'})
+    # itemid = HiddenField(u'ReinstoffID')
+
 class CreateForm(Form):
 
     title = StringField("Titel", [validators.required()], render_kw={'class': 'form-control'})
@@ -23,6 +29,8 @@ class CreateForm(Form):
     skin_category = SelectField("Hautschutzkategorie", choices = hskategorie, render_kw={'class': 'form-control'})
     branch = SelectField("Branche", choices = branchen, render_kw={'class': 'form-control'})
     image_url = FileField("Bild hochladen", render_kw={'class': 'form-control'})
+    ingredients = FormField(IngredientForm)
+
 
 class UpdateForm(Form):
 
@@ -128,7 +136,7 @@ class UpdateFormView(CreateFormView):
                 if result:
                     return result
         self.itemid = self.request.get('itemid')
-        getter = """SELECT image_url, title, description, casnr, concentration, skin_category, branch 
+        getter = """SELECT image_url, title, description, casnr, concentration, skin_category, branch
                     FROM %s WHERE %s_id = %s;""" % (self.context.tablename,
                                                     self.context.tablename,
                                                     self.itemid)
@@ -153,7 +161,7 @@ class UpdateFormView(CreateFormView):
         redirect_url = self.context.aq_parent.absolute_url()
         if button == 'Speichern': #and self.validate():
             command = """UPDATE substance SET title='%s', description='%s', casnr=%s, concentration=%s,
-                         skin_category='%s', branch='%s' 
+                         skin_category='%s', branch='%s'
                          WHERE substance_id = %s;""" % (self.form.title.data,
                                                         self.form.description.data,
                                                         self.form.casnr.data,
@@ -166,7 +174,7 @@ class UpdateFormView(CreateFormView):
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
             #message = u'Fehler beim Aktualisieren des Gefahrstoffgemisches'
             #ploneapi.portal.show_message(message=message, type='error', request=self.request)
-            
+
             self.db.close()
             return self.request.response.redirect(redirect_url)
 
