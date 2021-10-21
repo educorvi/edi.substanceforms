@@ -95,7 +95,7 @@ class UpdateFormView(CreateFormView):
         redirect_url = self.context.aq_parent.absolute_url()
         if button == 'Speichern': #and self.validate():
             command = """UPDATE manufacturer SET title='%s', description='%s', homepage='%s'
-                         WHERE substance_id = %s;""" % (self.form.title.data,
+                         WHERE manufacturer_id = %s;""" % (self.form.title.data,
                                                         self.form.description.data,
                                                         self.form.homepage.data,
                                                         self.form.item_id.data)
