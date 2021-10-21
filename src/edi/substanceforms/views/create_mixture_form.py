@@ -255,7 +255,7 @@ class UpdateFormView(CreateFormView):
                                                         self.form.response.data,
                                                         self.form.skin_category.data,
                                                         self.form.checked_emissions.data,
-                                                        self.form.date_checked.data,
+                                                        check_value(self.form.date_checked.data),
                                                         self.form.flashpoint.data,
                                                         self.form.values_range.data,
                                                         self.form.comments.data,
