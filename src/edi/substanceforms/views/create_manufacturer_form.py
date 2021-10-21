@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from wtforms import Form, StringField, FileField
+from wtforms import Form, StringField, FileField, HiddenField
 from wtforms import validators
 from collective.wtforms.views import WTFormView
 from edi.substanceforms.helpers import check_value
@@ -19,6 +19,7 @@ class UpdateForm(Form):
     title = StringField("Titel", [validators.required()], render_kw={'class': 'form-control'})
     description = StringField("Beschreibung", render_kw={'class': 'form-control'})
     homepage = StringField("Homepage", render_kw={'class': 'form-control'})
+    item_id = HiddenField()
 
 class CreateFormView(WTFormView):
     formClass = CreateForm
@@ -84,6 +85,7 @@ class UpdateFormView(CreateFormView):
         self.form.title.default=self.result[0][0]
         self.form.description.default=self.result[0][1]
         self.form.homepage.default=self.result[0][2]
+        self.form.item_id.default=self.itemid
         return self.formTemplate()
 
     def submit(self, button):
@@ -94,7 +96,8 @@ class UpdateFormView(CreateFormView):
             command = """UPDATE manufacturer SET title='%s', description='%s', homepage='%s'
                          WHERE substance_id = %s;""" % (self.form.title.data,
                                                         self.form.description.data,
-                                                        self.form.homepage.data)
+                                                        self.form.homepage.data,
+                                                        self.form.item_id.data)
             self.db.execute(command)
             message = u'Der Hersteller wurde erfolgreich aktualisiert.'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
