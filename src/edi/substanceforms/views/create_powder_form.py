@@ -168,7 +168,7 @@ class UpdateFormView(CreateFormView):
                                                         self.form.description.data,
                                                         self.form.product_class.data,
                                                         self.form.starting_material.data,
-                                                        check_value(self.formClass.median_value.data),
+                                                        check_value(self.form.median_value.data),
                                                         check_value(self.form.volume_share.data),
                                                         check_value(self.form.checked_emissions.data),
                                                         self.form.item_id.data)
