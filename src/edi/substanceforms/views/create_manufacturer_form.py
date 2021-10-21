@@ -78,7 +78,6 @@ class UpdateFormView(CreateFormView):
                                                     self.context.tablename,
                                                     self.itemid)
         self.result = self.db.execute(getter)
-        import pdb; pdb.set_trace()
         self.db.close()
         return self.index()
 
