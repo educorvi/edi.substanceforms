@@ -208,7 +208,6 @@ class UpdateFormView(CreateFormView):
         self.form.description.default=self.result[0][1]
         self.form.branch.default = self.result[0][2]
         self.form.substance_type.default = self.result[0][3]
-        import pdb; pdb.set_trace()
         self.form.offset_print_manner.default = self.result[0][4]
         self.form.detergent_special.default = self.result[0][5]
         self.form.application_areas.default = self.result[0][6]
