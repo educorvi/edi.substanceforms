@@ -239,7 +239,7 @@ class UpdateFormView(CreateFormView):
                          evaporation_lane_150=%s, evaporation_lane_160=%s, evaporation_lane_170=%s, evaporation_lane_180=%s,
                          ueg='%s', response='%s', skin_category='%s', checked_emissions=%s,
                          flashpoint=%s, values_range=%s, comments='%s'
-                         WHERE manufacturer_id = %s;""" % (self.form.title.data,
+                         WHERE substance_mixture_id = %s;""" % (self.form.title.data,
                                                         self.form.description.data,
                                                         self.form.branch.data,
                                                         self.form.substance_type,
