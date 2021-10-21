@@ -86,6 +86,7 @@ class UpdateFormView(CreateFormView):
         self.form.description.default=self.result[0][1]
         self.form.homepage.default=self.result[0][2]
         self.form.item_id.default=self.itemid
+        self.form.process()
         return self.formTemplate()
 
     def submit(self, button):
