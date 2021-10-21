@@ -149,11 +149,11 @@ class UpdateFormView(CreateFormView):
     def renderForm(self):
         self.form.title.default=self.result[0][0]
         self.form.description.default=self.result[0][1]
-        self.form.product_class.default=self.result[0][3]
-        self.form.starting_material.default=self.result[0][4]
-        self.form.median_value.default=self.result[0][5]
-        self.form.volume_share.default=self.result[0][6]
-        self.form.checked_emissions.default=self.result[0][7]
+        self.form.product_class.default=self.result[0][2]
+        self.form.starting_material.default=self.result[0][3]
+        self.form.median_value.default=self.result[0][4]
+        self.form.volume_share.default=self.result[0][5]
+        self.form.checked_emissions.default=self.result[0][6]
         self.form.item_id.default=self.itemid
         self.form.process()
         return self.formTemplate()
