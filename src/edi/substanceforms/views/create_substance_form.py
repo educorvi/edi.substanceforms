@@ -213,7 +213,8 @@ class DeleteFormView(CreateFormView):
         import pdb; pdb.set_trace()
         if button == 'Speichern' and self.form.sure.data is True: #and self.validate():
             command = "DELETE FROM substance WHERE substance_id = %s;" % (self.form.item_id.data)
-            self.db.execute(command)
+            schorsch = self.db.execute(command)
+            import pdb; pdb.set_trace()
             message = u'Der Reinstoff wurde erfolgreich gelöscht'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
 
