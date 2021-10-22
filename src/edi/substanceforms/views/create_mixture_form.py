@@ -73,7 +73,6 @@ class UpdateForm(Form):
 class DeleteForm(Form):
     sure = BooleanField("Gefahrstoffgemisch löschen", render_kw={'class': 'form-check-input'})
     item_id = HiddenField()
-    title = HiddenField()
 
 class CreateFormView(WTFormView):
     formClass = CreateForm
@@ -304,7 +303,7 @@ class DeleteFormView(CreateFormView):
         redirect_url = self.context.aq_parent.absolute_url()
         if button == 'Speichern' and self.form.sure.data is True: #and self.validate():
             command = "DELETE FROM substance_mixture WHERE substance_mixture_id = %s" % (self.form.item_id.data)
-            schorsch = self.db.execute(command)
+            self.db.execute(command)
             message = u'Das Gefahrstoffgemisch wurde erfolgreich gelöscht'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
 
