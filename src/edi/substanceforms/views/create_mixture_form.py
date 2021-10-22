@@ -70,6 +70,11 @@ class UpdateForm(Form):
     no_image = BooleanField("Vorhandenes Bild entfernen", render_kw={'class': 'form-check-input'})
     item_id = HiddenField()
 
+class DeleteForm(Form):
+    sure = BooleanField("Gefahrstoffgemisch löschen", render_kw={'class': 'form-check-input'})
+    item_id = HiddenField()
+    title = HiddenField()
+
 class CreateFormView(WTFormView):
     formClass = CreateForm
     buttons = ('Speichern', 'Abbrechen')
@@ -270,3 +275,46 @@ class UpdateFormView(CreateFormView):
 
         elif button == 'Abbrechen':
             return self.request.response.redirect(redirect_url)
+
+class DeleteFormView(CreateFormView):
+    formClass = DeleteForm
+
+    def __call__(self):
+        dbdata = self.context.aq_parent
+        self.db = DBConnect(host=dbdata.host, db=dbdata.database, user=dbdata.username, password=dbdata.password)
+        if self.submitted:
+            button = self.hasButtonSubmitted()
+            if button:
+                result = self.submit(button)
+                if result:
+                    return result
+        self.itemid = self.request.get('itemid')
+        self.db.close()
+        return self.index()
+
+
+    def renderForm(self):
+        self.form.item_id.default=self.itemid
+        self.form.process()
+        return self.formTemplate()
+
+    def submit(self, button):
+        """
+        """
+        redirect_url = self.context.aq_parent.absolute_url()
+        if button == 'Speichern' and self.form.sure.data is True: #and self.validate():
+            command = "DELETE FROM substance_mixture WHERE substance_mixture_id = %s" % (self.form.item_id.data)
+            schorsch = self.db.execute(command)
+            message = u'Das Gefahrstoffgemisch wurde erfolgreich gelöscht'
+            ploneapi.portal.show_message(message=message, type='info', request=self.request)
+
+            self.db.close()
+            return self.request.response.redirect(redirect_url)
+
+        elif button == 'Speichern' and self.form.sure.data is False:
+            message = u'Das Gefahrstoffgemisch wurde nicht gelöscht, da das Bestätigungsfeld nicht ausgewählt war.'
+            ploneapi.portal.show_message(message=message, type='error', request=self.request)
+
+        elif button == 'Abbrechen':
+            return self.request.response.redirect(redirect_url)
+
