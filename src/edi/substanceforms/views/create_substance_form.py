@@ -209,17 +209,19 @@ class DeleteFormView(CreateFormView):
         """
         """
         redirect_url = self.context.aq_parent.absolute_url()
-        if button == 'Speichern': #and self.validate():
+        if button == 'Speichern' and self.form.sure.data is True: #and self.validate():
             command = """DELETE FROM substance
                          WHERE substance_id = %s;""" % (self.form.item_id.data)
             self.db.execute(command)
             message = u'Der Reinstoff wurde erfolgreich gelöscht'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
-            #message = u'Fehler beim Aktualisieren des Gefahrstoffgemisches'
-            #ploneapi.portal.show_message(message=message, type='error', request=self.request)
 
             self.db.close()
             return self.request.response.redirect(redirect_url)
+
+        elif button == 'Speichern' and self.form.sure.data is False:
+            message = u'Der Reinstoff wurde nicht gelöscht, da das Bestätigungsfeld nicht ausgewählt war.'
+            ploneapi.portal.show_message(message=message, type='error', request=self.request)
 
         elif button == 'Abbrechen':
             return self.request.response.redirect(redirect_url)
