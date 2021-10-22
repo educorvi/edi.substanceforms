@@ -48,6 +48,7 @@ class UpdateForm(Form):
 class DeleteForm(Form):
     sure = BooleanField("Reinstoff löschen", render_kw={'class': 'form-check-input'})
     item_id = HiddenField()
+    title = HiddenField()
 
 class CreateFormView(WTFormView):
     formClass = CreateForm
@@ -199,10 +200,18 @@ class DeleteFormView(CreateFormView):
                 if result:
                     return result
         self.itemid = self.request.get('itemid')
+        getter = """SELECT title
+                    FROM %s WHERE %s_id = %s;""" % (self.context.tablename,
+                                                    self.context.tablename,
+                                                    self.itemid)
+        self.result = self.db.execute(getter)
+        self.db.close()
         return self.index()
+
 
     def renderForm(self):
         self.form.item_id.default=self.itemid
+        self.form.title.default=self.result[0][0]
         self.form.process()
         return self.formTemplate()
 
@@ -212,7 +221,8 @@ class DeleteFormView(CreateFormView):
         redirect_url = self.context.aq_parent.absolute_url()
         import pdb; pdb.set_trace()
         if button == 'Speichern' and self.form.sure.data is True: #and self.validate():
-            command = "DELETE FROM substance WHERE substance_id = %s;" % (self.form.item_id.data)
+            command = "DELETE FROM substance WHERE substance_id = %s AND title = '%s';" % (self.form.item_id.data,
+                                                                                           self.form.title.data)
             schorsch = self.db.execute(command)
             import pdb; pdb.set_trace()
             message = u'Der Reinstoff wurde erfolgreich gelöscht'
