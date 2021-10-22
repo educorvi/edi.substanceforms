@@ -124,6 +124,14 @@
     />
 
   <browser:page
+    name="delete-manufacturer-form"
+    for="*"
+    class=".create_manufacturer_form.DeleteFormView"
+    template = "create_view.pt"
+    permission="zope2.View"
+    />
+
+  <browser:page
     name="update-mixture-form"
     for="*"
     class=".create_mixture_form.UpdateFormView"
