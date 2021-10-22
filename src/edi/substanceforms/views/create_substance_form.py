@@ -209,6 +209,7 @@ class DeleteFormView(CreateFormView):
         """
         """
         redirect_url = self.context.aq_parent.absolute_url()
+        import pdb; pdb.set_trace()
         if button == 'Speichern' and self.form.sure.data is True: #and self.validate():
             command = """DELETE FROM substance
                          WHERE substance_id = %s;""" % (self.form.item_id.data)
