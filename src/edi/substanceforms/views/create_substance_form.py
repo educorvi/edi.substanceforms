@@ -206,7 +206,6 @@ class DeleteFormView(CreateFormView):
 
     def renderForm(self):
         self.form.item_id.default=self.itemid
-        self.form.title.default=self.result[0][0]
         self.form.process()
         return self.formTemplate()
 
