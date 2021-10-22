@@ -44,6 +44,10 @@ class UpdateForm(Form):
     no_image = BooleanField("Vorhandenes Bild entfernen", render_kw={'class': 'form-check-input'})
     item_id = HiddenField()
 
+class DeleteForm(Form):
+    sure = BooleanField("Reinstoff löschen", render_kw={'class': 'form-check-input'})
+    item_id = HiddenField()
+
 class CreateFormView(WTFormView):
     formClass = CreateForm
     buttons = ('Speichern', 'Abbrechen')
@@ -170,7 +174,46 @@ class UpdateFormView(CreateFormView):
                                                         self.form.branch.data,
                                                         self.form.item_id.data)
             self.db.execute(command)
-            message = u'Das Wasch- und Reinigungsmittel wurde erfolgreich aktualisiert.'
+            message = u'Der Reinstoff wurde erfolgreich aktualisiert.'
+            ploneapi.portal.show_message(message=message, type='info', request=self.request)
+            #message = u'Fehler beim Aktualisieren des Gefahrstoffgemisches'
+            #ploneapi.portal.show_message(message=message, type='error', request=self.request)
+
+            self.db.close()
+            return self.request.response.redirect(redirect_url)
+
+        elif button == 'Abbrechen':
+            return self.request.response.redirect(redirect_url)
+
+class DeleteFormView(CreateFormView):
+    formClass = DeleteForm
+
+    def __call__(self):
+        dbdata = self.context.aq_parent
+        self.db = DBConnect(host=dbdata.host, db=dbdata.database, user=dbdata.username, password=dbdata.password)
+        if self.submitted:
+            button = self.hasButtonSubmitted()
+            if button:
+                result = self.submit(button)
+                if result:
+                    return result
+        self.itemid = self.request.get('itemid')
+        return self.index()
+
+    def renderForm(self):
+        self.form.item_id.default=self.itemid
+        self.form.process()
+        return self.formTemplate()
+
+    def submit(self, button):
+        """
+        """
+        redirect_url = self.context.aq_parent.absolute_url()
+        if button == 'Speichern': #and self.validate():
+            command = """DELETE FROM substance
+                         WHERE substance_id = %s;""" % (self.form.item_id.data)
+            self.db.execute(command)
+            message = u'Der Reinstoff wurde erfolgreich gelöscht'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
             #message = u'Fehler beim Aktualisieren des Gefahrstoffgemisches'
             #ploneapi.portal.show_message(message=message, type='error', request=self.request)
