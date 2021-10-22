@@ -200,12 +200,6 @@ class DeleteFormView(CreateFormView):
                 if result:
                     return result
         self.itemid = self.request.get('itemid')
-        """
-        getter = """SELECT title
-                    FROM %s WHERE %s_id = %s;""" % (self.context.tablename,
-                                                    self.context.tablename,
-                                                    self.itemid)
-        self.result = self.db.execute(getter)
         self.db.close()
         """
         return self.index()
