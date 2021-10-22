@@ -84,7 +84,7 @@
             </section>
 
             <section class="mt-3 mb-3" tal:condition="view/userCanEdit">
-              <a class="btn btn-primary" tal:attributes="href python:context.absolute_url()+'/delete-powder-form?itemid=%s' % view.itemid" role="button">Artikel Bearbeiten</a>
+              <a class="btn btn-primary" tal:attributes="href python:context.absolute_url()+'/delete-powder-form?itemid=%s' % view.itemid" role="button">Artikel Löschen</a>
             </section>
 
           </div>
