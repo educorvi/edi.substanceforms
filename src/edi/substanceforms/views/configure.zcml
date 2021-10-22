@@ -156,6 +156,14 @@
     />
 
   <browser:page
+    name="delete-powder-form"
+    for="*"
+    class=".create_powder_form.DeleteFormView"
+    template = "create_view.pt"
+    permission="zope2.View"
+    />
+
+  <browser:page
     name="create-printing_machine-form"
     for="*"
     class=".create_machine_form.CreateFormView"
