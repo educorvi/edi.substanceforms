@@ -201,7 +201,6 @@ class DeleteFormView(CreateFormView):
                     return result
         self.itemid = self.request.get('itemid')
         self.db.close()
-        """
         return self.index()
 
 
