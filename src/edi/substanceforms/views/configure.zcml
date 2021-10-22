@@ -110,7 +110,7 @@
   <browser:page
     name="delete-substance-form"
     for="*"
-    class=".create_substance_form.'DeleteFormView"
+    class=".create_substance_form.DeleteFormView"
     template = "create_view.pt"
     permission="zope2.View"
     />
