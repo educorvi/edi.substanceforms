@@ -1,4 +1,4 @@
-import psycopg2                                                                       
+import psycopg2
 
 class DBConnect(object):
     def __init__(self, host, db, user, password):
@@ -18,6 +18,8 @@ class DBConnect(object):
         if method == "SELECT":
             results = cur.fetchall()
         elif method in ["INSERT", "UPDATE"]:
+            results = self.conn.commit()
+        elif method == "DELETE":
             results = self.conn.commit()
         cur.close()
         return results

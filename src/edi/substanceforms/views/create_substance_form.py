@@ -200,12 +200,14 @@ class DeleteFormView(CreateFormView):
                 if result:
                     return result
         self.itemid = self.request.get('itemid')
+        """
         getter = """SELECT title
                     FROM %s WHERE %s_id = %s;""" % (self.context.tablename,
                                                     self.context.tablename,
                                                     self.itemid)
         self.result = self.db.execute(getter)
         self.db.close()
+        """
         return self.index()
 
 
@@ -221,8 +223,7 @@ class DeleteFormView(CreateFormView):
         redirect_url = self.context.aq_parent.absolute_url()
         import pdb; pdb.set_trace()
         if button == 'Speichern' and self.form.sure.data is True: #and self.validate():
-            command = "DELETE FROM substance WHERE substance_id = %s AND title = '%s';" % (self.form.item_id.data,
-                                                                                           self.form.title.data)
+            command = "DELETE FROM substance WHERE substance_id = %s" % (self.form.item_id.data)
             schorsch = self.db.execute(command)
             import pdb; pdb.set_trace()
             message = u'Der Reinstoff wurde erfolgreich gelöscht'
