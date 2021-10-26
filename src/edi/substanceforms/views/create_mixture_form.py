@@ -75,7 +75,7 @@ class DeleteForm(Form):
     item_id = HiddenField()
 
 class DeleteIngredientsForm(Form):
-    sure = BooleanField("Betandteile löschen", render_kw={'class': 'form-check-input'})
+    sure = BooleanField("Bestandteile löschen", render_kw={'class': 'form-check-input'})
     item_id = HiddenField()
 
 class CreateFormView(WTFormView):
