@@ -6,6 +6,7 @@ from zope.browserpage.viewpagetemplatefile import BoundPageTemplate
 from edi.substanceforms.config import editrole
 from edi.substanceforms.helpers import get_vocabulary
 from plone import api as ploneapi
+from edi.substanceforms.lib import DBConnect
 import psycopg2
 
 
@@ -14,6 +15,8 @@ class SingleView(BrowserView):
     index = ViewPageTemplateFile('standard.pt')
 
     def __call__(self):
+        dbdata = self.context.aq_parent
+        self.db = DBConnect(host=dbdata.host, db=dbdata.database, user=dbdata.username, password=dbdata.password)
         self.itemid = self.request.get('item')
         self.host = self.context.aq_parent.host
         self.dbname = self.context.aq_parent.database
@@ -26,10 +29,23 @@ class SingleView(BrowserView):
             #self.machines = self.get_machines()
             self.secsheet = self.get_recipes()
             template = ViewPageTemplateFile('substance_mixture_view.pt')
+            self.image_url = self.get_image_url()
+            self.template = BoundPageTemplate(template, self)
+            return self.template()
+        if self.context.tablename == 'substance':
+            #self.machines = self.get_machines()
+            self.secsheet = self.get_recipes()
+            template = ViewPageTemplateFile('substance_view.pt')
+            self.image_url = self.get_image_url()
             self.template = BoundPageTemplate(template, self)
             return self.template()
         elif self.context.tablename == 'spray_powder':
             template = ViewPageTemplateFile('spray_powder_view.pt')
+            self.image_url = self.get_image_url()
+            self.template = BoundPageTemplate(template, self)
+            return self.template()
+        elif self.context.tablename == 'manufacturer':
+            template = ViewPageTemplateFile('manufacturer_view.pt')
             self.template = BoundPageTemplate(template, self)
             return self.template()
         return self.index()
@@ -53,6 +69,24 @@ class SingleView(BrowserView):
         cur.close
         conn.close()
         return article
+
+    def get_image_url(self):
+        conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
+        cur = conn.cursor()
+        tablename = self.context.tablename
+        select = "SELECT image_url from %s WHERE %s_id = %s" % (tablename, tablename, self.itemid)
+        cur.execute(select)
+        uid = cur.fetchall()[0][0]
+        cur.close
+        conn.close()
+
+        if uid:
+            imageobj = ploneapi.content.get(UID=uid)
+            image_url = '%s/@@images/image/preview' % imageobj.absolute_url()
+            return image_url
+        else:
+            return False
+
     """
     def get_machines(self):
         machine_titles = []
@@ -75,22 +109,25 @@ class SingleView(BrowserView):
 
     def get_recipes(self):
         substances = []
-        conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
-        cur = conn.cursor()
         select = "SELECT substance_id, concentration from recipes WHERE mixture_id = %s" %self.itemid
-        cur.execute(select)
-        substance_ids = cur.fetchall() #TODO: muss evenutell noch behandelt werden
-        cur.close()
+        substance_ids = self.db.execute(select)
+        # Continue here
         for sid, concentration in substance_ids:
-            cur = conn.cursor()
             select = "SELECT title from substance WHERE substance_id = %s" %sid
-            cur.execute(select)
-            substance_title = cur.fetchall()
-            cur.close()
+            substance_title = self.db.execute(select)
             entry = {'title':substance_title, 'concentration':concentration}
             substances.append(entry)
-        conn.close()
+        #self.db.close()
         return substances
+
+    def translate_recipes(self, recipe):
+        resultstring = ""
+        index = 0
+        for i in recipe:
+            resultstring = resultstring + "%s (%s %s), " % (recipe[index]['title'][0][0], recipe[index]['concentration'], "%")
+            index = index + 1
+        resultstring = resultstring[:-2]
+        return resultstring
 
     def get_attr_translation(self, attribute, value):
         vocabulary = get_vocabulary(attribute)
@@ -99,12 +136,41 @@ class SingleView(BrowserView):
                 return i[1]
         return value
 
+    def get_none_translation(self, value):
+        if value == None or value == 'None':
+            return ''
+        else:
+            return value
+
     def usecase_translation(self, value):
         vocabulary = get_vocabulary('usecases')
         newlist = list()
-        for v in value:
-            for i in vocabulary:
-                if i[0] == v:
-                    newlist.append(i[1])
-        result = ', '.join(newlist)
+        try:
+            for v in value:
+                for i in vocabulary:
+                    if i[0] == v:
+                        newlist.append(i[1])
+            result = ', '.join(newlist)
+        except:
+            result = ''
+        return result
+
+    def application_areas_translation(self, value):
+        vocabulary = get_vocabulary('application_areas')
+        newlist = list()
+        try:
+            for v in value:
+                for i in vocabulary:
+                    if i[0] == v:
+                        newlist.append(i[1])
+            result = ', '.join(newlist)
+        except:
+            result = ''
+        return result
+
+    def unbundle_list(self, value):
+        if value:
+            result = value.split('@')
+        else:
+            result = list()
         return result

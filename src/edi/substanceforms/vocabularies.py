@@ -18,7 +18,8 @@ substance_types = [
     (u'detergent_labels', u'Reinigungsmittel Etiketten'),
     (u'detergent_heatset', u'Heatsetwaschmittel'),
     (u'detergent_manual', u'Reinigungsmittel manueller Gebrauch'),
-    ('product_datasheet', u'Wasch- und Reinigungsmittel für den Offsetdruck')
+    ('product_datasheet', u'Wasch- und Reinigungsmittel für den Offsetdruck'),
+    ('offset', u'Wasch- und Reinigungsmittel für den Offsetdruck')
     ]
 
 produktkategorien = [
@@ -32,6 +33,12 @@ produktklassen = [
     (u'waschmittel_kohlenwasserstoff', u'Waschmittel auf Kohlenwasserstoffbasis'),
     (u'waschmittel_testbenzin', u'Waschmittel auf Basis von Testbenzin'),
     (u'waschmittel_emulsionen', u'Waschmittel auf wässriger Basis/Emulsionen')
+    ]
+
+product_class = [
+    (u'fein', u'fein'),
+    (u'mittel', u'mittel'),
+    (u'grob', u'grob')
     ]
 
 classifications = [
@@ -71,7 +78,8 @@ application_areas = [
 
 boolvocab = [
     (u'True', u'Ja'),
-    (u'False', u'Nein')
+    (u'False', u'Nein'),
+    (u'None', u'Nein')
     ]
 
 vocabularies = {

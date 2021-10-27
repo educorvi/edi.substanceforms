@@ -7,6 +7,13 @@
   -*- extra stuff goes here -*-
 
   <browser:page
+    name="selector-view"
+    for="Products.CMFCore.interfaces.IFolderish"
+    class=".selector_view.SelectorView"
+    permission="zope2.View"
+    />
+
+  <browser:page
     name="migrationview"
     for="*"
     class=".migrationview.Migrationview"
@@ -21,9 +28,41 @@
     />
 
   <browser:page
-    name="view"
+    name="tabelle_view"
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".tabelle_view.TabelleFormView"
+    template="tabelle_view.pt"
+    permission="zope2.View"
+    />
+
+    <browser:page
+    name="manufacturer-form-view"
+    for="edi.substanceforms.content.tabelle.ITabelle"
+    class=".tabelle_view.HerstellerFormView"
+    template="tabelle_view.pt"
+    permission="zope2.View"
+    />
+
+    <browser:page
+    name="substance-form-view"
+    for="edi.substanceforms.content.tabelle.ITabelle"
+    class=".tabelle_view.SubstanceFormView"
+    template="tabelle_view.pt"
+    permission="zope2.View"
+    />
+
+    <browser:page
+    name="substance_mixture-form-view"
+    for="edi.substanceforms.content.tabelle.ITabelle"
+    class=".tabelle_view.SubstancemixtureFormView"
+    template="tabelle_view.pt"
+    permission="zope2.View"
+    />
+
+    <browser:page
+    name="spray_powder-form-view"
+    for="edi.substanceforms.content.tabelle.ITabelle"
+    class=".tabelle_view.SpraypowderFormView"
     template="tabelle_view.pt"
     permission="zope2.View"
     />
@@ -61,6 +100,78 @@
     />
 
   <browser:page
+    name="update-substance-form"
+    for="*"
+    class=".create_substance_form.UpdateFormView"
+    template = "create_view.pt"
+    permission="zope2.View"
+    />
+
+  <browser:page
+    name="delete-substance-form"
+    for="*"
+    class=".create_substance_form.DeleteFormView"
+    template = "create_view.pt"
+    permission="zope2.View"
+    />
+
+  <browser:page
+    name="update-manufacturer-form"
+    for="*"
+    class=".create_manufacturer_form.UpdateFormView"
+    template = "create_view.pt"
+    permission="zope2.View"
+    />
+
+  <browser:page
+    name="delete-manufacturer-form"
+    for="*"
+    class=".create_manufacturer_form.DeleteFormView"
+    template = "create_view.pt"
+    permission="zope2.View"
+    />
+
+  <browser:page
+    name="update-mixture-form"
+    for="*"
+    class=".create_mixture_form.UpdateFormView"
+    template = "create_view.pt"
+    permission="zope2.View"
+    />
+
+  <browser:page
+    name="delete-mixture-form"
+    for="*"
+    class=".create_mixture_form.DeleteFormView"
+    template = "create_view.pt"
+    permission="zope2.View"
+    />
+
+  <browser:page
+    name="delete-ingredients-form"
+    for="*"
+    class=".create_mixture_form.DeleteIngredientsFormView"
+    template = "create_view.pt"
+    permission="zope2.View"
+    />
+
+  <browser:page
+    name="update-powder-form"
+    for="*"
+    class=".create_powder_form.UpdateFormView"
+    template = "create_view.pt"
+    permission="zope2.View"
+    />
+
+  <browser:page
+    name="delete-powder-form"
+    for="*"
+    class=".create_powder_form.DeleteFormView"
+    template = "create_view.pt"
+    permission="zope2.View"
+    />
+
+  <browser:page
     name="create-printing_machine-form"
     for="*"
     class=".create_machine_form.CreateFormView"
@@ -72,6 +183,22 @@
     name="create-substance_mixture-form"
     for="*"
     class=".create_mixture_form.CreateFormView"
+    template = "create_view.pt"
+    permission="zope2.View"
+    />
+
+  <browser:page
+    name="create-ingredient-form"
+    for="*"
+    class=".create_ingredient_view.CreateIngredientForm"
+    template = "create_view.pt"
+    permission="zope2.View"
+    />
+
+  <browser:page
+    name="create-spray_powder-form"
+    for="*"
+    class=".create_powder_form.CreateFormView"
     template = "create_view.pt"
     permission="zope2.View"
     />
