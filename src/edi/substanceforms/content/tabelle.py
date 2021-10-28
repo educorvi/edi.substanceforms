@@ -69,7 +69,7 @@ class ITabelle(model.Schema):
             source = possibleTables,
             )
 
-    columns = schema.Choice(
+    columns = schema.MultiChoice(
             title = u"Datenbankspalten",
             description = u"Datenbankspalten auswählen, die berücksichtigt werden sollen",
             source = possibleColumns,
