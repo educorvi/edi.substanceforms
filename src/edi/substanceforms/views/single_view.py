@@ -111,7 +111,6 @@ class SingleView(BrowserView):
         synonyms = []
         select = "SELECT synonym_name from synonyms WHERE substance_id = %s" %self.itemid
         synonyms = self.db.execute(select)
-        import pdb; pdb.set_trace()
         return synonyms
 
     def translate_synonyms(self, synonyms):
