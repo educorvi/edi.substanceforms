@@ -70,7 +70,7 @@ class ITabelle(model.Schema):
             source = possibleTables,
             )
 
-    columns = schema.CheckBoxFieldWidget(
+    columns = z3c.form.browser.CheckBoxFieldWidget(
             title = u"Datenbankspalten",
             description = u"Datenbankspalten auswählen, die berücksichtigt werden sollen",
             source = possibleColumns,
