@@ -59,7 +59,7 @@ def possibleColumns(context):
 
     return SimpleVocabulary(terms)
 
-class ITabelle(model.Schema):
+class ITabelle(model.Schema, CheckBoxFieldWidget):
     """ Marker interface and Dexterity Python Schema for Tabelle
     """
 
