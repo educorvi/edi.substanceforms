@@ -32,6 +32,7 @@ def possibleTables(context):
         terms.append(SimpleVocabulary.createTerm(table,table,table))
     return SimpleVocabulary(terms)
 
+@provider(IContextSourceBinder)
 def possibleColumns(context):
     terms = []
     return SimpleVocabulary(terms)
