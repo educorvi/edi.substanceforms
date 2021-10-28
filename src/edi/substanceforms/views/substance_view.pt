@@ -49,6 +49,10 @@
 	          <td tal:content="python:article[1]"/>
 	        </tr>
           <tr>
+            <td>Synonyme</td>
+            <td tal:content="python:view.get_synonyms()"/>
+          </tr>
+          <tr>
 	          <td>Beschreibung</td>
 	          <td tal:content="python:article[2]"/>
 	        </tr>

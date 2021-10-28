@@ -107,6 +107,20 @@ class SingleView(BrowserView):
         return machine_titles
     """
 
+    def get_synonyms(self):
+        synonyms = []
+        select = "SELECT synonym_name from synonyms WHERE substance_id = %s" %self.itemid
+        synonyms = self.db.execute(select)
+        import pdb; pdb.set_trace()
+        # Continue here
+        for sid, concentration in substance_ids:
+            select = "SELECT title from substance WHERE substance_id = %s" %sid
+            substance_title = self.db.execute(select)
+            entry = {'title':substance_title, 'concentration':concentration}
+            substances.append(entry)
+        #self.db.close()
+        return substances
+
     def get_recipes(self):
         substances = []
         select = "SELECT substance_id, concentration from recipes WHERE mixture_id = %s" %self.itemid
