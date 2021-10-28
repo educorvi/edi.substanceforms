@@ -34,8 +34,28 @@ def possibleTables(context):
 
 @provider(IContextSourceBinder)
 def possibleColumns(context):
-    import pdb; pdb.set_trace()
-    terms = []
+    try:
+        tablename = context.tablename
+        host = context.host
+        dbname = context.database
+        username = context.username
+        password = context.password
+
+        conn = psycopg2.connect(host=host, user=username, dbname=dbname, password=password)
+        cur = conn.cursor()
+        select = "SELECT column_name FROM information_schema.columns WHERE table_name = '%s';" % tablename
+        cur.execute(select)
+        tables = cur.fetchall()
+        cur.close()
+        conn.close()
+
+        terms = []
+        for i in tables:
+            table = i[0]
+            terms.append(SimpleVocabulary.createTerm(table, table, table))
+    except:
+        terms = []
+
     return SimpleVocabulary(terms)
 
 class ITabelle(model.Schema):
