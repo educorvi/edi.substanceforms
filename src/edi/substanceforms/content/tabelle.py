@@ -34,6 +34,7 @@ def possibleTables(context):
 
 @provider(IContextSourceBinder)
 def possibleColumns(context):
+    import pdb; pdb.set_trace()
     terms = []
     return SimpleVocabulary(terms)
 
