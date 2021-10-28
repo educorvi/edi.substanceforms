@@ -32,6 +32,28 @@ def possibleTables(context):
         terms.append(SimpleVocabulary.createTerm(table,table,table))
     return SimpleVocabulary(terms)
 
+def possibleColumns(context):
+    import pdb; pdb.set_trace()
+    """
+    host = context.host
+    dbname = context.database
+    username = context.username
+    password = context.password
+
+    conn = psycopg2.connect(host=host, user=username, dbname=dbname, password=password)
+    cur = conn.cursor()
+    select = "SELECT column_name from information_schema.columns WHERE table_name = self.cn;"
+    cur.execute(select)
+    tables = cur.fetchall()
+    cur.close()
+    conn.close()
+
+    terms = []
+    for i in tables:
+        table = i[0]
+        terms.append(SimpleVocabulary.createTerm(table, table, table))
+    return SimpleVocabulary(terms)
+    """
 
 class ITabelle(model.Schema):
     """ Marker interface and Dexterity Python Schema for Tabelle
@@ -43,6 +65,12 @@ class ITabelle(model.Schema):
                     und dem Benutzer nicht angezeigt.",
             source = possibleTables,
             )
+
+    columns = schema.Choice(
+            title = u"Datenbankspalten",
+            description = u"Datenbankspalten auswählen, die berücksichtigt werden sollen",
+            source = possibleColumns,
+    )
 
     artikeltyp = schema.TextLine(
             title = u"Name des Artikeltyps der in dieser Tabelle gespeichert wird",
