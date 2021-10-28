@@ -8,7 +8,7 @@ from zope.interface import provider
 from zope.schema.vocabulary import SimpleVocabulary
 from zope.schema.interfaces import IContextSourceBinder
 import psycopg2
-from z3c.form.browser.checkbox import CheckBoxFieldWidget
+#from z3c.form.browser.checkbox import CheckBoxFieldWidget
 
 from edi.substanceforms import _
 
@@ -59,7 +59,7 @@ def possibleColumns(context):
 
     return SimpleVocabulary(terms)
 
-class ITabelle(model.Schema, CheckBoxFieldWidget):
+class ITabelle(model.Schema):
     """ Marker interface and Dexterity Python Schema for Tabelle
     """
 
@@ -70,7 +70,7 @@ class ITabelle(model.Schema, CheckBoxFieldWidget):
             source = possibleTables,
             )
 
-    columns = CheckBoxFieldWidget(
+    columns = schema.Choice(
             title = u"Datenbankspalten",
             description = u"Datenbankspalten auswählen, die berücksichtigt werden sollen",
             source = possibleColumns,
