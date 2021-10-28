@@ -258,7 +258,7 @@ class SynonymFormView(CreateFormView):
         """
         """
         redirect_url = self.context.aq_parent.absolute_url()
-        if button == 'Speichern' and self.form.sure.data is True: #and self.validate():
+        if button == 'Speichern': #and self.validate():
             insert = "INSERT INTO synonyms VALUES (DEFAULT, %s, '%s');" % (self.form.item_id.data,
                                                                self.form.synonym_name.data)
             self.db.execute(insert)
@@ -267,10 +267,6 @@ class SynonymFormView(CreateFormView):
 
             self.db.close()
             return self.request.response.redirect(redirect_url)
-
-        elif button == 'Speichern' and self.form.sure.data is False:
-            message = u'Der Reinstoff wurde nicht gelöscht, da das Bestätigungsfeld nicht ausgewählt war.'
-            ploneapi.portal.show_message(message=message, type='error', request=self.request)
 
         elif button == 'Abbrechen':
             return self.request.response.redirect(redirect_url)
