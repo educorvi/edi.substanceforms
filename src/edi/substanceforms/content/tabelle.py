@@ -73,7 +73,7 @@ class ITabelle(model.Schema):
     columns = schema.List(
             title = u"Datenbankspalten",
             description = u"Datenbankspalten auswählen, die berücksichtigt werden sollen",
-            value_type=schema.Choice(vocabulary=possibleColumns),
+            value_type=schema.Choice(source=possibleColumns),
             )
 
     artikeltyp = schema.TextLine(
