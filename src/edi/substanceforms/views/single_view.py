@@ -112,14 +112,16 @@ class SingleView(BrowserView):
         select = "SELECT synonym_name from synonyms WHERE substance_id = %s" %self.itemid
         synonyms = self.db.execute(select)
         import pdb; pdb.set_trace()
-        # Continue here
-        for sid, concentration in substance_ids:
-            select = "SELECT title from substance WHERE substance_id = %s" %sid
-            substance_title = self.db.execute(select)
-            entry = {'title':substance_title, 'concentration':concentration}
-            substances.append(entry)
-        #self.db.close()
-        return substances
+        return synonyms
+
+    def translate_synonyms(self, synonyms):
+        resultstring = ""
+        index = 0
+        for i in synonyms:
+            resultstring = resultstring + "%s, " % (synonyms[index][0])
+            index = index + 1
+        resultstring = resultstring[:-2]
+        return resultstring
 
     def get_recipes(self):
         substances = []

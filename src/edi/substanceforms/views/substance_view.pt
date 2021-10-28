@@ -50,7 +50,7 @@
 	        </tr>
           <tr>
             <td>Synonyme</td>
-            <td tal:content="python:view.get_synonyms()"/>
+            <td tal:content="python:view.translate_synonyms(view.get_synonyms())"/>
           </tr>
           <tr>
 	          <td>Beschreibung</td>
