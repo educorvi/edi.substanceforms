@@ -116,6 +116,14 @@
     />
 
   <browser:page
+    name="add-synonym-form"
+    for="*"
+    class=".create_substance_form.SynonymFormView"
+    template = "create_view.pt"
+    permission="zope2.View"
+    />
+
+  <browser:page
     name="update-manufacturer-form"
     for="*"
     class=".create_manufacturer_form.UpdateFormView"

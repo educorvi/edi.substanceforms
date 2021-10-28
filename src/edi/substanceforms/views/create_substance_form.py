@@ -49,6 +49,10 @@ class DeleteForm(Form):
     sure = BooleanField("Reinstoff löschen", render_kw={'class': 'form-check-input'})
     item_id = HiddenField()
 
+class SynonymForm(Form):
+    synonym_name = StringField("Synonyn", [validators.required()], render_kw={'class': 'form-control'})
+    item_id = HiddenField()
+
 class CreateFormView(WTFormView):
     formClass = CreateForm
     buttons = ('Speichern', 'Abbrechen')
@@ -215,6 +219,49 @@ class DeleteFormView(CreateFormView):
         if button == 'Speichern' and self.form.sure.data is True: #and self.validate():
             command = "DELETE FROM substance WHERE substance_id = %s" % (self.form.item_id.data)
             self.db.execute(command)
+            message = u'Der Reinstoff wurde erfolgreich gelöscht'
+            ploneapi.portal.show_message(message=message, type='info', request=self.request)
+
+            self.db.close()
+            return self.request.response.redirect(redirect_url)
+
+        elif button == 'Speichern' and self.form.sure.data is False:
+            message = u'Der Reinstoff wurde nicht gelöscht, da das Bestätigungsfeld nicht ausgewählt war.'
+            ploneapi.portal.show_message(message=message, type='error', request=self.request)
+
+        elif button == 'Abbrechen':
+            return self.request.response.redirect(redirect_url)
+
+class SynonymFormView(CreateFormView):
+    formClass = SynonymForm
+
+    def __call__(self):
+        dbdata = self.context.aq_parent
+        self.db = DBConnect(host=dbdata.host, db=dbdata.database, user=dbdata.username, password=dbdata.password)
+        if self.submitted:
+            button = self.hasButtonSubmitted()
+            if button:
+                result = self.submit(button)
+                if result:
+                    return result
+        self.itemid = self.request.get('itemid')
+        self.db.close()
+        return self.index()
+
+
+    def renderForm(self):
+        self.form.item_id.default=self.itemid
+        self.form.process()
+        return self.formTemplate()
+
+    def submit(self, button):
+        """
+        """
+        redirect_url = self.context.aq_parent.absolute_url()
+        if button == 'Speichern' and self.form.sure.data is True: #and self.validate():
+            insert = "INSERT INTO synonyms VALUES (DEFAULT, %s, '%s');" % (self.form.item_id.data,
+                                                               self.form.synonym_name.data)
+            self.db.execute(insert)
             message = u'Der Reinstoff wurde erfolgreich gelöscht'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
 
