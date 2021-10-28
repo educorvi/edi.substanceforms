@@ -34,6 +34,8 @@ def possibleTables(context):
 
 def possibleColumns(context):
     import pdb; pdb.set_trace()
+    terms = []
+    retun SimpleVocabulary(terms)
     """
     host = context.host
     dbname = context.database
