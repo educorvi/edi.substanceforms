@@ -8,7 +8,7 @@ from zope.interface import provider
 from zope.schema.vocabulary import SimpleVocabulary
 from zope.schema.interfaces import IContextSourceBinder
 import psycopg2
-from z3c.form.browser import checkbox
+import z3c.form.browser
 
 from edi.substanceforms import _
 
