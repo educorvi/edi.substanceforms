@@ -8,7 +8,7 @@ from zope.interface import provider
 from zope.schema.vocabulary import SimpleVocabulary
 from zope.schema.interfaces import IContextSourceBinder
 import psycopg2
-import z3c.form.browser
+from z3c.form.browser.checkbox import CheckBoxFieldWidget
 
 from edi.substanceforms import _
 
@@ -70,7 +70,7 @@ class ITabelle(model.Schema):
             source = possibleTables,
             )
 
-    columns = z3c.form.browser.CheckBoxFieldWidget(
+    columns = CheckBoxFieldWidget(
             title = u"Datenbankspalten",
             description = u"Datenbankspalten auswählen, die berücksichtigt werden sollen",
             source = possibleColumns,
