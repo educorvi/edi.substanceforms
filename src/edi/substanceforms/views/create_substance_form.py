@@ -14,14 +14,13 @@ import psycopg2
 from PIL import Image
 from io import BytesIO
 
-"""
 class IngredientForm(Form):
     def __call__(self):
         import pdb; pdb.set_trace()
     substance = SelectField(u"Reinstoff", [validators.required()], render_kw={'class': 'form-control'})
     concentration = IntegerField(u"Konzentration", render_kw={'class': 'form-control'})
     # itemid = HiddenField(u'ReinstoffID')
-"""
+
 class CreateForm(Form):
 
     title = StringField("Titel", [validators.required()], render_kw={'class': 'form-control'})
@@ -31,7 +30,7 @@ class CreateForm(Form):
     skin_category = SelectField("Hautschutzkategorie", choices = hskategorie, render_kw={'class': 'form-control'})
     branch = SelectField("Branche", choices = branchen, render_kw={'class': 'form-control'})
     image_url = FileField("Bild hochladen", render_kw={'class': 'form-control'})
-    #ingredients = FormField(IngredientForm)
+    ingredients = FormField(IngredientForm)
 
 class UpdateForm(Form):
 
