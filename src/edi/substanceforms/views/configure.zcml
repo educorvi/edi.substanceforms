@@ -28,6 +28,13 @@
     />
 
   <browser:page
+    name="addlistfield"
+    for="*"
+    class=".helperviews.AddListField"
+    permission="zope2.View"
+    />
+
+  <browser:page
     name="tabelle_view"
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".tabelle_view.TabelleFormView"

@@ -1,6 +1,6 @@
 <div class="form-group" tal:define="field nocall:options/field;
 	                            errors field/errors"
-		        tal:condition="python: field.type not in ['BooleanField']">
+		        tal:condition="python: field.type not in ['BooleanField', 'FieldList']">
     <label tal:attributes="for field/label/field_id" tal:content="field/label/text"></label>
       <span tal:condition="nocall: python: field.flags.required" title="Eingabe erforderlich">*</span>
     <div tal:replace="structure field" />
@@ -29,5 +29,13 @@
       </div>
       <small tal:condition="field/description" tal:attributes="id string:${field/label/field_id}Help"
             class="form-text text-muted" tal:content="field description"></small>
+    </div>
+</div>
+<div class="form-group" tal:define="field nocall:options/field;
+                                    errors field/errors"
+                        tal:condition="python: field.type in ['FieldList']">
+    <div class="form-group">
+	    <div tal:replace="structure field" />
+    <a tal:attributes="href python:context.absolute_url()+'/create-substance-form?addfield='+field.name">Feld hinzufügen</a>		    
     </div>
 </div>
