@@ -107,6 +107,21 @@ class SingleView(BrowserView):
         return machine_titles
     """
 
+    def get_synonyms(self):
+        synonyms = []
+        select = "SELECT synonym_name from synonyms WHERE substance_id = %s" %self.itemid
+        synonyms = self.db.execute(select)
+        return synonyms
+
+    def translate_synonyms(self, synonyms):
+        resultstring = ""
+        index = 0
+        for i in synonyms:
+            resultstring = resultstring + "%s, " % (synonyms[index][0])
+            index = index + 1
+        resultstring = resultstring[:-2]
+        return resultstring
+
     def get_recipes(self):
         substances = []
         select = "SELECT substance_id, concentration from recipes WHERE mixture_id = %s" %self.itemid

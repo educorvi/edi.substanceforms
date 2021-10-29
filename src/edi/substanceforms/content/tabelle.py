@@ -8,6 +8,7 @@ from zope.interface import provider
 from zope.schema.vocabulary import SimpleVocabulary
 from zope.schema.interfaces import IContextSourceBinder
 import psycopg2
+#from z3c.form.browser.checkbox import CheckBoxFieldWidget
 
 from edi.substanceforms import _
 
@@ -32,6 +33,31 @@ def possibleTables(context):
         terms.append(SimpleVocabulary.createTerm(table,table,table))
     return SimpleVocabulary(terms)
 
+@provider(IContextSourceBinder)
+def possibleColumns(context):
+    try:
+        tablename = context.tablename
+        host = context.host
+        dbname = context.database
+        username = context.username
+        password = context.password
+
+        conn = psycopg2.connect(host=host, user=username, dbname=dbname, password=password)
+        cur = conn.cursor()
+        select = "SELECT column_name FROM information_schema.columns WHERE table_name = '%s';" % tablename
+        cur.execute(select)
+        tables = cur.fetchall()
+        cur.close()
+        conn.close()
+
+        terms = []
+        for i in tables:
+            table = i[0]
+            terms.append(SimpleVocabulary.createTerm(table, table, table))
+    except:
+        terms = []
+
+    return SimpleVocabulary(terms)
 
 class ITabelle(model.Schema):
     """ Marker interface and Dexterity Python Schema for Tabelle
@@ -42,6 +68,12 @@ class ITabelle(model.Schema):
             description = u"Der Name der Datenbanktabelle wird nur für interne Zugriffe verwendet\
                     und dem Benutzer nicht angezeigt.",
             source = possibleTables,
+            )
+
+    columns = schema.List(
+            title = u"Datenbankspalten",
+            description = u"Datenbankspalten auswählen, die berücksichtigt werden sollen",
+            value_type=schema.Choice(source=possibleColumns),
             )
 
     artikeltyp = schema.TextLine(
