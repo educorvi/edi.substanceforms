@@ -28,7 +28,8 @@ class CreateForm(Form):
     skin_category = SelectField("Hautschutzkategorie", choices = hskategorie, render_kw={'class': 'form-control'})
     branch = SelectField("Branche", choices = branchen, render_kw={'class': 'form-control'})
     image_url = FileField("Bild hochladen", render_kw={'class': 'form-control'})
-    ingredients = FieldList(FormField(IngredientForm))
+    #ingredients = FieldList(FormField(IngredientForm))
+    testfield = FieldList(StringField('Test'))
 
 class UpdateForm(Form):
 
