@@ -28,8 +28,6 @@ class CreateForm(Form):
     skin_category = SelectField("Hautschutzkategorie", choices = hskategorie, render_kw={'class': 'form-control'})
     branch = SelectField("Branche", choices = branchen, render_kw={'class': 'form-control'})
     image_url = FileField("Bild hochladen", render_kw={'class': 'form-control'})
-    ingredients = FieldList(FormField(IngredientForm), min_entries=1, max_entries=8)
-    #testfield = FieldList(StringField('Test'))
 
 class UpdateForm(Form):
 
@@ -56,11 +54,6 @@ class CreateFormView(WTFormView):
     buttons = ('Speichern', 'Abbrechen')
 
     def __call__(self):
-        if self.request.get('addfield'):
-            import pdb; pdb.set_trace()
-            fieldname = self.request.get('addfield').split('-')[1]
-            field = getattr(self.form, fieldname)
-            field.append_entry()
         self.host = self.context.aq_parent.host
         self.dbname = self.context.aq_parent.database
         self.username = self.context.aq_parent.username
@@ -84,10 +77,6 @@ class CreateFormView(WTFormView):
         transaction.commit()
 
         return obj.UID()
-
-    #def renderField(self, field):
-        #print(field.type)
-        #import pdb; pdb.set_trace()
 
     def submit(self, button):
         image_url = ''
