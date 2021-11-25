@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from wtforms import Form, TextField, SelectField, IntegerField, BooleanField, FloatField
+from wtforms import Form, StringField, SelectField, IntegerField, BooleanField, FloatField
 from wtforms import validators
 from collective.wtforms.views import WTFormView
 from plone import api as ploneapi
@@ -21,7 +21,7 @@ class LoginCredentials:
 
 class BaseForm(Form):
 
-    search = TextField("Suchbegriff", render_kw={'class':'form-control'})
+    search = StringField("Suchbegriff", render_kw={'class':'form-control'})
     #manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[])
 
 class TabelleFormView(WTFormView):

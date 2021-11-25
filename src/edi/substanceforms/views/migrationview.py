@@ -179,8 +179,6 @@ class Migrationview(BrowserView):
                 if webcode:
                     return generated_webcode
 
-        import pdb; pdb.set_trace()
-
         print("Starting data migration...")
         hostname = self.host
         username = self.username
