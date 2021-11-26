@@ -199,10 +199,17 @@ class Migrationview(BrowserView):
             hersteller_desc = i.get('description')
             hersteller_uid = get_webcode(self)
             hersteller_homepage = i.get('homepage')
+            hersteller_review_state = i.get('review_state')
+
+            if hersteller_review_state == 'published':
+                hersteller_published = True
+            else:
+                hersteller_published = False
+
             cur = conn.cursor()
             # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
-            cur.execute("INSERT INTO manufacturer (title, description, webcode, homepage) VALUES (%s, %s, %s, %s);",
-                        (hersteller_title, hersteller_desc, hersteller_uid, hersteller_homepage))
+            cur.execute("INSERT INTO manufacturer (title, description, webcode, homepage, published) VALUES (%s, %s, %s, %s, %s);",
+                        (hersteller_title, hersteller_desc, hersteller_uid, hersteller_homepage, hersteller_published))
             conn.commit()
             # print(hersteller_title)# correct
             cur.close()
@@ -221,6 +228,12 @@ class Migrationview(BrowserView):
             powder_checked_emissions = i.get('emissionsgeprueft')
             powder_date_checked = i.get('pruefdateum')
             powder_manufacturer_name = i.get('hersteller')['title']
+            powder_review_state = i.get('review_state')
+
+            if powder_review_state == 'published':
+                powder_published = True
+            else:
+                powder_published = False
 
             cur = conn.cursor()
             cur.execute(
@@ -230,10 +243,10 @@ class Migrationview(BrowserView):
 
             cur = conn.cursor()
             cur.execute(
-                "INSERT INTO spray_powder (title, description, webcode, manufacturer_id, image_url, product_class, starting_material, median_value, volume_share, checked_emissions, date_checked) VALUES (%s, %s, %s, %s, NULL, %s, %s, %s, %s, %s, %s);",
+                "INSERT INTO spray_powder (title, description, webcode, manufacturer_id, image_url, product_class, starting_material, median_value, volume_share, checked_emissions, date_checked, published) VALUES (%s, %s, %s, %s, NULL, %s, %s, %s, %s, %s, %s, %s);",
                 (powder_title, powder_desc, powder_uid, powder_manufacturer_id[0], powder_product_class,
                  powder_starting_material, powder_median_value, powder_volume_share, powder_checked_emissions,
-                 powder_date_checked))
+                 powder_date_checked, powder_published))
             conn.commit()
             cur.close()
 
@@ -255,6 +268,8 @@ class Migrationview(BrowserView):
 
                 if etikett_review_state == 'published':
                     etikett_published = True
+                else:
+                    etikett_published = False
 
                 cur = conn.cursor()
                 cur.execute(
@@ -288,6 +303,12 @@ class Migrationview(BrowserView):
             manuell_usecases = i.get('verwendungszweck')
             manuell_application_areas = i.get('anwendungsgebiete')
             manuell_manufacturer_name = i.get('hersteller')['title']
+            manuell_review_state = i.get('review_state')
+
+            if manuell_review_state == 'published':
+                manuell_published = True
+            else:
+                manuell_published = False
 
             cur = conn.cursor()
             cur.execute(
@@ -298,10 +319,10 @@ class Migrationview(BrowserView):
             cur = conn.cursor()
             # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
             cur.execute(
-                "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, usecases, application_areas, manufacturer_id) VALUES (%s, %s, %s, 'branch', 'offset', NULL, %s, %s, %s, %s, %s, %s, %s);",
+                "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, usecases, application_areas, manufacturer_id, published) VALUES (%s, %s, %s, 'branch', 'offset', NULL, %s, %s, %s, %s, %s, %s, %s, %s);",
                 (manuell_title, manuell_desc, manuell_uid, manuell_skin_category, manuell_checked_emissions,
                  manuell_flashpoint, manuell_values_range, manuell_usecases, manuell_application_areas,
-                 manuell_manufacturer_id[0]))
+                 manuell_manufacturer_id[0]), manuell_published)
             conn.commit()
             # print(manuell_title)  # correct
             cur.close()
@@ -321,6 +342,12 @@ class Migrationview(BrowserView):
             datenblatt_values_range = i.get('wertebereich')
             datenblatt_material_compatibility = i.get('materialvertraeglichkeit')
             datenblatt_comments = i.get('bemerkungen')
+            datenblatt_review_state = i.get('review_state')
+
+            if datenblatt_review_state == 'published':
+                datenblatt_published = True
+            else:
+                datenblatt_published = False
 
             if datenblatt_skin_category:
                 pass
@@ -341,10 +368,10 @@ class Migrationview(BrowserView):
             cur = conn.cursor()
             # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
             cur.execute(
-                "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, comments, offset_print_manner) VALUES (%s, %s, %s, 'branch', 'offset', NULL, %s, %s, %s, %s, %s, %s);",
+                "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, comments, offset_print_manne, published) VALUES (%s, %s, %s, 'branch', 'offset', NULL, %s, %s, %s, %s, %s, %s, %s);",
                 (datenblatt_title, datenblatt_desc, datenblatt_uid, datenblatt_skin_category,
                  datenblatt_checked_emissions, datenblatt_flashpoint, datenblatt_values_range,
-                 str(datenblatt_comments),offsetprintmanner))
+                 str(datenblatt_comments),offsetprintmanner, datenblatt_published))
             conn.commit()
             # print(datenblatt_title)  # correct
             cur.close()
@@ -361,6 +388,12 @@ class Migrationview(BrowserView):
             heatset_skin_category = i.get('hskategorie')
             heatset_date_checked = i.get('pruefdateum')
             heatset_checked_emissions = i.get('emissionsgeprueft')
+            heatset_review_state = i.get('review_state')
+
+            if heatset_review_state == 'published':
+                heatset_published = True
+            else:
+                heatset_published = False
 
             if heatset_skin_category:
                 pass
@@ -371,9 +404,9 @@ class Migrationview(BrowserView):
             # import pdb; pdb.set_trace()
             # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
             cur.execute(
-                "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, ueg, response, skin_category, date_checked, checked_emissions) VALUES (%s, %s, %s, 'branch', 'offset', NULL, %s, %s, %s, %s, %s);",
+                "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, ueg, response, skin_category, date_checked, checked_emissions, published) VALUES (%s, %s, %s, 'branch', 'offset', NULL, %s, %s, %s, %s, %s, %s);",
                 (heatset_title, heatset_desc, heatset_uid, heatset_ueg, heatset_response, heatset_skin_category,
-                 heatset_date_checked, heatset_checked_emissions))
+                 heatset_date_checked, heatset_checked_emissions, heatset_published))
             conn.commit()
             # print(heatset_title)  # correct
             cur.close()
