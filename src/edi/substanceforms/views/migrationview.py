@@ -251,6 +251,10 @@ class Migrationview(BrowserView):
                 etikett_classifications = i.get('einstufungen')
                 etikett_usecases = i.get('verwendungszweck')
                 etikett_manufacturer_name = i.get('hersteller')['title']
+                etikett_review_state = i.get('review_state')
+
+                if etikett_review_state == 'published':
+                    etikett_published = True
 
                 cur = conn.cursor()
                 cur.execute(
@@ -261,9 +265,9 @@ class Migrationview(BrowserView):
                 cur = conn.cursor()
                 # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
                 cur.execute(
-                    "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, usecases, manufacturer_id) VALUES (%s, %s, %s, 'branch', 'label', NULL, %s, %s, %s, %s, %s, %s);",
+                    "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, usecases, manufacturer_id, published) VALUES (%s, %s, %s, 'branch', 'label', NULL, %s, %s, %s, %s, %s, %s, %s);",
                     (etikett_title, etikett_desc, etikett_uid, etikett_skin_category, etikett_checked_emissions,
-                     etikett_flashpoint, etikett_values_range, etikett_usecases, etikett_manufacturer_id[0]))
+                     etikett_flashpoint, etikett_values_range, etikett_usecases, etikett_manufacturer_id[0], etikett_published))
                 conn.commit()
                 # print(etikett_title)  # correct
                 cur.close()
