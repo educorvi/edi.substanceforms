@@ -11,6 +11,7 @@ from edi.substanceforms.helpers import check_value
 from plone import api as ploneapi
 import requests
 import psycopg2
+import csv
 
 class Migrationview(BrowserView):
 
@@ -73,6 +74,18 @@ class Migrationview(BrowserView):
                 data = getItemData(i)
                 newentries.append(data)
                 print("Fetched MANUFACTURER: " + i.get('title'))
+            return newentries
+
+        def getReinstoffe():
+            newentries = list()
+            numer = 0
+            with open('dnel-stoffliste.csv', newline='') as csvfile:
+                test = csv.reader(csvfile, delimiter=';', quotechar='|')
+                for row in test:
+                    entry = ', '.join(row)
+                    newentries.append(entry)
+                    print("Fetched SUBSTANCE NUMBER "+number)
+                    number = number + 1
             return newentries
 
         def getPowders():
@@ -186,6 +199,7 @@ class Migrationview(BrowserView):
         database = self.dbname
 
         erg = getHersteller()
+        erg1 = getReinstoffe()
         # erg2 = getMachines()
         erg3 = getPowders()
         erg4 = getEtiketten()
@@ -215,6 +229,10 @@ class Migrationview(BrowserView):
             cur.close()
 
         print('Successfully migrated MANUFACTURER')
+
+        for i in erg1:
+            ergebnis = i.split(', ')
+            print(ergebnis[0])
 
         for i in erg3:
             powder_title = i.get('title')
