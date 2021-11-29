@@ -233,14 +233,14 @@ class Migrationview(BrowserView):
         for i in erg1:
             ergebnis = i.split('@')
 
-            reinstoff_title = i[0]
+            reinstoff_title = ergebnis[0]
             reinstoff_uid = get_webcode(self)
-            reinstoff_casnr = i[2]
-            reinstoff_egnr = i[3]
-            reinstoff_lokal = i[4]
-            reinstoff_systemisch = i[5]
-            reinstoff_hinweise = i[9]
-            reinstoff_link = i[10]
+            reinstoff_casnr = ergebnis[2]
+            reinstoff_egnr = ergebnis[3]
+            reinstoff_lokal = ergebnis[4]
+            reinstoff_systemisch = ergebnis[5]
+            reinstoff_hinweise = ergebnis[9]
+            reinstoff_link = ergebnis[10]
             reinstoff_skin = 'id_wechselnd'
             reinstoff_branche = 'alle_branchen'
             reinstoff_published = True
