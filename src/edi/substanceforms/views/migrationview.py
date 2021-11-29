@@ -78,7 +78,7 @@ class Migrationview(BrowserView):
 
         def getReinstoffe():
             newentries = list()
-            numer = 0
+            number = 0
             with open('/home/plone_buildout/plone52/src/edi.substanceforms/src/edi/substanceforms/views/dnel-stoffliste.csv', newline='') as csvfile:
                 test = csv.reader(csvfile, delimiter=';', quotechar='|')
                 for row in test:
