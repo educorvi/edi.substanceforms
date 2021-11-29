@@ -340,7 +340,7 @@ class Migrationview(BrowserView):
                 "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, usecases, application_areas, manufacturer_id, published) VALUES (%s, %s, %s, 'branch', 'offset', NULL, %s, %s, %s, %s, %s, %s, %s, %s);",
                 (manuell_title, manuell_desc, manuell_uid, manuell_skin_category, manuell_checked_emissions,
                  manuell_flashpoint, manuell_values_range, manuell_usecases, manuell_application_areas,
-                 manuell_manufacturer_id[0]), manuell_published)
+                 manuell_manufacturer_id[0], manuell_published))
             conn.commit()
             # print(manuell_title)  # correct
             cur.close()
