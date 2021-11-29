@@ -82,7 +82,7 @@ class Migrationview(BrowserView):
             with open('/home/plone_buildout/plone52/src/edi.substanceforms/src/edi/substanceforms/views/dnel-stoffliste.csv', newline='') as csvfile:
                 test = csv.reader(csvfile, delimiter=';', quotechar='|')
                 for row in test:
-                    entry = ', '.join(row)
+                    entry = '@'.join(row)
                     newentries.append(entry)
                     print("Fetched SUBSTANCE NUMBER "+str(number))
                     number = number + 1
@@ -231,7 +231,7 @@ class Migrationview(BrowserView):
         print('Successfully migrated MANUFACTURER')
 
         for i in erg1:
-            ergebnis = i.split(', ')
+            ergebnis = i.split('@')
             print(ergebnis[0])
 
         for i in erg3:
