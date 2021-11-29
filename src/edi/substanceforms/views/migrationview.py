@@ -232,7 +232,28 @@ class Migrationview(BrowserView):
 
         for i in erg1:
             ergebnis = i.split('@')
-            print(ergebnis[0])
+
+            reinstoff_title = i[0]
+            reinstoff_uid = get_webcode(self)
+            reinstoff_casnr = i[2]
+            reinstoff_egnr = i[3]
+            reinstoff_lokal = i[4]
+            reinstoff_systemisch = i[5]
+            reinstoff_hinweise = i[9]
+            reinstoff_link = i[10]
+            reinstoff_skin = 'id_wechselnd'
+            reinstoff_branche = 'alle_branchen'
+            reinstoff_published = True
+
+            cur = conn.cursor()
+            cur.execute(
+                "INSERT INTO substance (title, webcode, casnr, egnr, skin_category, branch, dnel_lokal, dnel_systematisch, comments, link, published) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",
+                (reinstoff_title, reinstoff_uid, reinstoff_casnr, reinstoff_egnr, reinstoff_skin, reinstoff_branche, reinstoff_lokal,
+                 reinstoff_systemisch, reinstoff_hinweise, reinstoff_link, reinstoff_published))
+            conn.commit()
+            cur.close()
+
+            print('Successfully migrated SUBSTANCE')
 
         for i in erg3:
             powder_title = i.get('title')

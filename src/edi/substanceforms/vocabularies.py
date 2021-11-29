@@ -12,6 +12,7 @@ branchen = [
     (u"energie_und_wasser", u"Energie und Wasserwirtschaft"),
     (u"feinmechanik", u"Feinmechanik"),
     (u"textil_und_mode", u"Textil und Mode"),
+    (u"alle_branchen", u"Alle Branchen"),
     ]
 
 substance_types = [
