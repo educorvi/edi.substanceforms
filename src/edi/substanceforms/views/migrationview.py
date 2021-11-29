@@ -84,7 +84,7 @@ class Migrationview(BrowserView):
                 for row in test:
                     entry = ', '.join(row)
                     newentries.append(entry)
-                    print("Fetched SUBSTANCE NUMBER "+number)
+                    print("Fetched SUBSTANCE NUMBER "+str(number))
                     number = number + 1
             return newentries
 
