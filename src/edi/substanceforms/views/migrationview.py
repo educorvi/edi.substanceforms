@@ -230,6 +230,7 @@ class Migrationview(BrowserView):
 
         print('Successfully migrated MANUFACTURER')
 
+        zahl = 0
         for i in erg1:
             ergebnis = i.split('@')
             reinstoff_title = ergebnis[0]
@@ -259,7 +260,8 @@ class Migrationview(BrowserView):
             conn.commit()
             cur.close()
 
-            print('Successfully migrated SUBSTANCE')
+            print('Successfully migrated SUBSTANCE '+str(zahl)+' '+reinstoff_title)
+            zahl = zahl + 1
 
         for i in erg3:
             powder_title = i.get('title')
