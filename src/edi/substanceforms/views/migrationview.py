@@ -232,7 +232,6 @@ class Migrationview(BrowserView):
 
         for i in erg1:
             ergebnis = i.split('@')
-            import pdb; pdb.set_trace()
             reinstoff_title = ergebnis[0]
             reinstoff_uid = get_webcode(self)
             reinstoff_casnr = ergebnis[3]
@@ -252,7 +251,7 @@ class Migrationview(BrowserView):
                     (reinstoff_title, reinstoff_uid, reinstoff_casnr, reinstoff_egnr, reinstoff_skin, reinstoff_branche, reinstoff_lokal,
                      reinstoff_systemisch, reinstoff_hinweise, reinstoff_link, reinstoff_published))
             except:
-                import pdb; pdb.set_trace()
+                pass
             conn.commit()
             cur.close()
 
