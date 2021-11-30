@@ -36,7 +36,6 @@ class SingleView(BrowserView):
             #self.machines = self.get_machines()
             self.secsheet = self.get_recipes()
             template = ViewPageTemplateFile('substance_view.pt')
-            self.image_url = self.get_image_url()
             self.template = BoundPageTemplate(template, self)
             return self.template()
         elif self.context.tablename == 'spray_powder':
