@@ -107,7 +107,7 @@ class CreateFormView(WTFormView):
                                                        check_value(self.form.dnel_lokal.data),
                                                        check_value(self.form.dnel_systemisch.data),
                                                        check_value(self.form.gestislink.data),
-                                                       check_value(self.form.published.data),
+                                                       check_value(self.form.published),
                                                                )
 
             """
