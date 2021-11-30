@@ -23,22 +23,28 @@ class CreateForm(Form):
 
     title = StringField("Titel", [validators.required()], render_kw={'class': 'form-control'})
     description = StringField("Beschreibung", [validators.required()], render_kw={'class': 'form-control'})
-    casnr = IntegerField("CAS-Nummer", [validators.required()], render_kw={'class': 'form-control'})
-    concentration = IntegerField("Konzentration in wässriger Lösung", render_kw={'class': 'form-control'})
+    casnr = StringField("CAS-Nummer", [validators.required()], render_kw={'class': 'form-control'})
+    egnr = StringField("EG-Nummer", [validators.required()], render_kw={'class': 'form-control'})
+    #concentration = IntegerField("Konzentration in wässriger Lösung", render_kw={'class': 'form-control'})
     skin_category = SelectField("Hautschutzkategorie", choices = hskategorie, render_kw={'class': 'form-control'})
     branch = SelectField("Branche", choices = branchen, render_kw={'class': 'form-control'})
-    image_url = FileField("Bild hochladen", render_kw={'class': 'form-control'})
+    dnel_lokal = StringField("DNEL (lokal)", [validators.required()], render_kw={'class': 'form-control'})
+    dnel_systemisch = StringField("DNEL (systemisch)", [validators.required()], render_kw={'class': 'form-control'})
+    gestislink = StringField("Link in externe Datenbank", [validators.required()], render_kw={'class': 'form-control'})
+    published = True
+    #image_url = FileField("Bild hochladen", render_kw={'class': 'form-control'})
 
 class UpdateForm(Form):
 
     title = StringField("Titel", [validators.required()], render_kw={'class': 'form-control'})
     description = StringField("Beschreibung", [validators.required()], render_kw={'class': 'form-control'})
     casnr = IntegerField("CAS-Nummer", [validators.required()], render_kw={'class': 'form-control'})
-    concentration = IntegerField("Konzentration in wässriger Lösung", render_kw={'class': 'form-control'})
+    egnr = StringField("EG-Nummer", [validators.required()], render_kw={'class': 'form-control'})
+    #concentration = IntegerField("Konzentration in wässriger Lösung", render_kw={'class': 'form-control'})
     skin_category = SelectField("Hautschutzkategorie", choices = hskategorie, render_kw={'class': 'form-control'})
     branch = SelectField("Branche", choices = branchen, render_kw={'class': 'form-control'})
-    image_url = FileField("Neues Bild hochladen", render_kw={'class': 'form-control'})
-    no_image = BooleanField("Vorhandenes Bild entfernen", render_kw={'class': 'form-check-input'})
+    #image_url = FileField("Neues Bild hochladen", render_kw={'class': 'form-control'})
+    #no_image = BooleanField("Vorhandenes Bild entfernen", render_kw={'class': 'form-check-input'})
     item_id = HiddenField()
 
 class DeleteForm(Form):
@@ -66,6 +72,7 @@ class CreateFormView(WTFormView):
                     return result
         return self.index()
 
+    """
     def create_image(self, image, title):
         filedata = image.data.read()
         filename = image.data.filename
@@ -77,25 +84,33 @@ class CreateFormView(WTFormView):
         transaction.commit()
 
         return obj.UID()
+    """
 
     def submit(self, button):
+        """
         image_url = ''
         if self.form.image_url.data.filename:
             image_url = self.create_image(self.form.image_url, self.form.title.data)
+        """
         redirect_url = self.context.aq_parent.absolute_url()
         if button == 'Speichern': #and self.validate():
             conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
             cur = conn.cursor()
             insert = """INSERT INTO substance VALUES (DEFAULT, '%s', '%s', '%s',
-                        %s, %s, %s, %s, %s);""" % (self.form.title.data,
+                        %s, %s, %s, %s, %s, %s, %s, %s);""" % (self.form.title.data,
                                                        self.form.description.data,
                                                        self.context.aq_parent.get_webcode(),
                                                        check_value(self.form.casnr.data),
-                                                       check_value(self.form.concentration.data),
+                                                       check_value(self.form.egnr.data),
                                                        check_value(self.form.skin_category.data),
                                                        check_value(self.form.branch.data),
-                                                       check_value(image_url))
+                                                       check_value(self.form.dnel_lokal.data),
+                                                       check_value(self.form.dnel_systemisch.data),
+                                                       check_value(self.form.gestislink.data),
+                                                       check_value(self.form.published.data),
+                                                               )
 
+            """
             if self.form.image_url.data.filename:
 
                 try:
@@ -113,15 +128,16 @@ class CreateFormView(WTFormView):
 
                 cur.close()
                 conn.close()
+            """
 
-            else:
-                cur.execute(insert)
-                conn.commit()
-                cur.close()
-                conn.close()
 
-                message = u'Das Wasch- und Reinigungsmittel wurde erfolgreich gespeichert.'
-                ploneapi.portal.show_message(message=message, type='info', request=self.request)
+            cur.execute(insert)
+            conn.commit()
+            cur.close()
+            conn.close()
+
+            message = u'Das Wasch- und Reinigungsmittel wurde erfolgreich gespeichert.'
+            ploneapi.portal.show_message(message=message, type='info', request=self.request)
 
             return self.request.response.redirect(redirect_url)
 
