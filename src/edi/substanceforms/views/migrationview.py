@@ -235,12 +235,12 @@ class Migrationview(BrowserView):
             import pdb; pdb.set_trace()
             reinstoff_title = ergebnis[0]
             reinstoff_uid = get_webcode(self)
-            reinstoff_casnr = ergebnis[2]
-            reinstoff_egnr = ergebnis[3]
-            reinstoff_lokal = ergebnis[4]
-            reinstoff_systemisch = ergebnis[5]
-            reinstoff_hinweise = ergebnis[9]
-            reinstoff_link = ergebnis[10]
+            reinstoff_casnr = ergebnis[3]
+            reinstoff_egnr = ergebnis[4]
+            reinstoff_lokal = ergebnis[5]
+            reinstoff_systemisch = ergebnis[6]
+            reinstoff_hinweise = ergebnis[10]
+            reinstoff_link = ergebnis[11]
             reinstoff_skin = 'id_wechselnd'
             reinstoff_branche = 'alle_branchen'
             reinstoff_published = True
