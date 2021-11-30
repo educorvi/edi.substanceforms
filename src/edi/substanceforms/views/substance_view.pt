@@ -58,16 +58,28 @@
 	          <td tal:content="python:article[4]"/>
 	        </tr>
           <tr>
-	          <td>Konzentration in wässriger Lösung</td>
+	          <td>EG-Nummer</td>
 	          <td tal:content="python:article[5]"/>
 	        </tr>
           <tr>
 	          <td>Hautschutzmittelgruppe</td>
-            <td tal:content="python: view.get_attr_translation('hskategorie', article[6])"/>
+            <td tal:content="python: view.get_attr_translation('hskategorie', article[8])"/>
 	        </tr>
           <tr>
-	          <td>Hautschutzmittelgruppe</td>
-            <td tal:content="python: view.get_attr_translation('branchen', article[7])"/>
+	          <td>Brache</td>
+            <td tal:content="python: view.get_attr_translation('branchen', article[9])"/>
+	        </tr>
+          <tr>
+	          <td>DNEL Inhalation [mg/m3]: lokal</td>
+	          <td tal:content="python:article[10]"/>
+	        </tr>
+          <tr>
+	          <td>DNEL Inhalation [mg/m3]: systemisch</td>
+	          <td tal:content="python:article[11]"/>
+	        </tr>
+          <tr>
+	          <td>Link in externe Gestis-Stoffdatenbank</td>
+            <td href="python:article[13]" tal:attributes="python:article[13]"/>
 	        </tr>
 	      </tbody>
 	    </table>
