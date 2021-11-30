@@ -239,10 +239,14 @@ class Migrationview(BrowserView):
             reinstoff_lokal = ergebnis[5]
             reinstoff_systemisch = ergebnis[6]
             reinstoff_hinweise = ergebnis[10]
-            reinstoff_link = ergebnis[11]
+            reinstoff_link_id = ergebnis[11]
+            reinstoff_link_available= ergebnis[12]
             reinstoff_skin = 'id_wechselnd'
             reinstoff_branche = 'alle_branchen'
             reinstoff_published = True
+
+            if reinstoff_link_available == "zum Stoff":
+                reinstoff_link = "https://gestis.dguv.de/data?name="+str(reinstoff_link_id)
 
             cur = conn.cursor()
             try:
