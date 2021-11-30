@@ -97,7 +97,7 @@ class CreateFormView(WTFormView):
             conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
             cur = conn.cursor()
             insert = """INSERT INTO substance (title, description, webcode, casnr, egnr, skin_category, branch, dnel_lokal, dnel_systemisch, link, published)
-            VALUES (DEFAULT, '%s', '%s', '%s', %s, %s, %s, %s, %s, %s, %s, %s);""" % (self.form.title.data,
+            VALUES ('%s', '%s', '%s', %s, %s, %s, %s, %s, %s, %s, %s);""" % (self.form.title.data,
                                                        self.form.description.data,
                                                        self.context.aq_parent.get_webcode(),
                                                        check_value(self.form.casnr.data),
