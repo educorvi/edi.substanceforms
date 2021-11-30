@@ -257,6 +257,7 @@ class Migrationview(BrowserView):
                 except:
                     pass
             else:
+                cur = conn.cursor()
                 try:
                     cur.execute(
                         "INSERT INTO substance (title, webcode, casnr, egnr, skin_category, branch, dnel_lokal, dnel_systemisch, comments, link, published) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, NULL, %s);",
