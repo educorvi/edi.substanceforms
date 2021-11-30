@@ -232,7 +232,7 @@ class Migrationview(BrowserView):
 
         for i in erg1:
             ergebnis = i.split('@')
-
+            import pdb; pdb.set_trace()
             reinstoff_title = ergebnis[0]
             reinstoff_uid = get_webcode(self)
             reinstoff_casnr = ergebnis[2]
