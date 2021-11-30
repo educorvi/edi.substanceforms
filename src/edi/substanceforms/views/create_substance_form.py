@@ -28,9 +28,9 @@ class CreateForm(Form):
     #concentration = IntegerField("Konzentration in wässriger Lösung", render_kw={'class': 'form-control'})
     skin_category = SelectField("Hautschutzkategorie", choices = hskategorie, render_kw={'class': 'form-control'})
     branch = SelectField("Branche", choices = branchen, render_kw={'class': 'form-control'})
-    dnel_lokal = StringField("DNEL (lokal)", [validators.required()], render_kw={'class': 'form-control'})
-    dnel_systemisch = StringField("DNEL (systemisch)", [validators.required()], render_kw={'class': 'form-control'})
-    gestislink = StringField("Link in externe Datenbank", [validators.required()], render_kw={'class': 'form-control'})
+    dnel_lokal = StringField("DNEL (lokal)", render_kw={'class': 'form-control'})
+    dnel_systemisch = StringField("DNEL (systemisch)", render_kw={'class': 'form-control'})
+    gestislink = StringField("Link in externe Datenbank", render_kw={'class': 'form-control'})
     published = True
     #image_url = FileField("Bild hochladen", render_kw={'class': 'form-control'})
 
