@@ -247,7 +247,7 @@ class Migrationview(BrowserView):
 
             cur = conn.cursor()
             cur.execute(
-                "INSERT INTO substance (title, webcode, casnr, egnr, skin_category, branch, dnel_lokal, dnel_systematisch, comments, link, published) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",
+                "INSERT INTO substance (title, webcode, casnr, egnr, skin_category, branch, dnel_lokal, dnel_systematisch, comments, link, published) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",
                 (reinstoff_title, reinstoff_uid, reinstoff_casnr, reinstoff_egnr, reinstoff_skin, reinstoff_branche, reinstoff_lokal,
                  reinstoff_systemisch, reinstoff_hinweise, reinstoff_link, reinstoff_published))
             conn.commit()
