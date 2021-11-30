@@ -22,9 +22,9 @@ class IngredientForm(Form):
 class CreateForm(Form):
 
     title = StringField("Titel", [validators.required()], render_kw={'class': 'form-control'})
-    description = StringField("Beschreibung", [validators.required()], render_kw={'class': 'form-control'})
-    casnr = StringField("CAS-Nummer", [validators.required()], render_kw={'class': 'form-control'})
-    egnr = StringField("EG-Nummer", [validators.required()], render_kw={'class': 'form-control'})
+    description = StringField("Beschreibung", render_kw={'class': 'form-control'})
+    casnr = StringField("CAS-Nummer", render_kw={'class': 'form-control'})
+    egnr = StringField("EG-Nummer", render_kw={'class': 'form-control'})
     #concentration = IntegerField("Konzentration in wässriger Lösung", render_kw={'class': 'form-control'})
     skin_category = SelectField("Hautschutzkategorie", choices = hskategorie, render_kw={'class': 'form-control'})
     branch = SelectField("Branche", choices = branchen, render_kw={'class': 'form-control'})
@@ -37,9 +37,9 @@ class CreateForm(Form):
 class UpdateForm(Form):
 
     title = StringField("Titel", [validators.required()], render_kw={'class': 'form-control'})
-    description = StringField("Beschreibung", [validators.required()], render_kw={'class': 'form-control'})
-    casnr = IntegerField("CAS-Nummer", [validators.required()], render_kw={'class': 'form-control'})
-    egnr = StringField("EG-Nummer", [validators.required()], render_kw={'class': 'form-control'})
+    description = StringField("Beschreibung", render_kw={'class': 'form-control'})
+    casnr = IntegerField("CAS-Nummer", render_kw={'class': 'form-control'})
+    egnr = StringField("EG-Nummer", render_kw={'class': 'form-control'})
     #concentration = IntegerField("Konzentration in wässriger Lösung", render_kw={'class': 'form-control'})
     skin_category = SelectField("Hautschutzkategorie", choices = hskategorie, render_kw={'class': 'form-control'})
     branch = SelectField("Branche", choices = branchen, render_kw={'class': 'form-control'})
