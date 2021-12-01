@@ -5,6 +5,11 @@
       lang="en"
       metal:use-macro="context/main_template/macros/master"
       i18n:domain="example.conference">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
 <body>
 
 <metal:main fill-slot="main">
@@ -39,7 +44,7 @@
           <div class="col-lg-3 col-12">
             <div tal:replace="structure context/@@portlet-cards-view"/>
           </div>
-          <!-- Ende Portlets -->	  
+          <!-- Ende Portlets -->
 
         </div>
 
