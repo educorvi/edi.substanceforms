@@ -22,7 +22,8 @@ class MultiCheckboxField(SelectMultipleField):
 class CreateForm(Form):
 
     substance = SelectField(u"Reinstoff", [validators.required()], render_kw={'class': 'form-control'})
-    concentration = IntegerField(u"Konzentration", render_kw={'class': 'form-control'})
+    concentration_min = FloatField(u"Konzentration minimum", render_kw={'class': 'form-control'})
+    concentration_max = FloatField(u"Konzentration maximum", render_kw={'class': 'form-control'})
     itemid = HiddenField(u'ReinstoffID')
 
 class CreateIngredientForm(WTFormView):
