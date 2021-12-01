@@ -437,10 +437,10 @@ class Migrationview(BrowserView):
             heatset_review_state = i.get('review_state')
             heatset_verdampfung = i.get('verdampfung')
 
-            heatset_evap_150 = heatset_verdampfung.get('bahn_150')
-            heatset_evap_160 = heatset_verdampfung.get('bahn_160')
-            heatset_evap_170 = heatset_verdampfung.get('bahn_170')
-            heatset_evap_180 = heatset_verdampfung.get('bahn_180')
+            heatset_evap_150 = heatset_verdampfung[0].get('bahn_150')
+            heatset_evap_160 = heatset_verdampfung[0].get('bahn_160')
+            heatset_evap_170 = heatset_verdampfung[0].get('bahn_170')
+            heatset_evap_180 = heatset_verdampfung[0].get('bahn_180')
 
 
             if heatset_review_state == 'published':
