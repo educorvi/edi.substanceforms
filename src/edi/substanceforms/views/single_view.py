@@ -123,13 +123,13 @@ class SingleView(BrowserView):
 
     def get_recipes(self):
         substances = []
-        select = "SELECT substance_id, concentration from recipes WHERE mixture_id = %s" %self.itemid
+        select = "SELECT substance_id, concentration_min, concentration_max from recipes WHERE mixture_id = %s" %self.itemid
         substance_ids = self.db.execute(select)
         # Continue here
-        for sid, concentration in substance_ids:
+        for sid, concentration_min, concentration_max in substance_ids:
             select = "SELECT title from substance WHERE substance_id = %s" %sid
             substance_title = self.db.execute(select)
-            entry = {'title':substance_title, 'concentration':concentration}
+            entry = {'title':substance_title, 'concentration_min':concentration_min, 'concentration_max':concentration_max}
             substances.append(entry)
         #self.db.close()
         return substances
