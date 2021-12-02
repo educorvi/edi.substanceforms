@@ -256,6 +256,16 @@ class Migrationview(BrowserView):
                          reinstoff_systemisch, reinstoff_hinweise, reinstoff_link, reinstoff_published))
                 except:
                     pass
+            else:
+                cur = conn.cursor()
+                try:
+                    cur.execute(
+                        "INSERT INTO substance (title, webcode, casnr, egnr, skin_category, branch, dnel_lokal, dnel_systemisch, comments, link, published) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, NULL, %s);",
+                        (reinstoff_title, reinstoff_uid, reinstoff_casnr, reinstoff_egnr, reinstoff_skin,
+                         reinstoff_branche, reinstoff_lokal,
+                         reinstoff_systemisch, reinstoff_hinweise, reinstoff_published))
+                except:
+                    pass
             conn.commit()
             cur.close()
 
