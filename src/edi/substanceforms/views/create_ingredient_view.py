@@ -53,6 +53,7 @@ class CreateIngredientForm(WTFormView):
             substances = self.db.execute(insert)
         except:
             substances = []
+        import pdb;pdb.set_trace()
         self.form.substance.choices = substances
         self.form.process()
         return self.formTemplate()
