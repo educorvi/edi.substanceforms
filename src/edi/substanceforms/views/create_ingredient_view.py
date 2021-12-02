@@ -55,8 +55,8 @@ class CreateIngredientForm(WTFormView):
             substances = []
         import pdb;pdb.set_trace()
         durchlaufvariable = 0
+        optionlist = list()
         for i in substances:
-            optionlist = list()
             optionlist.append(tuple((i[0], str(i[1])+"|"+str(i[2])+"|"+str(i[3]))))
         self.form.substance.choices = optionlist
         self.form.process()
