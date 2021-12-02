@@ -24,7 +24,7 @@ class CreateForm(Form):
     substance = SelectField(u"Reinstoff", [validators.required()], render_kw={'class': 'form-control'})
     concentration_min = FloatField(u"Konzentration minimum", render_kw={'class': 'form-control'})
     concentration_max = FloatField(u"Konzentration maximum", render_kw={'class': 'form-control'})
-    itemid = HiddenField(u'ReinstoffID')
+    itemid = HiddenField(u'MixtureID')
 
 class CreateIngredientForm(WTFormView):
     formClass = CreateForm
@@ -64,7 +64,7 @@ class CreateIngredientForm(WTFormView):
 
     def submit(self, button):
         self.form.itemid.default = self.request.get('itemid')
-        redirect_url = self.context.aq_parent.absolute_url()
+        redirect_url = self.context.absolute_url()+'/single_view?item='+self.form.itemid.data
         if button == 'Speichern': #and self.validate():
             insert = """INSERT INTO recipes (mixture_id, substance_id, concentration_min, concentration_max)
                                                         VALUES (%s, %s, %s, %s);""" \
