@@ -49,7 +49,7 @@ class CreateIngredientForm(WTFormView):
 
     def renderForm(self):
         try:
-            insert = "SELECT substance_id, title FROM substance ORDER BY title;"
+            insert = "SELECT substance_id, title, casnr, egnr FROM substance ORDER BY title;"
             substances = self.db.execute(insert)
         except:
             substances = []
