@@ -54,7 +54,11 @@ class CreateIngredientForm(WTFormView):
         except:
             substances = []
         import pdb;pdb.set_trace()
-        self.form.substance.choices = substances
+        durchlaufvariable = 0
+        for i in substances:
+            optionlist = list()
+            optionlist.append(tuple((i[0], str(i[1])+"|"+str(i[2])+"|"+str(i[3]))))
+        self.form.substance.choices = optionlist
         self.form.process()
         return self.formTemplate()
 
