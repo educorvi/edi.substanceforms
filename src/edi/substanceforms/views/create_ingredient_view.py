@@ -53,7 +53,7 @@ class CreateIngredientForm(WTFormView):
             substances = self.db.execute(insert)
         except:
             substances = []
-        import pdb;pdb.set_trace()
+        #import pdb;pdb.set_trace()
         durchlaufvariable = 0
         optionlist = list()
         for i in substances:
