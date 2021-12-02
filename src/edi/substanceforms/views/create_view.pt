@@ -5,11 +5,7 @@
       lang="en"
       metal:use-macro="context/main_template/macros/master"
       i18n:domain="example.conference">
-<head>
-  <meta charset="utf-8">
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
-  <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-</head>
+
 <body>
 
 <metal:main fill-slot="main">
@@ -58,7 +54,13 @@
 
       </div>
 
-      <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script>
+	  $( document ).ready(function() {
+	    $("select").replaceWith(function() {
+              return '<datalist id="datalistOptions">' + this.innerHTML + '</datalist>';
+              });
+          });
+        </script>
 
     </tal:main-macro>
 </metal:main>
