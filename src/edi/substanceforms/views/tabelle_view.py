@@ -73,8 +73,8 @@ class TabelleFormView(WTFormView):
         #if button == 'Suche' and self.validate():
         if button == 'Alle anzeigen':
 
-            print(self.context.mixturetype)
-            #self.ergs = self.show_all()
+            #print(self.context.mixturetype)
+            self.ergs = self.show_all()
         if button == 'Suche':
 
             searchkey = self.context.tablename + '_id'
@@ -215,6 +215,7 @@ class SubstancemixtureFormView(TabelleFormView):
 
     def submit(self, button):
         if button == 'Alle anzeigen':
+            import pdb; pdb.set_trace()
             self.ergs = self.show_all()
         elif button == 'Suche':
 
