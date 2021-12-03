@@ -47,15 +47,15 @@
 	      </thead>
               <tbody>
 	        <tr>
-	          <td>Typ des Wasch- und Reinigungsmittels</td>
+	          <td tal:condition="python: view.get_attr_translation('substance_types', article[5])">Typ des Wasch- und Reinigungsmittels</td>
 	          <td tal:condition="python: view.get_attr_translation('substance_types', article[5])" tal:content="python: view.get_attr_translation('substance_types', article[5])"/>
 	        </tr>
           <tr>
-	          <td>Branche</td>
+	          <td tal:condition="python: view.get_attr_translation('branchen', article[4])">Branche</td>
             <td tal:condition="python: view.get_attr_translation('branchen', article[4])" tal:content="python: view.get_attr_translation('branchen', article[4])"/>
 	        </tr>
           <tr>
-	          <td>Verdampfungsfaktor 150 Grad</td>
+	          <td tal:condition="python:article[10]">Verdampfungsfaktor 150 Grad</td>
 	          <td tal:condition="python:article[10]" tal:content="python:article[10]"/>
 	        </tr>
 	        <tr>
