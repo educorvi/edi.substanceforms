@@ -59,6 +59,7 @@ def possibleColumns(context):
 
     return SimpleVocabulary(terms)
 
+@provider(IContextSourceBinder)
 def mixturetypes(context):
     try:
         tablename = context.tablename
