@@ -232,6 +232,7 @@ class SubstancemixtureFormView(TabelleFormView):
                     conn.close()
 
                 except:
+                    print ("LOLLL")
                     self.ergs = self.show_all()
 
             else:
