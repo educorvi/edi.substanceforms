@@ -56,9 +56,13 @@
 
       <script>
         $( document ).ready(function() {
-	  $("select").replaceWith(function() {
-            return "<datalist id=\"datalistOptions\">" + this.innerHTML + "</datalist>";
+          $("select").each(function() {
+            var listid = this.attr('id') + "datalistOptions";
+            this.replaceWith("<datalist id=" + listid + ">" + this.innerHTML + "</datalist>")
           });
+	        //$("select").replaceWith(function() {
+            //return "<datalist id=\"datalistOptions\">" + this.innerHTML + "</datalist>";
+          //});
         });
       </script>
 

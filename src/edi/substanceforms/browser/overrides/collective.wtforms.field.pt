@@ -39,7 +39,7 @@
       <div tal:replace="structure field" />
       <label tal:attributes="for field/label/field_id" tal:content="field/label/text"></label>
         <span tal:condition="nocall: python: field.flags.required" title="Eingabe erforderlich">*</span>
-      <input class="form-control" list="datalistOptions" id="exampleDataList" tal:attributes="id field/id; name field/name" placeholder="Type to search...">	
+      <input class="form-control" tal:attributes="list string:${field/label/field_id}datalistOptions" list="datalistOptions" id="exampleDataList" tal:attributes="id field/id; name field/name" placeholder="Type to search...">
       <div tal:condition="errors" tal:attributes="id string:${field/label/field_id}ValidationFeedback" class="invalid-feedback">
         <ul tal:repeat="error errors">
           <li i18n:translate="" tal:content="error" tal:condition="python: type(error) != list"/>
