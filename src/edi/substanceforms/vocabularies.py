@@ -24,10 +24,10 @@ substance_types = [
     ]
 
 substance_types_new = [
-    (u'detergent_labels', u'Etikettendruck'),
-    (u'detergent_uv', u'UV-Druck'),
-    (u'detergent_heatset', u'Heatsetwaschmittel'),
-    ('detergent_special', u'Sonderreiniger'),
+    (u'label', u'Etikettendruck'),
+    (u'uv', u'UV-Druck'),
+    (u'heatset', u'Heatsetwaschmittel'),
+    ('special', u'Sonderreiniger'),
     ('offset', u'Offsetdruck (allgemein)')
     ]
 
