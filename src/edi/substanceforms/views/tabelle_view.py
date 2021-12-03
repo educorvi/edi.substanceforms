@@ -215,8 +215,28 @@ class SubstancemixtureFormView(TabelleFormView):
 
     def submit(self, button):
         if button == 'Alle anzeigen':
-            import pdb; pdb.set_trace()
-            self.ergs = self.show_all()
+
+            mixturetype = self.context.mixturetype
+            searchkey = self.context.tablename + '_id'
+            searchtable = self.context.tablename
+
+            if mixturetype:
+                select = "SELECT %s, title FROM %s WHERE substance_type = %s;" % (searchkey, searchtable, mixturetype)
+                try:
+                    conn = psycopg2.connect(host=self.host, user=self.username, password=self.password,
+                                            dbname=self.dbname)
+                    cur = conn.cursor()
+                    cur.execute(select)
+                    self.ergs = cur.fetchall()
+                    cur.close
+                    conn.close()
+
+                except:
+                    self.ergs = self.show_all()
+
+            else:
+                self.ergs = self.show_all()
+
         elif button == 'Suche':
 
             searchkey = self.context.tablename + '_id'
