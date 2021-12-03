@@ -222,18 +222,18 @@ class SubstancemixtureFormView(TabelleFormView):
 
             if mixturetype:
                 select = "SELECT %s, title FROM %s WHERE substance_type = %s;" % (searchkey, searchtable, mixturetype)
-                try:
-                    conn = psycopg2.connect(host=self.host, user=self.username, password=self.password,
-                                            dbname=self.dbname)
-                    cur = conn.cursor()
-                    cur.execute(select)
-                    self.ergs = cur.fetchall()
-                    cur.close
-                    conn.close()
+                #try:
+                conn = psycopg2.connect(host=self.host, user=self.username, password=self.password,
+                                        dbname=self.dbname)
+                cur = conn.cursor()
+                cur.execute(select)
+                self.ergs = cur.fetchall()
+                cur.close
+                conn.close()
 
-                except:
-                    print ("LOLLL")
-                    self.ergs = self.show_all()
+                #except:
+                #    print ("LOLLL")
+                #    self.ergs = self.show_all()
 
             else:
                 self.ergs = self.show_all()
