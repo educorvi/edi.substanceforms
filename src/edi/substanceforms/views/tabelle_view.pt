@@ -71,12 +71,13 @@
       </div>
 
       <script>
-        $( document ).ready(function() {
-          $("select").replaceWith(function() {
-            return "<datalist id=\"datalistOptions\">" + this.innerHTML + "</datalist>";
-            });
+        $(document).ready(function () {
+          $("select").each(function () {
+            var listid = $(this).attr('id') + "datalistOptions";
+            $(this).replaceWith("<datalist id=" + listid + ">" + this.innerHTML + "</datalist>")
+          });
         });
-      </script> 
+      </script>
 
 
     </tal:main-macro>
