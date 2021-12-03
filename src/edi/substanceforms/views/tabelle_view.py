@@ -72,7 +72,9 @@ class TabelleFormView(WTFormView):
     def submit(self, button):
         #if button == 'Suche' and self.validate():
         if button == 'Alle anzeigen':
-            self.ergs = self.show_all()
+            import pdb; pdb.set_trace()
+            #if self.context.mixturetype
+            #self.ergs = self.show_all()
         if button == 'Suche':
 
             searchkey = self.context.tablename + '_id'
