@@ -102,10 +102,10 @@ class ITabelle(model.Schema):
             value_type=schema.Choice(source=possibleColumns),
             )
 
-    mixturetype = schema.List(
+    mixturetype = schema.Choice(
         title=u"Art des Gefahrstoffgemisches",
         description=u"Art des Gefahrstoffgemisches auswählen (aus Tabelle substance_mixutre)",
-        value_type=schema.Choice(source=mixturetypes),
+        source=mixturetypes,
     )
 
     artikeltyp = schema.TextLine(
