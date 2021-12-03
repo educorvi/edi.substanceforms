@@ -226,9 +226,9 @@ class SubstancemixtureFormView(TabelleFormView):
             elif manu_id == 'alle':
                 select = "SELECT %s, title FROM %s;" % (searchkey, searchtable)
             elif is_detergent_special == True:
-                select = "SELECT %s, title FROM %s WHERE manufacturer_id = '%s' AND detergent_special = True;" % (searchkey, searchtable, manu_id)
+                select = "SELECT %s, title FROM %s WHERE manufacturer_id = %s AND detergent_special = True;" % (searchkey, searchtable, manu_id)
             else:
-                select = "SELECT %s, title FROM %s WHERE manufacturer_id = '%s';" % (searchkey, searchtable, manu_id)
+                select = "SELECT %s, title FROM %s WHERE manufacturer_id = %s;" % (searchkey, searchtable, manu_id)
                 import pdb; pdb.set_trace()
 
             try:
