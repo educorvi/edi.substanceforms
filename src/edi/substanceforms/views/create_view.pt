@@ -54,13 +54,13 @@
 
       </div>
 
-	<script>
-	  $( document ).ready(function() {
-	    $("select").replaceWith(function() {
-              return '<datalist id="datalistOptions">' + this.innerHTML + '</datalist>';
-              });
+      <script>
+        $( document ).ready(function() {
+	  $("select").replaceWith(function() {
+            return "<datalist id=\"datalistOptions\">" + this.innerHTML + "</datalist>";
           });
-        </script>
+        });
+      </script>
 
     </tal:main-macro>
 </metal:main>
