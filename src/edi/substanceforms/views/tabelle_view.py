@@ -221,7 +221,7 @@ class SubstancemixtureFormView(TabelleFormView):
             searchtable = self.context.tablename
 
             if mixturetype:
-                select = "SELECT %s, title FROM %s WHERE substance_type = %s;" % (searchkey, searchtable, mixturetype)
+                select = "SELECT %s, title FROM %s WHERE substance_type = '%s';" % (searchkey, searchtable, mixturetype)
                 #try:
                 conn = psycopg2.connect(host=self.host, user=self.username, password=self.password,
                                         dbname=self.dbname)
