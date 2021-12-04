@@ -72,6 +72,8 @@ class TabelleFormView(WTFormView):
     def submit(self, button):
         #if button == 'Suche' and self.validate():
         if button == 'Alle anzeigen':
+
+            #print(self.context.mixturetype)
             self.ergs = self.show_all()
         if button == 'Suche':
 
@@ -213,7 +215,29 @@ class SubstancemixtureFormView(TabelleFormView):
 
     def submit(self, button):
         if button == 'Alle anzeigen':
-            self.ergs = self.show_all()
+
+            mixturetype = self.context.mixturetype
+            searchkey = self.context.tablename + '_id'
+            searchtable = self.context.tablename
+
+            if mixturetype:
+                select = "SELECT %s, title FROM %s WHERE substance_type = '%s';" % (searchkey, searchtable, mixturetype)
+                #try:
+                conn = psycopg2.connect(host=self.host, user=self.username, password=self.password,
+                                        dbname=self.dbname)
+                cur = conn.cursor()
+                cur.execute(select)
+                self.ergs = cur.fetchall()
+                cur.close
+                conn.close()
+
+                #except:
+                #    print ("LOLLL")
+                #    self.ergs = self.show_all()
+
+            else:
+                self.ergs = self.show_all()
+
         elif button == 'Suche':
 
             searchkey = self.context.tablename + '_id'
@@ -226,9 +250,9 @@ class SubstancemixtureFormView(TabelleFormView):
             elif manu_id == 'alle':
                 select = "SELECT %s, title FROM %s;" % (searchkey, searchtable)
             elif is_detergent_special == True:
-                select = "SELECT %s, title FROM %s WHERE manufacturer_id = '%s' AND detergent_special = True;" % (searchkey, searchtable, manu_id)
+                select = "SELECT %s, title FROM %s WHERE manufacturer_id = %s AND detergent_special = True;" % (searchkey, searchtable, manu_id)
             else:
-                select = "SELECT %s, title FROM %s WHERE manufacturer_id = '%s';" % (searchkey, searchtable, manu_id)
+                select = "SELECT %s, title FROM %s WHERE manufacturer_id = %s;" % (searchkey, searchtable, manu_id)
 
             try:
                 conn = psycopg2.connect(host=self.host, user=self.username, password=self.password, dbname=self.dbname)

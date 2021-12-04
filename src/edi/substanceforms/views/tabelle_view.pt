@@ -70,6 +70,16 @@
 
       </div>
 
+      <script>
+        $(document).ready(function () {
+          $("select").each(function () {
+            var listid = $(this).attr('id') + "datalistOptions";
+            $(this).replaceWith("<datalist id=" + listid + ">" + this.innerHTML + "</datalist>")
+          });
+        });
+      </script>
+
+
     </tal:main-macro>
 </metal:main>
 

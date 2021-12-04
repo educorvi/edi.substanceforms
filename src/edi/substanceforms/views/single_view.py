@@ -36,7 +36,6 @@ class SingleView(BrowserView):
             #self.machines = self.get_machines()
             self.secsheet = self.get_recipes()
             template = ViewPageTemplateFile('substance_view.pt')
-            self.image_url = self.get_image_url()
             self.template = BoundPageTemplate(template, self)
             return self.template()
         elif self.context.tablename == 'spray_powder':
@@ -124,13 +123,13 @@ class SingleView(BrowserView):
 
     def get_recipes(self):
         substances = []
-        select = "SELECT substance_id, concentration from recipes WHERE mixture_id = %s" %self.itemid
+        select = "SELECT substance_id, concentration_min, concentration_max from recipes WHERE mixture_id = %s" %self.itemid
         substance_ids = self.db.execute(select)
         # Continue here
-        for sid, concentration in substance_ids:
+        for sid, concentration_min, concentration_max in substance_ids:
             select = "SELECT title from substance WHERE substance_id = %s" %sid
             substance_title = self.db.execute(select)
-            entry = {'title':substance_title, 'concentration':concentration}
+            entry = {'title':substance_title, 'concentration_min':concentration_min, 'concentration_max':concentration_max}
             substances.append(entry)
         #self.db.close()
         return substances
@@ -139,7 +138,7 @@ class SingleView(BrowserView):
         resultstring = ""
         index = 0
         for i in recipe:
-            resultstring = resultstring + "%s (%s %s), " % (recipe[index]['title'][0][0], recipe[index]['concentration'], "%")
+            resultstring = resultstring + "%s (%s %s %s, %s %s %s), " % (recipe[index]['title'][0][0], ">=", recipe[index]['concentration_min'], "%", "<=", recipe[index]['concentration_max'], "%")
             index = index + 1
         resultstring = resultstring[:-2]
         return resultstring

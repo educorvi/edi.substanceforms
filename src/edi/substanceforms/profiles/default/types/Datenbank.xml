@@ -63,11 +63,11 @@
 
   <!-- View information -->
   <property name="add_view_expr">string:${folder_url}/++add++Datenbank</property>
-  <property name="default_view">view</property>
+  <property name="default_view">datenbank-view</property>
   <property name="default_view_fallback">False</property>
-  <property name="immediate_view">view</property>
+  <property name="immediate_view">datenbank-view</property>
   <property name="view_methods">
-    <element value="view"/>
+    <element value="datenbank-view"/>
   </property>
 
   <!-- Method aliases -->

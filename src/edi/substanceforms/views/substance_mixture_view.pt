@@ -47,80 +47,80 @@
 	      </thead>
               <tbody>
 	        <tr>
-	          <td>Typ des Wasch- und Reinigungsmittels</td>
-	          <td tal:content="python: view.get_attr_translation('substance_types', article[5])"/>
+	          <td tal:condition="python: view.get_attr_translation('substance_types', article[5])">Typ des Wasch- und Reinigungsmittels</td>
+	          <td tal:condition="python: view.get_attr_translation('substance_types', article[5])" tal:content="python: view.get_attr_translation('substance_types', article[5])"/>
 	        </tr>
           <tr>
-	          <td>Branche</td>
-            <td tal:content="python: view.get_attr_translation('branchen', article[4])"/>
+	          <td tal:condition="python: view.get_attr_translation('branchen', article[4])">Branche</td>
+            <td tal:condition="python: view.get_attr_translation('branchen', article[4])" tal:content="python: view.get_attr_translation('branchen', article[4])"/>
 	        </tr>
           <tr>
-	          <td>Verdampfungsfaktor 150 Grad</td>
-	          <td tal:content="python:article[10]"/>
+	          <td tal:condition="python:article[10]">Verdampfungsfaktor 150 Grad</td>
+	          <td tal:condition="python:article[10]" tal:content="python:article[10]"/>
 	        </tr>
 	        <tr>
-	          <td>Verdampfungsfaktor 160 Grad</td>
-	          <td tal:content="python:article[11]"/>
+	          <td tal:condition="python:article[11]">Verdampfungsfaktor 160 Grad</td>
+	          <td tal:condition="python:article[11]" tal:content="python:article[11]"/>
 	        </tr>
 	        <tr>
-	          <td>Verdampfungsfaktor 170 Grad</td>
-	          <td tal:content="python:article[12]"/>
+	          <td tal:condition="python:article[12]">Verdampfungsfaktor 170 Grad</td>
+	          <td tal:condition="python:article[12]" tal:content="python:article[12]"/>
 	        </tr>
 	        <tr>
-	          <td>Verdampfungsfaktor 180 Grad</td>
-	          <td tal:content="python:article[13]"/>
+	          <td tal:condition="python:article[13]">Verdampfungsfaktor 180 Grad</td>
+	          <td tal:condition="python:article[13]" tal:content="python:article[13]"/>
 	        </tr>
 	        <tr>
-	          <td>UEG in g/m3</td>
-	          <td tal:content="python:article[14]"/>
+	          <td tal:condition="python:article[14]">UEG in g/m3</td>
+	          <td tal:condition="python:article[14]" tal:content="python:article[14]"/>
 	        </tr>
 	        <tr>
-	          <td>Responsefaktor</td>
-	          <td tal:content="python:article[15]"/>
+	          <td tal:condition="python:article[15]">Responsefaktor</td>
+	          <td tal:condition="python:article[15]" tal:content="python:article[15]"/>
 	        </tr>
 	        <tr>
-	          <td>Hautschutzmittelgruppe</td>
-	          <td tal:content="python: view.get_attr_translation('hskategorie', article[16])"/>
+	          <td tal:condition="python: view.get_attr_translation('hskategorie', article[16])">Hautschutzmittelgruppe</td>
+	          <td tal:condition="python: view.get_attr_translation('hskategorie', article[16])" tal:content="python: view.get_attr_translation('hskategorie', article[16])"/>
 	        </tr>
 	        <tr>
-	          <td>Prüfdatum</td>
-	          <td tal:content="python:article[18]"/>
+	          <td tal:condition="python:article[18]">Prüfdatum</td>
+	          <td tal:condition="python:article[18]" tal:content="python:article[18]"/>
 	        </tr>
           <tr>
-	          <td>Sonderreiniger</td>
-	          <td tal:content="python: view.get_attr_translation('boolvocab', str(article[7]))"/>
+	          <td tal:condition="python: view.get_attr_translation('boolvocab', str(article[7]))">Sonderreiniger</td>
+	          <td tal:condition="python: view.get_attr_translation('boolvocab', str(article[7]))" tal:content="python: view.get_attr_translation('boolvocab', str(article[7]))"/>
 	        </tr>
 	        <tr>
-	          <td>Emissionsarmes Produkt</td>
-	          <td tal:content="python: view.get_attr_translation('boolvocab', str(article[17]))"/>
+	          <td tal:condition="python: view.get_attr_translation('boolvocab', str(article[17]))">Emissionsarmes Produkt</td>
+	          <td tal:condition="python: view.get_attr_translation('boolvocab', str(article[17]))" tal:content="python: view.get_attr_translation('boolvocab', str(article[17]))"/>
 	        </tr>
 	        <tr>
-	          <td>Flammpunkt</td>
-	          <td tal:content="python:article[19]"/>
+	          <td tal:condition="python:article[19]">Flammpunkt</td>
+	          <td tal:condition="python:article[19]" tal:content="python:article[19]"/>
 	        </tr>
 	        <tr>
-	          <td>Wertebereich für den Flammpunkt</td>
-	          <td tal:content="python: view.get_attr_translation('boolvocab', str(article[20]))"/>
+	          <td tal:condition="python: view.get_attr_translation('boolvocab', str(article[20]))">Wertebereich für den Flammpunkt</td>
+	          <td tal:condition="python: view.get_attr_translation('boolvocab', str(article[20]))" tal:content="python: view.get_attr_translation('boolvocab', str(article[20]))"/>
 	        </tr>
 	        <tr>
-	          <td>Bemerkungen</td>
-	          <td tal:content="python:view.get_none_translation(article[21])"/>
+	          <td tal:condition="python:view.get_none_translation(article[21])">Bemerkungen</td>
+	          <td tal:condition="python:view.get_none_translation(article[21])" tal:content="python:view.get_none_translation(article[21])"/>
 	        </tr>
 	        <tr>
-	          <td>Verwendungszwecke</td>
-	          <td tal:content="python: view.usecase_translation(view.unbundle_list(article[9]))"/>
+	          <td tal:condition="python: view.usecase_translation(view.unbundle_list(article[9]))">Verwendungszwecke</td>
+	          <td tal:condition="python: view.usecase_translation(view.unbundle_list(article[9]))" tal:content="python: view.usecase_translation(view.unbundle_list(article[9]))"/>
 	        </tr>
           <tr>
-	          <td>Anwendungsgebiete</td>
-	          <td tal:content="python: view.application_areas_translation(view.unbundle_list(article[8]))"/>
+	          <td tal:condition="python: view.application_areas_translation(view.unbundle_list(article[8]))">Anwendungsgebiete</td>
+	          <td tal:condition="python: view.application_areas_translation(view.unbundle_list(article[8]))" tal:content="python: view.application_areas_translation(view.unbundle_list(article[8]))"/>
 	        </tr>
           <tr>
-	          <td>Offset-Druckverfahren</td>
-	          <td tal:content="python:article[6]"/>
+	          <td tal:condition="python:article[6]">Offset-Druckverfahren</td>
+	          <td tal:condition="python:article[6]" tal:content="python:article[6]"/>
 	        </tr>
           <tr>
-	          <td>Bestandteile</td>
-            <td tal:content="python:view.translate_recipes(view.get_recipes())"/>
+	          <td tal:condition="python:view.translate_recipes(view.get_recipes())">Bestandteile</td>
+            <td tal:condition="python:view.translate_recipes(view.get_recipes())" tal:content="python:view.translate_recipes(view.get_recipes())"/>
           </tr>
 	      </tbody>
 	    </table>

@@ -8,6 +8,9 @@ class SelectorView(BrowserView):
     def __call__(self):
 
         viewname = "%s-form-view" % self.context.tablename
+        #if self.context.tablename == 'substance_mixture':
+            #if self.context.nochzudefinieren == "Etiketten":
+                #viewname="etiketten-form-view"
 
         try:
             view = ploneapi.content.get_view(

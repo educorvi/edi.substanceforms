@@ -59,6 +59,32 @@ def possibleColumns(context):
 
     return SimpleVocabulary(terms)
 
+@provider(IContextSourceBinder)
+def mixturetypes(context):
+    try:
+        tablename = context.tablename
+        host = context.host
+        dbname = context.database
+        username = context.username
+        password = context.password
+
+        conn = psycopg2.connect(host=host, user=username, dbname=dbname, password=password)
+        cur = conn.cursor()
+        select = "SELECT DISTINCT substance_type FROM substance_mixture;"
+        cur.execute(select)
+        tables = cur.fetchall()
+        cur.close()
+        conn.close()
+
+        terms = []
+        for i in tables:
+            table = i[0]
+            terms.append(SimpleVocabulary.createTerm(table, table, table))
+    except:
+        terms = []
+
+    return SimpleVocabulary(terms)
+
 class ITabelle(model.Schema):
     """ Marker interface and Dexterity Python Schema for Tabelle
     """
@@ -75,6 +101,13 @@ class ITabelle(model.Schema):
             description = u"Datenbankspalten auswählen, die berücksichtigt werden sollen",
             value_type=schema.Choice(source=possibleColumns),
             )
+
+    mixturetype = schema.Choice(
+        title=u"Art des Gefahrstoffgemisches",
+        description=u"Art des Gefahrstoffgemisches auswählen (aus Tabelle substance_mixutre)",
+        source=mixturetypes,
+        required = False
+    )
 
     artikeltyp = schema.TextLine(
             title = u"Name des Artikeltyps der in dieser Tabelle gespeichert wird",

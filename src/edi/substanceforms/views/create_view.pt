@@ -5,6 +5,7 @@
       lang="en"
       metal:use-macro="context/main_template/macros/master"
       i18n:domain="example.conference">
+
 <body>
 
 <metal:main fill-slot="main">
@@ -39,7 +40,7 @@
           <div class="col-lg-3 col-12">
             <div tal:replace="structure context/@@portlet-cards-view"/>
           </div>
-          <!-- Ende Portlets -->	  
+          <!-- Ende Portlets -->
 
         </div>
 
@@ -52,6 +53,18 @@
         </div>
 
       </div>
+
+      <script>
+        $( document ).ready(function() {
+          $("select").each(function() {
+            var listid = $( this ).attr('id') + "datalistOptions";
+            $(this).replaceWith("<datalist id=" + listid + ">" + this.innerHTML + "</datalist>")
+          });
+	        //$("select").replaceWith(function() {
+            //return "<datalist id=\"datalistOptions\">" + this.innerHTML + "</datalist>";
+          //});
+        });
+      </script>
 
     </tal:main-macro>
 </metal:main>

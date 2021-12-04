@@ -9,7 +9,7 @@ from wtforms import validators
 from collective.wtforms.views import WTFormView
 from edi.substanceforms.helpers import check_value, list_handler
 from edi.substanceforms.vocabularies import substance_types, hskategorie, produktkategorien, produktklassen, branchen
-from edi.substanceforms.vocabularies import classifications, usecases, application_areas
+from edi.substanceforms.vocabularies import classifications, usecases, application_areas, substance_types_new
 from plone import api as ploneapi
 from edi.substanceforms.lib import DBConnect
 import requests
@@ -23,9 +23,11 @@ class CreateForm(Form):
 
     title = StringField(u"Titel", [validators.required()], render_kw={'class': 'form-control'})
     description = StringField(u"Beschreibung", [validators.required()], render_kw={'class': 'form-control'})
-    branch = SelectField("Branche", choices=branchen, render_kw={'class': 'form-control'})
+    branch = SelectField("Branche", [validators.required()], choices=branchen, render_kw={'class': 'form-control'})
     manufacturer_id = SelectField(u"Hersteller des Wasch- und Reinigungsmittels", [validators.required()], render_kw={'class': 'form-control'})
-    substance_type = RadioField(u"Art des Wasch- und Reinigungsmittels", [validators.required()], choices=substance_types)
+    substance_type = RadioField(u"Art des Wasch- und Reinigungsmittels", [validators.required()], choices=substance_types_new)
+    usecases = MultiCheckboxField(u"Anwendungszwecke für Etikettenreiniger", choices=usecases)
+    application_areas = MultiCheckboxField(u"Anwendungsgebiete für Sonderreiniger", choices=application_areas)
     offset_print_manner = StringField(u"Offsetdruckverfahren", render_kw={'class': 'form-control'})
     detergent_special = BooleanField(u"Es handelt sich um einen Sonderreiniger", render_kw={'class': 'form-check-input'})
     evaporation_lane_150 = FloatField(u"Verdampfungsfaktor bei 150 Grad Celsius", render_kw={'class': 'form-control'})
@@ -34,13 +36,11 @@ class CreateForm(Form):
     evaporation_lane_180 = FloatField(u"Verdampfungsfaktor bei 180 Grad Celsius", render_kw={'class': 'form-control'})
     ueg = StringField(u"UEG", render_kw={'class': 'form-control'})
     response = StringField(u"Response-Faktor", render_kw={'class': 'form-control'})
-    skin_category = SelectField(u"Hautschutz-Kategorie", choices=hskategorie, render_kw={'class': 'form-control'})
+    skin_category = SelectField(u"Hautschutz-Kategorie", [validators.required()], choices=hskategorie, render_kw={'class': 'form-control'})
     date_checked = DateField(u"Datum der letzten Prüfung", render_kw={'class': 'form-control'})
     checked_emissions = BooleanField(u"Emissionsarmes Produkt", render_kw={'class': 'form-check-input'})
     flashpoint = IntegerField(u"Flammpunkt", render_kw={'class': 'form-control'})
     values_range = BooleanField(u"Wertebereich", render_kw={'class': 'form-check-input'})
-    usecases = MultiCheckboxField(u"Anwendungsfälle", choices=usecases)
-    application_areas = MultiCheckboxField(u"Anwendungsbereiche", choices=application_areas)
     image_url = FileField("Bilddatei hochladen", render_kw={'class': 'form-control'})
     comments = TextAreaField("Bemerkungen", render_kw={'class': 'form-control'})
 
@@ -49,9 +49,11 @@ class UpdateForm(Form):
     title = StringField(u"Titel", [validators.required()], render_kw={'class': 'form-control'})
     description = StringField(u"Beschreibung", [validators.required()], render_kw={'class': 'form-control'})
     branch = SelectField("Branche", choices=branchen, render_kw={'class': 'form-control'})
-    substance_type = RadioField(u"Art des Wasch- und Reinigungsmittels", [validators.required()], choices=substance_types)
+    substance_type = RadioField(u"Art des Wasch- und Reinigungsmittels", [validators.required()], choices=substance_types_new)
+    usecases = MultiCheckboxField(u"Anwendungszwecke für Etikettenreiniger", choices=usecases)
+    application_areas = MultiCheckboxField(u"Anwendungsgebiete für Sonderreiniger", choices=application_areas)
     offset_print_manner = StringField(u"Offsetdruckverfahren", render_kw={'class': 'form-control'})
-    detergent_special = BooleanField(u"Es handelt sich um einen Sonderreiniger", render_kw={'class': 'form-check-input'})
+    #detergent_special = BooleanField(u"Es handelt sich um einen Sonderreiniger", render_kw={'class': 'form-check-input'})
     evaporation_lane_150 = FloatField(u"Verdampfungsfaktor bei 150 Grad Celsius", render_kw={'class': 'form-control'})
     evaporation_lane_160 = FloatField(u"Verdampfungsfaktor bei 160 Grad Celsius", render_kw={'class': 'form-control'})
     evaporation_lane_170 = FloatField(u"Verdampfungsfaktor bei 170 Grad Celsius", render_kw={'class': 'form-control'})
@@ -63,8 +65,6 @@ class UpdateForm(Form):
     checked_emissions = BooleanField(u"Emissionsarmes Produkt", render_kw={'class': 'form-check-input'})
     flashpoint = IntegerField(u"Flammpunkt", render_kw={'class': 'form-control'})
     values_range = BooleanField(u"Wertebereich", render_kw={'class': 'form-check-input'})
-    usecases = MultiCheckboxField(u"Anwendungsfälle", choices=usecases)
-    application_areas = MultiCheckboxField(u"Anwendungsbereiche", choices=application_areas)
     image_url = FileField("Bilddatei hochladen", render_kw={'class': 'form-control'})
     comments = TextAreaField("Bemerkungen", render_kw={'class': 'form-control'})
     no_image = BooleanField("Vorhandenes Bild entfernen", render_kw={'class': 'form-check-input'})

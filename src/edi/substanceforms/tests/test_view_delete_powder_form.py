@@ -23,15 +23,15 @@ class ViewsIntegrationTest(unittest.TestCase):
     def test_update_view_is_registered(self):
         view = getMultiAdapter(
             (self.portal['test-datenbank']['test-tabelle'], self.portal.REQUEST),
-            name='update-view'
+            name='delete-powder-form'
         )
-        self.assertTrue(view.__name__ == 'update-view')
+        self.assertTrue(view.__name__ == 'delete-powder-form')
 
     def test_update_view_not_matching_interface(self):
         with self.assertRaises(ComponentLookupError):
             getMultiAdapter(
                 (self.portal['test-datenbank'], self.portal.REQUEST),
-                name='update-view'
+                name='delete-powder-form'
             )
 
 

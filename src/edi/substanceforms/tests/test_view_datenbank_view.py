@@ -17,12 +17,12 @@ class ViewsIntegrationTest(unittest.TestCase):
     def setUp(self):
         self.portal = self.layer['portal']
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
-        api.content.create(self.portal, 'Folder', 'other-folder')
+        api.content.create(self.portal, 'Datenbank', 'test-datenbank')
         api.content.create(self.portal, 'Document', 'front-page')
 
     def test_datenbank_view_is_registered(self):
         view = getMultiAdapter(
-            (self.portal['other-folder'], self.portal.REQUEST),
+            (self.portal['test-datenbank'], self.portal.REQUEST),
             name='datenbank-view'
         )
         self.assertTrue(view.__name__ == 'datenbank-view')

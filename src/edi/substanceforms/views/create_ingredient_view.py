@@ -22,8 +22,9 @@ class MultiCheckboxField(SelectMultipleField):
 class CreateForm(Form):
 
     substance = SelectField(u"Reinstoff", [validators.required()], render_kw={'class': 'form-control'})
-    concentration = IntegerField(u"Konzentration", render_kw={'class': 'form-control'})
-    itemid = HiddenField(u'ReinstoffID')
+    concentration_min = FloatField(u"Konzentration minimum", render_kw={'class': 'form-control'})
+    concentration_max = FloatField(u"Konzentration maximum", render_kw={'class': 'form-control'})
+    itemid = HiddenField(u'MixtureID')
 
 class CreateIngredientForm(WTFormView):
     formClass = CreateForm
@@ -48,23 +49,29 @@ class CreateIngredientForm(WTFormView):
 
     def renderForm(self):
         try:
-            insert = "SELECT substance_id, title FROM substance ORDER BY title;"
+            insert = "SELECT substance_id, title, casnr, egnr FROM substance ORDER BY title;"
             substances = self.db.execute(insert)
         except:
             substances = []
-        self.form.substance.choices = substances
+        #import pdb;pdb.set_trace()
+        durchlaufvariable = 0
+        optionlist = list()
+        for i in substances:
+            optionlist.append(tuple((i[0], str(i[1])+"|"+str(i[2])+"|"+str(i[3]))))
+        self.form.substance.choices = optionlist
         self.form.process()
         return self.formTemplate()
 
     def submit(self, button):
         self.form.itemid.default = self.request.get('itemid')
-        redirect_url = self.context.aq_parent.absolute_url()
+        redirect_url = self.context.absolute_url()+'/single_view?item='+self.form.itemid.data
         if button == 'Speichern': #and self.validate():
-            insert = """INSERT INTO recipes (mixture_id, substance_id, concentration)
-                                                        VALUES (%s, %s, %s);""" \
+            insert = """INSERT INTO recipes (mixture_id, substance_id, concentration_min, concentration_max)
+                                                        VALUES (%s, %s, %s, %s);""" \
                                                         % (self.form.itemid.data,
                                                         self.form.substance.data,
-                                                        self.form.concentration.data,
+                                                        self.form.concentration_min.data,
+                                                        self.form.concentration_max.data,
                                                         )
             try:
                 self.db.execute(insert)

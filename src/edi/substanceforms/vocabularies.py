@@ -23,6 +23,14 @@ substance_types = [
     ('offset', u'Wasch- und Reinigungsmittel für den Offsetdruck')
     ]
 
+substance_types_new = [
+    (u'label', u'Etikettendruck'),
+    (u'uv', u'UV-Druck'),
+    (u'heatset', u'Heatsetwaschmittel'),
+    ('special', u'Sonderreiniger'),
+    ('offset', u'Offsetdruck (allgemein)')
+    ]
+
 produktkategorien = [
     (u'konventionell', u'konventioneller Druck'),
     (u'uvdruck', u'UV-Druck')
