@@ -95,6 +95,7 @@ vocabularies = {
         'hskategorie':hskategorie,
         'branchen':branchen,
         'substance_types':substance_types,
+        'substance_types_new':substance_types_new,
         'produktkategorien':produktkategorien,
         'produktklassen':produktklassen,
         'classifications':classifications,
