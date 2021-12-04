@@ -2,7 +2,8 @@
 hskategorie = [
     (u"id_wasserloeslich", u"gegen wasserlösliche Arbeitsstoffe"),
     (u"id_nichtwasserloeslich", u"gegen wasserunlösliche Arbeitsstoffe"),
-    (u"id_wechselnd", u"gegen wechselnde Arbeitsstoffe")
+    (u"id_wechselnd", u"gegen wechselnde Arbeitsstoffe"),
+    (u"alle_branchen", u"alle Branchen")
     ]
 
 branchen = [
