@@ -47,8 +47,8 @@
 	      </thead>
               <tbody>
 	        <tr>
-	          <td tal:condition="python: view.get_attr_translation('substance_types', article[5])">Typ des Wasch- und Reinigungsmittels</td>
-	          <td tal:condition="python: view.get_attr_translation('substance_types', article[5])" tal:content="python: view.get_attr_translation('substance_types', article[5])"/>
+	          <td tal:condition="python: view.get_attr_translation('substance_types_new', article[5])">Typ des Wasch- und Reinigungsmittels</td>
+	          <td tal:condition="python: view.get_attr_translation('substance_types_new', article[5])" tal:content="python: view.get_attr_translation('substance_types_new', article[5])"/>
 	        </tr>
           <tr>
 	          <td tal:condition="python: view.get_attr_translation('branchen', article[4])">Branche</td>
