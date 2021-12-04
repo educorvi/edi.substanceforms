@@ -55,6 +55,10 @@ class SynonymForm(Form):
     synonym_name = StringField("Synonyn", [validators.required()], render_kw={'class': 'form-control'})
     item_id = HiddenField()
 
+class DeleteSynonymsForm(Form):
+    sure = BooleanField("Synonyme löschen", render_kw={'class': 'form-check-input'})
+    item_id = HiddenField()
+
 class CreateFormView(WTFormView):
     formClass = CreateForm
     buttons = ('Speichern', 'Abbrechen')
@@ -260,7 +264,6 @@ class SynonymFormView(CreateFormView):
         self.db.close()
         return self.index()
 
-
     def renderForm(self):
         self.form.item_id.default=self.itemid
         self.form.process()
@@ -274,7 +277,44 @@ class SynonymFormView(CreateFormView):
             insert = "INSERT INTO synonyms VALUES (DEFAULT, %s, '%s');" % (self.form.item_id.data,
                                                                self.form.synonym_name.data)
             self.db.execute(insert)
-            message = u'Der Reinstoff wurde erfolgreich gelöscht'
+            message = u'Das Synonym wurde erfolgreich angelegt'
+            ploneapi.portal.show_message(message=message, type='info', request=self.request)
+
+            self.db.close()
+            return self.request.response.redirect(redirect_url)
+
+        elif button == 'Abbrechen':
+            return self.request.response.redirect(redirect_url)
+
+class DeleteSynonymsFormView(CreateFormView):
+    formClass = DeleteSynonymsForm
+
+    def __call__(self):
+        dbdata = self.context.aq_parent
+        self.db = DBConnect(host=dbdata.host, db=dbdata.database, user=dbdata.username, password=dbdata.password)
+        if self.submitted:
+            button = self.hasButtonSubmitted()
+            if button:
+                result = self.submit(button)
+                if result:
+                    return result
+        self.itemid = self.request.get('itemid')
+        self.db.close()
+        return self.index()
+
+    def renderForm(self):
+        self.form.item_id.default=self.itemid
+        self.form.process()
+        return self.formTemplate()
+
+    def submit(self, button):
+        """
+        """
+        redirect_url = self.context.aq_parent.absolute_url()
+        if button == 'Speichern': #and self.validate():
+            insert = "DELETE FROM synonyms WHERE substance_id = %s;" % self.form.item_id.data
+            self.db.execute(insert)
+            message = u'Die Synonyme wurden erfolgreich gelöscht'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
 
             self.db.close()
