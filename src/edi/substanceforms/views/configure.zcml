@@ -7,13 +7,6 @@
   -*- extra stuff goes here -*-
 
   <browser:page
-    name="selector-view"
-    for="Products.CMFCore.interfaces.IFolderish"
-    class=".selector_view.SelectorView"
-    permission="zope2.View"
-    />
-
-  <browser:page
     name="migrationview"
     for="*"
     class=".migrationview.Migrationview"
@@ -21,14 +14,21 @@
     />
 
   <browser:page
+    name="selector-view"
+    for="edi.substanceforms.content.tabelle.ITabelle"
+    class=".selector_view.SelectorView"
+    permission="zope2.View"
+    />
+
+  <browser:page
     name="single_view"
-    for="Products.CMFCore.interfaces.IFolderish"
+    for="edi.substanceforms.content.tabelle.ITabelle"
     class=".single_view.SingleView"
     permission="zope2.View"
     />
 
   <browser:page
-    name="tabelle_view"
+    name="tabelle-view"
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".tabelle_view.TabelleFormView"
     template="tabelle_view.pt"
@@ -68,7 +68,7 @@
     />
 
   <browser:page
-    name="view"
+    name="datenbank-view"
     for="edi.substanceforms.content.datenbank.IDatenbank"
     class=".datenbank_view.DatenbankView"
     template="datenbank_view.pt"
@@ -77,7 +77,7 @@
 
   <browser:page
     name="update-view"
-    for="*"
+    for="edi.substanceforms.content.tabelle.ITabelle"
     class=".update_view.UpdateFormView"
     template="update_view.pt"
     permission="zope2.View"
@@ -85,7 +85,7 @@
 
   <browser:page
     name="create-manufacturer-form"
-    for="*"
+    for="edi.substanceforms.content.tabelle.ITabelle"
     class=".create_manufacturer_form.CreateFormView"
     template = "create_view.pt"
     permission="zope2.View"
@@ -93,7 +93,7 @@
 
   <browser:page
     name="create-substance-form"
-    for="*"
+    for="edi.substanceforms.content.tabelle.ITabelle"
     class=".create_substance_form.CreateFormView"
     template = "create_view.pt"
     permission="zope2.View"
@@ -101,7 +101,7 @@
 
   <browser:page
     name="update-substance-form"
-    for="*"
+    for="edi.substanceforms.content.tabelle.ITabelle"
     class=".create_substance_form.UpdateFormView"
     template = "create_view.pt"
     permission="zope2.View"
@@ -109,7 +109,7 @@
 
   <browser:page
     name="delete-substance-form"
-    for="*"
+    for="edi.substanceforms.content.tabelle.ITabelle"
     class=".create_substance_form.DeleteFormView"
     template = "create_view.pt"
     permission="zope2.View"
@@ -117,7 +117,7 @@
 
   <browser:page
     name="add-synonym-form"
-    for="*"
+    for="edi.substanceforms.content.tabelle.ITabelle"
     class=".create_substance_form.SynonymFormView"
     template = "create_view.pt"
     permission="zope2.View"
@@ -125,7 +125,7 @@
 
   <browser:page
     name="update-manufacturer-form"
-    for="*"
+    for="edi.substanceforms.content.tabelle.ITabelle"
     class=".create_manufacturer_form.UpdateFormView"
     template = "create_view.pt"
     permission="zope2.View"
@@ -133,7 +133,7 @@
 
   <browser:page
     name="delete-manufacturer-form"
-    for="*"
+    for="edi.substanceforms.content.tabelle.ITabelle"
     class=".create_manufacturer_form.DeleteFormView"
     template = "create_view.pt"
     permission="zope2.View"
@@ -141,7 +141,7 @@
 
   <browser:page
     name="update-mixture-form"
-    for="*"
+    for="edi.substanceforms.content.tabelle.ITabelle"
     class=".create_mixture_form.UpdateFormView"
     template = "create_view.pt"
     permission="zope2.View"
@@ -149,7 +149,7 @@
 
   <browser:page
     name="delete-mixture-form"
-    for="*"
+    for="edi.substanceforms.content.tabelle.ITabelle"
     class=".create_mixture_form.DeleteFormView"
     template = "create_view.pt"
     permission="zope2.View"
@@ -157,7 +157,7 @@
 
   <browser:page
     name="delete-ingredients-form"
-    for="*"
+    for="edi.substanceforms.content.tabelle.ITabelle"
     class=".create_mixture_form.DeleteIngredientsFormView"
     template = "create_view.pt"
     permission="zope2.View"
@@ -165,7 +165,7 @@
 
   <browser:page
     name="update-powder-form"
-    for="*"
+    for="edi.substanceforms.content.tabelle.ITabelle"
     class=".create_powder_form.UpdateFormView"
     template = "create_view.pt"
     permission="zope2.View"
@@ -173,23 +173,15 @@
 
   <browser:page
     name="delete-powder-form"
-    for="*"
+    for="edi.substanceforms.content.tabelle.ITabelle"
     class=".create_powder_form.DeleteFormView"
     template = "create_view.pt"
     permission="zope2.View"
     />
 
   <browser:page
-    name="create-printing_machine-form"
-    for="*"
-    class=".create_machine_form.CreateFormView"
-    template = "create_view.pt"
-    permission="zope2.View"
-    />
-
-  <browser:page
     name="create-substance_mixture-form"
-    for="*"
+    for="edi.substanceforms.content.tabelle.ITabelle"
     class=".create_mixture_form.CreateFormView"
     template = "create_view.pt"
     permission="zope2.View"
@@ -197,7 +189,7 @@
 
   <browser:page
     name="create-ingredient-form"
-    for="*"
+    for="edi.substanceforms.content.tabelle.ITabelle"
     class=".create_ingredient_view.CreateIngredientForm"
     template = "create_view.pt"
     permission="zope2.View"
@@ -205,7 +197,7 @@
 
   <browser:page
     name="create-spray_powder-form"
-    for="*"
+    for="edi.substanceforms.content.tabelle.ITabelle"
     class=".create_powder_form.CreateFormView"
     template = "create_view.pt"
     permission="zope2.View"

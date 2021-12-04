@@ -17,25 +17,21 @@ class ViewsIntegrationTest(unittest.TestCase):
     def setUp(self):
         self.portal = self.layer['portal']
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
-        api.content.create(self.portal, 'Folder', 'other-folder')
-        api.content.create(self.portal, 'Document', 'front-page')
+        api.content.create(self.portal, 'Datenbank', 'test-datenbank')
+        api.content.create(self.portal['test-datenbank'], 'Tabelle', 'test-tabelle')
 
-    def test_types_view_is_registered(self):
+    def test_substance_mixture_view_is_registered(self):
         view = getMultiAdapter(
-            (self.portal['other-folder'], self.portal.REQUEST),
-            name='types-view'
+            (self.portal['test-datenbank']['test-tabelle'], self.portal.REQUEST),
+            name='create-ingredient-form'
         )
-        self.assertTrue(view.__name__ == 'types-view')
-        # self.assertTrue(
-        #     'Sample View' in view(),
-        #     'Sample View is not found in types-view'
-        # )
+        self.assertTrue(view.__name__ == 'create-ingredient-form')
 
-    def test_types_view_not_matching_interface(self):
+    def test_substance_mixture_view_not_matching_interface(self):
         with self.assertRaises(ComponentLookupError):
             getMultiAdapter(
-                (self.portal['front-page'], self.portal.REQUEST),
-                name='types-view'
+                (self.portal['test-datenbank'], self.portal.REQUEST),
+                name='create-ingredient-form'
             )
 
 
