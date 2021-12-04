@@ -273,7 +273,7 @@ class SynonymFormView(CreateFormView):
         """
         """
         #redirect_url = self.context.aq_parent.absolute_url()
-        redirect_url = self.context.absolute_url() + '/single_view?item=' + self.form.itemid.data
+        redirect_url = self.context.absolute_url() + '/single_view?item=' + self.form.item_id.data
         if button == 'Speichern': #and self.validate():
             insert = "INSERT INTO synonyms VALUES (DEFAULT, %s, '%s');" % (self.form.item_id.data,
                                                                self.form.synonym_name.data)
@@ -312,7 +312,7 @@ class DeleteSynonymsFormView(CreateFormView):
         """
         """
         #redirect_url = self.context.aq_parent.absolute_url()
-        redirect_url = self.context.absolute_url() + '/single_view?item=' + self.form.itemid.data
+        redirect_url = self.context.absolute_url() + '/single_view?item=' + self.form.item_id.data
         if button == 'Speichern': #and self.validate():
             insert = "DELETE FROM synonyms WHERE substance_id = %s;" % self.form.item_id.data
             self.db.execute(insert)
