@@ -6,34 +6,25 @@
 edi.substanceforms
 ==================
 
-Tell me what your product does
+The Add-On edi.substanceforms has been developed for the free Open Source Web Content Management System Plone.
 
 Features
 --------
 
-- Can be bullet points
-
-
-Examples
---------
-
-This add-on can be seen in action at the following sites:
-- Is there a page on the internet where everybody can see the features?
+- employees in the printing and paper processing industry can search for chemical products used in the manufacturing process with the least impact on human health
+- they can manage, create, update and delete those substances and substance mixtures
 
 
 Documentation
 -------------
 
-Full documentation for end users can be found in the "docs" folder, and is also available online at http://docs.plone.org/foo/bar
+The full documentation of this project can be found online here: https://substanceforms.educorvi.de
 
 
 Translations
 ------------
 
-This product has been translated into
-
-- Klingon (thanks, K'Plai)
-
+This product and the full documentation is written in German.
 
 Installation
 ------------
@@ -56,17 +47,17 @@ Contribute
 
 - Issue Tracker: https://github.com/collective/edi.substanceforms/issues
 - Source Code: https://github.com/collective/edi.substanceforms
-- Documentation: https://docs.plone.org/foo/bar
+- Documentation: https://substanceforms.educorvi.de
 
 
 Support
 -------
 
-If you are having issues, please let us know.
-We have a mailing list located at: project@example.com
+If you are having issues, please let me know.
+Feel free to contact me here: seppo.walther@educorvi.de
 
 
 License
 -------
 
-The project is licensed under the GPLv2.
+The project is licensed under the MIT License.
