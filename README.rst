@@ -45,8 +45,8 @@ and then running ``bin/buildout``
 Contribute
 ----------
 
-- Issue Tracker: https://github.com/collective/edi.substanceforms/issues
-- Source Code: https://github.com/collective/edi.substanceforms
+- Issue Tracker: https://github.com/educorvi/edi.substanceforms/issues
+- Source Code: https://github.com/educorvi/edi.substanceforms
 - Documentation: https://substanceforms.educorvi.de
 
 
