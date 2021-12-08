@@ -2,7 +2,8 @@
 hskategorie = [
     (u"id_wasserloeslich", u"gegen wasserlösliche Arbeitsstoffe"),
     (u"id_nichtwasserloeslich", u"gegen wasserunlösliche Arbeitsstoffe"),
-    (u"id_wechselnd", u"gegen wechselnde Arbeitsstoffe")
+    (u"id_wechselnd", u"gegen wechselnde Arbeitsstoffe"),
+    (u"alle_branchen", u"alle Branchen")
     ]
 
 branchen = [
@@ -95,6 +96,7 @@ vocabularies = {
         'hskategorie':hskategorie,
         'branchen':branchen,
         'substance_types':substance_types,
+        'substance_types_new':substance_types_new,
         'produktkategorien':produktkategorien,
         'produktklassen':produktklassen,
         'classifications':classifications,

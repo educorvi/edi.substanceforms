@@ -42,40 +42,40 @@
 	      </thead>
         <tbody>
           <tr>
-	          <td>Name</td>
-	          <td tal:content="python:article[1]"/>
+	          <td tal:condition="python:article[1]">Name</td>
+	          <td tal:condition="python:article[1]" tal:content="python:article[1]"/>
 	        </tr>
           <tr>
-            <td>Synonyme</td>
-            <td tal:content="python:view.translate_synonyms(view.get_synonyms())"/>
+            <td tal:condition="python:view.translate_synonyms(view.get_synonyms())">Synonyme</td>
+            <td tal:condition="python:view.translate_synonyms(view.get_synonyms())" tal:content="python:view.translate_synonyms(view.get_synonyms())"/>
           </tr>
           <tr>
-	          <td>Beschreibung</td>
-	          <td tal:content="python:article[2]"/>
+	          <td tal:condition="python:article[2]">Beschreibung</td>
+	          <td tal:condition="python:article[2]" tal:content="python:article[2]"/>
 	        </tr>
           <tr>
-	          <td>CAS-Nummer</td>
-	          <td tal:content="python:article[4]"/>
+	          <td tal:condition="python:article[4]">CAS-Nummer</td>
+	          <td tal:condition="python:article[4]" tal:content="python:article[4]"/>
 	        </tr>
           <tr>
-	          <td>EG-Nummer</td>
-	          <td tal:content="python:article[5]"/>
+	          <td tal:condition="python:article[5]">EG-Nummer</td>
+	          <td tal:condition="python:article[5]" tal:content="python:article[5]"/>
 	        </tr>
           <tr>
-	          <td>Hautschutzmittelgruppe</td>
-            <td tal:content="python: view.get_attr_translation('hskategorie', article[8])"/>
+	          <td tal:condition="python: view.get_attr_translation('hskategorie', article[8])">Hautschutzmittelgruppe</td>
+            <td tal:condition="python: view.get_attr_translation('hskategorie', article[8])" tal:content="python: view.get_attr_translation('hskategorie', article[8])"/>
 	        </tr>
           <tr>
-	          <td>Brache</td>
-            <td tal:content="python: view.get_attr_translation('branchen', article[9])"/>
+	          <td tal:condition="python: view.get_attr_translation('branchen', article[9])">Brache</td>
+            <td tal:condition="python: view.get_attr_translation('branchen', article[9])" tal:content="python: view.get_attr_translation('branchen', article[9])"/>
 	        </tr>
           <tr>
-	          <td>DNEL Inhalation [mg/m3]: lokal</td>
-	          <td tal:content="python:article[10]"/>
+	          <td tal:condition="python:article[10]">DNEL Inhalation [mg/m3]: lokal</td>
+	          <td tal:condition="python:article[10]" tal:content="python:article[10]"/>
 	        </tr>
           <tr>
-	          <td>DNEL Inhalation [mg/m3]: systemisch</td>
-	          <td tal:content="python:article[11]"/>
+	          <td tal:condition="python:article[11]">DNEL Inhalation [mg/m3]: systemisch</td>
+	          <td tal:condition="python:article[11]" tal:content="python:article[11]"/>
 	        </tr>
 	      </tbody>
 	    </table>
@@ -95,6 +95,10 @@
 
             <section class="mt-3 mb-3" tal:condition="view/userCanEdit">
               <a class="btn btn-primary" tal:attributes="href python:context.absolute_url()+'/add-synonym-form?itemid=%s' % view.itemid" role="button">Synonym hinzufügen</a>
+            </section>
+
+            <section class="mt-3 mb-3" tal:condition="view/userCanEdit">
+              <a class="btn btn-primary" tal:attributes="href python:context.absolute_url()+'/delete-synonyms-form?itemid=%s' % view.itemid" role="button">Synonyme löschen</a>
             </section>
 
           </div>
