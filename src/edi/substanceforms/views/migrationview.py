@@ -336,7 +336,7 @@ class Migrationview(BrowserView):
                 cur = conn.cursor()
                 # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
                 cur.execute(
-                    "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, usecases, manufacturer_id, published) VALUES (%s, %s, %s, 'branch', 'label', NULL, %s, %s, %s, %s, %s, %s, %s);",
+                    "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, usecases, manufacturer_id, published) VALUES (%s, %s, %s, 'druck_und_papier', 'label', NULL, %s, %s, %s, %s, %s, %s, %s);",
                     (etikett_title, etikett_desc, etikett_uid, etikett_skin_category, etikett_checked_emissions,
                      etikett_flashpoint, etikett_values_range, etikett_usecases, etikett_manufacturer_id[0], etikett_published))
                 conn.commit()
@@ -375,7 +375,7 @@ class Migrationview(BrowserView):
                 cur = conn.cursor()
                 # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
                 cur.execute(
-                    "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, usecases, application_areas, manufacturer_id, published) VALUES (%s, %s, %s, 'branch', 'offset', NULL, %s, %s, %s, %s, %s, %s, %s, %s);",
+                    "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, usecases, application_areas, manufacturer_id, published) VALUES (%s, %s, %s, 'druck_und_papier', 'offset', NULL, %s, %s, %s, %s, %s, %s, %s, %s);",
                     (manuell_title, manuell_desc, manuell_uid, manuell_skin_category, manuell_checked_emissions,
                      manuell_flashpoint, manuell_values_range, manuell_usecases, manuell_application_areas,
                      manuell_manufacturer_id[0], manuell_published))
@@ -386,7 +386,7 @@ class Migrationview(BrowserView):
                 cur = conn.cursor()
                 # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
                 cur.execute(
-                    "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, usecases, application_areas, manufacturer_id, published) VALUES (%s, %s, %s, 'branch', 'offset', NULL, %s, %s, %s, %s, %s, %s, NULL, %s);",
+                    "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, usecases, application_areas, manufacturer_id, published) VALUES (%s, %s, %s, 'druck_und_papier', 'offset', NULL, %s, %s, %s, %s, %s, %s, NULL, %s);",
                     (manuell_title, manuell_desc, manuell_uid, manuell_skin_category, manuell_checked_emissions,
                      manuell_flashpoint, manuell_values_range, manuell_usecases, manuell_application_areas,
                      manuell_published))
@@ -436,7 +436,7 @@ class Migrationview(BrowserView):
             cur = conn.cursor()
             # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
             cur.execute(
-                "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, comments, offset_print_manner, published) VALUES (%s, %s, %s, 'branch', 'offset', NULL, %s, %s, %s, %s, %s, %s, %s);",
+                "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, comments, offset_print_manner, published) VALUES (%s, %s, %s, 'druck_und_papier', 'offset', NULL, %s, %s, %s, %s, %s, %s, %s);",
                 (datenblatt_title, datenblatt_desc, datenblatt_uid, datenblatt_skin_category,
                  datenblatt_checked_emissions, datenblatt_flashpoint, datenblatt_values_range,
                  str(datenblatt_comments),offsetprintmanner, datenblatt_published))
@@ -479,7 +479,7 @@ class Migrationview(BrowserView):
             # import pdb; pdb.set_trace()
             # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
             cur.execute(
-                "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, ueg, response, skin_category, date_checked, checked_emissions, evaporation_lane_150, evaporation_lane_160, evaporation_lane_170, evaporation_lane_180, published) VALUES (%s, %s, %s, 'branch', 'heatset', NULL, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",
+                "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, ueg, response, skin_category, date_checked, checked_emissions, evaporation_lane_150, evaporation_lane_160, evaporation_lane_170, evaporation_lane_180, published) VALUES (%s, %s, %s, 'druck_und_papier', 'heatset', NULL, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",
                 (heatset_title, heatset_desc, heatset_uid, heatset_ueg, heatset_response, heatset_skin_category,
                  heatset_date_checked, heatset_checked_emissions, heatset_evap_150, heatset_evap_160, heatset_evap_170, heatset_evap_180, heatset_published))
             conn.commit()
