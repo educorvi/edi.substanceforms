@@ -139,7 +139,6 @@ class Migrationview(BrowserView):
                 data = getItemData(i)
                 newentries.append(data)
                 print("Fetched PRODUCT_DATASHEET: " + i.get('title'))
-            import pdb; pdb.set_trace()
             return newentries
 
         def getHeatset():
@@ -372,19 +371,18 @@ class Migrationview(BrowserView):
                 "SELECT manufacturer_id FROM manufacturer WHERE title = '{0}';".format(manuell_manufacturer_name))
             manuell_manufacturer_id = cur.fetchall()
             cur.close()
-            try:
-                cur = conn.cursor()
-                # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
-                cur.execute(
-                    "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, usecases, application_areas, manufacturer_id, published) VALUES (%s, %s, %s, 'branch', 'offset', NULL, %s, %s, %s, %s, %s, %s, %s, %s);",
-                    (manuell_title, manuell_desc, manuell_uid, manuell_skin_category, manuell_checked_emissions,
-                     manuell_flashpoint, manuell_values_range, manuell_usecases, manuell_application_areas,
-                     manuell_manufacturer_id[0], manuell_published))
-                conn.commit()
-                # print(manuell_title)  # correct
-                cur.close()
-            except:
-                pass
+
+            cur = conn.cursor()
+            # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
+            cur.execute(
+                "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, usecases, application_areas, manufacturer_id, published) VALUES (%s, %s, %s, 'branch', 'offset', NULL, %s, %s, %s, %s, %s, %s, %s, %s);",
+                (manuell_title, manuell_desc, manuell_uid, manuell_skin_category, manuell_checked_emissions,
+                 manuell_flashpoint, manuell_values_range, manuell_usecases, manuell_application_areas,
+                 manuell_manufacturer_id[0], manuell_published))
+            conn.commit()
+            # print(manuell_title)  # correct
+            cur.close()
+
 
         print('Successfully migrated DETERGENT_MANUAL')
 
