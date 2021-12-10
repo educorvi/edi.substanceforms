@@ -382,6 +382,8 @@ class Migrationview(BrowserView):
                 conn.commit()
                 # print(manuell_title)  # correct
                 cur.close()
+            except:
+                pass
 
         print('Successfully migrated DETERGENT_MANUAL')
 
