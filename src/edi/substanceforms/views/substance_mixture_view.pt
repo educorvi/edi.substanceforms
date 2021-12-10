@@ -86,10 +86,12 @@
 	          <td tal:condition="python:article[18]">Prüfdatum</td>
 	          <td tal:condition="python:article[18]" tal:content="python:article[18]"/>
 	        </tr>
+          <!--
           <tr>
 	          <td tal:condition="python: view.get_attr_translation('boolvocab', str(article[7]))">Sonderreiniger</td>
 	          <td tal:condition="python: view.get_attr_translation('boolvocab', str(article[7]))" tal:content="python: view.get_attr_translation('boolvocab', str(article[7]))"/>
 	        </tr>
+	        -->
 	        <tr>
 	          <td tal:condition="python: view.get_attr_translation('boolvocab', str(article[17]))">Emissionsarmes Produkt</td>
 	          <td tal:condition="python: view.get_attr_translation('boolvocab', str(article[17]))" tal:content="python: view.get_attr_translation('boolvocab', str(article[17]))"/>
