@@ -139,8 +139,7 @@ class Migrationview(BrowserView):
                 data = getItemData(i)
                 newentries.append(data)
                 print("Fetched PRODUCT_DATASHEET: " + i.get('title'))
-            import pdb;
-            pdb.set_trace()
+            import pdb; pdb.set_trace()
             return newentries
 
         def getHeatset():
