@@ -138,6 +138,7 @@ class Migrationview(BrowserView):
             for i in entries:
                 data = getItemData(i)
                 newentries.append(data)
+                import pdb; pdb.set_trace()
                 print("Fetched PRODUCT_DATASHEET: " + i.get('title'))
             return newentries
 
@@ -388,7 +389,6 @@ class Migrationview(BrowserView):
         print('Successfully migrated DETERGENT_MANUAL')
 
         for i in erg6:
-            import pdb; pdb.set_trace()
             datenblatt_title = i.get('title')
             datenblatt_desc = i.get('description')
             datenblatt_uid = get_webcode(self)
