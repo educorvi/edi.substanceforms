@@ -28,8 +28,8 @@ class CreateForm(Form):
     substance_type = RadioField(u"Art des Wasch- und Reinigungsmittels", [validators.required()], choices=substance_types_new)
     usecases = MultiCheckboxField(u"Anwendungszwecke für Etikettenreiniger", choices=usecases)
     application_areas = MultiCheckboxField(u"Anwendungsgebiete für Sonderreiniger", choices=application_areas)
-    offset_print_manner = StringField(u"Offsetdruckverfahren", render_kw={'class': 'form-control'})
-    detergent_special = BooleanField(u"Es handelt sich um einen Sonderreiniger", render_kw={'class': 'form-check-input'})
+    #offset_print_manner = StringField(u"Offsetdruckverfahren", render_kw={'class': 'form-control'})
+    #detergent_special = BooleanField(u"Es handelt sich um einen Sonderreiniger", render_kw={'class': 'form-check-input'})
     evaporation_lane_150 = FloatField(u"Verdampfungsfaktor bei 150 Grad Celsius", render_kw={'class': 'form-control'})
     evaporation_lane_160 = FloatField(u"Verdampfungsfaktor bei 160 Grad Celsius", render_kw={'class': 'form-control'})
     evaporation_lane_170 = FloatField(u"Verdampfungsfaktor bei 170 Grad Celsius", render_kw={'class': 'form-control'})
@@ -52,7 +52,7 @@ class UpdateForm(Form):
     substance_type = RadioField(u"Art des Wasch- und Reinigungsmittels", [validators.required()], choices=substance_types_new)
     usecases = MultiCheckboxField(u"Anwendungszwecke für Etikettenreiniger", choices=usecases)
     application_areas = MultiCheckboxField(u"Anwendungsgebiete für Sonderreiniger", choices=application_areas)
-    offset_print_manner = StringField(u"Offsetdruckverfahren", render_kw={'class': 'form-control'})
+    #offset_print_manner = StringField(u"Offsetdruckverfahren", render_kw={'class': 'form-control'})
     #detergent_special = BooleanField(u"Es handelt sich um einen Sonderreiniger", render_kw={'class': 'form-check-input'})
     evaporation_lane_150 = FloatField(u"Verdampfungsfaktor bei 150 Grad Celsius", render_kw={'class': 'form-control'})
     evaporation_lane_160 = FloatField(u"Verdampfungsfaktor bei 160 Grad Celsius", render_kw={'class': 'form-control'})
@@ -129,12 +129,12 @@ class CreateFormView(WTFormView):
             conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
             cur = conn.cursor()
             insert = """INSERT INTO substance_mixture (title, description, webcode, branch, substance_type,
-                                                        offset_print_manner, detergent_special, application_areas,
+                                                        application_areas,
                                                         usecases, evaporation_lane_150, evaporation_lane_160,
                                                         evaporation_lane_170, evaporation_lane_180, ueg, response,
                                                         skin_category, checked_emissions, date_checked, flashpoint,
                                                         values_range, comments, image_url, manufacturer_id)
-                                                        VALUES ('%s', '%s', '%s', %s, '%s', '%s', '%s', '%s',
+                                                        VALUES ('%s', '%s', '%s', %s, '%s', '%s',
                                                         '%s', %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
                                                         %s, %s);""" \
                                                         % (self.form.title.data,
@@ -142,8 +142,6 @@ class CreateFormView(WTFormView):
                                                         self.context.aq_parent.get_webcode(),
                                                         check_value(self.form.branch.data),
                                                         self.form.substance_type.data,
-                                                        self.form.offset_print_manner.data,
-                                                        self.form.detergent_special.data,
                                                         list_handler(self.form.application_areas.data),
                                                         list_handler(self.form.usecases.data),
                                                         check_value(self.form.evaporation_lane_150.data),
