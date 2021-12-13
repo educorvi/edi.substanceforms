@@ -47,7 +47,7 @@ class CreateForm(Form):
 class UpdateForm(Form):
 
     title = StringField(u"Titel", [validators.required()], render_kw={'class': 'form-control'})
-    description = StringField(u"Beschreibung", [validators.required()], render_kw={'class': 'form-control'})
+    description = StringField(u"Beschreibung", render_kw={'class': 'form-control'})
     branch = SelectField("Branche", choices=branchen, render_kw={'class': 'form-control'})
     substance_type = RadioField(u"Art des Wasch- und Reinigungsmittels", [validators.required()], choices=substance_types_new)
     usecases = MultiCheckboxField(u"Anwendungszwecke für Etikettenreiniger", choices=usecases)
@@ -210,7 +210,6 @@ class UpdateFormView(CreateFormView):
         return self.index()
 
     def renderForm(self):
-        import pdb; pdb.set_trace()
         self.form.title.default=self.result[0][0]
         self.form.description.default=self.result[0][1]
         self.form.branch.default = self.result[0][2]
@@ -235,7 +234,6 @@ class UpdateFormView(CreateFormView):
         return self.formTemplate()
 
     def submit(self, button):
-        import pdb; pdb.set_trace()
         """
         """
         redirect_url = self.context.aq_parent.absolute_url()
@@ -248,7 +246,7 @@ class UpdateFormView(CreateFormView):
                          WHERE substance_mixture_id = %s;""" % (self.form.title.data,
                                                         self.form.description.data,
                                                         self.form.branch.data,
-                                                        self.form.substance_type,
+                                                        self.form.substance_type.data,
                                                         self.form.application_areas.data,
                                                         self.form.usecases.data,
                                                         check_value(self.form.evaporation_lane_150.data),
