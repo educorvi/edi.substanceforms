@@ -86,10 +86,12 @@
 	          <td tal:condition="python:article[18]">Prüfdatum</td>
 	          <td tal:condition="python:article[18]" tal:content="python:article[18]"/>
 	        </tr>
+          <!--
           <tr>
 	          <td tal:condition="python: view.get_attr_translation('boolvocab', str(article[7]))">Sonderreiniger</td>
 	          <td tal:condition="python: view.get_attr_translation('boolvocab', str(article[7]))" tal:content="python: view.get_attr_translation('boolvocab', str(article[7]))"/>
 	        </tr>
+	        -->
 	        <tr>
 	          <td tal:condition="python: view.get_attr_translation('boolvocab', str(article[17]))">Emissionsarmes Produkt</td>
 	          <td tal:condition="python: view.get_attr_translation('boolvocab', str(article[17]))" tal:content="python: view.get_attr_translation('boolvocab', str(article[17]))"/>
@@ -114,10 +116,12 @@
 	          <td tal:condition="python: view.application_areas_translation(view.unbundle_list(article[8]))">Anwendungsgebiete</td>
 	          <td tal:condition="python: view.application_areas_translation(view.unbundle_list(article[8]))" tal:content="python: view.application_areas_translation(view.unbundle_list(article[8]))"/>
 	        </tr>
+          <!--
           <tr>
 	          <td tal:condition="python:article[6]">Offset-Druckverfahren</td>
 	          <td tal:condition="python:article[6]" tal:content="python:article[6]"/>
 	        </tr>
+	        -->
           <tr>
 	          <td tal:condition="python:view.translate_recipes(view.get_recipes())">Bestandteile</td>
             <td tal:condition="python:view.translate_recipes(view.get_recipes())" tal:content="python:view.translate_recipes(view.get_recipes())"/>
