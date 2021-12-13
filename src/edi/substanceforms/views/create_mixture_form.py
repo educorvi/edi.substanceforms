@@ -198,7 +198,7 @@ class UpdateFormView(CreateFormView):
                 if result:
                     return result
         self.itemid = self.request.get('itemid')
-        getter = """SELECT title, description, branch, substance_type, offset_print_manner, detergent_special,
+        getter = """SELECT title, description, branch, substance_type,
                     application_areas, usecases, evaporation_lane_150, evaporation_lane_160, evaporation_lane_170,
                     evaporation_lane_180, ueg, response, skin_category, checked_emissions, date_checked, flashpoint,
                     values_range, comments, image_url
@@ -214,8 +214,6 @@ class UpdateFormView(CreateFormView):
         self.form.description.default=self.result[0][1]
         self.form.branch.default = self.result[0][2]
         self.form.substance_type.default = self.result[0][3]
-        self.form.offset_print_manner.default = self.result[0][4]
-        self.form.detergent_special.default = self.result[0][5]
         self.form.application_areas.default = self.result[0][6]
         self.form.usecases.default = self.result[0][7]
         self.form.evaporation_lane_150.default = self.result[0][8]
@@ -241,7 +239,7 @@ class UpdateFormView(CreateFormView):
         redirect_url = self.context.aq_parent.absolute_url()
         if button == 'Speichern': #and self.validate():
             command = """UPDATE substance_mixture SET title='%s', description='%s', branch='%s', substance_type='%s',
-                         offset_print_manner='%s', detergent_special=%s, application_areas='%s', usecases='%s',
+                         application_areas='%s', usecases='%s',
                          evaporation_lane_150=%s, evaporation_lane_160=%s, evaporation_lane_170=%s, evaporation_lane_180=%s,
                          ueg='%s', response='%s', skin_category='%s', checked_emissions=%s,
                          flashpoint=%s, values_range=%s, comments='%s'
@@ -249,8 +247,6 @@ class UpdateFormView(CreateFormView):
                                                         self.form.description.data,
                                                         self.form.branch.data,
                                                         self.form.substance_type,
-                                                        self.form.offset_print_manner.data,
-                                                        self.form.detergent_special.data,
                                                         self.form.application_areas.data,
                                                         self.form.usecases.data,
                                                         check_value(self.form.evaporation_lane_150.data),
