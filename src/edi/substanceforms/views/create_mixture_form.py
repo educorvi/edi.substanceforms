@@ -362,7 +362,7 @@ class DeleteIngredientsFormView(CreateFormView):
             return self.request.response.redirect(redirect_url)
 
 
-class UpdateManufacturerFormView(UpdateManufacturerForm):
+class UpdateManufacturerFormView(CreateFormView):
     formClass = UpdateManufacturerForm
 
     def __call__(self):
