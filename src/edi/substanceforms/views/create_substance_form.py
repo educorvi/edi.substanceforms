@@ -205,7 +205,7 @@ class UpdateFormView(CreateFormView):
                                                         self.form.branch.data,
                                                         self.form.dnel_lokal.data,
                                                         self.form.dnel_systemisch.data,
-                                                        self.form.link.data,
+                                                        self.form.gestislink.data,
                                                         self.form.item_id.data)
             self.db.execute(command)
             message = u'Der Reinstoff wurde erfolgreich aktualisiert.'
