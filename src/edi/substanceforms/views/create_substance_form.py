@@ -175,17 +175,16 @@ class UpdateFormView(CreateFormView):
         return self.index()
 
     def renderForm(self):
-        import pdb; pdb.set_trace()
-        self.form.title.default=self.result[0][1]
-        self.form.description.default=self.result[0][2]
-        self.form.casnr.default=self.result[0][3]
-        self.form.egnr.default=self.result[0][4]
-        self.form.concentration.default=self.result[0][5]
-        self.form.skin_category.default=self.result[0][6]
-        self.form.branch.default=self.result[0][7]
-        self.form.dnel_lokal.default=self.result[0][8]
-        self.form.dnel_systemisch.default=self.result[0][9]
-        self.form.gestislink.default=self.result[0][10]
+        self.form.title.default=self.result[0][0]
+        self.form.description.default=self.result[0][1]
+        self.form.casnr.default=self.result[0][2]
+        self.form.egnr.default=self.result[0][3]
+        self.form.concentration.default=self.result[0][4]
+        self.form.skin_category.default=self.result[0][5]
+        self.form.branch.default=self.result[0][6]
+        self.form.dnel_lokal.default=self.result[0][7]
+        self.form.dnel_systemisch.default=self.result[0][8]
+        self.form.gestislink.default=self.result[0][9]
         self.form.item_id.default=self.itemid
         self.form.process()
         return self.formTemplate()
