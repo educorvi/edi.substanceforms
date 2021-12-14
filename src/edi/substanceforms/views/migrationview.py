@@ -216,13 +216,13 @@ class Migrationview(BrowserView):
             hersteller_review_state = i.get('review_state')
 
             if hersteller_review_state == 'published':
-                hersteller_published = True
+                hersteller_published = 'published'
             else:
-                hersteller_published = False
+                hersteller_published = 'private'
 
             cur = conn.cursor()
             # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
-            cur.execute("INSERT INTO manufacturer (title, description, webcode, homepage, published) VALUES (%s, %s, %s, %s, %s);",
+            cur.execute("INSERT INTO manufacturer (title, description, webcode, homepage, status) VALUES (%s, %s, %s, %s, %s);",
                         (hersteller_title, hersteller_desc, hersteller_uid, hersteller_homepage, hersteller_published))
             conn.commit()
             # print(hersteller_title)# correct
@@ -244,14 +244,14 @@ class Migrationview(BrowserView):
             reinstoff_link_available= ergebnis[12]
             reinstoff_skin = 'id_wechselnd'
             reinstoff_branche = 'alle_branchen'
-            reinstoff_published = True
+            reinstoff_published = 'published'
 
             if reinstoff_link_available == "zum Stoff":
                 reinstoff_link = "https://gestis.dguv.de/data?name="+str(reinstoff_link_id)
                 cur = conn.cursor()
                 try:
                     cur.execute(
-                        "INSERT INTO substance (title, webcode, casnr, egnr, skin_category, branch, dnel_lokal, dnel_systemisch, comments, link, published) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",
+                        "INSERT INTO substance (title, webcode, casnr, egnr, skin_category, branch, dnel_lokal, dnel_systemisch, comments, link, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",
                         (reinstoff_title, reinstoff_uid, reinstoff_casnr, reinstoff_egnr, reinstoff_skin, reinstoff_branche, reinstoff_lokal,
                          reinstoff_systemisch, reinstoff_hinweise, reinstoff_link, reinstoff_published))
                 except:
@@ -260,7 +260,7 @@ class Migrationview(BrowserView):
                 cur = conn.cursor()
                 try:
                     cur.execute(
-                        "INSERT INTO substance (title, webcode, casnr, egnr, skin_category, branch, dnel_lokal, dnel_systemisch, comments, link, published) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, NULL, %s);",
+                        "INSERT INTO substance (title, webcode, casnr, egnr, skin_category, branch, dnel_lokal, dnel_systemisch, comments, link, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, NULL, %s);",
                         (reinstoff_title, reinstoff_uid, reinstoff_casnr, reinstoff_egnr, reinstoff_skin,
                          reinstoff_branche, reinstoff_lokal,
                          reinstoff_systemisch, reinstoff_hinweise, reinstoff_published))
@@ -287,9 +287,9 @@ class Migrationview(BrowserView):
             powder_review_state = i.get('review_state')
 
             if powder_review_state == 'published':
-                powder_published = True
+                powder_published = 'published'
             else:
-                powder_published = False
+                powder_published = 'private'
 
             cur = conn.cursor()
             cur.execute(
@@ -299,7 +299,7 @@ class Migrationview(BrowserView):
 
             cur = conn.cursor()
             cur.execute(
-                "INSERT INTO spray_powder (title, description, webcode, manufacturer_id, image_url, product_class, starting_material, median_value, volume_share, checked_emissions, date_checked, published) VALUES (%s, %s, %s, %s, NULL, %s, %s, %s, %s, %s, %s, %s);",
+                "INSERT INTO spray_powder (title, description, webcode, manufacturer_id, image_url, product_class, starting_material, median_value, volume_share, checked_emissions, date_checked, status) VALUES (%s, %s, %s, %s, NULL, %s, %s, %s, %s, %s, %s, %s);",
                 (powder_title, powder_desc, powder_uid, powder_manufacturer_id[0], powder_product_class,
                  powder_starting_material, powder_median_value, powder_volume_share, powder_checked_emissions,
                  powder_date_checked, powder_published))
@@ -323,9 +323,9 @@ class Migrationview(BrowserView):
                 etikett_review_state = i.get('review_state')
 
                 if etikett_review_state == 'published':
-                    etikett_published = True
+                    etikett_published = 'published'
                 else:
-                    etikett_published = False
+                    etikett_published = 'private'
 
                 cur = conn.cursor()
                 cur.execute(
@@ -336,7 +336,7 @@ class Migrationview(BrowserView):
                 cur = conn.cursor()
                 # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
                 cur.execute(
-                    "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, usecases, manufacturer_id, published) VALUES (%s, %s, %s, 'druck_und_papier', 'label', NULL, %s, %s, %s, %s, %s, %s, %s);",
+                    "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, usecases, manufacturer_id, status) VALUES (%s, %s, %s, 'druck_und_papier', 'label', NULL, %s, %s, %s, %s, %s, %s, %s);",
                     (etikett_title, etikett_desc, etikett_uid, etikett_skin_category, etikett_checked_emissions,
                      etikett_flashpoint, etikett_values_range, etikett_usecases, etikett_manufacturer_id[0], etikett_published))
                 conn.commit()
@@ -362,9 +362,9 @@ class Migrationview(BrowserView):
             manuell_review_state = i.get('review_state')
 
             if manuell_review_state == 'published':
-                manuell_published = True
+                manuell_published = 'published'
             else:
-                manuell_published = False
+                manuell_published = 'private'
 
             cur = conn.cursor()
             cur.execute(
@@ -375,7 +375,7 @@ class Migrationview(BrowserView):
                 cur = conn.cursor()
                 # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
                 cur.execute(
-                    "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, usecases, application_areas, manufacturer_id, published) VALUES (%s, %s, %s, 'druck_und_papier', 'special', NULL, %s, %s, %s, %s, %s, %s, %s, %s);",
+                    "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, usecases, application_areas, manufacturer_id, status) VALUES (%s, %s, %s, 'druck_und_papier', 'special', NULL, %s, %s, %s, %s, %s, %s, %s, %s);",
                     (manuell_title, manuell_desc, manuell_uid, manuell_skin_category, manuell_checked_emissions,
                      manuell_flashpoint, manuell_values_range, manuell_usecases, manuell_application_areas,
                      manuell_manufacturer_id[0], manuell_published))
@@ -386,7 +386,7 @@ class Migrationview(BrowserView):
                 cur = conn.cursor()
                 # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
                 cur.execute(
-                    "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, usecases, application_areas, manufacturer_id, published) VALUES (%s, %s, %s, 'druck_und_papier', 'offset', NULL, %s, %s, %s, %s, %s, %s, NULL, %s);",
+                    "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, usecases, application_areas, manufacturer_id, status) VALUES (%s, %s, %s, 'druck_und_papier', 'offset', NULL, %s, %s, %s, %s, %s, %s, NULL, %s);",
                     (manuell_title, manuell_desc, manuell_uid, manuell_skin_category, manuell_checked_emissions,
                      manuell_flashpoint, manuell_values_range, manuell_usecases, manuell_application_areas,
                      manuell_published))
@@ -413,9 +413,9 @@ class Migrationview(BrowserView):
             datenblatt_review_state = i.get('review_state')
 
             if datenblatt_review_state == 'published':
-                datenblatt_published = True
+                datenblatt_published = 'published'
             else:
-                datenblatt_published = False
+                datenblatt_published = 'private'
 
             if datenblatt_skin_category:
                 pass
@@ -436,7 +436,7 @@ class Migrationview(BrowserView):
             cur = conn.cursor()
             # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
             cur.execute(
-                "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, comments, offset_print_manner, published) VALUES (%s, %s, %s, 'druck_und_papier', 'offset', NULL, %s, %s, %s, %s, %s, %s, %s);",
+                "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, comments, offset_print_manner, status) VALUES (%s, %s, %s, 'druck_und_papier', 'offset', NULL, %s, %s, %s, %s, %s, %s, %s);",
                 (datenblatt_title, datenblatt_desc, datenblatt_uid, datenblatt_skin_category,
                  datenblatt_checked_emissions, datenblatt_flashpoint, datenblatt_values_range,
                  str(datenblatt_comments),offsetprintmanner, datenblatt_published))
@@ -466,9 +466,9 @@ class Migrationview(BrowserView):
 
 
             if heatset_review_state == 'published':
-                heatset_published = True
+                heatset_published = 'published'
             else:
-                heatset_published = False
+                heatset_published = 'private'
 
             if heatset_skin_category:
                 pass
@@ -479,7 +479,7 @@ class Migrationview(BrowserView):
             # import pdb; pdb.set_trace()
             # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
             cur.execute(
-                "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, ueg, response, skin_category, date_checked, checked_emissions, evaporation_lane_150, evaporation_lane_160, evaporation_lane_170, evaporation_lane_180, published) VALUES (%s, %s, %s, 'druck_und_papier', 'heatset', NULL, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",
+                "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, ueg, response, skin_category, date_checked, checked_emissions, evaporation_lane_150, evaporation_lane_160, evaporation_lane_170, evaporation_lane_180, status) VALUES (%s, %s, %s, 'druck_und_papier', 'heatset', NULL, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",
                 (heatset_title, heatset_desc, heatset_uid, heatset_ueg, heatset_response, heatset_skin_category,
                  heatset_date_checked, heatset_checked_emissions, heatset_evap_150, heatset_evap_160, heatset_evap_170, heatset_evap_180, heatset_published))
             conn.commit()
