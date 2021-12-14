@@ -172,7 +172,7 @@
     />
 
   <browser:page
-    name="update-manufacturer-form"
+    name="update-mixture-manufacturer-form"
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".create_mixture_form.UpdateManufacturerFormView"
     template = "create_view.pt"
