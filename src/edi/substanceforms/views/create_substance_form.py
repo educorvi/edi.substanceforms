@@ -25,7 +25,7 @@ class CreateForm(Form):
     description = StringField("Beschreibung", render_kw={'class': 'form-control'})
     casnr = StringField("CAS-Nummer", render_kw={'class': 'form-control'})
     egnr = StringField("EG-Nummer", render_kw={'class': 'form-control'})
-    #concentration = IntegerField("Konzentration in wässriger Lösung", render_kw={'class': 'form-control'})
+    concentration = IntegerField("Konzentration in wässriger Lösung", render_kw={'class': 'form-control'})
     skin_category = SelectField("Hautschutzkategorie", choices = hskategorie, render_kw={'class': 'form-control'})
     branch = SelectField("Branche", choices = branchen, render_kw={'class': 'form-control'})
     dnel_lokal = StringField("DNEL (lokal)", render_kw={'class': 'form-control'})
@@ -40,7 +40,7 @@ class UpdateForm(Form):
     description = StringField("Beschreibung", render_kw={'class': 'form-control'})
     casnr = IntegerField("CAS-Nummer", render_kw={'class': 'form-control'})
     egnr = StringField("EG-Nummer", render_kw={'class': 'form-control'})
-    #concentration = IntegerField("Konzentration in wässriger Lösung", render_kw={'class': 'form-control'})
+    concentration = IntegerField("Konzentration in wässriger Lösung", render_kw={'class': 'form-control'})
     skin_category = SelectField("Hautschutzkategorie", choices = hskategorie, render_kw={'class': 'form-control'})
     branch = SelectField("Branche", choices = branchen, render_kw={'class': 'form-control'})
     #image_url = FileField("Neues Bild hochladen", render_kw={'class': 'form-control'})
@@ -104,12 +104,13 @@ class CreateFormView(WTFormView):
         if button == 'Speichern': #and self.validate():
             conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
             cur = conn.cursor()
-            insert = """INSERT INTO substance (title, description, webcode, casnr, egnr, skin_category, branch, dnel_lokal, dnel_systemisch, link, published)
-            VALUES ('%s', '%s', '%s', %s, %s, %s, %s, %s, %s, %s, %s);""" % (self.form.title.data,
+            insert = """INSERT INTO substance (title, description, webcode, casnr, egnr, concentration, skin_category, branch, dnel_lokal, dnel_systemisch, link, published)
+            VALUES ('%s', '%s', '%s', %s, %s, %s, %s, %s, %s, %s, %s, %s);""" % (self.form.title.data,
                                                        self.form.description.data,
                                                        self.context.aq_parent.get_webcode(),
                                                        check_value(self.form.casnr.data),
                                                        check_value(self.form.egnr.data),
+                                                       check_value(self.form.concentration.data),
                                                        check_value(self.form.skin_category.data),
                                                        check_value(self.form.branch.data),
                                                        check_value(self.form.dnel_lokal.data),
