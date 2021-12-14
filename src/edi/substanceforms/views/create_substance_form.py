@@ -175,6 +175,7 @@ class UpdateFormView(CreateFormView):
         return self.index()
 
     def renderForm(self):
+        import pdb; pdb.set_trace()
         self.form.title.default=self.result[0][1]
         self.form.description.default=self.result[0][2]
         self.form.casnr.default=self.result[0][3]
