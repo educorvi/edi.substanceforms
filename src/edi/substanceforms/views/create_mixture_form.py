@@ -399,7 +399,13 @@ class UpdateManufacturerFormView(CreateFormView):
         self.form.comments.default = self.result[0][17]
         self.form.image_url.default = self.result[0][18]
         """
-        self.form.item_id.default=self.itemid
+        try:
+            insert = "SELECT manufacturer_id, title FROM manufacturer ORDER BY title;"
+            manus = self.db.execute(insert)
+        except:
+            manus = []
+        self.form.manufacturer_id.choices = manus
+        self.form.item_id.default = self.itemid
         self.form.process()
         return self.formTemplate()
 
