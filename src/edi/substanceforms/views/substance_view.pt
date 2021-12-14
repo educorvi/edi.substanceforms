@@ -66,7 +66,7 @@
 	          <td tal:condition="python:article[6]" tal:content="python:article[6]"/>
 	        </tr>
           <tr>
-	          <td tal:condition="python: view.get_attr_translation('hskategorie', article[7)">Hautschutzmittelgruppe</td>
+	          <td tal:condition="python: view.get_attr_translation('hskategorie', article[7])">Hautschutzmittelgruppe</td>
             <td tal:condition="python: view.get_attr_translation('hskategorie', article[7])" tal:content="python: view.get_attr_translation('hskategorie', article[7])"/>
 	        </tr>
           <tr>
