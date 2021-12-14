@@ -78,6 +78,10 @@ class DeleteIngredientsForm(Form):
     sure = BooleanField("Bestandteile löschen", render_kw={'class': 'form-check-input'})
     item_id = HiddenField()
 
+class UpdateManufacturerForm(Form):
+    manufacturer_id = SelectField(u"Hersteller des Wasch- und Reinigungsmittels", [validators.required()], render_kw={'class': 'form-control'})
+    item_id = HiddenField()
+
 class CreateFormView(WTFormView):
     formClass = CreateForm
     buttons = ('Speichern', 'Abbrechen')
@@ -357,3 +361,62 @@ class DeleteIngredientsFormView(CreateFormView):
         elif button == 'Abbrechen':
             return self.request.response.redirect(redirect_url)
 
+
+class UpdateManufacturerFormView(UpdateManufacturerForm):
+    formClass = UpdateManufacturerForm
+
+    def __call__(self):
+        dbdata = self.context.aq_parent
+        self.db = DBConnect(host=dbdata.host, db=dbdata.database, user=dbdata.username, password=dbdata.password)
+        if self.submitted:
+            button = self.hasButtonSubmitted()
+            if button:
+                result = self.submit(button)
+                if result:
+                    return result
+        self.itemid = self.request.get('itemid')
+        return self.index()
+
+    def renderForm(self):
+        """
+        self.form.title.default=self.result[0][0]
+        self.form.description.default=self.result[0][1]
+        self.form.branch.default = self.result[0][2]
+        self.form.substance_type.default = self.result[0][3]
+        self.form.application_areas.default = self.result[0][4]
+        self.form.usecases.default = self.result[0][5]
+        self.form.evaporation_lane_150.default = self.result[0][6]
+        self.form.evaporation_lane_160.default = self.result[0][7]
+        self.form.evaporation_lane_170.default = self.result[0][8]
+        self.form.evaporation_lane_180.default = self.result[0][9]
+        self.form.ueg.default = self.result[0][10]
+        self.form.response.default = self.result[0][11]
+        self.form.skin_category.default = self.result[0][12]
+        self.form.checked_emissions.default = self.result[0][13]
+        self.form.date_checked.default = self.result[0][14]
+        self.form.flashpoint.default = self.result[0][15]
+        self.form.values_range.default = self.result[0][16]
+        self.form.comments.default = self.result[0][17]
+        self.form.image_url.default = self.result[0][18]
+        """
+        self.form.item_id.default=self.itemid
+        self.form.process()
+        return self.formTemplate()
+
+    def submit(self, button):
+        """
+        """
+        redirect_url = self.context.aq_parent.absolute_url()
+        if button == 'Speichern': #and self.validate():
+            command = """UPDATE substance_mixture SET manufacturer_id=%s WHERE substance_mixture_id = %s;""" % self.form.manufacturer_id.data
+            self.db.execute(command)
+            message = u'Das Gefahrstoffgemisch wurde erfolgreich aktualisiert.'
+            ploneapi.portal.show_message(message=message, type='info', request=self.request)
+            #message = u'Fehler beim Aktualisieren des Gefahrstoffgemisches'
+            #ploneapi.portal.show_message(message=message, type='error', request=self.request)
+
+            self.db.close()
+            return self.request.response.redirect(redirect_url)
+
+        elif button == 'Abbrechen':
+            return self.request.response.redirect(redirect_url)
