@@ -115,6 +115,7 @@ class SingleView(BrowserView):
     def get_manufacturer(self, manu):
         select = "SELECT title from manufacturer WHERE manufacturer_id = %s" %manu
         manufacturer = self.db.execute(select)
+        import pdb; pdb.set_trace()
         return manufacturer
 
     def translate_synonyms(self, synonyms):
