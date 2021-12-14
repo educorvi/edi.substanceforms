@@ -165,7 +165,7 @@ class UpdateFormView(CreateFormView):
                 if result:
                     return result
         self.itemid = self.request.get('itemid')
-        getter = """SELECT image_url, title, description, casnr, egnr, concentration, skin_category, branch, dnel_lokal, dnel_systemisch, link
+        getter = """SELECT title, description, casnr, egnr, concentration, skin_category, branch, dnel_lokal, dnel_systemisch, link
                     FROM %s WHERE %s_id = %s;""" % (self.context.tablename,
                                                     self.context.tablename,
                                                     self.itemid)
