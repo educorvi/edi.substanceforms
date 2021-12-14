@@ -200,7 +200,7 @@ class UpdateFormView(CreateFormView):
                                                         self.form.description.data,
                                                         self.form.casnr.data,
                                                         self.form.egnr.data,
-                                                        self.form.concentration.data,
+                                                        check_value(self.form.concentration.data),
                                                         self.form.skin_category.data,
                                                         self.form.branch.data,
                                                         self.form.dnel_lokal.data,
