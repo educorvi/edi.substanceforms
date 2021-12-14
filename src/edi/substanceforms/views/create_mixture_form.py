@@ -47,7 +47,7 @@ class CreateForm(Form):
 class UpdateForm(Form):
 
     title = StringField(u"Titel", [validators.required()], render_kw={'class': 'form-control'})
-    description = StringField(u"Beschreibung", [validators.required()], render_kw={'class': 'form-control'})
+    description = StringField(u"Beschreibung", render_kw={'class': 'form-control'})
     branch = SelectField("Branche", choices=branchen, render_kw={'class': 'form-control'})
     substance_type = RadioField(u"Art des Wasch- und Reinigungsmittels", [validators.required()], choices=substance_types_new)
     usecases = MultiCheckboxField(u"Anwendungszwecke für Etikettenreiniger", choices=usecases)
@@ -198,7 +198,7 @@ class UpdateFormView(CreateFormView):
                 if result:
                     return result
         self.itemid = self.request.get('itemid')
-        getter = """SELECT title, description, branch, substance_type, offset_print_manner, detergent_special,
+        getter = """SELECT title, description, branch, substance_type,
                     application_areas, usecases, evaporation_lane_150, evaporation_lane_160, evaporation_lane_170,
                     evaporation_lane_180, ueg, response, skin_category, checked_emissions, date_checked, flashpoint,
                     values_range, comments, image_url
@@ -214,23 +214,21 @@ class UpdateFormView(CreateFormView):
         self.form.description.default=self.result[0][1]
         self.form.branch.default = self.result[0][2]
         self.form.substance_type.default = self.result[0][3]
-        self.form.offset_print_manner.default = self.result[0][4]
-        self.form.detergent_special.default = self.result[0][5]
-        self.form.application_areas.default = self.result[0][6]
-        self.form.usecases.default = self.result[0][7]
-        self.form.evaporation_lane_150.default = self.result[0][8]
-        self.form.evaporation_lane_160.default = self.result[0][9]
-        self.form.evaporation_lane_170.default = self.result[0][10]
-        self.form.evaporation_lane_180.default = self.result[0][11]
-        self.form.ueg.default = self.result[0][12]
-        self.form.response.default = self.result[0][13]
-        self.form.skin_category.default = self.result[0][14]
-        self.form.checked_emissions.default = self.result[0][15]
-        self.form.date_checked.default = self.result[0][16]
-        self.form.flashpoint.default = self.result[0][17]
-        self.form.values_range.default = self.result[0][18]
-        self.form.comments.default = self.result[0][19]
-        self.form.image_url.default = self.result[0][20]
+        self.form.application_areas.default = self.result[0][4]
+        self.form.usecases.default = self.result[0][5]
+        self.form.evaporation_lane_150.default = self.result[0][6]
+        self.form.evaporation_lane_160.default = self.result[0][7]
+        self.form.evaporation_lane_170.default = self.result[0][8]
+        self.form.evaporation_lane_180.default = self.result[0][9]
+        self.form.ueg.default = self.result[0][10]
+        self.form.response.default = self.result[0][11]
+        self.form.skin_category.default = self.result[0][12]
+        self.form.checked_emissions.default = self.result[0][13]
+        self.form.date_checked.default = self.result[0][14]
+        self.form.flashpoint.default = self.result[0][15]
+        self.form.values_range.default = self.result[0][16]
+        self.form.comments.default = self.result[0][17]
+        self.form.image_url.default = self.result[0][18]
         self.form.item_id.default=self.itemid
         self.form.process()
         return self.formTemplate()
@@ -241,18 +239,16 @@ class UpdateFormView(CreateFormView):
         redirect_url = self.context.aq_parent.absolute_url()
         if button == 'Speichern': #and self.validate():
             command = """UPDATE substance_mixture SET title='%s', description='%s', branch='%s', substance_type='%s',
-                         offset_print_manner='%s', detergent_special=%s, application_areas='%s', usecases='%s',
+                         application_areas='%s', usecases='%s',
                          evaporation_lane_150=%s, evaporation_lane_160=%s, evaporation_lane_170=%s, evaporation_lane_180=%s,
                          ueg='%s', response='%s', skin_category='%s', checked_emissions=%s,
                          flashpoint=%s, values_range=%s, comments='%s'
                          WHERE substance_mixture_id = %s;""" % (self.form.title.data,
                                                         self.form.description.data,
                                                         self.form.branch.data,
-                                                        self.form.substance_type,
-                                                        self.form.offset_print_manner.data,
-                                                        self.form.detergent_special.data,
-                                                        self.form.application_areas.data,
-                                                        self.form.usecases.data,
+                                                        self.form.substance_type.data,
+                                                        list_handler(self.form.application_areas.data),
+                                                        list_handler(self.form.usecases.data),
                                                         check_value(self.form.evaporation_lane_150.data),
                                                         check_value(self.form.evaporation_lane_160.data),
                                                         check_value(self.form.evaporation_lane_170.data),
@@ -261,7 +257,7 @@ class UpdateFormView(CreateFormView):
                                                         self.form.response.data,
                                                         self.form.skin_category.data,
                                                         self.form.checked_emissions.data,
-                                                        self.form.flashpoint.data,
+                                                        check_value(self.form.flashpoint.data),
                                                         self.form.values_range.data,
                                                         self.form.comments.data,
                                                         self.form.item_id.data)
