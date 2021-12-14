@@ -45,6 +45,10 @@ class UpdateForm(Form):
     branch = SelectField("Branche", choices = branchen, render_kw={'class': 'form-control'})
     #image_url = FileField("Neues Bild hochladen", render_kw={'class': 'form-control'})
     #no_image = BooleanField("Vorhandenes Bild entfernen", render_kw={'class': 'form-check-input'})
+    dnel_lokal = StringField("DNEL (lokal)", render_kw={'class': 'form-control'})
+    dnel_systemisch = StringField("DNEL (systemisch)", render_kw={'class': 'form-control'})
+    gestislink = StringField("Link in externe Datenbank", render_kw={'class': 'form-control'})
+    published = True
     item_id = HiddenField()
 
 class DeleteForm(Form):
@@ -161,7 +165,7 @@ class UpdateFormView(CreateFormView):
                 if result:
                     return result
         self.itemid = self.request.get('itemid')
-        getter = """SELECT image_url, title, description, casnr, concentration, skin_category, branch
+        getter = """SELECT image_url, title, description, casnr, egnr, concentration, skin_category, branch, dnel_lokal, dnel_systemisch, link
                     FROM %s WHERE %s_id = %s;""" % (self.context.tablename,
                                                     self.context.tablename,
                                                     self.itemid)
@@ -173,9 +177,13 @@ class UpdateFormView(CreateFormView):
         self.form.title.default=self.result[0][1]
         self.form.description.default=self.result[0][2]
         self.form.casnr.default=self.result[0][3]
-        self.form.concentration.default=self.result[0][4]
-        self.form.skin_category.default=self.result[0][5]
-        self.form.branch.default=self.result[0][6]
+        self.form.egnr.default=self.result[0][4]
+        self.form.concentration.default=self.result[0][5]
+        self.form.skin_category.default=self.result[0][6]
+        self.form.branch.default=self.result[0][7]
+        self.form.dnel_lokal.default=self.result[0][8]
+        self.form.dnel_systemisch.default=self.result[0][9]
+        self.form.gestislink.default=self.result[0][10]
         self.form.item_id.default=self.itemid
         self.form.process()
         return self.formTemplate()
@@ -185,14 +193,18 @@ class UpdateFormView(CreateFormView):
         """
         redirect_url = self.context.aq_parent.absolute_url()
         if button == 'Speichern': #and self.validate():
-            command = """UPDATE substance SET title='%s', description='%s', casnr=%s, concentration=%s,
-                         skin_category='%s', branch='%s'
+            command = """UPDATE substance SET title='%s', description='%s', casnr=%s, egnr=%s, concentration=%s,
+                         skin_category='%s', branch='%s', dnel_lokal='%s', dnel_systemisch='%s', link='%s'
                          WHERE substance_id = %s;""" % (self.form.title.data,
                                                         self.form.description.data,
                                                         self.form.casnr.data,
+                                                        self.form.egnr.data,
                                                         self.form.concentration.data,
                                                         self.form.skin_category.data,
                                                         self.form.branch.data,
+                                                        self.form.dnel_lokal.data,
+                                                        self.form.dnel_systemisch.data,
+                                                        self.form.link.data,
                                                         self.form.item_id.data)
             self.db.execute(command)
             message = u'Der Reinstoff wurde erfolgreich aktualisiert.'
