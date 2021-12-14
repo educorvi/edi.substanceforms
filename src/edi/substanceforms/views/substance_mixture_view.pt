@@ -52,7 +52,7 @@
 	        </tr>
           <tr>
 	          <td tal:condition="python: view.get_manufacturer(article[23])">Hersteller</td>
-	          <td tal:condition="python: view.get_manufacturer(article[23])" tal:content="python: view.unbundle_list(view.get_manufacturer(article[23]))"/>
+	          <td tal:condition="python: view.get_manufacturer(article[23])" tal:content="python: view.get_manufacturer(article[23])"/>
 	        </tr>
           <tr>
 	          <td tal:condition="python: view.get_attr_translation('branchen', article[4])">Branche</td>
