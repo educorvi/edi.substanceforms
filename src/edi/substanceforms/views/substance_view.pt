@@ -62,20 +62,24 @@
 	          <td tal:condition="python:article[5]" tal:content="python:article[5]"/>
 	        </tr>
           <tr>
-	          <td tal:condition="python: view.get_attr_translation('hskategorie', article[8])">Hautschutzmittelgruppe</td>
-            <td tal:condition="python: view.get_attr_translation('hskategorie', article[8])" tal:content="python: view.get_attr_translation('hskategorie', article[8])"/>
+	          <td tal:condition="python:article[6]">Konzentration in wässriger Lösung</td>
+	          <td tal:condition="python:article[6]" tal:content="python:article[6]"/>
 	        </tr>
           <tr>
-	          <td tal:condition="python: view.get_attr_translation('branchen', article[9])">Brache</td>
-            <td tal:condition="python: view.get_attr_translation('branchen', article[9])" tal:content="python: view.get_attr_translation('branchen', article[9])"/>
+	          <td tal:condition="python: view.get_attr_translation('hskategorie', article[7)">Hautschutzmittelgruppe</td>
+            <td tal:condition="python: view.get_attr_translation('hskategorie', article[7])" tal:content="python: view.get_attr_translation('hskategorie', article[7])"/>
 	        </tr>
           <tr>
-	          <td tal:condition="python:article[10]">DNEL Inhalation [mg/m3]: lokal</td>
+	          <td tal:condition="python: view.get_attr_translation('branchen', article[8])">Brache</td>
+            <td tal:condition="python: view.get_attr_translation('branchen', article[8])" tal:content="python: view.get_attr_translation('branchen', article[8])"/>
+	        </tr>
+          <tr>
+	          <td tal:condition="python:article[9]">DNEL Inhalation [mg/m3]: lokal</td>
+	          <td tal:condition="python:article[9]" tal:content="python:article[9]"/>
+	        </tr>
+          <tr>
+	          <td tal:condition="python:article[10]">DNEL Inhalation [mg/m3]: systemisch</td>
 	          <td tal:condition="python:article[10]" tal:content="python:article[10]"/>
-	        </tr>
-          <tr>
-	          <td tal:condition="python:article[11]">DNEL Inhalation [mg/m3]: systemisch</td>
-	          <td tal:condition="python:article[11]" tal:content="python:article[11]"/>
 	        </tr>
 	      </tbody>
 	    </table>
