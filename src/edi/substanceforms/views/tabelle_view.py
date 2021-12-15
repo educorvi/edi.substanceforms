@@ -101,6 +101,7 @@ class HerstellerForm (BaseForm):
     manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[], render_kw={'class':'form-control'})
 
 class SubstanceForm (BaseForm):
+    search = StringField("Suchbegriff_lol", render_kw={'class':'form-control'})
     casnr = IntegerField(u'Bitte geben Sie eine CAS-Nummer an:', render_kw={'class':'form-control'})
     concentration = IntegerField(u'Bitte geben Sie eine Konzentration in wässriger Lösung an:', render_kw={'class':'form-control'})
 
