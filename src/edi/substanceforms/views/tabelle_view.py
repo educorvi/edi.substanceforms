@@ -193,9 +193,9 @@ class SubstanceFormView(TabelleFormView):
             if substance_id and casnr and concentration:
                 select = "SELECT %s, title FROM %s WHERE casnr = '%s' AND concentration = '%s' AND %s = %s;" % (searchkey, searchtable, casnr, concentration, searchkey, substance_id)
             elif substance_id and casnr:
-                select = "SELECT %s, title FROM %s WHERE casnr = '%s' AND %s = %s;" % (searchkey, searchtable, casnr, concentration, searchkey, substance_id)
+                select = "SELECT %s, title FROM %s WHERE casnr = '%s' AND %s = %s;" % (searchkey, searchtable, casnr, searchkey, substance_id)
             elif substance_id and concentration:
-                select = "SELECT %s, title FROM %s WHERE concentration = '%s' AND %s = %s;" % (searchkey, searchtable, casnr, concentration, searchkey, substance_id)
+                select = "SELECT %s, title FROM %s WHERE concentration = '%s' AND %s = %s;" % (searchkey, searchtable, concentration, searchkey, substance_id)
             elif casnr and concentration:
                 select = "SELECT %s, title FROM %s WHERE casnr = '%s' AND concentration = '%s';" % (searchkey, searchtable, casnr, concentration)
             elif casnr:
@@ -203,7 +203,7 @@ class SubstanceFormView(TabelleFormView):
             elif concentration:
                 select = "SELECT %s, title FROM %s WHERE concentration = '%s';" % (searchkey, searchtable, concentration)
             elif substance_id:
-                select = "SELECT %s, title FROM %s WHERE %s = %s;" % (searchkey, searchtable, casnr, concentration, searchkey, substance_id)
+                select = "SELECT %s, title FROM %s WHERE %s = %s;" % (searchkey, searchtable, searchkey, substance_id)
 
             try:
                 conn = psycopg2.connect(host=self.host, user=self.username, password=self.password, dbname=self.dbname)
