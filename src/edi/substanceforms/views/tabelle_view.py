@@ -172,7 +172,7 @@ class SubstanceFormView(TabelleFormView):
             choices = self.db.execute(insert)
         except:
             choices = []
-        self.form.search.choices = choices
+        self.form.substance_id.choices = choices
         self.form.process()
         return self.formTemplate()
 
