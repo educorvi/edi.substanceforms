@@ -167,7 +167,6 @@ class SubstanceFormView(TabelleFormView):
     formClass = SubstanceForm
 
     def renderForm(self):
-        import pdb; pdb.set_trace()
         conn = psycopg2.connect(host=self.host, user=self.username, password=self.password, dbname=self.dbname)
         try:
             cur = conn.cursor()
