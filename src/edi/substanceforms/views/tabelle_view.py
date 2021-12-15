@@ -171,7 +171,7 @@ class SubstanceFormView(TabelleFormView):
         conn = psycopg2.connect(host=self.host, user=self.username, password=self.password, dbname=self.dbname)
         try:
             cur = conn.cursor()
-            insert = "SELECT substance_mixture_id, title FROM substance_mixture ORDER BY title;"
+            insert = "SELECT substance_id, title FROM substance ORDER BY title;"
             cur.execute(insert)
             choices = cur.fetchall()
             cur.close()
