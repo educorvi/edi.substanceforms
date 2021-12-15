@@ -161,6 +161,7 @@ class HerstellerFormView(TabelleFormView):
             return self.request.response.redirect(url)
 
 class SubstanceFormView(TabelleFormView):
+    buttons = ('Suche', 'Abbrechen')
     formClass = SubstanceForm
 
     def renderForm(self):
