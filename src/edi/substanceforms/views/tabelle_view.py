@@ -167,6 +167,7 @@ class SubstanceFormView(TabelleFormView):
     formClass = SubstanceForm
 
     def renderForm(self):
+        import pdb; pdb.set_trace()
         try:
             insert = "SELECT substance_mixture_id, title FROM substance_mixture ORDER BY title;"
             choices = self.db.execute(insert)
