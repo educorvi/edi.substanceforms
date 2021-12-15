@@ -22,7 +22,7 @@ class MultiCheckboxField(SelectMultipleField):
 class CreateForm(Form):
 
     title = StringField(u"Titel", [validators.required()], render_kw={'class': 'form-control'})
-    description = StringField(u"Beschreibung", [validators.required()], render_kw={'class': 'form-control'})
+    description = StringField(u"Beschreibung", render_kw={'class': 'form-control'})
     branch = RadioField("Branche", [validators.required()], choices=branchen)
     manufacturer_id = SelectField(u"Hersteller des Wasch- und Reinigungsmittels", [validators.required()], render_kw={'class': 'form-control'})
     substance_type = RadioField(u"Art des Wasch- und Reinigungsmittels", [validators.required()], choices=substance_types_new)
@@ -214,6 +214,7 @@ class UpdateFormView(CreateFormView):
         return self.index()
 
     def renderForm(self):
+        import pdb; pdb.set_trace()
         self.form.title.default=self.result[0][0]
         self.form.description.default=self.result[0][1]
         self.form.branch.default = self.result[0][2]
