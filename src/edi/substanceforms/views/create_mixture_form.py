@@ -247,24 +247,25 @@ class UpdateFormView(CreateFormView):
                          evaporation_lane_150=%s, evaporation_lane_160=%s, evaporation_lane_170=%s, evaporation_lane_180=%s,
                          ueg='%s', response='%s', skin_category='%s', checked_emissions=%s,
                          flashpoint=%s, values_range=%s, comments='%s'
-                         WHERE substance_mixture_id = %s;""" % (self.form.title.data,
-                                                        self.form.description.data,
-                                                        self.form.branch.data,
-                                                        self.form.substance_type.data,
+                         WHERE substance_mixture_id = %s;""" % \
+                                                        (check_value(self.form.title.data),
+                                                        check_value(self.form.description.data),
+                                                        check_value(self.form.branch.data),
+                                                        check_value(self.form.substance_type.data),
                                                         list_handler(self.form.application_areas.data),
                                                         list_handler(self.form.usecases.data),
                                                         check_value(self.form.evaporation_lane_150.data),
                                                         check_value(self.form.evaporation_lane_160.data),
                                                         check_value(self.form.evaporation_lane_170.data),
                                                         check_value(self.form.evaporation_lane_180.data),
-                                                        self.form.ueg.data,
-                                                        self.form.response.data,
-                                                        self.form.skin_category.data,
-                                                        self.form.checked_emissions.data,
+                                                        check_value(self.form.ueg.data),
+                                                        check_value(self.form.response.data),
+                                                        check_value(self.form.skin_category.data),
+                                                        check_value(self.form.checked_emissions.data),
                                                         check_value(self.form.flashpoint.data),
-                                                        self.form.values_range.data,
-                                                        self.form.comments.data,
-                                                        self.form.item_id.data)
+                                                        check_value(self.form.values_range.data),
+                                                        check_value(self.form.comments.data),
+                                                        check_value(self.form.item_id.data))
             self.db.execute(command)
             message = u'Das Gefahrstoffgemisch wurde erfolgreich aktualisiert.'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
