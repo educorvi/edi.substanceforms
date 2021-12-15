@@ -168,11 +168,16 @@ class SubstanceFormView(TabelleFormView):
 
     def renderForm(self):
         import pdb; pdb.set_trace()
+        conn = psycopg2.connect(host=self.host, user=self.username, password=self.password, dbname=self.dbname)
         try:
+            cur = conn.cursor()
             insert = "SELECT substance_mixture_id, title FROM substance_mixture ORDER BY title;"
-            choices = self.db.execute(insert)
+            cur.execute(insert)
+            choices = cur.fetchall()
+            cur.close()
         except:
             choices = []
+        conn.close()
         self.form.substance_id.choices = choices
         self.form.process()
         return self.formTemplate()
