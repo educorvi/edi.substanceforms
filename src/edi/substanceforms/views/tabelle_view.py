@@ -21,7 +21,7 @@ class LoginCredentials:
 
 class BaseForm(Form):
 
-    #search = StringField("Suchbegriff", render_kw={'class':'form-control'})
+    search = StringField("Suchbegriff", render_kw={'class':'form-control'})
     #manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[])
 
 class TabelleFormView(WTFormView):
