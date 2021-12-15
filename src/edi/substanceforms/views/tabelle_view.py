@@ -21,7 +21,7 @@ class LoginCredentials:
 
 class BaseForm(Form):
 
-    search = StringField("Suchbegriff", render_kw={'class':'form-control'})
+    #search = StringField("Suchbegriff", render_kw={'class':'form-control'})
     #manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[])
 
 class TabelleFormView(WTFormView):
@@ -101,7 +101,7 @@ class HerstellerForm (BaseForm):
     manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[], render_kw={'class':'form-control'})
 
 class SubstanceForm (BaseForm):
-    substance_id = SelectField(u"Suchbegriff_2", [validators.required()], render_kw={'class': 'form-control'})
+    substance_id = SelectField(u"Suchbegriff", render_kw={'class': 'form-control'})
     #search = StringField("Suchbegriff", render_kw={'class':'form-control'})
     casnr = IntegerField(u'Bitte geben Sie eine CAS-Nummer an:', render_kw={'class':'form-control'})
     concentration = IntegerField(u'Bitte geben Sie eine Konzentration in wässriger Lösung an:', render_kw={'class':'form-control'})
@@ -188,13 +188,22 @@ class SubstanceFormView(TabelleFormView):
             searchtable = self.context.tablename
             casnr = self.form.casnr.data
             concentration = self.form.concentration.data
+            substance_id = self.form.substance_id.data
 
-            if casnr and concentration:
+            if substance_id and casnr and concentration:
+                select = "SELECT %s, title FROM %s WHERE casnr = '%s' AND concentration = '%s' AND %s = %s;" % (searchkey, searchtable, casnr, concentration, searchkey, substance_id)
+            elif substance_id and casnr:
+                select = "SELECT %s, title FROM %s WHERE casnr = '%s' AND %s = %s;" % (searchkey, searchtable, casnr, concentration, searchkey, substance_id)
+            elif substance_id and concentration:
+                select = "SELECT %s, title FROM %s WHERE concentration = '%s' AND %s = %s;" % (searchkey, searchtable, casnr, concentration, searchkey, substance_id)
+            elif casnr and concentration:
                 select = "SELECT %s, title FROM %s WHERE casnr = '%s' AND concentration = '%s';" % (searchkey, searchtable, casnr, concentration)
             elif casnr:
                 select = "SELECT %s, title FROM %s WHERE casnr = '%s';" % (searchkey, searchtable, casnr)
             elif concentration:
                 select = "SELECT %s, title FROM %s WHERE concentration = '%s';" % (searchkey, searchtable, concentration)
+            elif substance_id:
+                select = "SELECT %s, title FROM %s WHERE %s = %s;" % (searchkey, searchtable, casnr, concentration, searchkey, substance_id)
 
             try:
                 conn = psycopg2.connect(host=self.host, user=self.username, password=self.password, dbname=self.dbname)
