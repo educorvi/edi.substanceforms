@@ -242,11 +242,11 @@ class UpdateFormView(CreateFormView):
         """
         redirect_url = self.context.aq_parent.absolute_url()
         if button == 'Speichern': #and self.validate():
-            command = """UPDATE substance_mixture SET title='%s', description='%s', branch='%s', substance_type='%s',
+            command = """UPDATE substance_mixture SET title=%s, description=%s, branch=%s, substance_type=%s,
                          application_areas='%s', usecases='%s',
                          evaporation_lane_150=%s, evaporation_lane_160=%s, evaporation_lane_170=%s, evaporation_lane_180=%s,
-                         ueg='%s', response='%s', skin_category='%s', checked_emissions=%s,
-                         flashpoint=%s, values_range=%s, comments='%s'
+                         ueg=%s, response=%s, skin_category=%s, checked_emissions=%s,
+                         flashpoint=%s, values_range=%s, comments=%s
                          WHERE substance_mixture_id = %s;""" % \
                                                         (check_value(self.form.title.data),
                                                         check_value(self.form.description.data),
