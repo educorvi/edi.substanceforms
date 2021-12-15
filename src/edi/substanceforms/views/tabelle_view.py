@@ -104,6 +104,7 @@ class SubstanceForm (BaseForm):
     substance_id = SelectField(u"Suchbegriff", render_kw={'class': 'form-control'})
     #search = StringField("Suchbegriff", render_kw={'class':'form-control'})
     casnr = StringField(u'Bitte geben Sie eine CAS-Nummer an:', render_kw={'class':'form-control'})
+    egnr = StringField(u'Bitte geben Sie eine EG-Nummer an:', render_kw={'class': 'form-control'})
     concentration = FloatField(u'Bitte geben Sie eine Konzentration in wässriger Lösung an:', render_kw={'class':'form-control'})
 
 class SubstanceMixtureForm (BaseForm):
@@ -187,23 +188,42 @@ class SubstanceFormView(TabelleFormView):
             searchkey = self.context.tablename + '_id'
             searchtable = self.context.tablename
             casnr = self.form.casnr.data
+            egnr = self.form.egnr.data
             concentration = self.form.concentration.data
             substance_id = self.form.substance_id.data
 
-            if substance_id and casnr and concentration:
-                select = "SELECT %s, title FROM %s WHERE casnr = '%s' AND concentration = '%s' AND %s = %s;" % (searchkey, searchtable, casnr, concentration, searchkey, substance_id)
+
+            if substance_id and casnr and egnr and concentration:
+                select = "SELECT %s, title FROM %s WHERE casnr = '%s' AND egnr = '%s' AND concentration = %s AND %s = %s;" % (searchkey, searchtable, casnr, egnr, concentration, searchkey, substance_id)
+            elif substance_id and casnr and egnr:
+                select = "SELECT %s, title FROM %s WHERE casnr = '%s' AND egnr = '%s' AND %s = %s;" % (searchkey, searchtable, casnr, egnr, searchkey, substance_id)
+            elif substance_id and casnr and concentration:
+                select = "SELECT %s, title FROM %s WHERE casnr = '%s' AND concentration = %s AND %s = %s;" % (searchkey, searchtable, casnr, concentration, searchkey, substance_id)
+            elif substance_id and egnr and concentration:
+                select = "SELECT %s, title FROM %s WHERE egnr = '%s' AND concentration = %s AND %s = %s;" % (searchkey, searchtable, egnr, concentration, searchkey, substance_id)
+            elif casnr and egnr and concentration:
+                select = "SELECT %s, title FROM %s WHERE casnr = '%s' AND egnr = '%s' AND concentration = %s;" % (searchkey, searchtable, casnr, egnr, concentration)
             elif substance_id and casnr:
                 select = "SELECT %s, title FROM %s WHERE casnr = '%s' AND %s = %s;" % (searchkey, searchtable, casnr, searchkey, substance_id)
+            elif substance_id and egnr:
+                select = "SELECT %s, title FROM %s WHERE egnr = '%s' AND %s = %s;" % (searchkey, searchtable, egnr, searchkey, substance_id)
             elif substance_id and concentration:
-                select = "SELECT %s, title FROM %s WHERE concentration = '%s' AND %s = %s;" % (searchkey, searchtable, concentration, searchkey, substance_id)
+                select = "SELECT %s, title FROM %s WHERE concentration = %s AND %s = %s;" % (searchkey, searchtable, concentration, searchkey, substance_id)
+            elif casnr and egnr:
+                select = "SELECT %s, title FROM %s WHERE casnr = '%s' AND egnr = '%s';" % (searchkey, searchtable, casnr, egnr)
             elif casnr and concentration:
-                select = "SELECT %s, title FROM %s WHERE casnr = '%s' AND concentration = '%s';" % (searchkey, searchtable, casnr, concentration)
-            elif casnr:
-                select = "SELECT %s, title FROM %s WHERE casnr = '%s';" % (searchkey, searchtable, casnr)
-            elif concentration:
-                select = "SELECT %s, title FROM %s WHERE concentration = '%s';" % (searchkey, searchtable, concentration)
+                select = "SELECT %s, title FROM %s WHERE casnr = '%s' AND concentration = %s;" % (searchkey, searchtable, casnr, concentration)
+            elif egnr and concentration:
+                select = "SELECT %s, title FROM %s WHERE egnr = '%s' AND concentration = %s;" % (searchkey, searchtable, egnr, concentration)
             elif substance_id:
                 select = "SELECT %s, title FROM %s WHERE %s = %s;" % (searchkey, searchtable, searchkey, substance_id)
+            elif casnr:
+                select = "SELECT %s, title FROM %s WHERE casnr = '%s';" % (searchkey, searchtable, casnr)
+            elif egnr:
+                select = "SELECT %s, title FROM %s WHERE egnr = '%s';" % (searchkey, searchtable, egnr)
+            elif concentration:
+                select = "SELECT %s, title FROM %s WHERE concentration = %s;" % (searchkey, searchtable, concentration)
+
 
             try:
                 conn = psycopg2.connect(host=self.host, user=self.username, password=self.password, dbname=self.dbname)
