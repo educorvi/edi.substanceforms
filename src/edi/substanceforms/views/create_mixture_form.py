@@ -303,7 +303,7 @@ class DeleteFormView(CreateFormView):
     def submit(self, button):
         """
         """
-        redirect_url = self.context.absolute_url()+'/single_view?item='+self.form.itemid.data
+        redirect_url = self.context.absolute_url()+'/single_view?item='+self.form.item_id.data
         if button == 'Speichern' and self.form.sure.data is True: #and self.validate():
             command = "DELETE FROM substance_mixture WHERE substance_mixture_id = %s" % (self.form.item_id.data)
             self.db.execute(command)
