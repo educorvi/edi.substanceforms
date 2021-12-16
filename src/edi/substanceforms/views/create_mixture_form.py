@@ -240,7 +240,7 @@ class UpdateFormView(CreateFormView):
     def submit(self, button):
         """
         """
-        redirect_url = self.context.absolute_url() + '/single_view?item=' + self.form.itemid.data
+        redirect_url = self.context.absolute_url() + '/single_view?item=' + self.form.item_id.data
         if button == 'Speichern': #and self.validate():
             command = """UPDATE substance_mixture SET title=%s, description=%s, branch=%s, substance_type=%s,
                          application_areas='%s', usecases='%s',
