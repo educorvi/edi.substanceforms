@@ -44,16 +44,16 @@
 	      </thead>
               <tbody>
           <tr>
-	          <td>Name</td>
-	          <td tal:content="python:article[1]"/>
+	          <td tal:condition="python:article[1]">Name</td>
+	          <td tal:condition="python:article[1]" tal:content="python:article[1]"/>
 	        </tr>
           <tr>
-	          <td>Beschreibung</td>
-	          <td tal:content="python:article[2]"/>
+	          <td tal:condition="python:article[2]">Beschreibung</td>
+	          <td tal:condition="python:article[2]" tal:content="python:article[2]"/>
 	        </tr>
           <tr>
-	          <td>Homepage</td>
-	          <td tal:content="python:article[4]"/>
+	          <td tal:condition="python:article[4]">Homepage</td>
+	          <td tal:condition="python:article[4]" tal:content="python:article[4]"/>
 	        </tr>
 	      </tbody>
 	    </table>
