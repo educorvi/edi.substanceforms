@@ -164,7 +164,7 @@ class UpdateFormView(CreateFormView):
     def submit(self, button):
         """
         """
-        redirect_url = self.context.aq_parent.absolute_url()
+        redirect_url = self.context.absolute_url() + '/single_view?item=' + self.form.item_id.data
         if button == 'Speichern': #and self.validate():
             command = """UPDATE spray_powder SET title='%s', description='%s', product_class='%s', starting_material='%s',
                          median_value=%s, volume_share=%s, checked_emissions=%s
