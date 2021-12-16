@@ -379,7 +379,6 @@ class UpdateManufacturerFormView(CreateFormView):
         return self.index()
 
     def renderForm(self):
-        form.image_url.default = self.result[0][18]
         try:
             insert = "SELECT manufacturer_id, title FROM manufacturer ORDER BY title;"
             manus = self.db.execute(insert)
