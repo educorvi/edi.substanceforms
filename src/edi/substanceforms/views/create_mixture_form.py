@@ -127,7 +127,8 @@ class CreateFormView(WTFormView):
         image_url = ''
         if self.form.image_url.data.filename:
             image_url = self.create_image(self.form.image_url, self.form.title.data)
-        redirect_url = self.context.aq_parent.absolute_url()
+        #redirect_url = self.context.aq_parent.absolute_url()
+        redirect_url = self.context.absolute_url() + '/single_view?item=' + self.form.itemid.data
         if button == 'Speichern': #and self.validate():
 
             conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
@@ -240,7 +241,7 @@ class UpdateFormView(CreateFormView):
     def submit(self, button):
         """
         """
-        redirect_url = self.context.aq_parent.absolute_url()
+        redirect_url = self.context.absolute_url() + '/single_view?item=' + self.form.itemid.data
         if button == 'Speichern': #and self.validate():
             command = """UPDATE substance_mixture SET title=%s, description=%s, branch=%s, substance_type=%s,
                          application_areas='%s', usecases='%s',
