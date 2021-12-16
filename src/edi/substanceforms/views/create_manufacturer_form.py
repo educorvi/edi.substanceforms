@@ -96,7 +96,7 @@ class UpdateFormView(CreateFormView):
     def submit(self, button):
         """
         """
-        redirect_url = self.context.aq_parent.absolute_url()
+        redirect_url = self.context.absolute_url() + '/single_view?item=' + self.form.item_id.data
         if button == 'Speichern': #and self.validate():
             command = """UPDATE manufacturer SET title='%s', description='%s', homepage='%s'
                          WHERE manufacturer_id = %s;""" % (self.form.title.data,
