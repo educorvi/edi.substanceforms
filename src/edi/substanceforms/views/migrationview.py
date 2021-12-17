@@ -172,11 +172,8 @@ class Migrationview(BrowserView):
                 table = i[0]
                 cur = conn.cursor()
                 select = "SELECT webcode from %s WHERE webcode = '%s'" % (table, generated_webcode)
-                try:
-                    cur.execute(select)
-                    erg = cur.fetchall()
-                except:
-                    erg = False
+                cur.execute(select)
+                erg = cur.fetchall()
                 cur.close()
                 if erg:
                     return False
@@ -249,23 +246,18 @@ class Migrationview(BrowserView):
             if reinstoff_link_available == "zum Stoff":
                 reinstoff_link = "https://gestis.dguv.de/data?name="+str(reinstoff_link_id)
                 cur = conn.cursor()
-                try:
-                    cur.execute(
-                        "INSERT INTO substance (title, webcode, casnr, egnr, skin_category, branch, dnel_lokal, dnel_systemisch, comments, link, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",
-                        (reinstoff_title, reinstoff_uid, reinstoff_casnr, reinstoff_egnr, reinstoff_skin, reinstoff_branche, reinstoff_lokal,
-                         reinstoff_systemisch, reinstoff_hinweise, reinstoff_link, reinstoff_published))
-                except:
-                    pass
+
+                cur.execute(
+                    "INSERT INTO substance (title, webcode, casnr, egnr, skin_category, branch, dnel_lokal, dnel_systemisch, comments, link, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",
+                    (reinstoff_title, reinstoff_uid, reinstoff_casnr, reinstoff_egnr, reinstoff_skin, reinstoff_branche, reinstoff_lokal,
+                     reinstoff_systemisch, reinstoff_hinweise, reinstoff_link, reinstoff_published))
             else:
                 cur = conn.cursor()
-                try:
-                    cur.execute(
-                        "INSERT INTO substance (title, webcode, casnr, egnr, skin_category, branch, dnel_lokal, dnel_systemisch, comments, link, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, NULL, %s);",
-                        (reinstoff_title, reinstoff_uid, reinstoff_casnr, reinstoff_egnr, reinstoff_skin,
-                         reinstoff_branche, reinstoff_lokal,
-                         reinstoff_systemisch, reinstoff_hinweise, reinstoff_published))
-                except:
-                    pass
+                cur.execute(
+                    "INSERT INTO substance (title, webcode, casnr, egnr, skin_category, branch, dnel_lokal, dnel_systemisch, comments, link, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, NULL, %s);",
+                    (reinstoff_title, reinstoff_uid, reinstoff_casnr, reinstoff_egnr, reinstoff_skin,
+                     reinstoff_branche, reinstoff_lokal,
+                     reinstoff_systemisch, reinstoff_hinweise, reinstoff_published))
             conn.commit()
             cur.close()
 
@@ -309,41 +301,38 @@ class Migrationview(BrowserView):
         print('Successfully migrated SPRAY_POWDER')
 
         for i in erg4:
-            try:
-                etikett_title = i.get('title')
-                etikett_desc = i.get('description')
-                etikett_uid = get_webcode(self)
-                etikett_skin_category = i.get('hskategorie')
-                etikett_checked_emissions = i.get('emissionsgeprueft')
-                etikett_flashpoint = i.get('flammpunkt')
-                etikett_values_range = i.get('wertebereich')
-                etikett_classifications = i.get('einstufungen')
-                etikett_usecases = i.get('verwendungszweck')
-                etikett_manufacturer_name = i.get('hersteller')['title']
-                etikett_review_state = i.get('review_state')
+            etikett_title = i.get('title')
+            etikett_desc = i.get('description')
+            etikett_uid = get_webcode(self)
+            etikett_skin_category = i.get('hskategorie')
+            etikett_checked_emissions = i.get('emissionsgeprueft')
+            etikett_flashpoint = i.get('flammpunkt')
+            etikett_values_range = i.get('wertebereich')
+            etikett_classifications = i.get('einstufungen')
+            etikett_usecases = i.get('verwendungszweck')
+            etikett_manufacturer_name = i.get('hersteller')['title']
+            etikett_review_state = i.get('review_state')
 
-                if etikett_review_state == 'published':
-                    etikett_published = 'published'
-                else:
-                    etikett_published = 'private'
+            if etikett_review_state == 'published':
+                etikett_published = 'published'
+            else:
+                etikett_published = 'private'
 
-                cur = conn.cursor()
-                cur.execute(
-                    "SELECT manufacturer_id FROM manufacturer WHERE title = '{0}';".format(etikett_manufacturer_name))
-                etikett_manufacturer_id = cur.fetchall()
-                cur.close()
+            cur = conn.cursor()
+            cur.execute(
+                "SELECT manufacturer_id FROM manufacturer WHERE title = '{0}';".format(etikett_manufacturer_name))
+            etikett_manufacturer_id = cur.fetchall()
+            cur.close()
 
-                cur = conn.cursor()
-                # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
-                cur.execute(
-                    "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, usecases, manufacturer_id, status) VALUES (%s, %s, %s, 'druck_und_papier', 'label', NULL, %s, %s, %s, %s, %s, %s, %s);",
-                    (etikett_title, etikett_desc, etikett_uid, etikett_skin_category, etikett_checked_emissions,
-                     etikett_flashpoint, etikett_values_range, etikett_usecases, etikett_manufacturer_id[0], etikett_published))
-                conn.commit()
-                # print(etikett_title)  # correct
-                cur.close()
-            except:
-                pass
+            cur = conn.cursor()
+            # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
+            cur.execute(
+                "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, usecases, manufacturer_id, status) VALUES (%s, %s, %s, 'druck_und_papier', 'label', NULL, %s, %s, %s, %s, %s, %s, %s);",
+                (etikett_title, etikett_desc, etikett_uid, etikett_skin_category, etikett_checked_emissions,
+                 etikett_flashpoint, etikett_values_range, etikett_usecases, etikett_manufacturer_id[0], etikett_published))
+            conn.commit()
+            # print(etikett_title)  # correct
+            cur.close()
 
         print('Successfully migrated DETERGENT_LABELS')
 
@@ -422,22 +411,17 @@ class Migrationview(BrowserView):
             else:
                 datenblatt_skin_category = ''
 
-            try:
-                if datenblatt_product_category[0] == 'Konventionell':
-                    offsetprintmanner = 'without_spec'
-                elif datenblatt_product_category[0] == 'UV-Druck':
-                    offsetprintmanner = 'uv_print'
-                else:
-                    offsetprintmanner = 'without_spec'
-            except:
-                offsetprintmanner = 'without_spec'
+            if datenblatt_product_category[0] == 'UV-Druck':
+                datenblatt_substancetype = 'uv'
+            else:
+                datenblatt_substancetype = 'offset'
 
             # import pdb; pdb.set_trace()
             cur = conn.cursor()
             # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
             cur.execute(
-                "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, comments, offset_print_manner, status) VALUES (%s, %s, %s, 'druck_und_papier', 'offset', NULL, %s, %s, %s, %s, %s, %s, %s);",
-                (datenblatt_title, datenblatt_desc, datenblatt_uid, datenblatt_skin_category,
+                "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, comments, offset_print_manner, status) VALUES (%s, %s, %s, 'druck_und_papier', %s, NULL, %s, %s, %s, %s, %s, %s, %s);",
+                (datenblatt_title, datenblatt_desc, datenblatt_uid, datenblatt_substancetype, datenblatt_skin_category,
                  datenblatt_checked_emissions, datenblatt_flashpoint, datenblatt_values_range,
                  str(datenblatt_comments),offsetprintmanner, datenblatt_published))
             conn.commit()
