@@ -177,7 +177,8 @@ class Migrationview(BrowserView):
             try:
                 etikett_manufacturer_name = i.get('hersteller')['title']
             except:
-                import pdb; pdb.set_trace()
+                etikett_manufacturer_name = ''
+
             etikett_review_state = i.get('review_state')
 
             if etikett_review_state == 'published':
