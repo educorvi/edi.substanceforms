@@ -177,7 +177,7 @@ class Migrationview(BrowserView):
             try:
                 etikett_manufacturer_name = i.get('hersteller')['title']
             except:
-                etikett_manufacturer_name = ''
+                etikett_manufacturer_name = 'nichtvorhanden'
 
             etikett_review_state = i.get('review_state')
 
