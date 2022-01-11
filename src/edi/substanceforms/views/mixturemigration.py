@@ -192,6 +192,8 @@ class Migrationview(BrowserView):
             etikett_manufacturer_id = cur.fetchall()
             cur.close()
 
+            import pdb; pdb.set_trace()
+
             cur = conn.cursor()
             # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
             cur.execute(
