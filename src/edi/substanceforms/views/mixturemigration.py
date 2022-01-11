@@ -174,7 +174,10 @@ class Migrationview(BrowserView):
             etikett_values_range = i.get('wertebereich')
             etikett_classifications = i.get('einstufungen')
             etikett_usecases = i.get('verwendungszweck')
-            etikett_manufacturer_name = i.get('hersteller')['title']
+            try:
+                etikett_manufacturer_name = i.get('hersteller')['title']
+            except:
+                import pdb; pdb.set_trace()
             etikett_review_state = i.get('review_state')
 
             if etikett_review_state == 'published':
