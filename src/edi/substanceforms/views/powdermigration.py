@@ -92,11 +92,12 @@ class Migrationview(BrowserView):
 
             for i in tables:
                 table = i[0]
-                cur = conn.cursor()
-                select = "SELECT webcode from %s WHERE webcode = '%s'" % (table, generated_webcode)
-                cur.execute(select)
-                erg = cur.fetchall()
-                cur.close()
+                if table != 'synonyms' and table != 'recipes':
+                    cur = conn.cursor()
+                    select = "SELECT webcode from %s WHERE webcode = '%s'" % (table, generated_webcode)
+                    cur.execute(select)
+                    erg = cur.fetchall()
+                    cur.close()
                 if erg:
                     return False
             conn.close()
