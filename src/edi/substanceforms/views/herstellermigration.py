@@ -98,6 +98,8 @@ class Migrationview(BrowserView):
                     cur.execute(select)
                     erg = cur.fetchall()
                     cur.close()
+                else:
+                    erg = False
                 if erg:
                     return False
             conn.close()
