@@ -300,10 +300,13 @@ class Migrationview(BrowserView):
             else:
                 datenblatt_skin_category = ''
 
-            if datenblatt_product_category[0] == 'UV-Druck':
-                datenblatt_substancetype = 'uv'
+            if datenblatt_product_category:
+                if datenblatt_product_category[0] == 'UV-Druck':
+                    datenblatt_substancetype = 'uv'
+                else:
+                    datenblatt_substancetype = 'offset'
             else:
-                datenblatt_substancetype = 'offset'
+                datenblatt_substancetype = 'leer'
 
             # import pdb; pdb.set_trace()
             cur = conn.cursor()
