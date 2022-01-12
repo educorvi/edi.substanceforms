@@ -176,9 +176,6 @@ class Migrationview(BrowserView):
             etikett_values_range = i.get('wertebereich')
             etikett_classifications = i.get('einstufungen')
             etikett_usecases = i.get('verwendungszweck')
-
-            etikett_manufacturer_name = i.get('hersteller')['title']
-
             etikett_review_state = i.get('review_state')
 
             if etikett_review_state == 'published':
@@ -186,6 +183,9 @@ class Migrationview(BrowserView):
             else:
                 etikett_published = 'private'
 
+            import pdb; pdb.set_trace()
+
+            etikett_manufacturer_name = i.get('hersteller')['title']
             cur = conn.cursor()
             cur.execute(
                 "SELECT manufacturer_id FROM manufacturer WHERE title = '{0}';".format(etikett_manufacturer_name))
