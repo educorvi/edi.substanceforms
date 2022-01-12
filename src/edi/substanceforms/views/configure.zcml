@@ -14,6 +14,34 @@
     />
 
   <browser:page
+    name="herstellermigration"
+    for="*"
+    class=".herstellermigration.Migrationview"
+    permission="zope2.View"
+    />
+
+  <browser:page
+    name="mixturemigration"
+    for="*"
+    class=".mixturemigration.Migrationview"
+    permission="zope2.View"
+    />
+
+  <browser:page
+    name="powdermigration"
+    for="*"
+    class=".powdermigration.Migrationview"
+    permission="zope2.View"
+    />
+
+  <browser:page
+    name="reinstoffmigration"
+    for="*"
+    class=".reinstoffmigration.Migrationview"
+    permission="zope2.View"
+    />
+
+  <browser:page
     name="selector-view"
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".selector_view.SelectorView"
@@ -167,6 +195,14 @@
     name="delete-ingredients-form"
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".create_mixture_form.DeleteIngredientsFormView"
+    template = "create_view.pt"
+    permission="zope2.View"
+    />
+
+  <browser:page
+    name="update-mixture-manufacturer-form"
+    for="edi.substanceforms.content.tabelle.ITabelle"
+    class=".create_mixture_form.UpdateManufacturerFormView"
     template = "create_view.pt"
     permission="zope2.View"
     />

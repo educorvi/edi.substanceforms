@@ -51,6 +51,10 @@
 	          <td tal:condition="python: view.get_attr_translation('substance_types_new', article[5])" tal:content="python: view.get_attr_translation('substance_types_new', article[5])"/>
 	        </tr>
           <tr>
+	          <td tal:condition="python: view.get_manufacturer(article[23])">Hersteller</td>
+	          <td tal:condition="python: view.get_manufacturer(article[23])" tal:content="python: view.get_manufacturer(article[23])"/>
+	        </tr>
+          <tr>
 	          <td tal:condition="python: view.get_attr_translation('branchen', article[4])">Branche</td>
             <td tal:condition="python: view.get_attr_translation('branchen', article[4])" tal:content="python: view.get_attr_translation('branchen', article[4])"/>
 	        </tr>
@@ -144,6 +148,10 @@
 
             <section class="mt-3 mb-3">
               <a class="btn btn-primary" tal:attributes="href python:context.absolute_url()+'/delete-ingredients-form?itemid=%s' % view.itemid" role="button">Bestandteile löschen</a>
+            </section>
+
+            <section class="mt-3 mb-3">
+              <a class="btn btn-primary" tal:attributes="href python:context.absolute_url()+'/update-mixture-manufacturer-form?itemid=%s' % view.itemid" role="button">Hersteller aktualisieren</a>
             </section>
 
           </div>

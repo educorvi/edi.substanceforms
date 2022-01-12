@@ -7,7 +7,7 @@ from plone.namedfile import NamedBlobImage
 from wtforms import FileField, RadioField, SelectMultipleField
 from wtforms import validators
 from collective.wtforms.views import WTFormView
-from edi.substanceforms.helpers import check_value, list_handler
+from edi.substanceforms.helpers import check_value, list_handler, reverse_list_handler
 from edi.substanceforms.vocabularies import substance_types, hskategorie, produktkategorien, produktklassen, branchen
 from edi.substanceforms.vocabularies import classifications, usecases, application_areas, substance_types_new
 from plone import api as ploneapi
@@ -22,8 +22,8 @@ class MultiCheckboxField(SelectMultipleField):
 class CreateForm(Form):
 
     title = StringField(u"Titel", [validators.required()], render_kw={'class': 'form-control'})
-    description = StringField(u"Beschreibung", [validators.required()], render_kw={'class': 'form-control'})
-    branch = SelectField("Branche", [validators.required()], choices=branchen, render_kw={'class': 'form-control'})
+    description = StringField(u"Beschreibung", render_kw={'class': 'form-control'})
+    branch = RadioField("Branche", [validators.required()], choices=branchen)
     manufacturer_id = SelectField(u"Hersteller des Wasch- und Reinigungsmittels", [validators.required()], render_kw={'class': 'form-control'})
     substance_type = RadioField(u"Art des Wasch- und Reinigungsmittels", [validators.required()], choices=substance_types_new)
     usecases = MultiCheckboxField(u"Anwendungszwecke für Etikettenreiniger", choices=usecases)
@@ -36,7 +36,7 @@ class CreateForm(Form):
     evaporation_lane_180 = FloatField(u"Verdampfungsfaktor bei 180 Grad Celsius", render_kw={'class': 'form-control'})
     ueg = StringField(u"UEG", render_kw={'class': 'form-control'})
     response = StringField(u"Response-Faktor", render_kw={'class': 'form-control'})
-    skin_category = SelectField(u"Hautschutz-Kategorie", [validators.required()], choices=hskategorie, render_kw={'class': 'form-control'})
+    skin_category = RadioField(u"Hautschutz-Kategorie", [validators.required()], choices=hskategorie)
     date_checked = DateField(u"Datum der letzten Prüfung", render_kw={'class': 'form-control'})
     checked_emissions = BooleanField(u"Emissionsarmes Produkt", render_kw={'class': 'form-check-input'})
     flashpoint = IntegerField(u"Flammpunkt", render_kw={'class': 'form-control'})
@@ -48,7 +48,7 @@ class UpdateForm(Form):
 
     title = StringField(u"Titel", [validators.required()], render_kw={'class': 'form-control'})
     description = StringField(u"Beschreibung", render_kw={'class': 'form-control'})
-    branch = SelectField("Branche", choices=branchen, render_kw={'class': 'form-control'})
+    branch = RadioField("Branche", choices=branchen)
     substance_type = RadioField(u"Art des Wasch- und Reinigungsmittels", [validators.required()], choices=substance_types_new)
     usecases = MultiCheckboxField(u"Anwendungszwecke für Etikettenreiniger", choices=usecases)
     application_areas = MultiCheckboxField(u"Anwendungsgebiete für Sonderreiniger", choices=application_areas)
@@ -60,7 +60,7 @@ class UpdateForm(Form):
     evaporation_lane_180 = FloatField(u"Verdampfungsfaktor bei 180 Grad Celsius", render_kw={'class': 'form-control'})
     ueg = StringField(u"UEG", render_kw={'class': 'form-control'})
     response = StringField(u"Response-Faktor", render_kw={'class': 'form-control'})
-    skin_category = SelectField(u"Hautschutz-Kategorie", choices=hskategorie, render_kw={'class': 'form-control'})
+    skin_category = RadioField(u"Hautschutz-Kategorie", choices=hskategorie)
     date_checked = DateField(u"Datum der letzten Prüfung", render_kw={'class': 'form-control'})
     checked_emissions = BooleanField(u"Emissionsarmes Produkt", render_kw={'class': 'form-check-input'})
     flashpoint = IntegerField(u"Flammpunkt", render_kw={'class': 'form-control'})
@@ -76,6 +76,10 @@ class DeleteForm(Form):
 
 class DeleteIngredientsForm(Form):
     sure = BooleanField("Bestandteile löschen", render_kw={'class': 'form-check-input'})
+    item_id = HiddenField()
+
+class UpdateManufacturerForm(Form):
+    manufacturer_id = SelectField(u"Hersteller des Wasch- und Reinigungsmittels", [validators.required()], render_kw={'class': 'form-control'})
     item_id = HiddenField()
 
 class CreateFormView(WTFormView):
@@ -214,8 +218,8 @@ class UpdateFormView(CreateFormView):
         self.form.description.default=self.result[0][1]
         self.form.branch.default = self.result[0][2]
         self.form.substance_type.default = self.result[0][3]
-        self.form.application_areas.default = self.result[0][4]
-        self.form.usecases.default = self.result[0][5]
+        self.form.application_areas.default = reverse_list_handler(self.result[0][4])
+        self.form.usecases.default = reverse_list_handler(self.result[0][5])
         self.form.evaporation_lane_150.default = self.result[0][6]
         self.form.evaporation_lane_160.default = self.result[0][7]
         self.form.evaporation_lane_170.default = self.result[0][8]
@@ -236,31 +240,32 @@ class UpdateFormView(CreateFormView):
     def submit(self, button):
         """
         """
-        redirect_url = self.context.aq_parent.absolute_url()
+        redirect_url = self.context.absolute_url() + '/single_view?item=' + self.form.item_id.data
         if button == 'Speichern': #and self.validate():
-            command = """UPDATE substance_mixture SET title='%s', description='%s', branch='%s', substance_type='%s',
+            command = """UPDATE substance_mixture SET title=%s, description=%s, branch=%s, substance_type=%s,
                          application_areas='%s', usecases='%s',
                          evaporation_lane_150=%s, evaporation_lane_160=%s, evaporation_lane_170=%s, evaporation_lane_180=%s,
-                         ueg='%s', response='%s', skin_category='%s', checked_emissions=%s,
-                         flashpoint=%s, values_range=%s, comments='%s'
-                         WHERE substance_mixture_id = %s;""" % (self.form.title.data,
-                                                        self.form.description.data,
-                                                        self.form.branch.data,
-                                                        self.form.substance_type.data,
+                         ueg=%s, response=%s, skin_category=%s, checked_emissions=%s,
+                         flashpoint=%s, values_range=%s, comments=%s
+                         WHERE substance_mixture_id = %s;""" % \
+                                                        (check_value(self.form.title.data),
+                                                        check_value(self.form.description.data),
+                                                        check_value(self.form.branch.data),
+                                                        check_value(self.form.substance_type.data),
                                                         list_handler(self.form.application_areas.data),
                                                         list_handler(self.form.usecases.data),
                                                         check_value(self.form.evaporation_lane_150.data),
                                                         check_value(self.form.evaporation_lane_160.data),
                                                         check_value(self.form.evaporation_lane_170.data),
                                                         check_value(self.form.evaporation_lane_180.data),
-                                                        self.form.ueg.data,
-                                                        self.form.response.data,
-                                                        self.form.skin_category.data,
-                                                        self.form.checked_emissions.data,
+                                                        check_value(self.form.ueg.data),
+                                                        check_value(self.form.response.data),
+                                                        check_value(self.form.skin_category.data),
+                                                        check_value(self.form.checked_emissions.data),
                                                         check_value(self.form.flashpoint.data),
-                                                        self.form.values_range.data,
-                                                        self.form.comments.data,
-                                                        self.form.item_id.data)
+                                                        check_value(self.form.values_range.data),
+                                                        check_value(self.form.comments.data),
+                                                        check_value(self.form.item_id.data))
             self.db.execute(command)
             message = u'Das Gefahrstoffgemisch wurde erfolgreich aktualisiert.'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
@@ -340,7 +345,7 @@ class DeleteIngredientsFormView(CreateFormView):
     def submit(self, button):
         """
         """
-        redirect_url = self.context.aq_parent.absolute_url()
+        redirect_url = self.context.absolute_url() + '/single_view?item=' + self.form.item_id.data
         if button == 'Speichern' and self.form.sure.data is True: #and self.validate():
             command = "DELETE FROM recipes WHERE mixture_id = %s" % (self.form.item_id.data)
             self.db.execute(command)
@@ -357,3 +362,48 @@ class DeleteIngredientsFormView(CreateFormView):
         elif button == 'Abbrechen':
             return self.request.response.redirect(redirect_url)
 
+
+class UpdateManufacturerFormView(CreateFormView):
+    formClass = UpdateManufacturerForm
+
+    def __call__(self):
+        dbdata = self.context.aq_parent
+        self.db = DBConnect(host=dbdata.host, db=dbdata.database, user=dbdata.username, password=dbdata.password)
+        if self.submitted:
+            button = self.hasButtonSubmitted()
+            if button:
+                result = self.submit(button)
+                if result:
+                    return result
+        self.itemid = self.request.get('itemid')
+        return self.index()
+
+    def renderForm(self):
+        try:
+            insert = "SELECT manufacturer_id, title FROM manufacturer ORDER BY title;"
+            manus = self.db.execute(insert)
+        except:
+            manus = []
+        self.form.manufacturer_id.choices = manus
+        self.form.item_id.default = self.itemid
+        self.form.process()
+        return self.formTemplate()
+
+    def submit(self, button):
+        """
+        """
+        redirect_url = self.context.absolute_url() + '/single_view?item=' + self.form.item_id.data
+        if button == 'Speichern': #and self.validate():
+            command = """UPDATE substance_mixture SET manufacturer_id=%s WHERE substance_mixture_id = %s;""" % (self.form.manufacturer_id.data,
+                                                                                                                self.form.item_id.data)
+            self.db.execute(command)
+            message = u'Das Gefahrstoffgemisch wurde erfolgreich aktualisiert.'
+            ploneapi.portal.show_message(message=message, type='info', request=self.request)
+            #message = u'Fehler beim Aktualisieren des Gefahrstoffgemisches'
+            #ploneapi.portal.show_message(message=message, type='error', request=self.request)
+
+            self.db.close()
+            return self.request.response.redirect(redirect_url)
+
+        elif button == 'Abbrechen':
+            return self.request.response.redirect(redirect_url)

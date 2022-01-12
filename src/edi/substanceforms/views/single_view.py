@@ -112,6 +112,12 @@ class SingleView(BrowserView):
         synonyms = self.db.execute(select)
         return synonyms
 
+    def get_manufacturer(self, manu):
+        select = "SELECT title from manufacturer WHERE manufacturer_id = %s" %manu
+        manufacturer = self.db.execute(select)
+        result = manufacturer[0][0]
+        return result
+
     def translate_synonyms(self, synonyms):
         resultstring = ""
         index = 0
