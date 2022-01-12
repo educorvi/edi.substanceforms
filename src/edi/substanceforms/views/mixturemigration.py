@@ -289,6 +289,7 @@ class Migrationview(BrowserView):
             datenblatt_material_compatibility = i.get('materialvertraeglichkeit')
             datenblatt_comments = i.get('bemerkungen')
             datenblatt_review_state = i.get('review_state')
+            datenblatt_manufacturer_name = i.get('hersteller')['title']
 
             if datenblatt_review_state == 'published':
                 datenblatt_published = 'published'
@@ -308,17 +309,36 @@ class Migrationview(BrowserView):
             else:
                 datenblatt_substancetype = 'leer'
 
-            # import pdb; pdb.set_trace()
             cur = conn.cursor()
-            # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
             cur.execute(
-                "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, comments, status) VALUES (%s, %s, %s, 'druck_und_papier', %s, NULL, %s, %s, %s, %s, %s, %s);",
-                (datenblatt_title, datenblatt_desc, datenblatt_uid, datenblatt_substancetype, datenblatt_skin_category,
-                 datenblatt_checked_emissions, datenblatt_flashpoint, datenblatt_values_range,
-                 str(datenblatt_comments), datenblatt_published))
-            conn.commit()
-            # print(datenblatt_title)  # correct
+                "SELECT manufacturer_id FROM manufacturer WHERE title = '{0}';".format(datenblatt_manufacturer_name))
+            datenblatt_manufacturer_id = cur.fetchall()
             cur.close()
+
+            if datenblatt_manufacturer_id:
+                cur = conn.cursor()
+                # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
+                cur.execute(
+                    "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, comments, status, manufacturer_id) VALUES (%s, %s, %s, 'druck_und_papier', %s, NULL, %s, %s, %s, %s, %s, %s, %s);",
+                    (datenblatt_title, datenblatt_desc, datenblatt_uid, datenblatt_substancetype,
+                     datenblatt_skin_category,
+                     datenblatt_checked_emissions, datenblatt_flashpoint, datenblatt_values_range,
+                     str(datenblatt_comments), datenblatt_published, datenblatt_manufacturer_id[0]))
+                conn.commit()
+                # print(datenblatt_title)  # correct
+                cur.close()
+            else:
+                print("Keine ID")
+                cur = conn.cursor()
+                # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
+                cur.execute(
+                    "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, comments, status) VALUES (%s, %s, %s, 'druck_und_papier', %s, NULL, %s, %s, %s, %s, %s, %s);",
+                    (datenblatt_title, datenblatt_desc, datenblatt_uid, datenblatt_substancetype, datenblatt_skin_category,
+                     datenblatt_checked_emissions, datenblatt_flashpoint, datenblatt_values_range,
+                     str(datenblatt_comments), datenblatt_published))
+                conn.commit()
+                # print(datenblatt_title)  # correct
+                cur.close()
 
         print('Successfully migrated PRODUCT_DATASHEET')
 
