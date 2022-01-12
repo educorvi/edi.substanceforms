@@ -184,14 +184,14 @@ class Migrationview(BrowserView):
                 etikett_published = 'private'
 
             if i.get('hersteller'):
-                try:
-                    etikett_manufacturer_name = i.get('hersteller')['title']
-                    cur = conn.cursor()
-                    cur.execute(
-                        "SELECT manufacturer_id FROM manufacturer WHERE title = '{0}';".format(etikett_manufacturer_name))
-                    etikett_manufacturer_id = cur.fetchall()
-                    cur.close()
+                etikett_manufacturer_name = i.get('hersteller')['title']
+                cur = conn.cursor()
+                cur.execute(
+                    "SELECT manufacturer_id FROM manufacturer WHERE title = '{0}';".format(etikett_manufacturer_name))
+                etikett_manufacturer_id = cur.fetchall()
+                cur.close()
 
+                if etikett_manufacturer_id != []:
                     cur = conn.cursor()
                     # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
                     cur.execute(
@@ -201,8 +201,17 @@ class Migrationview(BrowserView):
                     conn.commit()
                     # print(etikett_title)  # correct
                     cur.close()
-                except:
-                    import pdb; pdb.set_trace()
+                else:
+                    cur = conn.cursor()
+                    # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
+                    cur.execute(
+                        "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, usecases, status) VALUES (%s, %s, %s, 'druck_und_papier', 'label', NULL, %s, %s, %s, %s, %s, %s);",
+                        (etikett_title, etikett_desc, etikett_uid, etikett_skin_category, etikett_checked_emissions,
+                         etikett_flashpoint, etikett_values_range, etikett_usecases, etikett_published))
+                    conn.commit()
+                    # print(etikett_title)  # correct
+                    cur.close()
+
             else:
                 cur = conn.cursor()
                 # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
