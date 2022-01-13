@@ -13,6 +13,8 @@ import requests
 import psycopg2
 import csv
 
+authtuple = ('admin', 'Bg2011eteM')
+
 class Migrationview(BrowserView):
 
     def __call__(self):
@@ -39,18 +41,16 @@ class Migrationview(BrowserView):
             token = getAuthToken()
             headers = {
                 'Accept': 'application/json',
-                'Authorization': 'Bearer %s' % token,
             }
-            results = requests.get(searchurl, headers=headers, params=query)
+            results = requests.get(searchurl, headers=headers, params=query, auth=authtuple)
             return results.json().get('items')
 
         def getItemData(entry):
             token = getAuthToken()
             headers = {
                 'Accept': 'application/json',
-                'Authorization': 'Bearer %s' % token,
             }
-            results = requests.get(entry.get('@id'), headers=headers)
+            results = requests.get(entry.get('@id'), headers=headers, auth=authtuple)
             return results.json()
 
         def possibleGefahrstoffe():
