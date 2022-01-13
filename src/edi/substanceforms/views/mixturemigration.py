@@ -385,7 +385,7 @@ class Migrationview(BrowserView):
                 cur.execute(
                     "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, ueg, response, skin_category, date_checked, checked_emissions, evaporation_lane_150, evaporation_lane_160, evaporation_lane_170, evaporation_lane_180, manufacturer_id, status) VALUES (%s, %s, %s, 'druck_und_papier', 'heatset', NULL, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",
                     (heatset_title, heatset_desc, heatset_uid, heatset_ueg, heatset_response, heatset_skin_category,
-                     heatset_date_checked, heatset_checked_emissions, heatset_evap_150, heatset_evap_160, heatset_evap_170, heatset_evap_180, heatset_manufacturer_id, heatset_published ))
+                     heatset_date_checked, heatset_checked_emissions, heatset_evap_150, heatset_evap_160, heatset_evap_170, heatset_evap_180, heatset_manufacturer_id[0], heatset_published ))
                 conn.commit()
                 # print(heatset_title)  # correct
                 cur.close()
