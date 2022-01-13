@@ -183,8 +183,6 @@ class Migrationview(BrowserView):
             else:
                 etikett_published = 'private'
 
-            import pdb; pdb.set_trace()
-
             if i.get('hersteller'):
                 etikett_manufacturer_name = i.get('hersteller')['title']
                 cur = conn.cursor()
