@@ -184,8 +184,9 @@ class Migrationview(BrowserView):
                 etikett_usecases = usecases_string
 
             if etikett_classifications:
-                classifications_string = '@'.join(etikett_classifications)
-                etikett_classifications = classifications_string
+                if etikett_classifications != []:
+                    classifications_string = '@'.join(etikett_classifications)
+                    etikett_classifications = classifications_string
 
             if etikett_hinweise:
                 hinweise_string = '@'.join(etikett_hinweise)
