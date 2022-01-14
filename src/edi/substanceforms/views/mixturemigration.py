@@ -191,6 +191,7 @@ class Migrationview(BrowserView):
                 hinweise_string = '@'.join(etikett_hinweise)
                 etikett_hinweise = hinweise_string
 
+            import pdb; pdb.set_trace()
 
             if etikett_review_state == 'published':
                 etikett_published = 'published'
