@@ -179,14 +179,17 @@ class Migrationview(BrowserView):
             etikett_usecases = i.get('verwendungszweck')
             etikett_review_state = i.get('review_state')
 
-            usecases_string = '@'.join(etikett_usecases)
-            etikett_usecases = usecases_string
+            if etikett_usecases:
+                usecases_string = '@'.join(etikett_usecases)
+                etikett_usecases = usecases_string
 
-            classifications_string = '@'.join(etikett_classifications)
-            etikett_classifications = classifications_string
+            if etikett_classifications:
+                classifications_string = '@'.join(etikett_classifications)
+                etikett_classifications = classifications_string
 
-            hinweise_string = '@'.join(etikett_hinweise)
-            etikett_hinweise = hinweise_string
+            if etikett_hinweise:
+                hinweise_string = '@'.join(etikett_hinweise)
+                etikett_hinweise = hinweise_string
 
 
             if etikett_review_state == 'published':
