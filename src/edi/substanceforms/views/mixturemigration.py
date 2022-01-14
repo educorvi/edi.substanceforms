@@ -174,12 +174,19 @@ class Migrationview(BrowserView):
             etikett_checked_emissions = i.get('emissionsgeprueft')
             etikett_flashpoint = i.get('flammpunkt')
             etikett_values_range = i.get('wertebereich')
-            etikett_classifications = i.get('einstufungen')
+            etikett_classifications = i.get('einstufung')
+            etikett_hinweise = i.get('saetze')
             etikett_usecases = i.get('verwendungszweck')
             etikett_review_state = i.get('review_state')
 
             usecases_string = '@'.join(etikett_usecases)
             etikett_usecases = usecases_string
+
+            classifications_string = '@'.join(etikett_classifications)
+            etikett_classifications = classifications_string
+
+            hinweise_string = '@'.join(etikett_hinweise)
+            etikett_hinweise = hinweise_string
 
 
             if etikett_review_state == 'published':
@@ -199,9 +206,9 @@ class Migrationview(BrowserView):
                     cur = conn.cursor()
                     # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
                     cur.execute(
-                        "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, usecases, manufacturer_id, status) VALUES (%s, %s, %s, 'druck_und_papier', 'label', NULL, %s, %s, %s, %s, %s, %s, %s);",
+                        "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, usecases, manufacturer_id, status, classifications, indicatiors) VALUES (%s, %s, %s, 'druck_und_papier', 'label', NULL, %s, %s, %s, %s, %s, %s, %s, %s, %s);",
                         (etikett_title, etikett_desc, etikett_uid, etikett_skin_category, etikett_checked_emissions,
-                         etikett_flashpoint, etikett_values_range, etikett_usecases, etikett_manufacturer_id[0], etikett_published))
+                         etikett_flashpoint, etikett_values_range, etikett_usecases, etikett_manufacturer_id[0], etikett_published, etikett_classifications, etikett_hinweise))
                     conn.commit()
                     # print(etikett_title)  # correct
                     cur.close()
@@ -209,9 +216,9 @@ class Migrationview(BrowserView):
                     cur = conn.cursor()
                     # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
                     cur.execute(
-                        "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, usecases, status) VALUES (%s, %s, %s, 'druck_und_papier', 'label', NULL, %s, %s, %s, %s, %s, %s);",
+                        "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, usecases, status, classifications, indicatiors) VALUES (%s, %s, %s, 'druck_und_papier', 'label', NULL, %s, %s, %s, %s, %s, %s, %s, %s);",
                         (etikett_title, etikett_desc, etikett_uid, etikett_skin_category, etikett_checked_emissions,
-                         etikett_flashpoint, etikett_values_range, etikett_usecases, etikett_published))
+                         etikett_flashpoint, etikett_values_range, etikett_usecases, etikett_published, etikett_classifications, etikett_hinweise))
                     conn.commit()
                     # print(etikett_title)  # correct
                     cur.close()
@@ -220,9 +227,9 @@ class Migrationview(BrowserView):
                 cur = conn.cursor()
                 # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
                 cur.execute(
-                    "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, usecases, status) VALUES (%s, %s, %s, 'druck_und_papier', 'label', NULL, %s, %s, %s, %s, %s, %s);",
+                    "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, usecases, status, classifications, indicatiors) VALUES (%s, %s, %s, 'druck_und_papier', 'label', NULL, %s, %s, %s, %s, %s, %s, %s, %s);",
                     (etikett_title, etikett_desc, etikett_uid, etikett_skin_category, etikett_checked_emissions,
-                     etikett_flashpoint, etikett_values_range, etikett_usecases, etikett_published))
+                     etikett_flashpoint, etikett_values_range, etikett_usecases, etikett_published, etikett_classifications, etikett_hinweise))
                 conn.commit()
                 # print(etikett_title)  # correct
                 cur.close()
