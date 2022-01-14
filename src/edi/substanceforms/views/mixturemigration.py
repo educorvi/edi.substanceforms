@@ -243,8 +243,9 @@ class Migrationview(BrowserView):
             manuell_manufacturer_name = i.get('hersteller')['title']
             manuell_review_state = i.get('review_state')
 
-            usecases_string = '@'.join(manuell_usecases)
-            manuell_usecases = usecases_string
+            if manuell_usecases:
+                usecases_string = '@'.join(manuell_usecases)
+                manuell_usecases = usecases_string
 
             if manuell_review_state == 'published':
                 manuell_published = 'published'
