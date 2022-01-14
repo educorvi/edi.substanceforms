@@ -178,8 +178,7 @@ class Migrationview(BrowserView):
             etikett_usecases = i.get('verwendungszweck')
             etikett_review_state = i.get('review_state')
 
-            for i in etikett_usecases:
-                usecases_string = '@'.join(etikett_usecases)
+            usecases_string = '@'.join(etikett_usecases)
 
             etikett_usecases = usecases_string
 
