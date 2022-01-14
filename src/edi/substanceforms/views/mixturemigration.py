@@ -367,6 +367,9 @@ class Migrationview(BrowserView):
             heatset_evap_180 = heatset_verdampfung[0].get('bahn_180')
 
 
+            import pdb; pdb.set_trace()
+
+
             if heatset_review_state == 'published':
                 heatset_published = 'published'
             else:
