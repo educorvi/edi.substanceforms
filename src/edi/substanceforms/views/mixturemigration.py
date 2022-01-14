@@ -178,6 +178,8 @@ class Migrationview(BrowserView):
             etikett_usecases = i.get('verwendungszweck')
             etikett_review_state = i.get('review_state')
 
+            import pdb; pdb.set_trace()
+
             if etikett_review_state == 'published':
                 etikett_published = 'published'
             else:
