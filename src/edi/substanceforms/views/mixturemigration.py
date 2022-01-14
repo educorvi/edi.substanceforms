@@ -188,6 +188,8 @@ class Migrationview(BrowserView):
                     classifications_string = '@'.join(etikett_classifications)
                     etikett_classifications = classifications_string
 
+            import pdb; pdb.set_trace()
+
             if etikett_hinweise:
                 hinweise_string = '@'.join(etikett_hinweise)
                 etikett_hinweise = hinweise_string
