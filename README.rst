@@ -29,6 +29,11 @@ This product and the full documentation is written in German.
 Installation
 ------------
 
+Please make sure, that pg_config is installed.
+This is part of postgresql-devel, and it can be installed with the following command on an Ubuntu/Debian system::
+
+    sudo apt install libpq-dev
+
 Install edi.substanceforms by adding it to your buildout::
 
     [buildout]
