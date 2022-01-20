@@ -132,7 +132,7 @@ class Migrationview(BrowserView):
 
             for i in tables:
                 table = i[0]
-                if table != 'synonyms' and table != 'recipes':
+                if table != 'synonyms' and table != 'recipes' and table != 'application_areas' and table != 'usecases' and table != 'areapairs' and table != 'usecasepairs':
                     cur = conn.cursor()
                     select = "SELECT webcode from %s WHERE webcode = '%s'" % (table, generated_webcode)
                     cur.execute(select)
