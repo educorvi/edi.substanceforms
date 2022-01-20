@@ -51,8 +51,8 @@
 	          <td tal:condition="python: view.get_attr_translation('substance_types_new', article[5])" tal:content="python: view.get_attr_translation('substance_types_new', article[5])"/>
 	        </tr>
           <tr>
-	          <td tal:condition="python: view.get_manufacturer(article[23])">Hersteller</td>
-	          <td tal:condition="python: view.get_manufacturer(article[23])" tal:content="python: view.get_manufacturer(article[23])"/>
+	          <td tal:condition="python: view.get_manufacturer(article[25])">Hersteller</td>
+	          <td tal:condition="python: view.get_manufacturer(article[25])" tal:content="python: view.get_manufacturer(article[25])"/>
 	        </tr>
           <tr>
 	          <td tal:condition="python: view.get_attr_translation('branchen', article[4])">Branche</td>
