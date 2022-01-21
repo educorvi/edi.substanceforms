@@ -176,7 +176,7 @@ class Migrationview(BrowserView):
             cur = conn.cursor()
             # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
             cur.execute(
-                "INSERT INTO usecases (usecase_name, usecase_realname) VALUES ('%s', '%s');",(i[0], i[1]))
+                "INSERT INTO usecases (usecase_name, usecase_realname) VALUES (%s, %s);",(i[0], i[1]))
             conn.commit()
             # print(manuell_title)  # correct
             cur.close()
