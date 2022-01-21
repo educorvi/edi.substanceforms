@@ -211,8 +211,10 @@ class UpdateFormView(CreateFormView):
                                                     self.itemid)
 
         relationalgetter = "SELECT application_areas.application_area_name FROM application_areas, areapairs WHERE areapairs.mixture_id = %s and areapairs.area_id = application_areas.application_area_id ;" % self.itemid
+        relationalgetter2 = "SELECT usecases.usecase_name FROM usecases, usecasepairs WHERE usecasepairs.mixture_id = %s and usecasepairs.area_id = usecases.usecase_id ;" % self.itemid
         self.result = self.db.execute(getter)
         self.relational = self.db.execute(relationalgetter)
+        self.relational2 = self.db.execute(relationalgetter2)
         self.db.close()
         return self.index()
 
@@ -221,9 +223,9 @@ class UpdateFormView(CreateFormView):
         self.form.description.default=self.result[0][1]
         self.form.branch.default = self.result[0][2]
         self.form.substance_type.default = self.result[0][3]
-        import pdb; pdb.set_trace()
         self.form.application_areas.default = new_list_handler(self.relational)
         #self.form.usecases.default = reverse_list_handler(self.result[0][5])
+        self.form.usecases.default = new_list_handler(self.relational2)
         self.form.evaporation_lane_150.default = self.result[0][6]
         self.form.evaporation_lane_160.default = self.result[0][7]
         self.form.evaporation_lane_170.default = self.result[0][8]
