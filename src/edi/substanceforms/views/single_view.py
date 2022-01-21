@@ -189,6 +189,15 @@ class SingleView(BrowserView):
         # self.db.close()
         return usecases
 
+    def translate_usecases(self, usecases):
+        resultstring = ""
+        index = 0
+        for i in usecases:
+            resultstring = resultstring + "%s, " % (usecases[index]['title'][0][0])
+            index = index + 1
+        resultstring = resultstring[:-2]
+        return resultstring
+
     def application_areas_translation(self, value):
         vocabulary = get_vocabulary('application_areas')
         newlist = list()

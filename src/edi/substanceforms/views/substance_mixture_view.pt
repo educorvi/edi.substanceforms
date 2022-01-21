@@ -113,8 +113,8 @@
 	          <td tal:condition="python:view.get_none_translation(article[21])" tal:content="python:view.get_none_translation(article[21])"/>
 	        </tr>
 	        <tr>
-	          <td tal:condition="python: view.new_usecase_translation()">Verwendungszwecke</td>
-	          <td tal:condition="python: view.new_usecase_translation()" tal:content="python: view.new_usecase_translation()"/>
+	          <td tal:condition="python: view.translate_usecases(view.new_usecase_translation())">Verwendungszwecke</td>
+	          <td tal:condition="python: view.translate_usecases(view.new_usecase_translation())" tal:content="python: view.translate_usecases(view.new_usecase_translation())"/>
 	        </tr>
           <tr>
 	          <td tal:condition="python: view.application_areas_translation(view.unbundle_list(article[8]))">Anwendungsgebiete</td>
