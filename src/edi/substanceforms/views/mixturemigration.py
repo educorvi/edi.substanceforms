@@ -244,6 +244,18 @@ class Migrationview(BrowserView):
 
         print('Successfully migrated DETERGENT_LABELS')
 
+        areavocab = ['Farbreiniger', 'Plattenreiniger', 'Feuchtwalzenreiniger', 'Gummituchregenerierer', 'Reiniger für Leitstände, Sensoren', 'Klebstoffreiniger']
+        for i in areavocab:
+            cur = conn.cursor()
+            # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
+            cur.execute(
+                "INSERT INTO application_area (application_area_name) VALUES (%s);",
+                (i))
+            conn.commit()
+            # print(manuell_title)  # correct
+            cur.close()
+            print("Added %s to application_areas",(i))
+
         for i in erg5:
             manuell_title = i.get('title')
             manuell_desc = i.get('description')
