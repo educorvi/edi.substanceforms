@@ -175,6 +175,20 @@ class SingleView(BrowserView):
             result = ''
         return result
 
+    def new_usecase_translation(self, value):
+        usecases = []
+        select = "SELECT usecase_id from usecasepairs WHERE mixture_id = %s" % self.itemid
+        usecaseids = self.db.execute(select)
+        # Continue here
+
+        for ucid in usecaseids:
+            select = "SELECT usecase_name from usecases WHERE usecase_id = %s" % ucid
+            usecase_title = self.db.execute(select)
+            entry = {'title': usecase_title}
+            usecases.append(entry)
+        # self.db.close()
+        return usecases
+
     def application_areas_translation(self, value):
         vocabulary = get_vocabulary('application_areas')
         newlist = list()
