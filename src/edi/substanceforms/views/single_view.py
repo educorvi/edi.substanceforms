@@ -182,7 +182,7 @@ class SingleView(BrowserView):
         # Continue here
 
         for ucid in usecaseids:
-            select = "SELECT usecase_name from usecases WHERE usecase_id = %s" % ucid
+            select = "SELECT usecase_realname from usecases WHERE usecase_id = %s" % ucid
             usecase_title = self.db.execute(select)
             entry = {'title': usecase_title}
             usecases.append(entry)
