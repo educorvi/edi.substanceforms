@@ -211,7 +211,7 @@ class UpdateFormView(CreateFormView):
                                                     self.itemid)
 
         relationalgetter = "SELECT application_areas.application_area_name FROM application_areas, areapairs WHERE areapairs.mixture_id = %s and areapairs.area_id = application_areas.application_area_id ;" % self.itemid
-        relationalgetter2 = "SELECT usecases.usecase_name FROM usecases, usecasepairs WHERE usecasepairs.mixture_id = %s and usecasepairs.area_id = usecases.usecase_id ;" % self.itemid
+        relationalgetter2 = "SELECT usecases.usecase_name FROM usecases, usecasepairs WHERE usecasepairs.mixture_id = %s and usecasepairs.usecase_id = usecases.usecase_id ;" % self.itemid
         self.result = self.db.execute(getter)
         self.relational = self.db.execute(relationalgetter)
         self.relational2 = self.db.execute(relationalgetter2)
