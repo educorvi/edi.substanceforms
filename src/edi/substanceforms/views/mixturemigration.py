@@ -166,6 +166,19 @@ class Migrationview(BrowserView):
         erg7 = getHeatset()
         conn = psycopg2.connect(host=hostname, user=username, password=password, dbname=database)
 
+        usecasevocab = ['buchdruck', 'flexodruck', 'siebdruck', 'farbreiniger_alle_druckverfahren', 'offsetdruck',
+                     'waschanlage', 'tiefdruck', 'klebstoffreiniger', 'uv-offsetdruck', 'klischeereiniger', 'bodenreiniger',
+                        'entfetter', 'reflektorreiniger']
+        for i in usecasevocab:
+            cur = conn.cursor()
+            # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
+            cur.execute(
+                "INSERT INTO usecases (usecase_name) VALUES ('%s');" % i)
+            conn.commit()
+            # print(manuell_title)  # correct
+            cur.close()
+            print("Added %s to usecases" % i)
+
         for i in erg4:
             etikett_title = i.get('title')
             etikett_desc = i.get('description')
@@ -179,9 +192,9 @@ class Migrationview(BrowserView):
             etikett_usecases = i.get('verwendungszweck')
             etikett_review_state = i.get('review_state')
 
-            if etikett_usecases:
-                usecases_string = '@'.join(etikett_usecases)
-                etikett_usecases = usecases_string
+            #if etikett_usecases:
+            #    usecases_string = '@'.join(etikett_usecases)
+            #    etikett_usecases = usecases_string
 
             if etikett_classifications:
                 if etikett_classifications != []:
@@ -242,6 +255,31 @@ class Migrationview(BrowserView):
                 # print(etikett_title)  # correct
                 cur.close()
 
+            if etikett_usecases:
+                for i in etikett_usecases:
+                    cur = conn.cursor()
+                    cur.execute(
+                        "SELECT usecase_id FROM usecases WHERE usecase_name = '{0}';".format(i))
+                    usecaseid = cur.fetchall()
+                    cur.close()
+
+                    cur = conn.cursor()
+                    cur.execute(
+                        "SELECT substance_mixture_id FROM substance_mixture ORDER BY substance_mixture_id DESC LIMIT 1;")
+                    mixtureid = cur.fetchall()
+                    cur.close()
+
+                    try:
+                        cur = conn.cursor()
+                        cur.execute(
+                            "INSERT INTO usecasepairs (usecase_id, mixture_id) VALUES (%s, %s);",
+                            (usecaseid[0][0], mixtureid[0][0]))
+                        conn.commit()
+                        # print(manuell_title)  # correct
+                        cur.close()
+                    except:
+                        import pdb; pdb.set_trace()
+
         print('Successfully migrated DETERGENT_LABELS')
 
         areavocab = ['Farbreiniger', 'Plattenreiniger', 'Feuchtwalzenreiniger', 'Gummituchregenerierer', 'Reiniger_Leitstaende_Sensoren', 'Klebstoffreiniger']
@@ -270,8 +308,9 @@ class Migrationview(BrowserView):
             manuell_review_state = i.get('review_state')
 
             if manuell_usecases:
-                usecases_string = '@'.join(manuell_usecases)
-                manuell_usecases = usecases_string
+                print ("TESTTESTTESTTESTTESTTEST")
+                #usecases_string = '@'.join(manuell_usecases)
+                #manuell_usecases = usecases_string
 
                 #areas_string = '@'.join(manuell_application_areas)
                 #manuell_application_areas = areas_string
