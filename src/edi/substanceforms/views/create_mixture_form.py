@@ -210,7 +210,7 @@ class UpdateFormView(CreateFormView):
                                                     self.context.tablename,
                                                     self.itemid)
 
-        relationalgetter = "SELECT application_areas.application_area_name FROM application_areas, areapairs WHERE areapairs.mixture_id = %s and areapairs.area_id = application_areas.application_area_id ;" % self.itemid
+        self.relationalgetter = "SELECT application_areas.application_area_name FROM application_areas, areapairs WHERE areapairs.mixture_id = %s and areapairs.area_id = application_areas.application_area_id ;" % self.itemid
         self.result = self.db.execute(getter)
         self.relational = self.db.execute(relationalgetter)
         self.db.close()
