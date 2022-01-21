@@ -328,7 +328,7 @@ class Migrationview(BrowserView):
                     cur = conn.cursor()
                     cur.execute(
                         "INSERT INTO areapairs (area_id, mixture_id) VALUES (%s, %s);",
-                        (areaid, mixtureid))
+                        (areaid[0][0], mixtureid[0][0]))
                     conn.commit()
                     # print(manuell_title)  # correct
                     cur.close()
