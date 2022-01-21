@@ -319,7 +319,7 @@ class Migrationview(BrowserView):
 
                     cur = conn.cursor()
                     cur.execute(
-                        "SELECT substance_mixture_id FROM substance_mixtures ORDER BY timestamp DESC LIMIT 1;")
+                        "SELECT substance_mixture_id FROM substance_mixture ORDER BY timestamp DESC LIMIT 1;")
                     mixtureid = cur.fetchall()
                     cur.close()
 
