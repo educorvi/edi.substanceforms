@@ -224,7 +224,6 @@ class UpdateFormView(CreateFormView):
         self.form.branch.default = self.result[0][2]
         self.form.substance_type.default = self.result[0][3]
         self.form.application_areas.default = new_list_handler(self.relational)
-        #self.form.usecases.default = reverse_list_handler(self.result[0][5])
         self.form.usecases.default = new_list_handler(self.relational2)
         self.form.evaporation_lane_150.default = self.result[0][6]
         self.form.evaporation_lane_160.default = self.result[0][7]
@@ -249,7 +248,6 @@ class UpdateFormView(CreateFormView):
         redirect_url = self.context.absolute_url() + '/single_view?item=' + self.form.item_id.data
         if button == 'Speichern': #and self.validate():
             command = """UPDATE substance_mixture SET title=%s, description=%s, branch=%s, substance_type=%s,
-                         application_areas='%s', usecases='%s',
                          evaporation_lane_150=%s, evaporation_lane_160=%s, evaporation_lane_170=%s, evaporation_lane_180=%s,
                          ueg=%s, response=%s, skin_category=%s, checked_emissions=%s,
                          flashpoint=%s, values_range=%s, comments=%s
@@ -258,8 +256,6 @@ class UpdateFormView(CreateFormView):
                                                         check_value(self.form.description.data),
                                                         check_value(self.form.branch.data),
                                                         check_value(self.form.substance_type.data),
-                                                        list_handler(self.form.application_areas.data),
-                                                        list_handler(self.form.usecases.data),
                                                         check_value(self.form.evaporation_lane_150.data),
                                                         check_value(self.form.evaporation_lane_160.data),
                                                         check_value(self.form.evaporation_lane_170.data),
@@ -273,6 +269,10 @@ class UpdateFormView(CreateFormView):
                                                         check_value(self.form.comments.data),
                                                         check_value(self.form.item_id.data))
             self.db.execute(command)
+
+            currentareas = new_list_handler(self.relational)
+            editedareas = self.form.application_areas.data
+            import pdb; pdb.set_trace()
             message = u'Das Gefahrstoffgemisch wurde erfolgreich aktualisiert.'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
             #message = u'Fehler beim Aktualisieren des Gefahrstoffgemisches'
