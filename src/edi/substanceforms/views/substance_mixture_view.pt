@@ -109,8 +109,8 @@
 	          <td tal:condition="python: view.get_attr_translation('boolvocab', str(article[20]))" tal:content="python: view.get_attr_translation('boolvocab', str(article[20]))"/>
 	        </tr>
 	        <tr>
-	          <td tal:condition="python:view.get_none_translation(article[21])">Bemerkungen</td>
-	          <td tal:condition="python:view.get_none_translation(article[21])" tal:content="python:view.get_none_translation(article[21])"/>
+	          <td tal:condition="python:view.get_none_translation(article[23])">Bemerkungen</td>
+	          <td tal:condition="python:view.get_none_translation(article[23])" tal:content="python:view.get_none_translation(article[23])"/>
 	        </tr>
 	        <tr>
 	          <td tal:condition="python: view.translate_usecases(view.new_usecase_translation())">Verwendungszwecke</td>
