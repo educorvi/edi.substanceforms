@@ -175,7 +175,7 @@ class SingleView(BrowserView):
             result = ''
         return result
 
-    def new_usecase_translation(self, value):
+    def new_usecase_translation(self):
         usecases = []
         select = "SELECT usecase_id from usecasepairs WHERE mixture_id = %s" % self.itemid
         usecaseids = self.db.execute(select)
