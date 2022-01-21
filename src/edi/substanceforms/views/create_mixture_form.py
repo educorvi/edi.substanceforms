@@ -210,7 +210,7 @@ class UpdateFormView(CreateFormView):
                                                     self.context.tablename,
                                                     self.itemid)
 
-        self.relationalgetter = "SELECT application_areas.application_area_name FROM application_areas, areapairs WHERE areapairs.mixture_id = %s and areapairs.area_id = application_areas.application_area_id ;" % self.itemid
+        relationalgetter = "SELECT application_areas.application_area_name FROM application_areas, areapairs WHERE areapairs.mixture_id = %s and areapairs.area_id = application_areas.application_area_id ;" % self.itemid
         self.result = self.db.execute(getter)
         self.relational = self.db.execute(relationalgetter)
         self.db.close()
@@ -221,7 +221,7 @@ class UpdateFormView(CreateFormView):
         self.form.description.default=self.result[0][1]
         self.form.branch.default = self.result[0][2]
         self.form.substance_type.default = self.result[0][3]
-        self.form.application_areas.default = self.relationalgetter(self.result[0][0])
+        self.form.application_areas.default = self.relational(self.result[0][0])
         #self.form.usecases.default = reverse_list_handler(self.result[0][5])
         self.form.evaporation_lane_150.default = self.result[0][6]
         self.form.evaporation_lane_160.default = self.result[0][7]
