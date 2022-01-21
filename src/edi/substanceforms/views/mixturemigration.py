@@ -253,7 +253,7 @@ class Migrationview(BrowserView):
             conn.commit()
             # print(manuell_title)  # correct
             cur.close()
-            print("Added %s to application_areas",(i))
+            print("Added %s to application_areas" %i)
 
         for i in erg5:
             manuell_title = i.get('title')
@@ -273,9 +273,8 @@ class Migrationview(BrowserView):
                 usecases_string = '@'.join(manuell_usecases)
                 manuell_usecases = usecases_string
 
-            if manuell_application_areas:
-                areas_string = '@'.join(manuell_application_areas)
-                manuell_application_areas = areas_string
+                #areas_string = '@'.join(manuell_application_areas)
+                #manuell_application_areas = areas_string
 
             if manuell_review_state == 'published':
                 manuell_published = 'published'
@@ -309,6 +308,28 @@ class Migrationview(BrowserView):
                 conn.commit()
                 # print(manuell_title)  # correct
                 cur.close()
+
+            if manuell_application_areas:
+                for i in manuell_application_areas:
+                    cur = conn.cursor()
+                    cur.execute(
+                        "SELECT application_area_id FROM application_areas WHERE application_area_name = '{0}';".format(i))
+                    areaid = cur.fetchall()
+                    cur.close()
+
+                    cur = conn.cursor()
+                    cur.execute(
+                        "SELECT substance_mixture_id FROM substance_mixtures ORDER BY timestamp DESC LIMIT 1;")
+                    mixtureid = cur.fetchall()
+                    cur.close()
+
+                    cur = conn.cursor()
+                    cur.execute(
+                        "INSERT INTO areapairs (area_id, mixture_id) VALUES (%s, %s);",
+                        (areaid, mixtureid))
+                    conn.commit()
+                    # print(manuell_title)  # correct
+                    cur.close()
 
 
         print('Successfully migrated DETERGENT_MANUAL')
