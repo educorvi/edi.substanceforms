@@ -18,5 +18,11 @@ def reverse_list_handler(liste):
     result = liste.split('@')
     return result
 
+def new_list_handler(liste):
+    result = list()
+    for i in liste:
+        result.append(i)[0]
+    return result
+
 def get_vocabulary(attribute):
     return vocabularies.get(attribute, [])

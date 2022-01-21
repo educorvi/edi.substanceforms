@@ -7,7 +7,7 @@ from plone.namedfile import NamedBlobImage
 from wtforms import FileField, RadioField, SelectMultipleField
 from wtforms import validators
 from collective.wtforms.views import WTFormView
-from edi.substanceforms.helpers import check_value, list_handler, reverse_list_handler
+from edi.substanceforms.helpers import check_value, list_handler, reverse_list_handler, new_list_handler
 from edi.substanceforms.vocabularies import substance_types, hskategorie, produktkategorien, produktklassen, branchen
 from edi.substanceforms.vocabularies import classifications, usecases, application_areas, substance_types_new
 from plone import api as ploneapi
@@ -222,7 +222,7 @@ class UpdateFormView(CreateFormView):
         self.form.branch.default = self.result[0][2]
         self.form.substance_type.default = self.result[0][3]
         import pdb; pdb.set_trace()
-        self.form.application_areas.default = self.relational
+        self.form.application_areas.default = new_list_handler(self.relational)
         #self.form.usecases.default = reverse_list_handler(self.result[0][5])
         self.form.evaporation_lane_150.default = self.result[0][6]
         self.form.evaporation_lane_160.default = self.result[0][7]
