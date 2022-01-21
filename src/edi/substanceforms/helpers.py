@@ -20,8 +20,10 @@ def reverse_list_handler(liste):
 
 def new_list_handler(liste):
     result = list()
+    variable = 0
     for i in liste:
-        result.append(i)[0]
+        result.append(liste[variable][0])
+        variable = variable + 1
     return result
 
 def get_vocabulary(attribute):
