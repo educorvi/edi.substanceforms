@@ -221,7 +221,8 @@ class UpdateFormView(CreateFormView):
         self.form.description.default=self.result[0][1]
         self.form.branch.default = self.result[0][2]
         self.form.substance_type.default = self.result[0][3]
-        self.form.application_areas.default = self.relational(self.result[0][0])
+        import pdb; pdb.set_trace()
+        #self.form.application_areas.default = self.relational(self.result[0][0])
         #self.form.usecases.default = reverse_list_handler(self.result[0][5])
         self.form.evaporation_lane_150.default = self.result[0][6]
         self.form.evaporation_lane_160.default = self.result[0][7]
