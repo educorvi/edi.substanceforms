@@ -323,8 +323,6 @@ class Migrationview(BrowserView):
                     mixtureid = cur.fetchall()
                     cur.close()
 
-                    import pdb; pdb.set_trace()
-
                     cur = conn.cursor()
                     cur.execute(
                         "INSERT INTO areapairs (area_id, mixture_id) VALUES (%s, %s);",
