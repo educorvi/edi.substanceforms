@@ -323,13 +323,16 @@ class Migrationview(BrowserView):
                     mixtureid = cur.fetchall()
                     cur.close()
 
-                    cur = conn.cursor()
-                    cur.execute(
-                        "INSERT INTO areapairs (area_id, mixture_id) VALUES (%s, %s);",
-                        (areaid[0][0], mixtureid[0][0]))
-                    conn.commit()
-                    # print(manuell_title)  # correct
-                    cur.close()
+                    try:
+                        cur = conn.cursor()
+                        cur.execute(
+                            "INSERT INTO areapairs (area_id, mixture_id) VALUES (%s, %s);",
+                            (areaid[0][0], mixtureid[0][0]))
+                        conn.commit()
+                        # print(manuell_title)  # correct
+                        cur.close()
+                    except:
+                        import pdb; pdb.set_trace()
 
 
         print('Successfully migrated DETERGENT_MANUAL')
