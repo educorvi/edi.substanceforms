@@ -270,8 +270,6 @@ class UpdateFormView(CreateFormView):
                                                         check_value(self.form.item_id.data))
             self.db.execute(command)
 
-            currentareas = new_list_handler(self.relational)
-            editedareas = self.form.application_areas.data
             import pdb; pdb.set_trace()
             message = u'Das Gefahrstoffgemisch wurde erfolgreich aktualisiert.'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
