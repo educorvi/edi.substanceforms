@@ -166,12 +166,12 @@ class Migrationview(BrowserView):
         erg7 = getHeatset()
         conn = psycopg2.connect(host=hostname, user=username, password=password, dbname=database)
 
-        usecasevocab = [['buchdruck']['Buchdruck'], ['flexodruck']['Flexodruck'], ['siebdruck']['Siebdruck'],
-                        ['farbreiniger_alle_druckverfahren']['Farbreiniger alle Druckverfahren'],
-                        ['offsetdruck']['Offsetdruck'], ['waschanlage']['Waschanlage'], ['tiefdruck']['Tiefdruck'],
-                        ['klebstoffreiniger']['Klebstoffreiniger'], ['uv-offsetdruck']['UV-Druck'],
-                        ['klischeereiniger']['Klischeereiniger'], ['bodenreiniger']['Bodenreiniger'],
-                        ['entfetter']['Entfetter'], ['reflektorreiniger']['Reflektorreiniger']]
+        usecasevocab = [['buchdruck', 'Buchdruck'], ['flexodruck', 'Flexodruck'], ['siebdruck', 'Siebdruck'],
+                        ['farbreiniger_alle_druckverfahren', 'Farbreiniger alle Druckverfahren'],
+                        ['offsetdruck', 'Offsetdruck'], ['waschanlage', 'Waschanlage'], ['tiefdruck', 'Tiefdruck'],
+                        ['klebstoffreiniger', 'Klebstoffreiniger'], ['uv-offsetdruck', 'UV-Druck'],
+                        ['klischeereiniger', 'Klischeereiniger'], ['bodenreiniger', 'Bodenreiniger'],
+                        ['entfetter', 'Entfetter'], ['reflektorreiniger', 'Reflektorreiniger']]
         for i in usecasevocab:
             cur = conn.cursor()
             # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
