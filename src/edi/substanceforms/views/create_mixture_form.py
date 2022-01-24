@@ -272,6 +272,7 @@ class UpdateFormView(CreateFormView):
 
             neueliste = list()
             neuevocab = list()
+            resultlist = list()
             vocabulary = get_vocabulary('application_areas')
             for n in vocabulary:
                 neuevocab.append(n[0])
@@ -281,7 +282,8 @@ class UpdateFormView(CreateFormView):
                 for v in currentareas:
                     command = "SELECT application_area_name FROM application_areas WHERE application_area_id = %s" % v[1]
                     result = self.db.execute(command)
-                    import pdb; pdb.set_trace()
+                    result = result[0][0]
+                    resultlist.append(result)
                 for m in neuevocab:
                     for l in result:
                         if i == l[0][0]:
