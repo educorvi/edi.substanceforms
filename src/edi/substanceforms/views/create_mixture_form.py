@@ -276,14 +276,13 @@ class UpdateFormView(CreateFormView):
 
                 vocabulary = get_vocabulary('application_areas')
                 newlist = list()
-                try:
-                    for v in i:
-                        for m in vocabulary:
-                            if m[0] == v:
-                                newlist.append(m[1])
-                    result = ', '.join(newlist)
-                except:
-                    result = ''
+                for v in i:
+                    for m in vocabulary:
+                        if m[0] == v:
+                            #newlist.append(m[1])
+                            newlist.append(i)
+                result = ', '.join(newlist)
+
 
 
                 import pdb; pdb.set_trace()
