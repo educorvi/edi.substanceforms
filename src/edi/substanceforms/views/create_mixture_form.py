@@ -272,13 +272,12 @@ class UpdateFormView(CreateFormView):
 
             neueliste = list()
             neuevocab = list()
+            vocabulary = get_vocabulary('application_areas')
             for n in vocabulary:
                 neuevocab.append(n[0])
             for i in self.form.application_areas.data:
                 getfromvocab = "SELECT DISTINCT mixture_id, area_id FROM areapairs, application_areas WHERE mixture_id = %s" % self.form.item_id.data
                 currentareas = self.db.execute(getfromvocab)
-
-                vocabulary = get_vocabulary('application_areas')
                 for v in currentareas:
                     command = "SELECT application_area_name FROM application_areas WHERE application_area_id = %s" % v[1]
                     result = self.db.execute(command)
