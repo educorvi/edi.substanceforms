@@ -271,6 +271,21 @@ class UpdateFormView(CreateFormView):
             self.db.execute(command)
 
             for i in self.form.application_areas.data:
+                getfromvocab = "SELECT DISTINCT mixture_id, area_id FROM areapairs, application_areas WHERE mixture_id = %s" % self.form.item_id.data
+                currentareas = self.db.execute(getfromvocab)
+
+                vocabulary = get_vocabulary('application_areas')
+                newlist = list()
+                try:
+                    for v in i:
+                        for m in vocabulary:
+                            if m[0] == v:
+                                newlist.append(m[1])
+                    result = ', '.join(newlist)
+                except:
+                    result = ''
+
+
                 import pdb; pdb.set_trace()
             message = u'Das Gefahrstoffgemisch wurde erfolgreich aktualisiert.'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
