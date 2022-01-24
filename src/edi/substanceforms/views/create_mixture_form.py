@@ -281,9 +281,9 @@ class UpdateFormView(CreateFormView):
                 for v in currentareas:
                     command = "SELECT application_area_name FROM application_areas WHERE application_area_id = %s" % v[1]
                     result = self.db.execute(command)
-                    for m in neuevocab:
-                        if m == result[0][0]:
-                            neueliste.append(i)
+                for m in neuevocab:
+                    if m == result[0][0]:
+                        neueliste.append(i)
                 #del newlist[::2]
                 import pdb; pdb.set_trace()
             message = u'Das Gefahrstoffgemisch wurde erfolgreich aktualisiert.'
