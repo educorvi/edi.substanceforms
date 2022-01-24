@@ -283,7 +283,7 @@ class UpdateFormView(CreateFormView):
                     result = self.db.execute(command)
                 for m in neuevocab:
                     for l in result:
-                        if m == l[0][0]:
+                        if i == l[0][0]:
                             neueliste.append(i)
 
             print(neueliste)
