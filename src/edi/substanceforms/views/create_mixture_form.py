@@ -285,8 +285,8 @@ class UpdateFormView(CreateFormView):
                     if m == result[0][0]:
                         neueliste.append(i)
 
-                print(neueliste)
-                import pdb; pdb.set_trace()
+            print(neueliste)
+            import pdb; pdb.set_trace()
                 #del newlist[::2]
                 #import pdb; pdb.set_trace()
             message = u'Das Gefahrstoffgemisch wurde erfolgreich aktualisiert.'
