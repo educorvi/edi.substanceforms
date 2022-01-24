@@ -281,9 +281,8 @@ class UpdateFormView(CreateFormView):
                     result = self.db.execute(command)
                     for m in vocabulary:
                         if m[0] == result[0][0]:
-                            #newlist.append(m[1])
                             newlist.append(i)
-                            break
+
                 import pdb; pdb.set_trace()
             message = u'Das Gefahrstoffgemisch wurde erfolgreich aktualisiert.'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
