@@ -294,13 +294,15 @@ class UpdateFormView(CreateFormView):
                 if i not in neueliste:
                     idcommand = "SELECT application_area_id FROM application_areas WHERE application_area_name = 'Reiniger_Leitstaende_Sensoren'"
                     richtigeid = self.db.execute(idcommand)
+                    import pdb;
+                    pdb.set_trace()
                     insertcommand = "INSERT INTO areapairs (area_id, mixture_id) VALUES (%s, %s);" % (richtigeid,
                                                                                                    self.form.item_id.data)
                     self.db.execute(insertcommand)
 
             print(neueliste)
             print(listtoadd)
-            import pdb; pdb.set_trace()
+
                 #del newlist[::2]
                 #import pdb; pdb.set_trace()
             message = u'Das Gefahrstoffgemisch wurde erfolgreich aktualisiert.'
