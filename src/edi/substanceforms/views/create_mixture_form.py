@@ -296,6 +296,7 @@ class UpdateFormView(CreateFormView):
                     richtigeid = self.db.execute(idcommand)
                     insertcommand = "INSERT INTO areapairs (area_id, mixture_id) VALUES (%s, %s);" % (richtigeid,
                                                                                                    self.form.item_id.data)
+                    self.db.execute(insertcommand)
 
             print(neueliste)
             print(listtoadd)
