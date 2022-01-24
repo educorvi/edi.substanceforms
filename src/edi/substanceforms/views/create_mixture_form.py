@@ -273,6 +273,7 @@ class UpdateFormView(CreateFormView):
             neueliste = list()
             neuevocab = list()
             resultlist = list()
+            listtoadd = list()
             vocabulary = get_vocabulary('application_areas')
             for n in vocabulary:
                 neuevocab.append(n[0])
@@ -289,6 +290,9 @@ class UpdateFormView(CreateFormView):
                     for l in resultlist:
                         if i == l and i not in neueliste:
                             neueliste.append(i)
+
+                if i not in neueliste:
+                    listtoadd.append(i)
 
             print(neueliste)
             import pdb; pdb.set_trace()
