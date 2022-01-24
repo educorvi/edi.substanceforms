@@ -283,8 +283,9 @@ class UpdateFormView(CreateFormView):
                         if m[0] == result[0][0]:
                             newlist.append(i)
 
+                import pdb;
+                pdb.set_trace()
                 del newlist[::2]
-                import pdb; pdb.set_trace()
             message = u'Das Gefahrstoffgemisch wurde erfolgreich aktualisiert.'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
             #message = u'Fehler beim Aktualisieren des Gefahrstoffgemisches'
