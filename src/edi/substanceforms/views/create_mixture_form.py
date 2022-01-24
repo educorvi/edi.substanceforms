@@ -283,6 +283,8 @@ class UpdateFormView(CreateFormView):
                     for n in vocabulary:
                         neuevocab.append(n[0])
                         for m in neuevocab:
+                            import pdb;
+                            pdb.set_trace()
                             if m == result[0][0]:
                                 neueliste.append(i)
                 #del newlist[::2]
