@@ -277,8 +277,10 @@ class UpdateFormView(CreateFormView):
                 vocabulary = get_vocabulary('application_areas')
                 newlist = list()
                 for v in currentareas:
+                    command = "SELECT application_area_name FROM application_areas WHERE application_area_id = %s" % v[1]
+                    result = self.db.execute(command)
                     for m in vocabulary:
-                        if m[0] == v:
+                        if m[0] == result:
                             #newlist.append(m[1])
                             newlist.append(i)
                 result = ', '.join(newlist)
