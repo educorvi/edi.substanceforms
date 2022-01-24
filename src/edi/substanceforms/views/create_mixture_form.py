@@ -282,8 +282,6 @@ class UpdateFormView(CreateFormView):
                     command = "SELECT application_area_name FROM application_areas WHERE application_area_id = %s" % v[1]
                     result = self.db.execute(command)
                     for m in neuevocab:
-                        import pdb;
-                        pdb.set_trace()
                         if m == result[0][0]:
                             neueliste.append(i)
                 #del newlist[::2]
