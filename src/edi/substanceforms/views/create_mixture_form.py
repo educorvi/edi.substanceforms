@@ -294,9 +294,7 @@ class UpdateFormView(CreateFormView):
                 if i not in neueliste:
                     idcommand = "SELECT application_area_id FROM application_areas WHERE application_area_name = 'Reiniger_Leitstaende_Sensoren'"
                     richtigeid = self.db.execute(idcommand)
-                    import pdb;
-                    pdb.set_trace()
-                    insertcommand = "INSERT INTO areapairs (area_id, mixture_id) VALUES (%s, %s);" % (richtigeid,
+                    insertcommand = "INSERT INTO areapairs (area_id, mixture_id) VALUES (%s, %s);" % (richtigeid[0][0],
                                                                                                    self.form.item_id.data)
                     self.db.execute(insertcommand)
 
