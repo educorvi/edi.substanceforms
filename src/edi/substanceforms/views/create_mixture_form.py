@@ -271,6 +271,7 @@ class UpdateFormView(CreateFormView):
             self.db.execute(command)
 
             neueliste = list()
+            neuevocab = list()
             for i in self.form.application_areas.data:
                 getfromvocab = "SELECT DISTINCT mixture_id, area_id FROM areapairs, application_areas WHERE mixture_id = %s" % self.form.item_id.data
                 currentareas = self.db.execute(getfromvocab)
@@ -279,13 +280,11 @@ class UpdateFormView(CreateFormView):
                 for v in currentareas:
                     command = "SELECT application_area_name FROM application_areas WHERE application_area_id = %s" % v[1]
                     result = self.db.execute(command)
-                    for m in vocabulary:
-                        if m[0] == result[0][0]:
-                            import pdb;
-                            pdb.set_trace()
-                            break
-                            break
-                            #neueliste.append(i)
+                    for n in vocabulary:
+                        neuevocab.append(n[0])
+                        for m in vocabulary:
+                            if m[0] == result[0][0]:
+                                neueliste.append(i)
                 #del newlist[::2]
             message = u'Das Gefahrstoffgemisch wurde erfolgreich aktualisiert.'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
