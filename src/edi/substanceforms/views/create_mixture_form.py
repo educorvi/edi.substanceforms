@@ -276,7 +276,7 @@ class UpdateFormView(CreateFormView):
 
                 vocabulary = get_vocabulary('application_areas')
                 newlist = list()
-                for v in i:
+                for v in currentareas:
                     for m in vocabulary:
                         if m[0] == v:
                             #newlist.append(m[1])
