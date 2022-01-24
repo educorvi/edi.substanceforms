@@ -285,7 +285,7 @@ class UpdateFormView(CreateFormView):
                     result = result[0][0]
                     resultlist.append(result)
                 for m in neuevocab:
-                    import pdb; pdb.set_trace()
+                    #import pdb; pdb.set_trace()
                     for l in resultlist:
                         if i == l and i not in neueliste:
                             neueliste.append(i)
