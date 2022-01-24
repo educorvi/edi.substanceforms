@@ -282,8 +282,8 @@ class UpdateFormView(CreateFormView):
                     result = self.db.execute(command)
                     for n in vocabulary:
                         neuevocab.append(n[0])
-                        for m in vocabulary:
-                            if m[0] == result[0][0]:
+                        for m in neuevocab:
+                            if m == result[0][0]:
                                 neueliste.append(i)
                 #del newlist[::2]
                 import pdb; pdb.set_trace()
