@@ -295,6 +295,7 @@ class UpdateFormView(CreateFormView):
                     listtoadd.append(i)
 
             print(neueliste)
+            print(listtoadd)
             import pdb; pdb.set_trace()
                 #del newlist[::2]
                 #import pdb; pdb.set_trace()
