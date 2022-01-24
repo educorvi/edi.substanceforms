@@ -292,7 +292,10 @@ class UpdateFormView(CreateFormView):
                             neueliste.append(i)
 
                 if i not in neueliste:
-                    listtoadd.append(i)
+                    idcommand = "SELECT application_area_id FROM application_areas WHERE application_area_name = 'Reiniger_Leitstaende_Sensoren'"
+                    richtigeid = self.db.execute(idcommand)
+                    insertcommand = "INSERT INTO areapairs (area_id, mixture_id) VALUES (%s, %s);" % (richtigeid,
+                                                                                                   self.form.item_id.data)
 
             print(neueliste)
             print(listtoadd)
