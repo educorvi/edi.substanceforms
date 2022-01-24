@@ -287,7 +287,7 @@ class UpdateFormView(CreateFormView):
                 for m in neuevocab:
                     import pdb; pdb.set_trace()
                     for l in resultlist:
-                        if i == l:
+                        if i == l and i not in neueliste:
                             neueliste.append(i)
 
             print(neueliste)
