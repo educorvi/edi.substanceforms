@@ -352,6 +352,8 @@ class Migrationview(BrowserView):
             try:
                 if manuell_application_areas:
                     for i in manuell_application_areas:
+                        if i == 'Reiniger_Leitstaende_Sensoren':
+                            i = 'Reiniger für Leitstände, Sensoren'
                         cur = conn.cursor()
                         cur.execute(
                             "SELECT application_area_id FROM application_areas WHERE application_area_name = '{0}';".format(i))
