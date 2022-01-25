@@ -309,10 +309,10 @@ class UpdateFormView(CreateFormView):
 
         """
 
-            #deletecommand = "DELETE FROM areapairs WHERE mixture_id = %s" % self.form.item_id.data
+            deletecommand = "DELETE FROM areapairs WHERE mixture_id = %s" % self.form.item_id.data
+            self.db.execute(deletecommand)
             for i in self.form.application_areas.data:
-                import pdb; pdb.set_trace()
-                insertcommand = "INSERT INTO areapairs (area_id, mixture_id) VALUES (%s, %s)" % (i, self.form.item_id.data)
+                insertcommand = "INSERT INTO areapairs (area_id, mixture_id) VALUES (%s, %s)" % (int(i), self.form.item_id.data)
                 self.db.execute(insertcommand)
 
 
