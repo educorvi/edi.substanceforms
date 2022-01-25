@@ -133,21 +133,18 @@ class CreateFormView(WTFormView):
             conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
             cur = conn.cursor()
             insert = """INSERT INTO substance_mixture (title, description, webcode, branch, substance_type,
-                                                        application_areas,
-                                                        usecases, evaporation_lane_150, evaporation_lane_160,
+                                                        evaporation_lane_150, evaporation_lane_160,
                                                         evaporation_lane_170, evaporation_lane_180, ueg, response,
                                                         skin_category, checked_emissions, date_checked, flashpoint,
                                                         values_range, comments, image_url, manufacturer_id)
-                                                        VALUES ('%s', '%s', '%s', %s, '%s', '%s',
-                                                        '%s', %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
+                                                        VALUES ('%s', '%s', '%s', %s, '%s',
+                                                        %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
                                                         %s, %s);""" \
                                                         % (self.form.title.data,
                                                         self.form.description.data,
                                                         self.context.aq_parent.get_webcode(),
                                                         check_value(self.form.branch.data),
                                                         self.form.substance_type.data,
-                                                        list_handler(self.form.application_areas.data),
-                                                        list_handler(self.form.usecases.data),
                                                         check_value(self.form.evaporation_lane_150.data),
                                                         check_value(self.form.evaporation_lane_160.data),
                                                         check_value(self.form.evaporation_lane_170.data),
@@ -162,6 +159,11 @@ class CreateFormView(WTFormView):
                                                         check_value(self.form.comments.data),
                                                         check_value(image_url),
                                                         self.form.manufacturer_id.data)
+
+            for i in self.form.application_areas.data:
+                insertcommand = "INSERT INTO areapairs (area_id, mixture_id) VALUES (%s, %s)" % (
+                int(i), self.form.item_id.data)
+                self.db.execute(insertcommand)
 
             if self.form.image_url.data.filename:
 
@@ -357,6 +359,8 @@ class DeleteFormView(CreateFormView):
         if button == 'Speichern' and self.form.sure.data is True: #and self.validate():
             command = "DELETE FROM substance_mixture WHERE substance_mixture_id = %s" % (self.form.item_id.data)
             self.db.execute(command)
+            deletecommand = "DELETE FROM areapairs WHERE mixture_id = %s" % self.form.item_id.data
+            self.db.execute(deletecommand)
             message = u'Das Gefahrstoffgemisch wurde erfolgreich gelöscht'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
 
