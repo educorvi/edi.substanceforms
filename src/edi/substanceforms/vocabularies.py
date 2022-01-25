@@ -78,12 +78,12 @@ usecases = [
     ]
 
 application_areas = [
-    (0, u'Farbreiniger'),
-    (1, u'Plattenreiniger'),
-    (2, u'Feuchtwalzenreiniger'),
-    (3, u'Gummituchregenerierer'),
-    (4, u'Reiniger für Leitstände, Sensoren'),
-    (5, u'Klebstoffreiniger')
+    (1, u'Farbreiniger'),
+    (2, u'Plattenreiniger'),
+    (3, u'Feuchtwalzenreiniger'),
+    (4, u'Gummituchregenerierer'),
+    (5, u'Reiniger für Leitstände, Sensoren'),
+    (6, u'Klebstoffreiniger')
     ]
 
 boolvocab = [
