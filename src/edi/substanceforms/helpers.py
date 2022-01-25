@@ -26,15 +26,14 @@ def new_list_handler(liste):
         variable = variable + 1
     return result
 
+def get_vocabulary(attribute):
+    return vocabularies.get(attribute, [])
+
 def new_list_handler2(liste):
     result = list()
     variable = 0
+    vocabulary = get_vocabulary('application_areas')
     for i in liste:
-        cur = conn.cursor()
-        cur.execute(
-            "SELECT application_area_id FROM application_areas WHERE application_area_name = '{0}';".format(i))
-        areaid = cur.fetchall()
-        cur.close()
-
-def get_vocabulary(attribute):
-    return vocabularies.get(attribute, [])
+        for v in vocabulary:
+            if v[0] == i:
+                result.append(v[1])
