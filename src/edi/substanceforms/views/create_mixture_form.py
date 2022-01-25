@@ -270,6 +270,9 @@ class UpdateFormView(CreateFormView):
                                                         check_value(self.form.item_id.data))
             self.db.execute(command)
 
+
+            """
+
             neueliste = list()
             neuevocab = list()
             resultlist = list()
@@ -303,6 +306,16 @@ class UpdateFormView(CreateFormView):
 
                 #del newlist[::2]
                 #import pdb; pdb.set_trace()
+
+        """
+
+            #deletecommand = "DELETE FROM areapairs WHERE mixture_id = %s" % self.form.item_id.data
+            for i in self.form.application_areas.data:
+                import pdb; pdb.set_trace()
+                insertcommand = "INSERT INTO areapairs (area_id, mixture_id) VALUES (%s, %s)" % (i, self.form.item_id.data)
+                self.db.execute(insertcommand)
+
+
             message = u'Das Gefahrstoffgemisch wurde erfolgreich aktualisiert.'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
             #message = u'Fehler beim Aktualisieren des Gefahrstoffgemisches'
