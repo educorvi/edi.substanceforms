@@ -288,7 +288,7 @@ class Migrationview(BrowserView):
             cur = conn.cursor()
             # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
             cur.execute(
-                "INSERT INTO application_areas (application_area_name) VALUES (%s);",(i))
+                "INSERT INTO application_areas (application_area_name) VALUES ('%s');" % i)
             conn.commit()
             # print(manuell_title)  # correct
             cur.close()
