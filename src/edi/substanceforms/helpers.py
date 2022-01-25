@@ -37,4 +37,4 @@ def new_list_handler2(liste):
         for v in vocabulary:
             if v[1] == i[0]:
                 result.append(v[0])
-    import pdb; pdb.set_trace()
+    return result
