@@ -282,14 +282,13 @@ class Migrationview(BrowserView):
 
         print('Successfully migrated DETERGENT_LABELS')
 
-        areavocab = [['Farbreiniger', 'Farbreiniger'], ['Plattenreiniger', 'Plattenreiniger'], ['Feuchtwalzenreiniger', 'Feuchtwalzenreiniger'],
-                     ['Gummituchregenerierer', 'Gummituchregenerierer'], ['Reiniger_Leitstaende_Sensoren', 'Reiniger_Leitstaende_Sensoren'],
-                     ['Klebstoffreiniger', 'Klebstoffreiniger']]
+        areavocab = ['Farbreiniger', 'Plattenreiniger', 'Feuchtwalzenreiniger', 'Gummituchregenerierer',
+                     'Reiniger für Leitstände, Sensoren', 'Klebstoffreiniger']
         for i in areavocab:
             cur = conn.cursor()
             # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
             cur.execute(
-                "INSERT INTO application_areas (application_area_name, application_area_realname) VALUES (%s, %s);",(i[0], i[1]))
+                "INSERT INTO application_areas (application_area_name) VALUES (%s);",(i))
             conn.commit()
             # print(manuell_title)  # correct
             cur.close()
