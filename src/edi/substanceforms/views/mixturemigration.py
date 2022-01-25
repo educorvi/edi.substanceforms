@@ -349,27 +349,31 @@ class Migrationview(BrowserView):
                 # print(manuell_title)  # correct
                 cur.close()
 
-            if manuell_application_areas:
-                for i in manuell_application_areas:
-                    cur = conn.cursor()
-                    cur.execute(
-                        "SELECT application_area_id FROM application_areas WHERE application_area_name = '{0}';".format(i))
-                    areaid = cur.fetchall()
-                    cur.close()
+            try:
+                if manuell_application_areas:
+                    for i in manuell_application_areas:
+                        cur = conn.cursor()
+                        cur.execute(
+                            "SELECT application_area_id FROM application_areas WHERE application_area_name = '{0}';".format(i))
+                        areaid = cur.fetchall()
+                        cur.close()
 
-                    cur = conn.cursor()
-                    cur.execute(
-                        "SELECT substance_mixture_id FROM substance_mixture ORDER BY substance_mixture_id DESC LIMIT 1;")
-                    mixtureid = cur.fetchall()
-                    cur.close()
+                        cur = conn.cursor()
+                        cur.execute(
+                            "SELECT substance_mixture_id FROM substance_mixture ORDER BY substance_mixture_id DESC LIMIT 1;")
+                        mixtureid = cur.fetchall()
+                        cur.close()
 
-                    cur = conn.cursor()
-                    cur.execute(
-                        "INSERT INTO areapairs (area_id, mixture_id) VALUES (%s, %s);",
-                        (areaid[0][0], mixtureid[0][0]))
-                    conn.commit()
-                    # print(manuell_title)  # correct
-                    cur.close()
+                        cur = conn.cursor()
+                        cur.execute(
+                            "INSERT INTO areapairs (area_id, mixture_id) VALUES (%s, %s);",
+                            (areaid[0][0], mixtureid[0][0]))
+                        conn.commit()
+                        # print(manuell_title)  # correct
+                        cur.close()
+                        print("Worked")
+            except:
+                import pdb; pdb.set_trace()
 
 
         print('Successfully migrated DETERGENT_MANUAL')
