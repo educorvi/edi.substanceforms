@@ -205,7 +205,7 @@ class SingleView(BrowserView):
         # Continue here
 
         for arid in areaids:
-            select = "SELECT application_area_realname from application_areas WHERE application_area_id = %s" % arid
+            select = "SELECT application_area_name from application_areas WHERE application_area_id = %s" % arid
             area_title = self.db.execute(select)
             entry = {'title': area_title}
             applicationareas.append(entry)
