@@ -35,6 +35,6 @@ def new_list_handler2(liste):
     vocabulary = get_vocabulary('application_areas')
     for i in liste:
         for v in vocabulary:
-            if v[0] == i:
-                result.append(v[1])
+            if v[1] == i[0]:
+                result.append(v[0])
     import pdb; pdb.set_trace()
