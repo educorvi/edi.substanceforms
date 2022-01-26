@@ -161,14 +161,15 @@ class CreateFormView(WTFormView):
                                                         self.form.manufacturer_id.data)
 
             for i in self.form.application_areas.data:
-                insertcommand = "INSERT INTO areapairs (area_id, mixture_id) VALUES (%s, %s)" % (
-                int(i), self.form.item_id.data)
-                self.db.execute(insertcommand)
+                selectcommand = "SELECT substance_mixture_id FROM substance_mixture ORDER BY substance_mixture_id DESC LIMIT 1"
+                selectedid = self.db.execute(selectcommand)
+                insertcommand = "INSERT INTO areapairs (area_id, mixture_id) VALUES (%s, %s)" % (int(i), self.form.item_id.data)
 
             if self.form.image_url.data.filename:
 
                 try:
                     self.db.execute(insert)
+                    self.db.execute(insertcommand)
                     message = u'Das Wasch- und Reinigungsmittel wurde erfolgreich gespeichert.'
                     ploneapi.portal.show_message(message=message, type='info', request=self.request)
                 except:
