@@ -162,7 +162,6 @@ class CreateFormView(WTFormView):
 
             areaids = list()
             for i in self.form.application_areas.data:
-                import pdb; pdb.set_trace()
                 selectcommand = "SELECT substance_mixture_id FROM substance_mixture ORDER BY substance_mixture_id DESC LIMIT 1"
                 selectedid = self.db.execute(selectcommand)
                 areaids.append([int(i), (int(selectedid[0][0]))+1])
