@@ -166,17 +166,14 @@ class Migrationview(BrowserView):
         erg7 = getHeatset()
         conn = psycopg2.connect(host=hostname, user=username, password=password, dbname=database)
 
-        usecasevocab = [['buchdruck', 'Buchdruck'], ['flexodruck', 'Flexodruck'], ['siebdruck', 'Siebdruck'],
-                        ['farbreiniger_alle_druckverfahren', 'Farbreiniger alle Druckverfahren'],
-                        ['offsetdruck', 'Offsetdruck'], ['waschanlage', 'Waschanlage'], ['tiefdruck', 'Tiefdruck'],
-                        ['klebstoffreiniger', 'Klebstoffreiniger'], ['uv-offsetdruck', 'UV-Druck'],
-                        ['klischeereiniger', 'Klischeereiniger'], ['bodenreiniger', 'Bodenreiniger'],
-                        ['entfetter', 'Entfetter'], ['reflektorreiniger', 'Reflektorreiniger']]
+        usecasevocab = ['Buchdruck', 'Flexodruck', 'Siebdruck', 'Farbreiniger alle Druckverfahren', 'Offsetdruck',
+                        'Waschanlage', 'Tiefdruck', 'Klebstoffreiniger', 'UV-Druck', 'Klischeereiniger',
+                        'Bodenreiniger', 'Entfetter', 'Reflektorreiniger']
         for i in usecasevocab:
             cur = conn.cursor()
             # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
             cur.execute(
-                "INSERT INTO usecases (usecase_name, usecase_realname) VALUES (%s, %s);",(i[0], i[1]))
+                "INSERT INTO usecases (usecase_name) VALUES ('%s');" % i)
             conn.commit()
             # print(manuell_title)  # correct
             cur.close()
@@ -258,27 +255,37 @@ class Migrationview(BrowserView):
                 # print(etikett_title)  # correct
                 cur.close()
 
-            if etikett_usecases:
-                for i in etikett_usecases:
-                    cur = conn.cursor()
-                    cur.execute(
-                        "SELECT usecase_id FROM usecases WHERE usecase_name = '{0}';".format(i))
-                    usecaseid = cur.fetchall()
-                    cur.close()
+            try:
+                if etikett_usecases:
+                    for i in etikett_usecases:
+                        #if i == 'Reiniger_Leitstaende_Sensoren':
+                        #    i = 'Reiniger für Leitstände, Sensoren'
+                        cur = conn.cursor()
+                        cur.execute(
+                            "SELECT usecase_id FROM usecases WHERE usecase_name = '{0}';".format(i))
+                        usecaseid = cur.fetchall()
+                        cur.close()
 
-                    cur = conn.cursor()
-                    cur.execute(
-                        "SELECT substance_mixture_id FROM substance_mixture ORDER BY substance_mixture_id DESC LIMIT 1;")
-                    mixtureid = cur.fetchall()
-                    cur.close()
+                        cur = conn.cursor()
+                        cur.execute(
+                            "SELECT substance_mixture_id FROM substance_mixture ORDER BY substance_mixture_id DESC LIMIT 1;")
+                        mixtureid = cur.fetchall()
+                        cur.close()
 
-                    cur = conn.cursor()
-                    cur.execute(
-                        "INSERT INTO usecasepairs (usecase_id, mixture_id) VALUES (%s, %s);",
-                        (usecaseid[0][0], mixtureid[0][0]))
-                    conn.commit()
-                    # print(manuell_title)  # correct
-                    cur.close()
+                        cur = conn.cursor()
+                        cur.execute(
+                            "INSERT INTO usecasepairs (area_id, mixture_id) VALUES (%s, %s);",
+                            (usecaseid[0][0], mixtureid[0][0]))
+                        conn.commit()
+                        # print(manuell_title)  # correct
+                        cur.close()
+                        print("Worked")
+            except:
+                import pdb;
+                pdb.set_trace()
+
+
+
 
         print('Successfully migrated DETERGENT_LABELS')
 
