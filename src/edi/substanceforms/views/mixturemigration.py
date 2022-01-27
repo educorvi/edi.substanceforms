@@ -284,9 +284,6 @@ class Migrationview(BrowserView):
                 import pdb;
                 pdb.set_trace()
 
-
-
-
         print('Successfully migrated DETERGENT_LABELS')
 
         areavocab = ['Farbreiniger', 'Plattenreiniger', 'Feuchtwalzenreiniger', 'Gummituchregenerierer',
