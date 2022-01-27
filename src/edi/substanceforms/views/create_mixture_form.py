@@ -245,7 +245,7 @@ class UpdateFormView(CreateFormView):
         self.form.branch.default = self.result[0][2]
         self.form.substance_type.default = self.result[0][3]
         self.form.application_areas.default = new_list_handler2(self.relational)
-        self.form.usecases.default = new_list_handler(self.relational2)
+        self.form.usecases.default = new_list_handler2(self.relational2)
         self.form.evaporation_lane_150.default = self.result[0][6]
         self.form.evaporation_lane_160.default = self.result[0][7]
         self.form.evaporation_lane_170.default = self.result[0][8]
