@@ -38,3 +38,13 @@ def new_list_handler2(liste):
             if v[1] == i[0]:
                 result.append(v[0])
     return result
+
+def new_list_handler3(liste):
+    result = list()
+    variable = 0
+    vocabulary = get_vocabulary('usecases')
+    for i in liste:
+        for v in vocabulary:
+            if v[1] == i[0]:
+                result.append(v[0])
+    return result
