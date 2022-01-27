@@ -169,6 +169,13 @@ class Migrationview(BrowserView):
         usecasevocab = ['Buchdruck', 'Flexodruck', 'Siebdruck', 'Farbreiniger alle Druckverfahren', 'Offsetdruck',
                         'Waschanlage', 'Tiefdruck', 'Klebstoffreiniger', 'UV-Druck', 'Klischeereiniger',
                         'Bodenreiniger', 'Entfetter', 'Reflektorreiniger']
+
+        usecasetranslate = {'buchdruck': 'Buchdruck', 'flexodruck': 'Flexodruck', 'siebdruck': 'Siebdruck',
+                        'farbreiniger_alle_druckverfahren': 'Farbreiniger alle Druckverfahren',
+                        'offsetdruck': 'Offsetdruck', 'waschanlage': 'Waschanlage', 'tiefdruck': 'Tiefdruck',
+                        'klebstoffreiniger': 'Klebstoffreiniger', 'uv-offsetdruck': 'UV-Druck',
+                        'klischeereiniger': 'Klischeereiniger', 'bodenreiniger': 'Bodenreiniger',
+                        'entfetter': 'Entfetter', 'reflektorreiniger': 'Reflektorreiniger'}
         for i in usecasevocab:
             cur = conn.cursor()
             # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
@@ -262,7 +269,7 @@ class Migrationview(BrowserView):
                         #    i = 'Reiniger für Leitstände, Sensoren'
                         cur = conn.cursor()
                         cur.execute(
-                            "SELECT usecase_id FROM usecases WHERE usecase_name = '{0}';".format(i))
+                            "SELECT usecase_id FROM usecases WHERE usecase_name = '{0}';".format(usecasetranslate.get(i)))
                         usecaseid = cur.fetchall()
                         cur.close()
 
