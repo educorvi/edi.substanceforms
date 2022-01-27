@@ -185,6 +185,7 @@ class CreateFormView(WTFormView):
                 self.db.close()
 
             else:
+                import pdb; pdb.set_trace()
                 self.db.execute(insert)
                 for i in areaids:
                     insertcommand = "INSERT INTO areapairs (area_id, mixture_id) VALUES (%s, %s)" % (i[0], i[1])
