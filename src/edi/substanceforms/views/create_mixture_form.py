@@ -163,7 +163,6 @@ class CreateFormView(WTFormView):
             for i in self.form.application_areas.data:
                 selectcommand = "SELECT substance_mixture_id FROM substance_mixture ORDER BY substance_mixture_id DESC LIMIT 1"
                 selectedid = self.db.execute(selectcommand)
-                insertcommand = "INSERT INTO areapairs (area_id, mixture_id) VALUES (%s, %s)" % (int(i), selectedid)
                 self.db.execute(insertcommand)
 
             if self.form.image_url.data.filename:
