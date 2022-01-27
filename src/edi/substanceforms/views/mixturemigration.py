@@ -265,7 +265,6 @@ class Migrationview(BrowserView):
             try:
                 if etikett_usecases:
                     for i in etikett_usecases:
-                        import pdb; pdb.set_trace()
                         #if i == 'Reiniger_Leitstaende_Sensoren':
                         #    i = 'Reiniger für Leitstände, Sensoren'
                         cur = conn.cursor()
@@ -282,8 +281,7 @@ class Migrationview(BrowserView):
 
                         cur = conn.cursor()
                         cur.execute(
-                            "INSERT INTO usecasepairs (area_id, mixture_id) VALUES (%s, %s);",
-                            (usecaseid[0][0], mixtureid[0][0]))
+                            "INSERT INTO usecasepairs (usecase_id, mixture_id) VALUES (%s, %s);" % (usecaseid[0][0], mixtureid[0][0]))
                         conn.commit()
                         # print(manuell_title)  # correct
                         cur.close()
