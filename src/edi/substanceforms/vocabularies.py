@@ -62,28 +62,28 @@ classifications = [
     ]
 
 usecases = [
-    (u'buchdruck', u'Buchdruck'),
-    (u'flexodruck', u'Flexodruck'),
-    (u'siebdruck', u'Siebdruck'),
-    (u'farbreiniger_alle_druckverfahren', u'Farbreiniger alle Druckverfahren'),
-    (u'offsetdruck', u'Offsetdruck'),
-    (u'waschanlage', u'Waschanlage'),
-    (u'tiefdruck', u'Tiefdruck'),
-    (u'klebstoffreiniger', u'Klebstoffreiniger'),
-    (u'uv-offsetdruck', u'UV-Druck'),
-    (u'klischeereiniger', u'Klischeereiniger'),
-    (u'bodenreiniger', u'Bodenreiniger'),
-    (u'entfetter', u'Entfetter'),
-    (u'reflektorreiniger', u'Reflektorreiniger')
+    (1, u'Buchdruck'),
+    (2, u'Flexodruck'),
+    (3, u'Siebdruck'),
+    (4, u'Farbreiniger alle Druckverfahren'),
+    (5, u'Offsetdruck'),
+    (6, u'Waschanlage'),
+    (7, u'Tiefdruck'),
+    (8, u'Klebstoffreiniger'),
+    (9, u'UV-Druck'),
+    (10, u'Klischeereiniger'),
+    (11, u'Bodenreiniger'),
+    (12, u'Entfetter'),
+    (13, u'Reflektorreiniger')
     ]
 
 application_areas = [
-    (u'Farbreiniger', u'Farbreiniger'),
-    (u'Plattenreiniger', u'Plattenreiniger'),
-    (u'Feuchtwalzenreiniger', u'Feuchtwalzenreiniger'),
-    (u'Gummituchregenerierer', u'Gummituchregenerierer'),
-    (u'Reiniger_Leitstaende_Sensoren', u'Reiniger für Leitstände, Sensoren'),
-    (u'Klebstoffreiniger', u'Klebstoffreiniger')
+    (1, u'Farbreiniger'),
+    (2, u'Plattenreiniger'),
+    (3, u'Feuchtwalzenreiniger'),
+    (4, u'Gummituchregenerierer'),
+    (5, u'Reiniger für Leitstände, Sensoren'),
+    (6, u'Klebstoffreiniger')
     ]
 
 boolvocab = [

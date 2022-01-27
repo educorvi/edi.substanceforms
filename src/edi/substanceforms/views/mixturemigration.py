@@ -132,7 +132,7 @@ class Migrationview(BrowserView):
 
             for i in tables:
                 table = i[0]
-                if table != 'synonyms' and table != 'recipes':
+                if table == 'manufacturer' or table == 'substance' or table == 'substance_mixture' or table == 'spray_powder':
                     cur = conn.cursor()
                     select = "SELECT webcode from %s WHERE webcode = '%s'" % (table, generated_webcode)
                     cur.execute(select)
@@ -166,6 +166,26 @@ class Migrationview(BrowserView):
         erg7 = getHeatset()
         conn = psycopg2.connect(host=hostname, user=username, password=password, dbname=database)
 
+        usecasevocab = ['Buchdruck', 'Flexodruck', 'Siebdruck', 'Farbreiniger alle Druckverfahren', 'Offsetdruck',
+                        'Waschanlage', 'Tiefdruck', 'Klebstoffreiniger', 'UV-Druck', 'Klischeereiniger',
+                        'Bodenreiniger', 'Entfetter', 'Reflektorreiniger']
+
+        usecasetranslate = {'buchdruck': 'Buchdruck', 'flexodruck': 'Flexodruck', 'siebdruck': 'Siebdruck',
+                        'farbreiniger_alle_druckverfahren': 'Farbreiniger alle Druckverfahren',
+                        'offsetdruck': 'Offsetdruck', 'waschanlage': 'Waschanlage', 'tiefdruck': 'Tiefdruck',
+                        'klebstoffreiniger': 'Klebstoffreiniger', 'uv-offsetdruck': 'UV-Druck',
+                        'klischeereiniger': 'Klischeereiniger', 'bodenreiniger': 'Bodenreiniger',
+                        'entfetter': 'Entfetter', 'reflektorreiniger': 'Reflektorreiniger'}
+        for i in usecasevocab:
+            cur = conn.cursor()
+            # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
+            cur.execute(
+                "INSERT INTO usecases (usecase_name) VALUES ('%s');" % i)
+            conn.commit()
+            # print(manuell_title)  # correct
+            cur.close()
+            print("Added %s to usecases" % i)
+
         for i in erg4:
             etikett_title = i.get('title')
             etikett_desc = i.get('description')
@@ -174,9 +194,28 @@ class Migrationview(BrowserView):
             etikett_checked_emissions = i.get('emissionsgeprueft')
             etikett_flashpoint = i.get('flammpunkt')
             etikett_values_range = i.get('wertebereich')
-            etikett_classifications = i.get('einstufungen')
+            etikett_classifications = i.get('einstufung')
+            etikett_hinweise = i.get('saetze')
             etikett_usecases = i.get('verwendungszweck')
             etikett_review_state = i.get('review_state')
+
+            #if etikett_usecases:
+            #    usecases_string = '@'.join(etikett_usecases)
+            #    etikett_usecases = usecases_string
+
+            if etikett_classifications:
+                if etikett_classifications != []:
+                    classifications_string = '@'.join(etikett_classifications)
+                else:
+                    classifications_string = ''
+            else:
+                classifications_string = ''
+
+            etikett_classifications = classifications_string
+
+            if etikett_hinweise:
+                hinweise_string = '@'.join(etikett_hinweise)
+                etikett_hinweise = hinweise_string
 
             if etikett_review_state == 'published':
                 etikett_published = 'published'
@@ -195,9 +234,9 @@ class Migrationview(BrowserView):
                     cur = conn.cursor()
                     # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
                     cur.execute(
-                        "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, usecases, manufacturer_id, status) VALUES (%s, %s, %s, 'druck_und_papier', 'label', NULL, %s, %s, %s, %s, %s, %s, %s);",
+                        "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, usecases, manufacturer_id, status, classifications, indicators) VALUES (%s, %s, %s, 'druck_und_papier', 'label', NULL, %s, %s, %s, %s, %s, %s, %s, %s, %s);",
                         (etikett_title, etikett_desc, etikett_uid, etikett_skin_category, etikett_checked_emissions,
-                         etikett_flashpoint, etikett_values_range, etikett_usecases, etikett_manufacturer_id[0], etikett_published))
+                         etikett_flashpoint, etikett_values_range, etikett_usecases, etikett_manufacturer_id[0], etikett_published, etikett_classifications, etikett_hinweise))
                     conn.commit()
                     # print(etikett_title)  # correct
                     cur.close()
@@ -205,9 +244,9 @@ class Migrationview(BrowserView):
                     cur = conn.cursor()
                     # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
                     cur.execute(
-                        "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, usecases, status) VALUES (%s, %s, %s, 'druck_und_papier', 'label', NULL, %s, %s, %s, %s, %s, %s);",
+                        "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, usecases, status, classifications, indicators) VALUES (%s, %s, %s, 'druck_und_papier', 'label', NULL, %s, %s, %s, %s, %s, %s, %s, %s);",
                         (etikett_title, etikett_desc, etikett_uid, etikett_skin_category, etikett_checked_emissions,
-                         etikett_flashpoint, etikett_values_range, etikett_usecases, etikett_published))
+                         etikett_flashpoint, etikett_values_range, etikett_usecases, etikett_published, etikett_classifications, etikett_hinweise))
                     conn.commit()
                     # print(etikett_title)  # correct
                     cur.close()
@@ -216,14 +255,54 @@ class Migrationview(BrowserView):
                 cur = conn.cursor()
                 # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
                 cur.execute(
-                    "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, usecases, status) VALUES (%s, %s, %s, 'druck_und_papier', 'label', NULL, %s, %s, %s, %s, %s, %s);",
+                    "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, usecases, status, classifications, indicators) VALUES (%s, %s, %s, 'druck_und_papier', 'label', NULL, %s, %s, %s, %s, %s, %s, %s, %s);",
                     (etikett_title, etikett_desc, etikett_uid, etikett_skin_category, etikett_checked_emissions,
-                     etikett_flashpoint, etikett_values_range, etikett_usecases, etikett_published))
+                     etikett_flashpoint, etikett_values_range, etikett_usecases, etikett_published, etikett_classifications, etikett_hinweise))
                 conn.commit()
                 # print(etikett_title)  # correct
                 cur.close()
 
+            try:
+                if etikett_usecases:
+                    for i in etikett_usecases:
+                        #if i == 'Reiniger_Leitstaende_Sensoren':
+                        #    i = 'Reiniger für Leitstände, Sensoren'
+                        cur = conn.cursor()
+                        cur.execute(
+                            "SELECT usecase_id FROM usecases WHERE usecase_name = '{0}';".format(usecasetranslate.get(i)))
+                        usecaseid = cur.fetchall()
+                        cur.close()
+
+                        cur = conn.cursor()
+                        cur.execute(
+                            "SELECT substance_mixture_id FROM substance_mixture ORDER BY substance_mixture_id DESC LIMIT 1;")
+                        mixtureid = cur.fetchall()
+                        cur.close()
+
+                        cur = conn.cursor()
+                        cur.execute(
+                            "INSERT INTO usecasepairs (usecase_id, mixture_id) VALUES (%s, %s);" % (usecaseid[0][0], mixtureid[0][0]))
+                        conn.commit()
+                        # print(manuell_title)  # correct
+                        cur.close()
+                        print("Worked")
+            except:
+                import pdb;
+                pdb.set_trace()
+
         print('Successfully migrated DETERGENT_LABELS')
+
+        areavocab = ['Farbreiniger', 'Plattenreiniger', 'Feuchtwalzenreiniger', 'Gummituchregenerierer',
+                     'Reiniger für Leitstände, Sensoren', 'Klebstoffreiniger']
+        for i in areavocab:
+            cur = conn.cursor()
+            # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
+            cur.execute(
+                "INSERT INTO application_areas (application_area_name) VALUES ('%s');" % i)
+            conn.commit()
+            # print(manuell_title)  # correct
+            cur.close()
+            print("Added %s to application_areas" %i)
 
         for i in erg5:
             manuell_title = i.get('title')
@@ -238,6 +317,14 @@ class Migrationview(BrowserView):
             manuell_application_areas = i.get('anwendungsgebiete')
             manuell_manufacturer_name = i.get('hersteller')['title']
             manuell_review_state = i.get('review_state')
+
+            if manuell_usecases:
+                print ("TESTTESTTESTTESTTESTTEST")
+                #usecases_string = '@'.join(manuell_usecases)
+                #manuell_usecases = usecases_string
+
+                #areas_string = '@'.join(manuell_application_areas)
+                #manuell_application_areas = areas_string
 
             if manuell_review_state == 'published':
                 manuell_published = 'published'
@@ -264,13 +351,41 @@ class Migrationview(BrowserView):
                 cur = conn.cursor()
                 # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
                 cur.execute(
-                    "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, usecases, application_areas, manufacturer_id, status) VALUES (%s, %s, %s, 'druck_und_papier', 'offset', NULL, %s, %s, %s, %s, %s, %s, NULL, %s);",
+                    "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, usecases, application_areas, manufacturer_id, status) VALUES (%s, %s, %s, 'druck_und_papier', 'special', NULL, %s, %s, %s, %s, %s, %s, NULL, %s);",
                     (manuell_title, manuell_desc, manuell_uid, manuell_skin_category, manuell_checked_emissions,
                      manuell_flashpoint, manuell_values_range, manuell_usecases, manuell_application_areas,
                      manuell_published))
                 conn.commit()
                 # print(manuell_title)  # correct
                 cur.close()
+
+            try:
+                if manuell_application_areas:
+                    for i in manuell_application_areas:
+                        if i == 'Reiniger_Leitstaende_Sensoren':
+                            i = 'Reiniger für Leitstände, Sensoren'
+                        cur = conn.cursor()
+                        cur.execute(
+                            "SELECT application_area_id FROM application_areas WHERE application_area_name = '{0}';".format(i))
+                        areaid = cur.fetchall()
+                        cur.close()
+
+                        cur = conn.cursor()
+                        cur.execute(
+                            "SELECT substance_mixture_id FROM substance_mixture ORDER BY substance_mixture_id DESC LIMIT 1;")
+                        mixtureid = cur.fetchall()
+                        cur.close()
+
+                        cur = conn.cursor()
+                        cur.execute(
+                            "INSERT INTO areapairs (area_id, mixture_id) VALUES (%s, %s);",
+                            (areaid[0][0], mixtureid[0][0]))
+                        conn.commit()
+                        # print(manuell_title)  # correct
+                        cur.close()
+                        print("Worked")
+            except:
+                import pdb; pdb.set_trace()
 
 
         print('Successfully migrated DETERGENT_MANUAL')
@@ -360,7 +475,6 @@ class Migrationview(BrowserView):
             heatset_evap_160 = heatset_verdampfung[0].get('bahn_160')
             heatset_evap_170 = heatset_verdampfung[0].get('bahn_170')
             heatset_evap_180 = heatset_verdampfung[0].get('bahn_180')
-
 
             if heatset_review_state == 'published':
                 heatset_published = 'published'

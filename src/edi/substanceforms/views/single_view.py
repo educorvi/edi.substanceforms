@@ -175,6 +175,66 @@ class SingleView(BrowserView):
             result = ''
         return result
 
+    def new_usecase_translation(self):
+        usecases = []
+        select = "SELECT usecase_id from usecasepairs WHERE mixture_id = %s" % self.itemid
+        usecaseids = self.db.execute(select)
+        # Continue here
+
+        for ucid in usecaseids:
+            select = "SELECT usecase_name from usecases WHERE usecase_id = %s" % ucid
+            usecase_title = self.db.execute(select)
+            entry = {'title': usecase_title}
+            usecases.append(entry)
+        # self.db.close()
+        return usecases
+
+    def translate_usecases(self, usecases):
+        resultstring = ""
+        index = 0
+        for i in usecases:
+            resultstring = resultstring + "%s, " % (usecases[index]['title'][0][0])
+            index = index + 1
+        resultstring = resultstring[:-2]
+        return resultstring
+
+    def new_usecases_translation(self):
+        usecases = []
+        select = "SELECT usecase_id from usecasepairs WHERE mixture_id = %s" % self.itemid
+        caseids = self.db.execute(select)
+        # Continue here
+
+        for caseid in caseids:
+            select = "SELECT usecase_name from usecases WHERE usecase_id = %s" % caseid
+            case_title = self.db.execute(select)
+            entry = {'title': case_title}
+            usecases.append(entry)
+        # self.db.close()
+        return usecases
+
+    def new_application_areas_translation(self):
+        applicationareas = []
+        select = "SELECT area_id from areapairs WHERE mixture_id = %s" % self.itemid
+        areaids = self.db.execute(select)
+        # Continue here
+
+        for arid in areaids:
+            select = "SELECT application_area_name from application_areas WHERE application_area_id = %s" % arid
+            area_title = self.db.execute(select)
+            entry = {'title': area_title}
+            applicationareas.append(entry)
+        # self.db.close()
+        return applicationareas
+
+    def translate_application_areas(self, areas):
+        resultstring = ""
+        index = 0
+        for i in areas:
+            resultstring = resultstring + "%s, " % (areas[index]['title'][0][0])
+            index = index + 1
+        resultstring = resultstring[:-2]
+        return resultstring
+
     def application_areas_translation(self, value):
         vocabulary = get_vocabulary('application_areas')
         newlist = list()

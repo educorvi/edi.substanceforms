@@ -7,7 +7,7 @@ from plone.namedfile import NamedBlobImage
 from wtforms import FileField, RadioField, SelectMultipleField
 from wtforms import validators
 from collective.wtforms.views import WTFormView
-from edi.substanceforms.helpers import check_value, list_handler, reverse_list_handler
+from edi.substanceforms.helpers import check_value, list_handler, reverse_list_handler, new_list_handler, get_vocabulary, new_list_handler2, new_list_handler3
 from edi.substanceforms.vocabularies import substance_types, hskategorie, produktkategorien, produktklassen, branchen
 from edi.substanceforms.vocabularies import classifications, usecases, application_areas, substance_types_new
 from plone import api as ploneapi
@@ -133,21 +133,18 @@ class CreateFormView(WTFormView):
             conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
             cur = conn.cursor()
             insert = """INSERT INTO substance_mixture (title, description, webcode, branch, substance_type,
-                                                        application_areas,
-                                                        usecases, evaporation_lane_150, evaporation_lane_160,
+                                                        evaporation_lane_150, evaporation_lane_160,
                                                         evaporation_lane_170, evaporation_lane_180, ueg, response,
                                                         skin_category, checked_emissions, date_checked, flashpoint,
                                                         values_range, comments, image_url, manufacturer_id)
-                                                        VALUES ('%s', '%s', '%s', %s, '%s', '%s',
-                                                        '%s', %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
+                                                        VALUES ('%s', '%s', '%s', %s, '%s',
+                                                        %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
                                                         %s, %s);""" \
                                                         % (self.form.title.data,
                                                         self.form.description.data,
                                                         self.context.aq_parent.get_webcode(),
                                                         check_value(self.form.branch.data),
                                                         self.form.substance_type.data,
-                                                        list_handler(self.form.application_areas.data),
-                                                        list_handler(self.form.usecases.data),
                                                         check_value(self.form.evaporation_lane_150.data),
                                                         check_value(self.form.evaporation_lane_160.data),
                                                         check_value(self.form.evaporation_lane_170.data),
@@ -161,12 +158,30 @@ class CreateFormView(WTFormView):
                                                         self.form.values_range.data,
                                                         check_value(self.form.comments.data),
                                                         check_value(image_url),
-                                                        self.form.manufacturer_id.data)
+                                                        check_value(self.form.manufacturer_id.data))
+
+            areaids = list()
+            for i in self.form.application_areas.data:
+                selectcommand = "SELECT substance_mixture_id FROM substance_mixture ORDER BY substance_mixture_id DESC LIMIT 1"
+                selectedid = self.db.execute(selectcommand)
+                areaids.append([int(i), (int(selectedid[0][0]))+1])
+
+            caseids = list()
+            for i in self.form.usecases.data:
+                selectcommand = "SELECT substance_mixture_id FROM substance_mixture ORDER BY substance_mixture_id DESC LIMIT 1"
+                selectedid = self.db.execute(selectcommand)
+                caseids.append([int(i), (int(selectedid[0][0])) + 1])
 
             if self.form.image_url.data.filename:
 
                 try:
                     self.db.execute(insert)
+                    for i in areaids:
+                        insertcommand = "INSERT INTO areapairs (area_id, mixture_id) VALUES (%s, %s)" % (i[0], i[1])
+                        self.db.execute(insertcommand)
+                    for i in caseids:
+                        insertcommand = "INSERT INTO usecasepairs (usecase_id, mixture_id) VALUES (%s, %s)" % (i[0], i[1])
+                        self.db.execute(insertcommand)
                     message = u'Das Wasch- und Reinigungsmittel wurde erfolgreich gespeichert.'
                     ploneapi.portal.show_message(message=message, type='info', request=self.request)
                 except:
@@ -180,6 +195,12 @@ class CreateFormView(WTFormView):
 
             else:
                 self.db.execute(insert)
+                for i in areaids:
+                    insertcommand = "INSERT INTO areapairs (area_id, mixture_id) VALUES (%s, %s)" % (i[0], i[1])
+                    self.db.execute(insertcommand)
+                for i in caseids:
+                    insertcommand = "INSERT INTO usecasepairs (usecase_id, mixture_id) VALUES (%s, %s)" % (i[0], i[1])
+                    self.db.execute(insertcommand)
                 self.db.close()
                 message = u'Das Wasch- und Reinigungsmittel wurde erfolgreich gespeichert.'
                 ploneapi.portal.show_message(message=message, type='info', request=self.request)
@@ -209,7 +230,12 @@ class UpdateFormView(CreateFormView):
                     FROM %s WHERE %s_id = %s;""" % (self.context.tablename,
                                                     self.context.tablename,
                                                     self.itemid)
+
+        relationalgetter = "SELECT application_areas.application_area_name FROM application_areas, areapairs WHERE areapairs.mixture_id = %s and areapairs.area_id = application_areas.application_area_id ;" % self.itemid
+        relationalgetter2 = "SELECT usecases.usecase_name FROM usecases, usecasepairs WHERE usecasepairs.mixture_id = %s and usecasepairs.usecase_id = usecases.usecase_id ;" % self.itemid
         self.result = self.db.execute(getter)
+        self.relational = self.db.execute(relationalgetter)
+        self.relational2 = self.db.execute(relationalgetter2)
         self.db.close()
         return self.index()
 
@@ -218,8 +244,8 @@ class UpdateFormView(CreateFormView):
         self.form.description.default=self.result[0][1]
         self.form.branch.default = self.result[0][2]
         self.form.substance_type.default = self.result[0][3]
-        self.form.application_areas.default = reverse_list_handler(self.result[0][4])
-        self.form.usecases.default = reverse_list_handler(self.result[0][5])
+        self.form.application_areas.default = new_list_handler2(self.relational)
+        self.form.usecases.default = new_list_handler3(self.relational2)
         self.form.evaporation_lane_150.default = self.result[0][6]
         self.form.evaporation_lane_160.default = self.result[0][7]
         self.form.evaporation_lane_170.default = self.result[0][8]
@@ -243,7 +269,6 @@ class UpdateFormView(CreateFormView):
         redirect_url = self.context.absolute_url() + '/single_view?item=' + self.form.item_id.data
         if button == 'Speichern': #and self.validate():
             command = """UPDATE substance_mixture SET title=%s, description=%s, branch=%s, substance_type=%s,
-                         application_areas='%s', usecases='%s',
                          evaporation_lane_150=%s, evaporation_lane_160=%s, evaporation_lane_170=%s, evaporation_lane_180=%s,
                          ueg=%s, response=%s, skin_category=%s, checked_emissions=%s,
                          flashpoint=%s, values_range=%s, comments=%s
@@ -252,8 +277,6 @@ class UpdateFormView(CreateFormView):
                                                         check_value(self.form.description.data),
                                                         check_value(self.form.branch.data),
                                                         check_value(self.form.substance_type.data),
-                                                        list_handler(self.form.application_areas.data),
-                                                        list_handler(self.form.usecases.data),
                                                         check_value(self.form.evaporation_lane_150.data),
                                                         check_value(self.form.evaporation_lane_160.data),
                                                         check_value(self.form.evaporation_lane_170.data),
@@ -267,6 +290,60 @@ class UpdateFormView(CreateFormView):
                                                         check_value(self.form.comments.data),
                                                         check_value(self.form.item_id.data))
             self.db.execute(command)
+
+
+            """
+
+            neueliste = list()
+            neuevocab = list()
+            resultlist = list()
+            listtoadd = list()
+            vocabulary = get_vocabulary('application_areas')
+            for n in vocabulary:
+                neuevocab.append(n[0])
+            for i in self.form.application_areas.data:
+                getfromvocab = "SELECT DISTINCT mixture_id, area_id FROM areapairs, application_areas WHERE mixture_id = %s" % self.form.item_id.data
+                currentareas = self.db.execute(getfromvocab)
+                for v in currentareas:
+                    command = "SELECT application_area_name FROM application_areas WHERE application_area_id = %s" % v[1]
+                    result = self.db.execute(command)
+                    result = result[0][0]
+                    resultlist.append(result)
+                for m in neuevocab:
+                    #import pdb; pdb.set_trace()
+                    for l in resultlist:
+                        if i == l and i not in neueliste:
+                            neueliste.append(i)
+
+                if i not in neueliste:
+                    idcommand = "SELECT application_area_id FROM application_areas WHERE application_area_name = 'Reiniger_Leitstaende_Sensoren'"
+                    richtigeid = self.db.execute(idcommand)
+                    insertcommand = "INSERT INTO areapairs (area_id, mixture_id) VALUES (%s, %s);" % (richtigeid[0][0],
+                                                                                                   self.form.item_id.data)
+                    self.db.execute(insertcommand)
+
+            print(neueliste)
+            print(listtoadd)
+
+                #del newlist[::2]
+                #import pdb; pdb.set_trace()
+
+        """
+
+            deletecommand = "DELETE FROM areapairs WHERE mixture_id = %s" % self.form.item_id.data
+            self.db.execute(deletecommand)
+            for i in self.form.application_areas.data:
+                insertcommand = "INSERT INTO areapairs (area_id, mixture_id) VALUES (%s, %s)" % (int(i), self.form.item_id.data)
+                self.db.execute(insertcommand)
+
+            deletecommand2 = "DELETE FROM usecasepairs WHERE mixture_id = %s" % self.form.item_id.data
+            self.db.execute(deletecommand2)
+            for i in self.form.usecases.data:
+                insertcommand2 = "INSERT INTO usecasepairs (usecase_id, mixture_id) VALUES (%s, %s)" % (
+                int(i), self.form.item_id.data)
+                self.db.execute(insertcommand2)
+
+
             message = u'Das Gefahrstoffgemisch wurde erfolgreich aktualisiert.'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
             #message = u'Fehler beim Aktualisieren des Gefahrstoffgemisches'
@@ -307,6 +384,10 @@ class DeleteFormView(CreateFormView):
         if button == 'Speichern' and self.form.sure.data is True: #and self.validate():
             command = "DELETE FROM substance_mixture WHERE substance_mixture_id = %s" % (self.form.item_id.data)
             self.db.execute(command)
+            deletecommand = "DELETE FROM areapairs WHERE mixture_id = %s" % self.form.item_id.data
+            self.db.execute(deletecommand)
+            deletecommand2 = "DELETE FROM usecasepairs WHERE mixture_id = %s" % self.form.item_id.data
+            self.db.execute(deletecommand2)
             message = u'Das Gefahrstoffgemisch wurde erfolgreich gelöscht'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
 
