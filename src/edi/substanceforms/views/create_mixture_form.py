@@ -166,12 +166,21 @@ class CreateFormView(WTFormView):
                 selectedid = self.db.execute(selectcommand)
                 areaids.append([int(i), (int(selectedid[0][0]))+1])
 
+            caseids = list()
+            for i in self.form.usecases.data:
+                selectcommand = "SELECT substance_mixture_id FROM substance_mixture ORDER BY substance_mixture_id DESC LIMIT 1"
+                selectedid = self.db.execute(selectcommand)
+                caseids.append([int(i), (int(selectedid[0][0])) + 1])
+
             if self.form.image_url.data.filename:
 
                 try:
                     self.db.execute(insert)
                     for i in areaids:
                         insertcommand = "INSERT INTO areapairs (area_id, mixture_id) VALUES (%s, %s)" % (i[0], i[1])
+                        self.db.execute(insertcommand)
+                    for i in caseids:
+                        insertcommand = "INSERT INTO usecasepairs (usecase_id, mixture_id) VALUES (%s, %s)" % (i[0], i[1])
                         self.db.execute(insertcommand)
                     message = u'Das Wasch- und Reinigungsmittel wurde erfolgreich gespeichert.'
                     ploneapi.portal.show_message(message=message, type='info', request=self.request)
@@ -188,6 +197,9 @@ class CreateFormView(WTFormView):
                 self.db.execute(insert)
                 for i in areaids:
                     insertcommand = "INSERT INTO areapairs (area_id, mixture_id) VALUES (%s, %s)" % (i[0], i[1])
+                    self.db.execute(insertcommand)
+                for i in caseids:
+                    insertcommand = "INSERT INTO usecasepairs (usecase_id, mixture_id) VALUES (%s, %s)" % (i[0], i[1])
                     self.db.execute(insertcommand)
                 self.db.close()
                 message = u'Das Wasch- und Reinigungsmittel wurde erfolgreich gespeichert.'
