@@ -265,6 +265,7 @@ class Migrationview(BrowserView):
             try:
                 if etikett_usecases:
                     for i in etikett_usecases:
+                        import pdb; pdb.set_trace()
                         #if i == 'Reiniger_Leitstaende_Sensoren':
                         #    i = 'Reiniger für Leitstände, Sensoren'
                         cur = conn.cursor()
