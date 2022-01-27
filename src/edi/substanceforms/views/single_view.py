@@ -182,7 +182,7 @@ class SingleView(BrowserView):
         # Continue here
 
         for ucid in usecaseids:
-            select = "SELECT usecase_realname from usecases WHERE usecase_id = %s" % ucid
+            select = "SELECT usecase_name from usecases WHERE usecase_id = %s" % ucid
             usecase_title = self.db.execute(select)
             entry = {'title': usecase_title}
             usecases.append(entry)
@@ -197,6 +197,20 @@ class SingleView(BrowserView):
             index = index + 1
         resultstring = resultstring[:-2]
         return resultstring
+
+    def new_usecases_translation(self):
+        usecases = []
+        select = "SELECT usecase_id from usecasepairs WHERE mixture_id = %s" % self.itemid
+        caseids = self.db.execute(select)
+        # Continue here
+
+        for caseid in caseids:
+            select = "SELECT usecase_name from usecases WHERE usecase_id = %s" % caseid
+            case_title = self.db.execute(select)
+            entry = {'title': case_title}
+            usecases.append(entry)
+        # self.db.close()
+        return usecases
 
     def new_application_areas_translation(self):
         applicationareas = []
