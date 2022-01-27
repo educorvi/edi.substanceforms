@@ -158,7 +158,7 @@ class CreateFormView(WTFormView):
                                                         self.form.values_range.data,
                                                         check_value(self.form.comments.data),
                                                         check_value(image_url),
-                                                        self.form.manufacturer_id.data)
+                                                        check_value(self.form.manufacturer_id.data))
 
             areaids = list()
             for i in self.form.application_areas.data:
@@ -185,7 +185,6 @@ class CreateFormView(WTFormView):
                 self.db.close()
 
             else:
-                import pdb; pdb.set_trace()
                 self.db.execute(insert)
                 for i in areaids:
                     insertcommand = "INSERT INTO areapairs (area_id, mixture_id) VALUES (%s, %s)" % (i[0], i[1])
