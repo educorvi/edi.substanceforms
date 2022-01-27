@@ -186,6 +186,9 @@ class CreateFormView(WTFormView):
 
             else:
                 self.db.execute(insert)
+                for i in areaids:
+                    insertcommand = "INSERT INTO areapairs (area_id, mixture_id) VALUES (%s, %s)" % (i[0], i[1])
+                    self.db.execute(insertcommand)
                 self.db.close()
                 message = u'Das Wasch- und Reinigungsmittel wurde erfolgreich gespeichert.'
                 ploneapi.portal.show_message(message=message, type='info', request=self.request)
