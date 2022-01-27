@@ -336,6 +336,13 @@ class UpdateFormView(CreateFormView):
                 insertcommand = "INSERT INTO areapairs (area_id, mixture_id) VALUES (%s, %s)" % (int(i), self.form.item_id.data)
                 self.db.execute(insertcommand)
 
+            deletecommand2 = "DELETE FROM usecasepairs WHERE mixture_id = %s" % self.form.item_id.data
+            self.db.execute(deletecommand2)
+            for i in self.form.usecases.data:
+                insertcommand2 = "INSERT INTO usecasepairs (usecase_id, mixture_id) VALUES (%s, %s)" % (
+                int(i), self.form.item_id.data)
+                self.db.execute(insertcommand2)
+
 
             message = u'Das Gefahrstoffgemisch wurde erfolgreich aktualisiert.'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
@@ -379,6 +386,8 @@ class DeleteFormView(CreateFormView):
             self.db.execute(command)
             deletecommand = "DELETE FROM areapairs WHERE mixture_id = %s" % self.form.item_id.data
             self.db.execute(deletecommand)
+            deletecommand2 = "DELETE FROM usecasepairs WHERE mixture_id = %s" % self.form.item_id.data
+            self.db.execute(deletecommand2)
             message = u'Das Gefahrstoffgemisch wurde erfolgreich gelöscht'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
 
