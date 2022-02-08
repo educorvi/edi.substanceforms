@@ -240,16 +240,16 @@ class SubstancemixtureFormView(TabelleFormView):
     formClass = SubstanceMixtureForm
 
     def renderForm(self):
-        manus = [('alle', 'Alle anzeigen')]
         try:
             conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
             cur = conn.cursor()
             cur.execute("SELECT manufacturer_id, title FROM manufacturer ORDER BY title;")
-            manus += cur.fetchall()
+            erg = cur.fetchall()
+            manus = [(result[0], result[1] + ' ID:' + str(result[0])) for result in erg]
             cur.close
             conn.close()
         except:
-            manus += []
+            manus = []
         self.form.manu.choices = manus
         self.form.process()
         return self.formTemplate()
@@ -263,7 +263,6 @@ class SubstancemixtureFormView(TabelleFormView):
 
             if mixturetype:
                 select = "SELECT %s, title FROM %s WHERE substance_type = '%s';" % (searchkey, searchtable, mixturetype)
-                #try:
                 conn = psycopg2.connect(host=self.host, user=self.username, password=self.password,
                                         dbname=self.dbname)
                 cur = conn.cursor()
@@ -272,10 +271,6 @@ class SubstancemixtureFormView(TabelleFormView):
                 cur.close
                 conn.close()
 
-                #except:
-                #    print ("LOLLL")
-                #    self.ergs = self.show_all()
-
             else:
                 self.ergs = self.show_all()
 
@@ -283,7 +278,7 @@ class SubstancemixtureFormView(TabelleFormView):
 
             searchkey = self.context.tablename + '_id'
             searchtable = self.context.tablename
-            manu_id = self.form.manu.data
+            manu_id = int(self.form.manu.data.split('ID:')[-1])
             is_detergent_special = self.form.detergent_special.data
 
             if manu_id == 'alle' and is_detergent_special == True:

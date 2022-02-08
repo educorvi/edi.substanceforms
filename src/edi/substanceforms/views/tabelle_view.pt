@@ -73,6 +73,7 @@
       <script>
         $(document).ready(function () {
           $("select").each(function () {
+   	    $('option').removeAttr('value');
             var listid = $(this).attr('id') + "datalistOptions";
             $(this).replaceWith("<datalist id=" + listid + ">" + this.innerHTML + "</datalist>")
           });

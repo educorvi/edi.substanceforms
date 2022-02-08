@@ -103,8 +103,9 @@ class CreateFormView(WTFormView):
 
     def renderForm(self):
         try:
-            insert = "SELECT manufacturer_id, title FROM manufacturer ORDER BY title;"
-            manus = self.db.execute(insert)
+            select = "SELECT manufacturer_id, title FROM manufacturer ORDER BY title;"
+            erg = self.db.execute(select)
+            manus = [(result[0], result[1] + ' ID:' + str(result[0])) for result in erg]
         except:
             manus = []
         self.form.manufacturer_id.choices = manus
@@ -158,7 +159,7 @@ class CreateFormView(WTFormView):
                                                         self.form.values_range.data,
                                                         check_value(self.form.comments.data),
                                                         check_value(image_url),
-                                                        check_value(self.form.manufacturer_id.data))
+                                                        check_value(self.form.manufacturer_id.data.split('ID:')[-1]))
 
             areaids = list()
             for i in self.form.application_areas.data:

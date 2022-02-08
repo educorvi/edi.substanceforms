@@ -63,7 +63,6 @@ class CreateIngredientForm(WTFormView):
             subeg = i[3]
             subentry = f"{subname} CAS:{subcas} EG:{subeg} ID:{subid}"
             optionlist.append((i[0], subentry))
-            #optionlist.append(tuple((i[0], str(i[1])+"|" ++str(i[2])+"|"+str(i[3]))))
         self.form.substance.choices = optionlist
         self.form.process()
         return self.formTemplate()

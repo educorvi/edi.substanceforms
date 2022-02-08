@@ -61,7 +61,6 @@ class SingleView(BrowserView):
         conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
         cur = conn.cursor()
         tablename = self.context.tablename
-        import pdb;pdb.set_trace()
         select = "SELECT * from %s WHERE %s_id = %s" %(tablename, tablename, self.itemid)
         cur.execute(select)
         article = cur.fetchall()[0]
