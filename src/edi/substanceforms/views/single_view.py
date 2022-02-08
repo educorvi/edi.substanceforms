@@ -254,3 +254,10 @@ class SingleView(BrowserView):
         else:
             result = list()
         return result
+
+    def getRightUrl(self, value):
+        urlels = value.split('=')
+        if len(urlels[1]) < 6:
+            param = urlels[1].zfill(6)
+            return urlels[0] + '=' + param
+        return value

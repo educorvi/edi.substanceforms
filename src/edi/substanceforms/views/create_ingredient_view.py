@@ -49,15 +49,18 @@ class CreateIngredientForm(WTFormView):
 
     def renderForm(self):
         try:
-            insert = "SELECT substance_id, title, casnr, egnr FROM substance ORDER BY title;"
-            substances = self.db.execute(insert)
+            select = "SELECT substance_id, title, casnr, egnr FROM substance ORDER BY title;"
+            substances = self.db.execute(select)
         except:
             substances = []
-        #import pdb;pdb.set_trace()
-        durchlaufvariable = 0
         optionlist = list()
         for i in substances:
-            optionlist.append(tuple((i[0], str(i[1])+"|"+str(i[2])+"|"+str(i[3]))))
+            subid = i[0]
+            subname = i[1]
+            subcas = i[2]
+            subeg = i[3]
+            subentry = f"{subname} CAS:{subcas} EG:{subeg} ID:{subid}"
+            optionlist.append((i[0], subentry))
         self.form.substance.choices = optionlist
         self.form.process()
         return self.formTemplate()
@@ -69,7 +72,7 @@ class CreateIngredientForm(WTFormView):
             insert = """INSERT INTO recipes (mixture_id, substance_id, concentration_min, concentration_max)
                                                         VALUES (%s, %s, %s, %s);""" \
                                                         % (self.form.itemid.data,
-                                                        self.form.substance.data,
+                                                        int(self.form.substance.data.split('ID:')[-1]),
                                                         self.form.concentration_min.data,
                                                         self.form.concentration_max.data,
                                                         )
