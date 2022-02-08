@@ -49,12 +49,10 @@ class CreateIngredientForm(WTFormView):
 
     def renderForm(self):
         try:
-            insert = "SELECT substance_id, title, casnr, egnr FROM substance ORDER BY title;"
-            substances = self.db.execute(insert)
+            select = "SELECT substance_id, title, casnr, egnr FROM substance ORDER BY title;"
+            substances = self.db.execute(select)
         except:
             substances = []
-        #import pdb;pdb.set_trace()
-        durchlaufvariable = 0
         optionlist = list()
         for i in substances:
             subid = i[0]

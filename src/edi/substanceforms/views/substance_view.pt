@@ -70,7 +70,7 @@
             <td tal:condition="python: view.get_attr_translation('hskategorie', article[7])" tal:content="python: view.get_attr_translation('hskategorie', article[7])"/>
 	        </tr>
           <tr>
-	          <td tal:condition="python: view.get_attr_translation('branchen', article[8])">Brache</td>
+	          <td tal:condition="python: view.get_attr_translation('branchen', article[8])">Branche</td>
             <td tal:condition="python: view.get_attr_translation('branchen', article[8])" tal:content="python: view.get_attr_translation('branchen', article[8])"/>
 	        </tr>
           <tr>

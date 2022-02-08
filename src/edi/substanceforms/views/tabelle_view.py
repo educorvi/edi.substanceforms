@@ -7,6 +7,8 @@ from edi.substanceforms.config import addrole
 import requests
 import psycopg2
 from plone import api as ploneapi
+from edi.substanceforms.lib import DBConnect
+
 
 class LoginCredentials:
 
@@ -29,6 +31,9 @@ class TabelleFormView(WTFormView):
     buttons = ('Suche', 'Alle anzeigen', 'Abbrechen')
 
     def __call__(self):
+
+        dbdata = self.context.aq_parent
+        self.db = DBConnect(host=dbdata.host, db=dbdata.database, user=dbdata.username, password=dbdata.password)
 
         self.host = self.context.aq_parent.host
         self.dbname = self.context.aq_parent.database
@@ -101,11 +106,7 @@ class HerstellerForm (BaseForm):
     manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[], render_kw={'class':'form-control'})
 
 class SubstanceForm (BaseForm):
-    substance_id = SelectField(u"Suchbegriff", render_kw={'class': 'form-control'})
-    #search = StringField("Suchbegriff", render_kw={'class':'form-control'})
-    casnr = StringField(u'Bitte geben Sie eine CAS-Nummer an:', render_kw={'class':'form-control'})
-    egnr = StringField(u'Bitte geben Sie eine EG-Nummer an:', render_kw={'class': 'form-control'})
-    concentration = FloatField(u'Bitte geben Sie eine Konzentration in wässriger Lösung an:', render_kw={'class':'form-control'})
+    substance_id = SelectField(u"Suchbegriff", choices=[], render_kw={'class': 'form-control'})
 
 class SubstanceMixtureForm (BaseForm):
     manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[], render_kw={'class':'form-control'})
@@ -168,73 +169,34 @@ class SubstanceFormView(TabelleFormView):
     formClass = SubstanceForm
 
     def renderForm(self):
-        conn = psycopg2.connect(host=self.host, user=self.username, password=self.password, dbname=self.dbname)
         try:
-            cur = conn.cursor()
-            insert = "SELECT substance_id, title FROM substance ORDER BY title;"
-            cur.execute(insert)
-            choices = cur.fetchall()
-            cur.close()
+            select = "SELECT substance_id, title, casnr, egnr FROM substance ORDER BY title;"
+            substances = self.db.execute(select)
         except:
-            choices = []
-        conn.close()
-        self.form.substance_id.choices = choices
+            substances = []
+        optionlist = list()
+        for i in substances:
+            subid = i[0]
+            subname = i[1]
+            subcas = i[2]
+            subeg = i[3]
+            subentry = f"{subname} CAS:{subcas} EG:{subeg} ID:{subid}"
+            optionlist.append((i[0], subentry))
+        self.form.substance_id.choices = optionlist
         self.form.process()
         return self.formTemplate()
+
 
     def submit(self, button):
         if button == 'Suche':
 
-            searchkey = self.context.tablename + '_id'
-            searchtable = self.context.tablename
-            casnr = self.form.casnr.data
-            egnr = self.form.egnr.data
-            concentration = self.form.concentration.data
-            substance_id = self.form.substance_id.data
+            substance_id = self.form.substance_id.data.split('ID:')[-1]
 
+            if substance_id:
+                select = "SELECT substance_id, title FROM substance WHERE substance_id = %s;" % (substance_id)
 
-            if substance_id and casnr and egnr and concentration:
-                select = "SELECT %s, title FROM %s WHERE casnr = '%s' AND egnr = '%s' AND concentration = %s AND %s = %s;" % (searchkey, searchtable, casnr, egnr, concentration, searchkey, substance_id)
-            elif substance_id and casnr and egnr:
-                select = "SELECT %s, title FROM %s WHERE casnr = '%s' AND egnr = '%s' AND %s = %s;" % (searchkey, searchtable, casnr, egnr, searchkey, substance_id)
-            elif substance_id and casnr and concentration:
-                select = "SELECT %s, title FROM %s WHERE casnr = '%s' AND concentration = %s AND %s = %s;" % (searchkey, searchtable, casnr, concentration, searchkey, substance_id)
-            elif substance_id and egnr and concentration:
-                select = "SELECT %s, title FROM %s WHERE egnr = '%s' AND concentration = %s AND %s = %s;" % (searchkey, searchtable, egnr, concentration, searchkey, substance_id)
-            elif casnr and egnr and concentration:
-                select = "SELECT %s, title FROM %s WHERE casnr = '%s' AND egnr = '%s' AND concentration = %s;" % (searchkey, searchtable, casnr, egnr, concentration)
-            elif substance_id and casnr:
-                select = "SELECT %s, title FROM %s WHERE casnr = '%s' AND %s = %s;" % (searchkey, searchtable, casnr, searchkey, substance_id)
-            elif substance_id and egnr:
-                select = "SELECT %s, title FROM %s WHERE egnr = '%s' AND %s = %s;" % (searchkey, searchtable, egnr, searchkey, substance_id)
-            elif substance_id and concentration:
-                select = "SELECT %s, title FROM %s WHERE concentration = %s AND %s = %s;" % (searchkey, searchtable, concentration, searchkey, substance_id)
-            elif casnr and egnr:
-                select = "SELECT %s, title FROM %s WHERE casnr = '%s' AND egnr = '%s';" % (searchkey, searchtable, casnr, egnr)
-            elif casnr and concentration:
-                select = "SELECT %s, title FROM %s WHERE casnr = '%s' AND concentration = %s;" % (searchkey, searchtable, casnr, concentration)
-            elif egnr and concentration:
-                select = "SELECT %s, title FROM %s WHERE egnr = '%s' AND concentration = %s;" % (searchkey, searchtable, egnr, concentration)
-            elif substance_id:
-                select = "SELECT %s, title FROM %s WHERE %s = %s;" % (searchkey, searchtable, searchkey, substance_id)
-            elif casnr:
-                select = "SELECT %s, title FROM %s WHERE casnr = '%s';" % (searchkey, searchtable, casnr)
-            elif egnr:
-                select = "SELECT %s, title FROM %s WHERE egnr = '%s';" % (searchkey, searchtable, egnr)
-            elif concentration:
-                select = "SELECT %s, title FROM %s WHERE concentration = %s;" % (searchkey, searchtable, concentration)
+                self.ergs = self.db.execute(select)
 
-
-            try:
-                conn = psycopg2.connect(host=self.host, user=self.username, password=self.password, dbname=self.dbname)
-                cur = conn.cursor()
-                cur.execute(select)
-                self.ergs = cur.fetchall()
-                cur.close
-                conn.close()
-
-            except:
-                self.ergs = []
 
 class SubstancemixtureFormView(TabelleFormView):
     formClass = SubstanceMixtureForm
