@@ -86,7 +86,7 @@
 	    </section>
 
             <section class="mt-3 mb-3">
-              <a class="btn btn-primary mb-3" tal:attributes="href python:article[12]" tal:condition="python:article[12]" target="_blank" role="button">Weitere Informationen (externe Gestis-Stoffdatenbank)</a>
+              <a class="btn btn-primary mb-3" tal:attributes="href python:view.getRightUrl(article[12])" tal:condition="python:article[12]" target="_blank" role="button">Weitere Informationen (externe Gestis-Stoffdatenbank)</a>
             </section>
 
             <section class="mt-3 mb-3" tal:condition="view/userCanEdit">
