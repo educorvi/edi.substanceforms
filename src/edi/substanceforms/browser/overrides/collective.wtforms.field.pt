@@ -42,7 +42,7 @@
       <input class="form-control" tal:attributes="list string:${field/label/field_id}datalistOptions;
                                                   id field/id;
 						  name field/name" 
-	     placeholder="Type to search...">
+	     placeholder="Bitte Suchbegriff eingeben...">
       <div tal:condition="errors" tal:attributes="id string:${field/label/field_id}ValidationFeedback" class="invalid-feedback">
         <ul tal:repeat="error errors">
           <li i18n:translate="" tal:content="error" tal:condition="python: type(error) != list"/>

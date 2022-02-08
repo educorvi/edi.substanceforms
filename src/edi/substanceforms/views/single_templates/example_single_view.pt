@@ -34,7 +34,7 @@
             <!-- TODO: Hier müssen alle anderen Attribute reingeschrieben werden -->		    
 	    <table class="table table-bordered">
 	      <thead>
-	        <th>Attribut</th>
+	        <th>Merkmal</th>
 		<th>Ausprägung</th>
 	      </thead>
               <tbody>
