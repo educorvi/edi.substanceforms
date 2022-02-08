@@ -31,7 +31,7 @@ class CreateForm(Form):
     dnel_lokal = StringField("DNEL (lokal)", render_kw={'class': 'form-control'})
     dnel_systemisch = StringField("DNEL (systemisch)", render_kw={'class': 'form-control'})
     gestislink = StringField("Link in externe Datenbank", render_kw={'class': 'form-control'})
-    published = True
+    status = "published" 
     #image_url = FileField("Bild hochladen", render_kw={'class': 'form-control'})
 
 class UpdateForm(Form):
@@ -104,7 +104,7 @@ class CreateFormView(WTFormView):
         if button == 'Speichern': #and self.validate():
             conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
             cur = conn.cursor()
-            insert = """INSERT INTO substance (title, description, webcode, casnr, egnr, concentration, skin_category, branch, dnel_lokal, dnel_systemisch, link, published)
+            insert = """INSERT INTO substance (title, description, webcode, casnr, egnr, concentration, skin_category, branch, dnel_lokal, dnel_systemisch, link, status)
             VALUES ('%s', '%s', '%s', %s, %s, %s, %s, %s, %s, %s, %s, %s);""" % (self.form.title.data,
                                                        self.form.description.data,
                                                        self.context.aq_parent.get_webcode(),
@@ -116,28 +116,8 @@ class CreateFormView(WTFormView):
                                                        check_value(self.form.dnel_lokal.data),
                                                        check_value(self.form.dnel_systemisch.data),
                                                        check_value(self.form.gestislink.data),
-                                                       check_value(self.form.published),
+                                                       check_value(self.form.status),
                                                                )
-
-            """
-            if self.form.image_url.data.filename:
-
-                try:
-                    cur.execute(insert)
-                    conn.commit()
-
-                    message = u'Das Wasch- und Reinigungsmittel wurde erfolgreich gespeichert.'
-                    ploneapi.portal.show_message(message=message, type='info', request=self.request)
-                except:
-                    imageobj = ploneapi.content.get(UID=image_url)
-                    ploneapi.content.delete(imageobj)
-
-                    message = u'Fehler beim Hinzufügen des Gefahrstoffgemisches'
-                    ploneapi.portal.show_message(message=message, type='error', request=self.request)
-
-                cur.close()
-                conn.close()
-            """
 
 
             cur.execute(insert)

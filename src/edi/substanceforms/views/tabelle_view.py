@@ -22,8 +22,9 @@ class LoginCredentials:
     password = 'reldbpassword'
 
 class BaseForm(Form):
+    """Base Form"""
 
-    search = StringField("Suchbegriff", render_kw={'class':'form-control'})
+    #search = StringField("Suchbegriff", render_kw={'class':'form-control'})
     #manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[])
 
 class TabelleFormView(WTFormView):
@@ -121,18 +122,17 @@ class HerstellerFormView(TabelleFormView):
     formClass = HerstellerForm
 
     def renderForm(self):
-        manus = [('alle', 'Alle anzeigen')]
         try:
             conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
             cur = conn.cursor()
             cur.execute("SELECT manufacturer_id, title FROM manufacturer ORDER BY title;")
-            manus += cur.fetchall()
+            erg = cur.fetchall()
+            manus = [(result[0], result[1] + ' ID:' + str(result[0])) for result in erg]
             cur.close
             conn.close()
         except:
-            manus += []
+            manus = []
         self.form.manu.choices = manus
-        #self.form.manu.default = 'alle'
         self.form.process()
         return self.formTemplate()
 
@@ -143,7 +143,7 @@ class HerstellerFormView(TabelleFormView):
 
             searchkey = self.context.tablename + '_id'
             searchtable = self.context.tablename
-            manu_id = self.form.manu.data
+            manu_id = self.form.manu.data.split('ID:')[-1]
 
             if manu_id == 'alle':
                 select = "SELECT %s, title FROM %s;" % (searchkey, searchtable)
