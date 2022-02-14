@@ -159,7 +159,7 @@ class Migrationview(BrowserView):
                     cur.close()
 
                     cur = conn.cursor()
-                    cur.execute("UPDATE substance_mixture SET productclass = '%s' WHERE substance_mixture_id = '%s';" % (toinsertid, selectedid))
+                    cur.execute("UPDATE substance_mixture SET productclass = %s WHERE substance_mixture_id = %s;" % (toinsertid, selectedid))
                     conn.commit()
                     cur.close()
                 except:
