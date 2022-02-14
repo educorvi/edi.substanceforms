@@ -148,7 +148,7 @@ class Migrationview(BrowserView):
                 cur = conn.cursor()
                 cur.execute("SELECT class_id FROM productclasses WHERE class_name = '%s';" % datenblatt_product_class)
                 toinsertid = cur.fetchall()
-                import pdb; pdb.set_trace()
+                #import pdb; pdb.set_trace()
                 cur.close()
 
                 cur = conn.cursor()
