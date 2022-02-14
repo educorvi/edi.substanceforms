@@ -140,6 +140,9 @@ class Migrationview(BrowserView):
             datenblatt_title = i.get('title')
             datenblatt_product_class = i.get('produktklasse')
 
+            if datenblatt_product_class == 'Waschmittel auf Basis Testbenzin':
+                datenblatt_product_class = 'Waschmittel auf Basis von Testbenzin'
+
             if datenblatt_product_class:
 
                 cur = conn.cursor()
