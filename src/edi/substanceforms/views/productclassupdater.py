@@ -142,6 +142,8 @@ class Migrationview(BrowserView):
 
             if datenblatt_product_class == 'Waschmittel auf Basis Testbenzin':
                 datenblatt_product_class = 'Waschmittel auf Basis von Testbenzin'
+            elif datenblatt_product_class == 'Reinigungsoele auf Pflanzenoelbasis':
+                datenblatt_product_class = 'Waschmittel auf Pflanzenölbasis'
 
             if datenblatt_product_class:
                 try:
