@@ -139,17 +139,17 @@ class Migrationview(BrowserView):
             if datenblatt_product_class:
 
                 cur = conn.cursor()
-                cur.execute("SELECT class_id FROM productclasses WHERE class_name = '%s';") % datenblatt_product_class
+                cur.execute("SELECT class_id FROM productclasses WHERE class_name = %s;") % datenblatt_product_class
                 toinsertid = cur.fetchall()
                 cur.close()
 
                 cur = conn.cursor()
-                cur.execute("SELECT substance_mixture_id FROM substance_mixture WHERE title = '%s';") % datenblatt_title
+                cur.execute("SELECT substance_mixture_id FROM substance_mixture WHERE title = %s;") % datenblatt_title
                 selectedid = cur.fetchall()
                 cur.close()
 
                 cur = conn.cursor()
-                cur.execute("UPDATE substance_mixture SET productclass = %s WHERE substance_mixture_id = '%s';") % (toinsertid, selectedid)
+                cur.execute("UPDATE substance_mixture SET productclass = %s WHERE substance_mixture_id = %s;") % (toinsertid, selectedid)
                 conn.commit()
                 cur.close()
 
