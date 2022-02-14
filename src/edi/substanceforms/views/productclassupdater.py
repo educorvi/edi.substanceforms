@@ -123,13 +123,17 @@ class Migrationview(BrowserView):
                         'klebstoffreiniger': 'Klebstoffreiniger', 'uv-offsetdruck': 'UV-Druck',
                         'klischeereiniger': 'Klischeereiniger', 'bodenreiniger': 'Bodenreiniger',
                         'entfetter': 'Entfetter', 'reflektorreiniger': 'Reflektorreiniger'}
-        for i in classesvocab:
-            cur = conn.cursor()
-            cur.execute(
-                "INSERT INTO productclasses (class_name) VALUES ('%s');" % i)
-            conn.commit()
-            cur.close()
-            print("Added %s to productclasses" % i)
+
+        running = 0
+        import pdb; pdb.set_trace()
+        if running == 1:
+            for i in classesvocab:
+                cur = conn.cursor()
+                cur.execute(
+                    "INSERT INTO productclasses (class_name) VALUES ('%s');" % i)
+                conn.commit()
+                cur.close()
+                print("Added %s to productclasses" % i)
 
 
         for i in erg6:
