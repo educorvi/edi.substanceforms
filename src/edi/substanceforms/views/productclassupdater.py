@@ -110,10 +110,7 @@ class Migrationview(BrowserView):
         password = self.password
         database = self.dbname
 
-        erg4 = getEtiketten()
-        erg5 = getManuell()
         erg6 = getProduktdatenblatt()
-        erg7 = getHeatset()
         conn = psycopg2.connect(host=hostname, user=username, password=password, dbname=database)
 
         usecasevocab = ['Buchdruck', 'Flexodruck', 'Siebdruck', 'Farbreiniger alle Druckverfahren', 'Offsetdruck',
