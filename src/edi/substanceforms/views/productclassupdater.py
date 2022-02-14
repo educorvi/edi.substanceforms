@@ -138,6 +138,7 @@ class Migrationview(BrowserView):
 
 
         for i in erg6:
+            import pdb; pdb.set_trace()
             datenblatt_title = i.get('title')
             datenblatt_desc = i.get('description')
             datenblatt_uid = get_webcode(self)
