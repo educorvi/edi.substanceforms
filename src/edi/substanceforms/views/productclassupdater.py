@@ -113,9 +113,9 @@ class Migrationview(BrowserView):
         erg6 = getProduktdatenblatt()
         conn = psycopg2.connect(host=hostname, user=username, password=password, dbname=database)
 
-        usecasevocab = ['Buchdruck', 'Flexodruck', 'Siebdruck', 'Farbreiniger alle Druckverfahren', 'Offsetdruck',
-                        'Waschanlage', 'Tiefdruck', 'Klebstoffreiniger', 'UV-Druck', 'Klischeereiniger',
-                        'Bodenreiniger', 'Entfetter', 'Reflektorreiniger']
+        classesvocab = ['Waschmittel auf Pflanzenölbasis', 'UV-Waschmittel', 'Waschmittel auf Kohlenwasserstoffbasis',
+                        'Waschmittel auf Basis von Testbenzin', 'Waschmittel auf wässriger Basis/Emulsionen',
+                        ]
 
         usecasetranslate = {'buchdruck': 'Buchdruck', 'flexodruck': 'Flexodruck', 'siebdruck': 'Siebdruck',
                         'farbreiniger_alle_druckverfahren': 'Farbreiniger alle Druckverfahren',
@@ -123,85 +123,40 @@ class Migrationview(BrowserView):
                         'klebstoffreiniger': 'Klebstoffreiniger', 'uv-offsetdruck': 'UV-Druck',
                         'klischeereiniger': 'Klischeereiniger', 'bodenreiniger': 'Bodenreiniger',
                         'entfetter': 'Entfetter', 'reflektorreiniger': 'Reflektorreiniger'}
-        for i in usecasevocab:
+        for i in classesvocab:
             cur = conn.cursor()
-            # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
             cur.execute(
-                "INSERT INTO usecases (usecase_name) VALUES ('%s');" % i)
+                "INSERT INTO productclasses (class_name) VALUES ('%s');" % i)
             conn.commit()
-            # print(manuell_title)  # correct
             cur.close()
-            print("Added %s to usecases" % i)
+            print("Added %s to productclasses" % i)
 
 
         for i in erg6:
-            import pdb; pdb.set_trace()
             datenblatt_title = i.get('title')
-            datenblatt_desc = i.get('description')
-            datenblatt_uid = get_webcode(self)
-            datenblatt_link = i.get('@id')
-            datenblatt_skin_category = i.get('hskategorie')
-            datenblatt_checked_emissions = i.get('emissionsgeprueft')
-            datenblatt_product_category = i.get('produktkategorie')
             datenblatt_product_class = i.get('produktklasse')
-            datenblatt_flashpoint = i.get('flammpunkt')
-            datenblatt_values_range = i.get('wertebereich')
-            datenblatt_material_compatibility = i.get('materialvertraeglichkeit')
-            datenblatt_comments = i.get('bemerkungen')
-            datenblatt_review_state = i.get('review_state')
-            datenblatt_manufacturer_name = i.get('hersteller')['title']
 
-            if datenblatt_review_state == 'published':
-                datenblatt_published = 'published'
-            else:
-                datenblatt_published = 'private'
+            if datenblatt_product_class:
 
-            if datenblatt_skin_category:
-                pass
-            else:
-                datenblatt_skin_category = ''
-
-            if datenblatt_product_category:
-                if datenblatt_product_category[0] == 'UV-Druck':
-                    datenblatt_substancetype = 'uv'
-                else:
-                    datenblatt_substancetype = 'offset'
-            else:
-                datenblatt_substancetype = 'leer'
-
-            cur = conn.cursor()
-            cur.execute(
-                "SELECT manufacturer_id FROM manufacturer WHERE title = '{0}';".format(datenblatt_manufacturer_name))
-            datenblatt_manufacturer_id = cur.fetchall()
-            cur.close()
-
-            if datenblatt_manufacturer_id:
                 cur = conn.cursor()
-                # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
-                cur.execute(
-                    "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, comments, status, manufacturer_id) VALUES (%s, %s, %s, 'druck_und_papier', %s, NULL, %s, %s, %s, %s, %s, %s, %s);",
-                    (datenblatt_title, datenblatt_desc, datenblatt_uid, datenblatt_substancetype,
-                     datenblatt_skin_category,
-                     datenblatt_checked_emissions, datenblatt_flashpoint, datenblatt_values_range,
-                     str(datenblatt_comments), datenblatt_published, datenblatt_manufacturer_id[0]))
-                conn.commit()
-                # print(datenblatt_title)  # correct
+                cur.execute("SELECT class_id FROM productclasses WHERE class_name = '%s';") % datenblatt_product_class
+                toinsertid = cur.fetchall()
                 cur.close()
-            else:
-                print("Keine ID")
+
                 cur = conn.cursor()
-                # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
-                cur.execute(
-                    "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, comments, status) VALUES (%s, %s, %s, 'druck_und_papier', %s, NULL, %s, %s, %s, %s, %s, %s);",
-                    (datenblatt_title, datenblatt_desc, datenblatt_uid, datenblatt_substancetype, datenblatt_skin_category,
-                     datenblatt_checked_emissions, datenblatt_flashpoint, datenblatt_values_range,
-                     str(datenblatt_comments), datenblatt_published))
-                conn.commit()
-                # print(datenblatt_title)  # correct
+                cur.execute("SELECT substance_mixture_id FROM substance_mixture WHERE title = '%s';") % datenblatt_title
+                selectedid = cur.fetchall()
                 cur.close()
+
+                cur = conn.cursor()
+                cur.execute("UPDATE substance_mixture SET productclass = %s WHERE substance_mixture_id = '%s';") % (toinsertid, selectedid)
+                conn.commit()
+                cur.close()
+
+            else:
+                print("Fehler")
 
         print('Successfully migrated PRODUCT_DATASHEET')
-
         print('CHEERS! DATA MIGRATION SUCCESSFULLY COMPLETED :)')
 
         return template
