@@ -144,24 +144,26 @@ class Migrationview(BrowserView):
                 datenblatt_product_class = 'Waschmittel auf Basis von Testbenzin'
 
             if datenblatt_product_class:
+                try:
+                    cur = conn.cursor()
+                    cur.execute("SELECT class_id FROM productclasses WHERE class_name = '%s';" % datenblatt_product_class)
+                    resultid = cur.fetchall()
+                    toinsertid = resultid[0][0]
+                    #import pdb; pdb.set_trace()
+                    cur.close()
 
-                cur = conn.cursor()
-                cur.execute("SELECT class_id FROM productclasses WHERE class_name = '%s';" % datenblatt_product_class)
-                resultid = cur.fetchall()
-                toinsertid = resultid[0][0]
-                #import pdb; pdb.set_trace()
-                cur.close()
+                    cur = conn.cursor()
+                    cur.execute("SELECT substance_mixture_id FROM substance_mixture WHERE title = '%s';" % datenblatt_title)
+                    resultid2 = cur.fetchall()
+                    selectedid = resultid2[0][0]
+                    cur.close()
 
-                cur = conn.cursor()
-                cur.execute("SELECT substance_mixture_id FROM substance_mixture WHERE title = '%s';" % datenblatt_title)
-                resultid2 = cur.fetchall()
-                selectedid = resultid2[0][0]
-                cur.close()
-
-                cur = conn.cursor()
-                cur.execute("UPDATE substance_mixture SET productclass = '%s' WHERE substance_mixture_id = '%s';" % (toinsertid, selectedid))
-                conn.commit()
-                cur.close()
+                    cur = conn.cursor()
+                    cur.execute("UPDATE substance_mixture SET productclass = '%s' WHERE substance_mixture_id = '%s';" % (toinsertid, selectedid))
+                    conn.commit()
+                    cur.close()
+                except:
+                    import pdb; pdb.set_trace()
 
             else:
                 print("Fehler")
