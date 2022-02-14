@@ -28,6 +28,13 @@
     />
 
   <browser:page
+    name="productclassupdater"
+    for="*"
+    class=".productclassupdater.Migrationview"
+    permission="zope2.View"
+    />
+
+  <browser:page
     name="powdermigration"
     for="*"
     class=".powdermigration.Migrationview"
