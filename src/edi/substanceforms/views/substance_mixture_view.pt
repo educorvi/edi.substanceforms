@@ -39,64 +39,69 @@
             <span tal:content="structure provider:plone.abovecontentbody" />
 
             <!-- TODO: Hier müssen alle anderen Attribute reingeschrieben werden -->
-	    <section class="mt-3 mb-3">
 
-      <dl>
+     <article>
 
-        <dt tal:condition="python: view.get_attr_translation('substance_types_new', article[5])">Typ des Wasch- und Reinigungsmittels</dt>
-        <dd tal:condition="python: view.get_attr_translation('substance_types_new', article[5])" tal:content="python: view.get_attr_translation('substance_types_new', article[5])"/>
+      <section class="article-body clearfix">
 
-        <dt tal:condition="python: view.get_manufacturer(article[25])">Hersteller</dt>
-        <dd tal:condition="python: view.get_manufacturer(article[25])" tal:content="python: view.get_manufacturer(article[25])"/>
+      <dl class="row key-value-pair">
 
-        <dt tal:condition="python: view.get_attr_translation('branchen', article[4])">Branche</dt>
-        <dd tal:condition="python: view.get_attr_translation('branchen', article[4])" tal:content="python: view.get_attr_translation('branchen', article[4])"/>
+        <dt class="col col-sm-3" tal:condition="python: view.get_attr_translation('substance_types_new', article[5])">Typ des Wasch- und Reinigungsmittels</dt>
+        <dd class="col col-sm-6" tal:condition="python: view.get_attr_translation('substance_types_new', article[5])" tal:content="python: view.get_attr_translation('substance_types_new', article[5])"/>
 
-        <dt tal:condition="python:article[10]">Verdampfungsfaktor 150 Grad</dt>
-        <dd tal:condition="python:article[10]" tal:content="python:article[10]"/>
+        <dt class="col col-sm-3" tal:condition="python: view.get_manufacturer(article[25])">Hersteller</dt>
+        <dd class="col col-sm-6" tal:condition="python: view.get_manufacturer(article[25])" tal:content="python: view.get_manufacturer(article[25])"/>
 
-        <dt tal:condition="python:article[11]">Verdampfungsfaktor 160 Grad</dt>
-        <dd tal:condition="python:article[11]" tal:content="python:article[11]"/>
+        <dt class="col col-sm-3" tal:condition="python: view.get_attr_translation('branchen', article[4])">Branche</dt>
+        <dd class="col col-sm-6" tal:condition="python: view.get_attr_translation('branchen', article[4])" tal:content="python: view.get_attr_translation('branchen', article[4])"/>
 
-        <dt tal:condition="python:article[12]">Verdampfungsfaktor 170 Grad</dt>
-        <dd tal:condition="python:article[12]" tal:content="python:article[12]"/>
+        <dt class="col col-sm-3" tal:condition="python:article[10]">Verdampfungsfaktor 150 Grad</dt>
+        <dd class="col col-sm-6" tal:condition="python:article[10]" tal:content="python:article[10]"/>
 
-        <dt tal:condition="python:article[13]">Verdampfungsfaktor 180 Grad</dt>
-        <dd tal:condition="python:article[13]" tal:content="python:article[13]"/>
+        <dt class="col col-sm-3" tal:condition="python:article[11]">Verdampfungsfaktor 160 Grad</dt>
+        <dd class="col col-sm-6" tal:condition="python:article[11]" tal:content="python:article[11]"/>
 
-        <dt tal:condition="python:article[14]">UEG in g/m3</dt>
-        <dd tal:condition="python:article[14]" tal:content="python:article[14]"/>
+        <dt class="col col-sm-3" tal:condition="python:article[12]">Verdampfungsfaktor 170 Grad</dt>
+        <dd class="col col-sm-6" tal:condition="python:article[12]" tal:content="python:article[12]"/>
 
-        <dt tal:condition="python:article[15]">Responsefaktor</dt>
-        <dd tal:condition="python:article[15]" tal:content="python:article[15]"/>
+        <dt class="col col-sm-3" tal:condition="python:article[13]">Verdampfungsfaktor 180 Grad</dt>
+        <dd class="col col-sm-6" tal:condition="python:article[13]" tal:content="python:article[13]"/>
 
-        <dt tal:condition="python: view.get_attr_translation('hskategorie', article[16])">Hautschutzmittelgruppe</dt>
-        <dd tal:condition="python: view.get_attr_translation('hskategorie', article[16])" tal:content="python: view.get_attr_translation('hskategorie', article[16])"/>
+        <dt class="col col-sm-3" tal:condition="python:article[14]">UEG in g/m3</dt>
+        <dd class="col col-sm-6" tal:condition="python:article[14]" tal:content="python:article[14]"/>
 
-        <dt tal:condition="python:article[18]">Prüfdatum</dt>
-        <dd tal:condition="python:article[18]" tal:content="python:article[18]"/>
+        <dt class="col col-sm-3" tal:condition="python:article[15]">Responsefaktor</dt>
+        <dd class="col col-sm-6" tal:condition="python:article[15]" tal:content="python:article[15]"/>
 
-        <dt tal:condition="python: view.get_attr_translation('boolvocab', str(article[17]))">Emissionsarmes Produkt</dt>
-        <dd tal:condition="python: view.get_attr_translation('boolvocab', str(article[17]))" tal:content="python: view.get_attr_translation('boolvocab', str(article[17]))"/>
+        <dt class="col col-sm-3" tal:condition="python: view.get_attr_translation('hskategorie', article[16])">Hautschutzmittelgruppe</dt>
+        <dd class="col col-sm-6" tal:condition="python: view.get_attr_translation('hskategorie', article[16])" tal:content="python: view.get_attr_translation('hskategorie', article[16])"/>
 
-        <dt tal:condition="python:article[19]">Flammpunkt in °C</dt>
-        <dd tal:condition="python:article[19]" tal:content="python:article[19]"/>
+        <dt class="col col-sm-3" tal:condition="python:article[18]">Prüfdatum</dt>
+        <dd class="col col-sm-6" tal:condition="python:article[18]" tal:content="python:article[18]"/>
 
-        <dt tal:condition="python:view.get_none_translation(article[23])">Bemerkungen</dt>
-        <dd tal:condition="python:view.get_none_translation(article[23])" tal:content="python:view.get_none_translation(article[23])"/>
+        <dt class="col col-sm-3" tal:condition="python: view.get_attr_translation('boolvocab', str(article[17]))">Emissionsarmes Produkt</dt>
+        <dd class="col col-sm-6" tal:condition="python: view.get_attr_translation('boolvocab', str(article[17]))" tal:content="python: view.get_attr_translation('boolvocab', str(article[17]))"/>
 
-        <dt tal:condition="python: view.translate_usecases(view.new_usecase_translation())">Verwendungszwecke</dt>
-        <dd tal:condition="python: view.translate_usecases(view.new_usecase_translation())" tal:content="python: view.translate_usecases(view.new_usecase_translation())"/>
+        <dt class="col col-sm-3" tal:condition="python:article[19]">Flammpunkt in °C</dt>
+        <dd class="col col-sm-6" tal:condition="python:article[19]" tal:content="python:article[19]"/>
 
-        <dt tal:condition="python: view.translate_application_areas(view.new_application_areas_translation())">Anwendungsgebiete</dt>
-        <dd tal:condition="python: view.translate_application_areas(view.new_application_areas_translation())" tal:content="python: view.translate_application_areas(view.new_application_areas_translation())"/>
+        <dt class="col col-sm-3" tal:condition="python:view.get_none_translation(article[23])">Bemerkungen</dt>
+        <dd class="col col-sm-6" tal:condition="python:view.get_none_translation(article[23])" tal:content="python:view.get_none_translation(article[23])"/>
 
-        <dt tal:condition="python:view.translate_recipes(view.get_recipes())">Bestandteile</dt>
-        <dd tal:condition="python:view.translate_recipes(view.get_recipes())" tal:content="python:view.translate_recipes(view.get_recipes())"/>
+        <dt class="col col-sm-3" tal:condition="python: view.translate_usecases(view.new_usecase_translation())">Verwendungszwecke</dt>
+        <dd class="col col-sm-6" tal:condition="python: view.translate_usecases(view.new_usecase_translation())" tal:content="python: view.translate_usecases(view.new_usecase_translation())"/>
+
+        <dt class="col col-sm-3" tal:condition="python: view.translate_application_areas(view.new_application_areas_translation())">Anwendungsgebiete</dt>
+        <dd class="col col-sm-6" tal:condition="python: view.translate_application_areas(view.new_application_areas_translation())" tal:content="python: view.translate_application_areas(view.new_application_areas_translation())"/>
+
+        <dt class="col col-sm-3" tal:condition="python:view.translate_recipes(view.get_recipes())">Bestandteile</dt>
+        <dd class="col col-sm-6" tal:condition="python:view.translate_recipes(view.get_recipes())" tal:content="python:view.translate_recipes(view.get_recipes())"/>
 
       </dl>
 
       </section>
+
+     </article>
 
             <section class="mt-3 mb-3" tal:condition="view/userCanEdit">
               <a class="btn btn-primary mb-3" tal:attributes="href python:context.absolute_url()+'/update-mixture-form?itemid=%s' % view.itemid" role="button">Artikel bearbeiten</a>
