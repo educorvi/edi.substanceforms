@@ -46,88 +46,88 @@
 
       <dl class="row key-value-pair">
 
-        <dt class="col col-sm-3" tal:condition="python: view.get_attr_translation('substance_types_new', article[5])">Typ des Wasch- und Reinigungsmittels</dt>
-        <dd class="col col-sm-6" tal:condition="python: view.get_attr_translation('substance_types_new', article[5])" tal:content="python: view.get_attr_translation('substance_types_new', article[5])"/>
+        <dt class="col col-sm-5" tal:condition="python: view.get_attr_translation('substance_types_new', article[5])">Typ des Wasch- und Reinigungsmittels</dt>
+        <dd class="col col-sm-7" tal:condition="python: view.get_attr_translation('substance_types_new', article[5])" tal:content="python: view.get_attr_translation('substance_types_new', article[5])"/>
 
         <div class="w-100 divider"></div>
 
-        <dt class="col col-sm-3" tal:condition="python: view.get_manufacturer(article[25])">Hersteller</dt>
-        <dd class="col col-sm-6" tal:condition="python: view.get_manufacturer(article[25])" tal:content="python: view.get_manufacturer(article[25])"/>
+        <dt class="col col-sm-5" tal:condition="python: view.get_manufacturer(article[25])">Hersteller</dt>
+        <dd class="col col-sm-7" tal:condition="python: view.get_manufacturer(article[25])" tal:content="python: view.get_manufacturer(article[25])"/>
 
         <div class="w-100 divider"></div>
 
-        <dt class="col col-sm-3" tal:condition="python: view.get_attr_translation('branchen', article[4])">Branche</dt>
-        <dd class="col col-sm-6" tal:condition="python: view.get_attr_translation('branchen', article[4])" tal:content="python: view.get_attr_translation('branchen', article[4])"/>
+        <dt class="col col-sm-5" tal:condition="python: view.get_attr_translation('branchen', article[4])">Branche</dt>
+        <dd class="col col-sm-7" tal:condition="python: view.get_attr_translation('branchen', article[4])" tal:content="python: view.get_attr_translation('branchen', article[4])"/>
 
         <div class="w-100 divider"></div>
 
-        <dt class="col col-sm-3" tal:condition="python:article[10]">Verdampfungsfaktor 150 Grad</dt>
-        <dd class="col col-sm-6" tal:condition="python:article[10]" tal:content="python:article[10]"/>
+        <dt class="col col-sm-5" tal:condition="python:article[10]">Verdampfungsfaktor 150 Grad</dt>
+        <dd class="col col-sm-7" tal:condition="python:article[10]" tal:content="python:article[10]"/>
 
         <div class="w-100 divider"></div>
 
-        <dt class="col col-sm-3" tal:condition="python:article[11]">Verdampfungsfaktor 160 Grad</dt>
-        <dd class="col col-sm-6" tal:condition="python:article[11]" tal:content="python:article[11]"/>
+        <dt class="col col-sm-5" tal:condition="python:article[11]">Verdampfungsfaktor 160 Grad</dt>
+        <dd class="col col-sm-7" tal:condition="python:article[11]" tal:content="python:article[11]"/>
 
         <div class="w-100 divider"></div>
 
-        <dt class="col col-sm-3" tal:condition="python:article[12]">Verdampfungsfaktor 170 Grad</dt>
-        <dd class="col col-sm-6" tal:condition="python:article[12]" tal:content="python:article[12]"/>
+        <dt class="col col-sm-5" tal:condition="python:article[12]">Verdampfungsfaktor 170 Grad</dt>
+        <dd class="col col-sm-7" tal:condition="python:article[12]" tal:content="python:article[12]"/>
 
         <div class="w-100 divider"></div>
 
-        <dt class="col col-sm-3" tal:condition="python:article[13]">Verdampfungsfaktor 180 Grad</dt>
-        <dd class="col col-sm-6" tal:condition="python:article[13]" tal:content="python:article[13]"/>
+        <dt class="col col-sm-5" tal:condition="python:article[13]">Verdampfungsfaktor 180 Grad</dt>
+        <dd class="col col-sm-7" tal:condition="python:article[13]" tal:content="python:article[13]"/>
 
         <div class="w-100 divider"></div>
 
-        <dt class="col col-sm-3" tal:condition="python:article[14]">UEG in g/m3</dt>
-        <dd class="col col-sm-6" tal:condition="python:article[14]" tal:content="python:article[14]"/>
+        <dt class="col col-sm-5" tal:condition="python:article[14]">UEG in g/m3</dt>
+        <dd class="col col-sm-7" tal:condition="python:article[14]" tal:content="python:article[14]"/>
 
         <div class="w-100 divider"></div>
 
-        <dt class="col col-sm-3" tal:condition="python:article[15]">Responsefaktor</dt>
-        <dd class="col col-sm-6" tal:condition="python:article[15]" tal:content="python:article[15]"/>
+        <dt class="col col-sm-5" tal:condition="python:article[15]">Responsefaktor</dt>
+        <dd class="col col-sm-7" tal:condition="python:article[15]" tal:content="python:article[15]"/>
 
         <div class="w-100 divider"></div>
 
-        <dt class="col col-sm-3" tal:condition="python: view.get_attr_translation('hskategorie', article[16])">Hautschutzmittelgruppe</dt>
-        <dd class="col col-sm-6" tal:condition="python: view.get_attr_translation('hskategorie', article[16])" tal:content="python: view.get_attr_translation('hskategorie', article[16])"/>
+        <dt class="col col-sm-5" tal:condition="python: view.get_attr_translation('hskategorie', article[16])">Hautschutzmittelgruppe</dt>
+        <dd class="col col-sm-7" tal:condition="python: view.get_attr_translation('hskategorie', article[16])" tal:content="python: view.get_attr_translation('hskategorie', article[16])"/>
 
         <div class="w-100 divider"></div>
 
-        <dt class="col col-sm-3" tal:condition="python:article[18]">Prüfdatum</dt>
-        <dd class="col col-sm-6" tal:condition="python:article[18]" tal:content="python:article[18]"/>
+        <dt class="col col-sm-5" tal:condition="python:article[18]">Prüfdatum</dt>
+        <dd class="col col-sm-7" tal:condition="python:article[18]" tal:content="python:article[18]"/>
 
         <div class="w-100 divider"></div>
 
-        <dt class="col col-sm-3" tal:condition="python: view.get_attr_translation('boolvocab', str(article[17]))">Emissionsarmes Produkt</dt>
-        <dd class="col col-sm-6" tal:condition="python: view.get_attr_translation('boolvocab', str(article[17]))" tal:content="python: view.get_attr_translation('boolvocab', str(article[17]))"/>
+        <dt class="col col-sm-5" tal:condition="python: view.get_attr_translation('boolvocab', str(article[17]))">Emissionsarmes Produkt</dt>
+        <dd class="col col-sm-7" tal:condition="python: view.get_attr_translation('boolvocab', str(article[17]))" tal:content="python: view.get_attr_translation('boolvocab', str(article[17]))"/>
 
         <div class="w-100 divider"></div>
 
-        <dt class="col col-sm-3" tal:condition="python:article[19]">Flammpunkt in °C</dt>
-        <dd class="col col-sm-6" tal:condition="python:article[19]" tal:content="python:article[19]"/>
+        <dt class="col col-sm-5" tal:condition="python:article[19]">Flammpunkt in °C</dt>
+        <dd class="col col-sm-7" tal:condition="python:article[19]" tal:content="python:article[19]"/>
 
         <div class="w-100 divider"></div>
 
-        <dt class="col col-sm-3" tal:condition="python:view.get_none_translation(article[23])">Bemerkungen</dt>
-        <dd class="col col-sm-6" tal:condition="python:view.get_none_translation(article[23])" tal:content="python:view.get_none_translation(article[23])"/>
+        <dt class="col col-sm-5" tal:condition="python:view.get_none_translation(article[23])">Bemerkungen</dt>
+        <dd class="col col-sm-7" tal:condition="python:view.get_none_translation(article[23])" tal:content="python:view.get_none_translation(article[23])"/>
 
         <div class="w-100 divider"></div>
 
-        <dt class="col col-sm-3" tal:condition="python: view.translate_usecases(view.new_usecase_translation())">Verwendungszwecke</dt>
-        <dd class="col col-sm-6" tal:condition="python: view.translate_usecases(view.new_usecase_translation())" tal:content="python: view.translate_usecases(view.new_usecase_translation())"/>
+        <dt class="col col-sm-5" tal:condition="python: view.translate_usecases(view.new_usecase_translation())">Verwendungszwecke</dt>
+        <dd class="col col-sm-7" tal:condition="python: view.translate_usecases(view.new_usecase_translation())" tal:content="python: view.translate_usecases(view.new_usecase_translation())"/>
 
         <div class="w-100 divider"></div>
 
-        <dt class="col col-sm-3" tal:condition="python: view.translate_application_areas(view.new_application_areas_translation())">Anwendungsgebiete</dt>
-        <dd class="col col-sm-6" tal:condition="python: view.translate_application_areas(view.new_application_areas_translation())" tal:content="python: view.translate_application_areas(view.new_application_areas_translation())"/>
+        <dt class="col col-sm-5" tal:condition="python: view.translate_application_areas(view.new_application_areas_translation())">Anwendungsgebiete</dt>
+        <dd class="col col-sm-7" tal:condition="python: view.translate_application_areas(view.new_application_areas_translation())" tal:content="python: view.translate_application_areas(view.new_application_areas_translation())"/>
 
         <div class="w-100 divider"></div>
 
-        <dt class="col col-sm-3" tal:condition="python:view.translate_recipes(view.get_recipes())">Bestandteile</dt>
-        <dd class="col col-sm-6" tal:condition="python:view.translate_recipes(view.get_recipes())" tal:content="python:view.translate_recipes(view.get_recipes())"/>
+        <dt class="col col-sm-5" tal:condition="python:view.translate_recipes(view.get_recipes())">Bestandteile</dt>
+        <dd class="col col-sm-7" tal:condition="python:view.translate_recipes(view.get_recipes())" tal:content="python:view.translate_recipes(view.get_recipes())"/>
 
         <div class="w-100 divider"></div>
 
