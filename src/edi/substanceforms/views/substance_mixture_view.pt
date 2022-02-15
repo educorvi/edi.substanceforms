@@ -134,6 +134,18 @@
           </tr>
 	      </tbody>
 	    </table>
+
+      <dl>
+          <dt>Beast of Bodmin</dt>
+          <dd>A large feline inhabiting Bodmin Moor.</dd>
+
+          <dt>Morgawr</dt>
+          <dd>A sea serpent.</dd>
+
+          <dt>Owlman</dt>
+          <dd>A giant owl-like creature.</dd>
+      </dl>
+
 	    </section>
 
             <section class="mt-3 mb-3" tal:condition="view/userCanEdit">
