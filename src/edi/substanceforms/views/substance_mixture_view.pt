@@ -46,6 +46,8 @@
 
       <dl class="row key-value-pair">
 
+        <div class="w-100 divider"></div>
+
         <dt class="col col-sm-3" tal:condition="python: view.get_attr_translation('substance_types_new', article[5])">Typ des Wasch- und Reinigungsmittels</dt>
         <dd class="col col-sm-6" tal:condition="python: view.get_attr_translation('substance_types_new', article[5])" tal:content="python: view.get_attr_translation('substance_types_new', article[5])"/>
 
@@ -128,6 +130,8 @@
 
         <dt class="col col-sm-3" tal:condition="python:view.translate_recipes(view.get_recipes())">Bestandteile</dt>
         <dd class="col col-sm-6" tal:condition="python:view.translate_recipes(view.get_recipes())" tal:content="python:view.translate_recipes(view.get_recipes())"/>
+
+        <div class="w-100 divider"></div>
 
       </dl>
 
