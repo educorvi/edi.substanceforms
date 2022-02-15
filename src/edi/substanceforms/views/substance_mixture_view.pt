@@ -227,7 +227,7 @@
           <span class="col-lg-9 col-12" tal:content="structure provider:plone.belowcontentbody" />
         </div>
 
-      </div>
+      <!--</div>-->
 
     </tal:main-macro>
 </metal:main>
