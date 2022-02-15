@@ -39,34 +39,53 @@
             <span tal:content="structure provider:plone.abovecontentbody" />
 
             <!-- TODO: Hier müssen alle anderen Attribute reingeschrieben werden -->
-	    <section class="mt-3 mb-3">
 
-          <dl>
+      <article>
 
-	          <dt tal:condition="python:article[1]">Name</dt>
-	          <dd tal:condition="python:article[1]" tal:content="python:article[1]"/>
+        <section class="article-body clearfix">
 
-	          <dt tal:condition="python:article[2]">Beschreibung</dt>
-	          <dd tal:condition="python:article[2]" tal:content="python:article[2]"/>
+          <dl class="row key-value-pair">
 
-	          <dt tal:condition="python:article[4]">Produktklasse</dt>
-	          <dd tal:condition="python:article[4]" tal:content="python:article[4]"/>
+	          <dt class="col col-sm-3" tal:condition="python:article[1]">Name</dt>
+	          <dd class="col col-sm-6" tal:condition="python:article[1]" tal:content="python:article[1]"/>
 
-	          <dt tal:condition="python:article[5]">Ausgangsmaterial</dt>
-	          <dd tal:condition="python:article[5]" tal:content="python:article[5]"/>
+            <div class="w-100 divider"></div>
 
-	          <dt tal:condition="python:article[6]">Medianwert</dt>
-            <dd tal:condition="python:article[6]" tal:content="python:article[6]"/>
+            <dt class="col col-sm-3" tal:condition="python:article[2]">Beschreibung</dt>
+	          <dd class="col col-sm-6" tal:condition="python:article[2]" tal:content="python:article[2]"/>
 
-	          <dt tal:condition="python:article[7]">Volumenanteil</dt>
-            <dd tal:condition="python:article[7]" tal:content="python:article[7]"/>
+            <div class="w-100 divider"></div>
 
-	          <dt tal:condition="python: view.get_attr_translation('boolvocab', str(article[8]))">Emissionsgeprüft</dt>
-            <dd tal:condition="python: view.get_attr_translation('boolvocab', str(article[8]))" tal:content="python: view.get_attr_translation('boolvocab', str(article[8]))"/>
+            <dt class="col col-sm-3" tal:condition="python:article[4]">Produktklasse</dt>
+	          <dd class="col col-sm-6" tal:condition="python:article[4]" tal:content="python:article[4]"/>
+
+            <div class="w-100 divider"></div>
+
+            <dt class="col col-sm-3" tal:condition="python:article[5]">Ausgangsmaterial</dt>
+	          <dd class="col col-sm-6" tal:condition="python:article[5]" tal:content="python:article[5]"/>
+
+            <div class="w-100 divider"></div>
+
+            <dt class="col col-sm-3" tal:condition="python:article[6]">Medianwert</dt>
+            <dd class="col col-sm-6" tal:condition="python:article[6]" tal:content="python:article[6]"/>
+
+            <div class="w-100 divider"></div>
+
+            <dt class="col col-sm-3" tal:condition="python:article[7]">Volumenanteil</dt>
+            <dd class="col col-sm-6" tal:condition="python:article[7]" tal:content="python:article[7]"/>
+
+            <div class="w-100 divider"></div>
+
+            <dt class="col col-sm-3" tal:condition="python: view.get_attr_translation('boolvocab', str(article[8]))">Emissionsgeprüft</dt>
+            <dd class="col col-sm-6" tal:condition="python: view.get_attr_translation('boolvocab', str(article[8]))" tal:content="python: view.get_attr_translation('boolvocab', str(article[8]))"/>
+
+            <div class="w-100 divider"></div>
 
           </dl>
 
       </section>
+
+      </article>
 
 
             <section class="mt-3 mb-3" tal:condition="view/userCanEdit">
