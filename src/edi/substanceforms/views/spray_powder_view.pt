@@ -81,6 +81,34 @@
 	    </table>
 	    </section>
 
+
+          <dl>
+
+	          <dt tal:condition="python:article[1]">Name</dt>
+	          <dd tal:condition="python:article[1]" tal:content="python:article[1]"/>
+
+	          <dt tal:condition="python:article[2]">Beschreibung</dt>
+	          <dd tal:condition="python:article[2]" tal:content="python:article[2]"/>
+
+	          <dt tal:condition="python:article[4]">Produktklasse</dt>
+	          <dd tal:condition="python:article[4]" tal:content="python:article[4]"/>
+
+	          <dt tal:condition="python:article[5]">Ausgangsmaterial</dt>
+	          <dd tal:condition="python:article[5]" tal:content="python:article[5]"/>
+
+	          <dt tal:condition="python:article[6]">Medianwert</dt>
+            <dd tal:condition="python:article[6]" tal:content="python:article[6]"/>
+
+	          <dt tal:condition="python:article[7]">Volumenanteil</dt>
+            <dd tal:condition="python:article[7]" tal:content="python:article[7]"/>
+
+	          <dt tal:condition="python: view.get_attr_translation('boolvocab', str(article[8]))">Emissionsgeprüft</dt>
+            <dd tal:condition="python: view.get_attr_translation('boolvocab', str(article[8]))" tal:content="python: view.get_attr_translation('boolvocab', str(article[8]))"/>
+
+          </dl>
+
+
+
             <section class="mt-3 mb-3" tal:condition="view/userCanEdit">
               <a class="btn btn-primary" tal:attributes="href python:context.absolute_url()+'/update-powder-form?itemid=%s' % view.itemid" role="button">Artikel Bearbeiten</a>
             </section>
