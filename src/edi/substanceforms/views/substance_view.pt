@@ -36,42 +36,68 @@
             <span tal:content="structure provider:plone.abovecontentbody" />
 
             <!-- TODO: Hier müssen alle anderen Attribute reingeschrieben werden -->
-    <section class="mt-3 mb-3">
 
-      <dl>
-        <dt tal:condition="python:article[1]">Name</dt>
-        <dd tal:condition="python:article[1]" tal:content="python:article[1]"/>
+      <article>
 
-        <dt tal:condition="python:view.translate_synonyms(view.get_synonyms())">Synonyme</dt>
-        <dd tal:condition="python:view.translate_synonyms(view.get_synonyms())" tal:content="python:view.translate_synonyms(view.get_synonyms())"/>
+      <section class="article-body clearfix">
 
-        <dt tal:condition="python:article[2]">Beschreibung</dt>
-        <dd tal:condition="python:article[2]" tal:content="python:article[2]"/>
+      <dl class="row key-value-pair">
 
-        <dt tal:condition="python:article[4]">CAS-Nummer</dt>
-        <dd tal:condition="python:article[4]" tal:content="python:article[4]"/>
+        <dt class="col col-sm-3" tal:condition="python:article[1]">Name</dt>
+        <dd class="col col-sm-6" tal:condition="python:article[1]" tal:content="python:article[1]"/>
 
-        <dt tal:condition="python:article[5]">EG-Nummer</dt>
-        <dd tal:condition="python:article[5]" tal:content="python:article[5]"/>
+        <div class="w-100 divider"></div>
 
-        <dt tal:condition="python:article[6]">Konzentration in wässriger Lösung</dt>
-        <dd tal:condition="python:article[6]" tal:content="python:article[6]"/>
+        <dt class="col col-sm-3" tal:condition="python:view.translate_synonyms(view.get_synonyms())">Synonyme</dt>
+        <dd class="col col-sm-6" tal:condition="python:view.translate_synonyms(view.get_synonyms())" tal:content="python:view.translate_synonyms(view.get_synonyms())"/>
 
-        <dt tal:condition="python: view.get_attr_translation('hskategorie', article[7])">Hautschutzmittelgruppe</dt>
-        <dd tal:condition="python: view.get_attr_translation('hskategorie', article[7])" tal:content="python: view.get_attr_translation('hskategorie', article[7])"/>
+        <div class="w-100 divider"></div>
 
-        <dt tal:condition="python: view.get_attr_translation('branchen', article[8])">Branche</dt>
-        <dd tal:condition="python: view.get_attr_translation('branchen', article[8])" tal:content="python: view.get_attr_translation('branchen', article[8])"/>
+        <dt class="col col-sm-3" tal:condition="python:article[2]">Beschreibung</dt>
+        <dd class="col col-sm-6" tal:condition="python:article[2]" tal:content="python:article[2]"/>
 
-        <dt tal:condition="python:article[9]">DNEL Inhalation [mg/m3]: lokal</dt>
-        <dd tal:condition="python:article[9]" tal:content="python:article[9]"/>
+        <div class="w-100 divider"></div>
 
-        <dt tal:condition="python:article[10]">DNEL Inhalation [mg/m3]: systemisch</dt>
-        <dd tal:condition="python:article[10]" tal:content="python:article[10]"/>
+        <dt class="col col-sm-3" tal:condition="python:article[4]">CAS-Nummer</dt>
+        <dd class="col col-sm-6" tal:condition="python:article[4]" tal:content="python:article[4]"/>
+
+        <div class="w-100 divider"></div>
+
+        <dt class="col col-sm-3" tal:condition="python:article[5]">EG-Nummer</dt>
+        <dd class="col col-sm-6" tal:condition="python:article[5]" tal:content="python:article[5]"/>
+
+        <div class="w-100 divider"></div>
+
+        <dt class="col col-sm-3" tal:condition="python:article[6]">Konzentration in wässriger Lösung</dt>
+        <dd class="col col-sm-6" tal:condition="python:article[6]" tal:content="python:article[6]"/>
+
+        <div class="w-100 divider"></div>
+
+        <dt class="col col-sm-3" tal:condition="python: view.get_attr_translation('hskategorie', article[7])">Hautschutzmittelgruppe</dt>
+        <dd class="col col-sm-6" tal:condition="python: view.get_attr_translation('hskategorie', article[7])" tal:content="python: view.get_attr_translation('hskategorie', article[7])"/>
+
+        <div class="w-100 divider"></div>
+
+        <dt class="col col-sm-3" tal:condition="python: view.get_attr_translation('branchen', article[8])">Branche</dt>
+        <dd class="col col-sm-6" tal:condition="python: view.get_attr_translation('branchen', article[8])" tal:content="python: view.get_attr_translation('branchen', article[8])"/>
+
+        <div class="w-100 divider"></div>
+
+        <dt class="col col-sm-3" tal:condition="python:article[9]">DNEL Inhalation [mg/m3]: lokal</dt>
+        <dd class="col col-sm-6" tal:condition="python:article[9]" tal:content="python:article[9]"/>
+
+        <div class="w-100 divider"></div>
+
+        <dt class="col col-sm-3" tal:condition="python:article[10]">DNEL Inhalation [mg/m3]: systemisch</dt>
+        <dd class="col col-sm-6" tal:condition="python:article[10]" tal:content="python:article[10]"/>
+
+        <div class="w-100 divider"></div>
 
       </dl>
 
     </section>
+
+    </article>
 
 
 
