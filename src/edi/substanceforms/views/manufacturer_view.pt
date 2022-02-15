@@ -46,11 +46,13 @@
 
         <div class="w-100 divider"></div>
 
-        <dt tal:condition="python:article[2]">Beschreibung</dt>
-        <dd tal:condition="python:article[2]" tal:content="python:article[2]"/>
+        <dt class="col col-sm-3" tal:condition="python:article[2]">Beschreibung</dt>
+        <dd class="col col-sm-6" tal:condition="python:article[2]" tal:content="python:article[2]"/>
 
-        <dt tal:condition="python:article[4]">Homepage</dt>
-        <dd tal:condition="python:article[4]" tal:content="python:article[4]"/>
+        <div class="w-100 divider"></div>
+
+        <dt class="col col-sm-3" tal:condition="python:article[4]">Homepage</dt>
+        <dd class="col col-sm-6" tal:condition="python:article[4]" tal:content="python:article[4]"/>
 
       </dl>
 
