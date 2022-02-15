@@ -137,8 +137,8 @@
 	    </section>
 
       <dl>
-          <dt>Beast of Bodmin</dt>
-          <dd>A large feline inhabiting Bodmin Moor.</dd>
+          <dt tal:condition="python: view.get_attr_translation('substance_types_new', article[5])">Typ des Wasch- und Reinigungsmittels</dt>
+          <dd tal:condition="python: view.get_attr_translation('substance_types_new', article[5])" tal:content="python: view.get_attr_translation('substance_types_new', article[5])"/>
 
           <dt>Morgawr</dt>
           <dd>A sea serpent.</dd>
