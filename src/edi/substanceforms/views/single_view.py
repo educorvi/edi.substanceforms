@@ -26,7 +26,7 @@ class SingleView(BrowserView):
         self.machines = []
         self.secsheet = []
 
-        import pdb; pdb.set_trace()
+        #import pdb; pdb.set_trace()
         self.definitions = self.get_definitions()
         print(self.definitions)
 
@@ -72,6 +72,11 @@ class SingleView(BrowserView):
     def substance_type(self):
         title = "Typ des Wasch- und Reinigungsmittels"
         value = self.get_attr_translation('substance_types_new', self.article[5])
+        return {'title': title, 'value': value}
+
+    def manufacturer(self):
+        title = "Hersteller"
+        value = self.get_attr_translation(self.get_manufacturer(self.article[25]))
         return {'title': title, 'value': value}
 
     def userCanEdit(self):
