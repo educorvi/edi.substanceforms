@@ -25,6 +25,10 @@ class SingleView(BrowserView):
         self.article = self.get_article()
         self.machines = []
         self.secsheet = []
+
+        self.definitions = self.get_definitions()
+        print(self.definitions)
+
         if self.context.tablename == 'substance_mixture':
             #self.machines = self.get_machines()
             #self.secsheet = self.get_recipes()
@@ -48,6 +52,20 @@ class SingleView(BrowserView):
             self.template = BoundPageTemplate(template, self)
             return self.template()
         return self.index()
+
+    def get_definitions(self):
+        key_value_pairs = list()
+        columns = self.context.columns
+        for key in columns:
+            key_value_pair = getattr(self, key, {})
+
+            if key_value_pair:
+                key_value_pairs.append(key_value_pair)
+
+    def substance_type(self):
+        title = "Typ des Wasch- und Reinigungsmittels"
+        value = self.article[5]
+        return {'title': title, 'value': value}
 
     def userCanEdit(self):
         if not ploneapi.user.is_anonymous():
