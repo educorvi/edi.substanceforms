@@ -142,7 +142,7 @@ class SingleView(BrowserView):
         return substances
 
     def translate_recipes(self, recipe):
-        resultstring = "%s (%s %s %s, %s %s %s)" % (recipe[index]['title'][0][0], ">=", recipe[index]['concentration_min'], "%", "<=", recipe[index]['concentration_max'], "%")
+        resultstring = "%s (%s %s %s, %s %s %s)" % (recipe['title'][0][0], ">=", recipe['concentration_min'], "%", "<=", recipe['concentration_max'], "%")
         return resultstring
 
     def get_attr_translation(self, attribute, value):
