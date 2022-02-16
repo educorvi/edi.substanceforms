@@ -76,10 +76,74 @@ class SingleView(BrowserView):
 
     def manufacturer_id(self):
         title = "Hersteller"
-        import pdb;
-        pdb.set_trace()
         value = self.get_manufacturer(self.article[25])
         return {'title': title, 'value': value}
+
+    def branch(self):
+        title = "Branche"
+        value = self.get_attr_translation('branchen', self.article[4])
+        return {'title': title, 'value': value}
+
+    def skin_category(self):
+        title = "Hautschutzmittelgruppe"
+        value = self.get_attr_translation('hskategorie', self.article[16])
+        return {'title': title, 'value': value}
+
+    def checked_emissions(self):
+        title = "Emissionsarmes Produkt"
+        value = self.get_attr_translation('boolvocab', str(self.article[17]))
+        return {'title': title, 'value': value}
+
+    def evaporation_lane_150(self):
+        title = "Verdampfungsfaktor 150 Grad"
+        value = self.article[10]
+        return {'title': title, 'value': value}
+
+    def evaporation_lane_160(self):
+        title = "Verdampfungsfaktor 160 Grad"
+        value = self.article[11]
+        return {'title': title, 'value': value}
+
+    def evaporation_lane_170(self):
+        title = "Verdampfungsfaktor 170 Grad"
+        value = self.article[12]
+        return {'title': title, 'value': value}
+
+    def evaporation_lane_180(self):
+        title = "Verdampfungsfaktor 180 Grad"
+        value = self.article[13]
+        return {'title': title, 'value': value}
+
+    def date_checked(self):
+        title = "Prüfdatum"
+        value = self.article[18]
+        return {'title': title, 'value': value}
+
+    def flashpoint(self):
+        title = "Flammpunkt in °C"
+        value = self.article[19]
+        return {'title': title, 'value': value}
+
+    def ueg(self):
+        title = "UEG in g/m3"
+        value = self.article[14]
+        return {'title': title, 'value': value}
+
+    def response(self):
+        title = "Responsefaktor"
+        value = self.article[15]
+        return {'title': title, 'value': value}
+
+    def application_areas(self):
+        title = "Anwendungsgebiete"
+        value = self.translate_application_areas(self.new_application_areas_translation())
+        return {'title': title, 'value': value}
+
+    def usecases(self):
+        title = "Verwendungszwecke"
+        value = self.translate_usecases(self.new_usecase_translation())
+        return {'title': title, 'value': value}
+
 
     def userCanEdit(self):
         if not ploneapi.user.is_anonymous():
