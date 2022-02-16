@@ -74,7 +74,7 @@ class SingleView(BrowserView):
         value = self.get_attr_translation('substance_types_new', self.article[5])
         return {'title': title, 'value': value}
 
-    def manufacturer(self):
+    def manufacturer_id(self):
         title = "Hersteller"
         value = self.get_attr_translation(self.get_manufacturer(self.article[25]))
         return {'title': title, 'value': value}
