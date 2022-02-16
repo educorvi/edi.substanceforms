@@ -77,6 +77,7 @@ class SingleView(BrowserView):
     def manufacturer_id(self):
         title = "Hersteller"
         value = self.get_attr_translation(self.get_manufacturer(self.article[25]))
+        import pdb; pdb.set_trace()
         return {'title': title, 'value': value}
 
     def userCanEdit(self):
