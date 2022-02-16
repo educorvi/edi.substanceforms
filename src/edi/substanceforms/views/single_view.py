@@ -77,16 +77,16 @@ class SingleView(BrowserView):
             return {'title': title, 'value': value}
         return {}
 
-    def manufacturer_id(self):
-        title = "Hersteller"
-        value = self.get_manufacturer(self.article[25])
+    def branch(self):
+        title = "Branche"
+        value = self.get_attr_translation('branchen', self.article[4])
         if value:
             return {'title': title, 'value': value}
         return {}
 
-    def branch(self):
-        title = "Branche"
-        value = self.get_attr_translation('branchen', self.article[4])
+    def manufacturer_id(self):
+        title = "Hersteller"
+        value = self.get_manufacturer(self.article[25])
         if value:
             return {'title': title, 'value': value}
         return {}
