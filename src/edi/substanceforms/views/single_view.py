@@ -62,8 +62,8 @@ class SingleView(BrowserView):
 
             if key_value_pair:
                 entry = key_value_pair()
-                title = key_value_pair['title']
-                value = key_value_pair['value']
+                title = entry['title']
+                value = entry['value']
                 fragment = f'<dt class="col col-sm-5">{title}</dt><dd class="col col-sm-7">{value}</dd><div class="w-100 divider"></div>'
                 fragments.append(fragment)
 
