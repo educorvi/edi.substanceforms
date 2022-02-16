@@ -58,9 +58,10 @@ class SingleView(BrowserView):
         fragments = list()
         columns = self.context.columns
         for key in columns:
-            key_value_pair = getattr(self, key, {})()
+            key_value_pair = getattr(self, key, None)
 
             if key_value_pair:
+                entry = key_value_pair()
                 title = key_value_pair['title']
                 value = key_value_pair['value']
                 fragment = f'<dt class="col col-sm-5">{title}</dt><dd class="col col-sm-7">{value}</dd><div class="w-100 divider"></div>'
