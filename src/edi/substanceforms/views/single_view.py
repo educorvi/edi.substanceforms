@@ -58,7 +58,7 @@ class SingleView(BrowserView):
         key_value_pairs = list()
         columns = self.context.columns
         for key in columns:
-            key_value_pair = getattr(self, key, {})
+            key_value_pair = getattr(self, key, {})()
 
             if key_value_pair:
                 key_value_pairs.append(key_value_pair)
