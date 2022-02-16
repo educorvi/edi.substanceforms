@@ -26,6 +26,7 @@ class SingleView(BrowserView):
         self.machines = []
         self.secsheet = []
 
+        import pdb; pdb.set_trace()
         self.definitions = self.get_definitions()
         print(self.definitions)
 
