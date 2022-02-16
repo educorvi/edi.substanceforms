@@ -131,7 +131,7 @@
           <span>
             <ul>
               <li tal:repeat="recipe recipes">
-              <a tal:content="recipe/resultstring"/>
+                <a tal:content="recipe/resultstring"/>
               </li>
             </ul>
           </span>
