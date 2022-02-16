@@ -74,7 +74,7 @@ class SingleView(BrowserView):
         value = self.get_attr_translation('substance_types_new', self.article[5])
         return {'title': title, 'value': value}
 
-    def manufacturer(self):
+    def manufacturer_id(self):
         title = "Hersteller"
         import pdb;
         pdb.set_trace()
