@@ -62,10 +62,11 @@ class SingleView(BrowserView):
 
             if key_value_pair:
                 entry = key_value_pair()
-                title = entry['title']
-                value = entry['value']
-                fragment = f'<dt class="col col-sm-5">{title}</dt><dd class="col col-sm-7">{value}</dd><div class="w-100 divider"></div>'
-                fragments.append(fragment)
+                if entry:
+                    title = entry['title']
+                    value = entry['value']
+                    fragment = f'<dt class="col col-sm-5">{title}</dt><dd class="col col-sm-7">{value}</dd><div class="w-100 divider"></div>'
+                    fragments.append(fragment)
 
         return fragments
 
@@ -97,7 +98,9 @@ class SingleView(BrowserView):
     def evaporation_lane_150(self):
         title = "Verdampfungsfaktor 150 Grad"
         value = self.article[10]
-        return {'title': title, 'value': value}
+        if value:
+            return {'title': title, 'value': value}
+        return {}
 
     def evaporation_lane_160(self):
         title = "Verdampfungsfaktor 160 Grad"
