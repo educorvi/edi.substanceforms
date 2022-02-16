@@ -131,6 +131,20 @@
 
         <div class="w-100 divider"></div>
 
+        <dt class="col col-sm-5">Dateiliste</dt>
+        <dd class="col col-sm-7">
+          <span>
+            <ul>
+              <li>
+              <a tal:content="python:view.translate_recipes(view.get_recipes())"/>
+              </li>
+            </ul>
+          </span>
+        </dd>
+
+        <div class="w-100 divider"></div>
+
+
       </dl>
 
       </section>
