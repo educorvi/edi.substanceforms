@@ -39,6 +39,16 @@
             <!-- TODO: Hier müssen alle anderen Attribute reingeschrieben werden -->
 
      <article>
+       <section class="article-body clearfix" tal:define="definitions view/definitions">
+         <dl class="row key-value-pair">
+           <span tal:repeat="definition definitions" tal:replace="structure definition"/>
+         </dl>
+       </section>
+     </article>
+
+
+
+    <article>
 
       <section class="article-body clearfix">
 

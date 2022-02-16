@@ -55,15 +55,18 @@ class SingleView(BrowserView):
         return self.index()
 
     def get_definitions(self):
-        key_value_pairs = list()
+        fragments = list()
         columns = self.context.columns
         for key in columns:
             key_value_pair = getattr(self, key, {})()
 
             if key_value_pair:
-                key_value_pairs.append(key_value_pair)
+                title = key_value_pair['title']
+                value = key_value_pair['value']
+                fragment = f'<dt class="col col-sm-5">{title}</dt><dd class="col col-sm-7">{value}</dd><div class="w-100 divider"></div>'
+                fragments.append(fragment)
 
-        return key_value_pairs
+        return fragments
 
     def substance_type(self):
         title = "Typ des Wasch- und Reinigungsmittels"
