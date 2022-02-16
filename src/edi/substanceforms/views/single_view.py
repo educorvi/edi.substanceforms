@@ -136,17 +136,13 @@ class SingleView(BrowserView):
             select = "SELECT title from substance WHERE substance_id = %s" %sid
             substance_title = self.db.execute(select)
             entry = {'title':substance_title, 'concentration_min':concentration_min, 'concentration_max':concentration_max}
+            entry['resultstring'] = self.translate_recipes(entry)
             substances.append(entry)
         #self.db.close()
         return substances
 
     def translate_recipes(self, recipe):
-        resultstring = ""
-        index = 0
-        for i in recipe:
-            resultstring = resultstring + "%s (%s %s %s, %s %s %s), " % (recipe[index]['title'][0][0], ">=", recipe[index]['concentration_min'], "%", "<=", recipe[index]['concentration_max'], "%")
-            index = index + 1
-        resultstring = resultstring[:-2]
+        resultstring = "%s (%s %s %s, %s %s %s)" % (recipe[index]['title'][0][0], ">=", recipe[index]['concentration_min'], "%", "<=", recipe[index]['concentration_max'], "%")
         return resultstring
 
     def get_attr_translation(self, attribute, value):
