@@ -71,7 +71,7 @@ class SingleView(BrowserView):
 
     def substance_type(self):
         title = "Typ des Wasch- und Reinigungsmittels"
-        value = self.article[5]
+        value = self.get_attr_translation('substance_types_new', self.article[5])
         return {'title': title, 'value': value}
 
     def userCanEdit(self):
