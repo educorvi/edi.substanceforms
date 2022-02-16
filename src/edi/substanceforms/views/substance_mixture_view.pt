@@ -126,11 +126,6 @@
 
         <div class="w-100 divider"></div>
 
-        <dt class="col col-sm-5" tal:condition="python:view.translate_recipes(view.get_recipes())">Bestandteile</dt>
-        <dd class="col col-sm-7" tal:condition="python:view.translate_recipes(view.get_recipes())" tal:content="python:view.translate_recipes(view.get_recipes())"/>
-
-        <div class="w-100 divider"></div>
-
         <dt class="col col-sm-5">Bestandteile</dt>
         <dd class="col col-sm-7" tal:define="recipes view/get_recipes">
           <span>
