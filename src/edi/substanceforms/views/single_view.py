@@ -63,6 +63,8 @@ class SingleView(BrowserView):
             if key_value_pair:
                 key_value_pairs.append(key_value_pair)
 
+        return key_value_pairs
+
     def substance_type(self):
         title = "Typ des Wasch- und Reinigungsmittels"
         value = self.article[5]
