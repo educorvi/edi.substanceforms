@@ -20,7 +20,7 @@
 
         <div class="row">
 
-          <div class="col-lg-9 col-12">
+          <dl class="col-lg-9 col-12">
             <div class="row">
               <div class="col-7">
                 <h1 tal:content="python:article[1]"/>
@@ -128,7 +128,7 @@
               <a class="btn btn-warning mb-3" tal:attributes="href python:context.absolute_url()+'/delete-synonyms-form?itemid=%s' % view.itemid" role="button">Synonyme löschen</a>
             </section>
 
-          </div>
+          </dl>
 
           <!-- Portlets -->
           <div class="col-lg-3 col-12">
@@ -145,8 +145,6 @@
         <div class="row">
           <span class="col-lg-9 col-12" tal:content="structure provider:plone.belowcontentbody" />
         </div>
-
-    </div>
 
     </tal:main-macro>
 </metal:main>
