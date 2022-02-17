@@ -92,6 +92,7 @@ class SingleView(BrowserView):
         return {}
 
     def skin_category(self):
+        import pdb; pdb.set_trace()
         title = "Hautschutzmittelgruppe"
         value = self.get_attr_translation('hskategorie', self.article[16])
         if value:
@@ -171,6 +172,27 @@ class SingleView(BrowserView):
     def usecases(self):
         title = "Verwendungszwecke"
         value = self.translate_usecases(self.new_usecase_translation())
+        if value:
+            return {'title': title, 'value': value}
+        return {}
+
+    def concentration(self):
+        title = "Konzentration in wässriger Lösung"
+        value = self.article[6]
+        if value:
+            return {'title': title, 'value': value}
+        return {}
+
+    def casnr(self):
+        title = "CAS-Nummer"
+        value = self.article[4]
+        if value:
+            return {'title': title, 'value': value}
+        return {}
+
+    def egnr(self):
+        title = "EG-Nummer"
+        value = self.article[5]
         if value:
             return {'title': title, 'value': value}
         return {}
