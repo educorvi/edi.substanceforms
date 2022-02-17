@@ -47,7 +47,8 @@
 
 
 
-      <article>
+<!--
+            <article>
 
       <section class="article-body clearfix">
 
@@ -108,7 +109,7 @@
     </section>
 
     </article>
-
+-->
 
 
             <section class="mt-3 mb-3">
@@ -144,6 +145,8 @@
         <div class="row">
           <span class="col-lg-9 col-12" tal:content="structure provider:plone.belowcontentbody" />
         </div>
+
+    </div>
 
     </tal:main-macro>
 </metal:main>
