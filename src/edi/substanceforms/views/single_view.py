@@ -92,7 +92,6 @@ class SingleView(BrowserView):
         return {}
 
     def skin_category(self):
-        import pdb; pdb.set_trace()
         title = "Hautschutzmittelgruppe"
         if self.context.tablename == 'substance_mixture':
             value = self.get_attr_translation('hskategorie', self.article[16])
