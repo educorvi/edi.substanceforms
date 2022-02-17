@@ -11,8 +11,8 @@
     <tal:main-macro metal:define-macro="main">
 
       <div class="container"
-           id="main-content"
-           tal:define="article view/article">
+	   id="main-content"
+	   tal:define="article view/article">
 
         <div class="row">
           <span class="col-12" tal:content="structure provider:plone.abovecontenttitle" />
@@ -23,7 +23,10 @@
           <dl class="col-lg-9 col-12">
             <div class="row">
               <div class="col-7">
-                <h1 tal:content="python:self.article[1]"/>
+                <h1 tal:content="python:article[1]"/>
+              </div>
+              <div class="col-5">
+                <img class="img-fluid" tal:condition="view/image_url" tal:attributes="src view/image_url">
               </div>
             </div>
 	    <!--<span tal:content="structure provider:plone.belowcontenttitle" />-->
@@ -35,8 +38,7 @@
 
             <!-- TODO: Hier müssen alle anderen Attribute reingeschrieben werden -->
 
-
-      <article>
+     <article>
        <section class="article-body clearfix" tal:define="definitions view/definitions">
          <dl class="row key-value-pair">
            <span tal:repeat="definition definitions" tal:replace="structure definition"/>
@@ -45,90 +47,23 @@
      </article>
 
 
+            <section class="mt-3 mb-3" tal:condition="view/userCanEdit">
+              <a class="btn btn-primary mb-3" tal:attributes="href python:context.absolute_url()+'/update-mixture-form?itemid=%s' % view.itemid" role="button">Artikel bearbeiten</a>
 
-
-<!--
-            <article>
-
-      <section class="article-body clearfix">
-
-      <dl class="row key-value-pair">
-
-        <dt class="col col-sm-3" tal:condition="python:article[1]">Name</dt>
-        <dd class="col col-sm-6" tal:condition="python:article[1]" tal:content="python:article[1]"/>
-
-        <div class="w-100 divider"></div>
-
-        <dt class="col col-sm-3" tal:condition="python:view.translate_synonyms(view.get_synonyms())">Synonyme</dt>
-        <dd class="col col-sm-6" tal:condition="python:view.translate_synonyms(view.get_synonyms())" tal:content="python:view.translate_synonyms(view.get_synonyms())"/>
-
-        <div class="w-100 divider"></div>
-
-        <dt class="col col-sm-3" tal:condition="python:article[2]">Beschreibung</dt>
-        <dd class="col col-sm-6" tal:condition="python:article[2]" tal:content="python:article[2]"/>
-
-        <div class="w-100 divider"></div>
-
-        <dt class="col col-sm-3" tal:condition="python:article[4]">CAS-Nummer</dt>
-        <dd class="col col-sm-6" tal:condition="python:article[4]" tal:content="python:article[4]"/>
-
-        <div class="w-100 divider"></div>
-
-        <dt class="col col-sm-3" tal:condition="python:article[5]">EG-Nummer</dt>
-        <dd class="col col-sm-6" tal:condition="python:article[5]" tal:content="python:article[5]"/>
-
-        <div class="w-100 divider"></div>
-
-        <dt class="col col-sm-3" tal:condition="python:article[6]">Konzentration in wässriger Lösung</dt>
-        <dd class="col col-sm-6" tal:condition="python:article[6]" tal:content="python:article[6]"/>
-
-        <div class="w-100 divider"></div>
-
-        <dt class="col col-sm-3" tal:condition="python: view.get_attr_translation('hskategorie', article[7])">Hautschutzmittelgruppe</dt>
-        <dd class="col col-sm-6" tal:condition="python: view.get_attr_translation('hskategorie', article[7])" tal:content="python: view.get_attr_translation('hskategorie', article[7])"/>
-
-        <div class="w-100 divider"></div>
-
-        <dt class="col col-sm-3" tal:condition="python: view.get_attr_translation('branchen', article[8])">Branche</dt>
-        <dd class="col col-sm-6" tal:condition="python: view.get_attr_translation('branchen', article[8])" tal:content="python: view.get_attr_translation('branchen', article[8])"/>
-
-        <div class="w-100 divider"></div>
-
-        <dt class="col col-sm-3" tal:condition="python:article[9]">DNEL Inhalation [mg/m3]: lokal</dt>
-        <dd class="col col-sm-6" tal:condition="python:article[9]" tal:content="python:article[9]"/>
-
-        <div class="w-100 divider"></div>
-
-        <dt class="col col-sm-3" tal:condition="python:article[10]">DNEL Inhalation [mg/m3]: systemisch</dt>
-        <dd class="col col-sm-6" tal:condition="python:article[10]" tal:content="python:article[10]"/>
-
-        <div class="w-100 divider"></div>
-
-      </dl>
-
-    </section>
-
-    </article>
--->
-
-
-            <section class="mt-3 mb-3">
-              <a class="btn btn-primary mb-3" tal:attributes="href python:view.getRightUrl(article[12])" tal:condition="python:article[12]" target="_blank" role="button">Weitere Informationen (externe Gestis-Stoffdatenbank)</a>
+              <a class="btn btn-warning mb-3" tal:attributes="href python:context.absolute_url()+'/delete-mixture-form?itemid=%s' % view.itemid" role="button">Artikel löschen</a>
             </section>
 
             <section class="mt-3 mb-3" tal:condition="view/userCanEdit">
-              <a class="btn btn-primary mb-3" tal:attributes="href python:context.absolute_url()+'/update-substance-form?itemid=%s' % view.itemid" role="button">Artikel bearbeiten</a>
+              <a class="btn btn-primary mb-3" tal:attributes="href python:context.absolute_url()+'/create-ingredient-form?itemid=%s' % view.itemid" role="button">Bestandteil hinzufügen</a>
 
-              <a class="btn btn-warning mb-3" tal:attributes="href python:context.absolute_url()+'/delete-substance-form?itemid=%s' % view.itemid" role="button">Artikel löschen</a>
+              <a class="btn btn-warning mb-3" tal:attributes="href python:context.absolute_url()+'/delete-ingredients-form?itemid=%s' % view.itemid" role="button">Bestandteile löschen</a>
             </section>
 
             <section class="mt-3 mb-3" tal:condition="view/userCanEdit">
-              <a class="btn btn-primary mb-3" tal:attributes="href python:context.absolute_url()+'/add-synonym-form?itemid=%s' % view.itemid" role="button">Synonym hinzufügen</a>
-
-              <a class="btn btn-warning mb-3" tal:attributes="href python:context.absolute_url()+'/delete-synonyms-form?itemid=%s' % view.itemid" role="button">Synonyme löschen</a>
+              <a class="btn btn-primary mb-3" tal:attributes="href python:context.absolute_url()+'/update-mixture-manufacturer-form?itemid=%s' % view.itemid" role="button">Hersteller aktualisieren</a>
             </section>
 
-          </dl>
+          </div>
 
           <!-- Portlets -->
           <div class="col-lg-3 col-12">
@@ -145,6 +80,8 @@
         <div class="row">
           <span class="col-lg-9 col-12" tal:content="structure provider:plone.belowcontentbody" />
         </div>
+
+      <!--</div>-->
 
     </tal:main-macro>
 </metal:main>
