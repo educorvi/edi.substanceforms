@@ -187,7 +187,7 @@ class SingleView(BrowserView):
 
     def usecases(self):
         title = "Verwendungszwecke"
-        value = self.translate_usecases(self.new_usecase_translation())
+        value = self.translate_usecases(self.new_usecase_translation2(self.article[0]))
         if value:
             return {'title': title, 'value': value}
         return {}
@@ -387,6 +387,20 @@ class SingleView(BrowserView):
     def new_usecase_translation(self):
         usecases = []
         select = "SELECT usecase_id from usecasepairs WHERE mixture_id = %s" % self.itemid
+        usecaseids = self.db.execute(select)
+        # Continue here
+
+        for ucid in usecaseids:
+            select = "SELECT usecase_name from usecases WHERE usecase_id = %s" % ucid
+            usecase_title = self.db.execute(select)
+            entry = {'title': usecase_title}
+            usecases.append(entry)
+        # self.db.close()
+        return usecases
+
+    def new_usecase_translation2(self, id):
+        usecases = []
+        select = "SELECT usecase_id from usecasepairs WHERE mixture_id = %s" % id
         usecaseids = self.db.execute(select)
         # Continue here
 
