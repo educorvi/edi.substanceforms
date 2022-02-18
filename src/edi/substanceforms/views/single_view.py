@@ -40,16 +40,16 @@ class SingleView(BrowserView):
         if self.context.tablename == 'substance':
             #self.machines = self.get_machines()
             #self.secsheet = self.get_recipes()
-            template = ViewPageTemplateFile('substance_view.pt')
+            template = ViewPageTemplateFile('substance_mixture_view.pt')
             self.template = BoundPageTemplate(template, self)
             return self.template()
         elif self.context.tablename == 'spray_powder':
-            template = ViewPageTemplateFile('spray_powder_view.pt')
+            template = ViewPageTemplateFile('substance_mixture_view.pt')
             self.image_url = self.get_image_url()
             self.template = BoundPageTemplate(template, self)
             return self.template()
         elif self.context.tablename == 'manufacturer':
-            template = ViewPageTemplateFile('manufacturer_view.pt')
+            template = ViewPageTemplateFile('substance_mixture_view.pt')
             self.template = BoundPageTemplate(template, self)
             return self.template()
         return self.index()
