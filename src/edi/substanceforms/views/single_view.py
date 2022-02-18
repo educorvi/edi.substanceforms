@@ -89,7 +89,10 @@ class SingleView(BrowserView):
 
     def manufacturer_id(self):
         title = "Hersteller"
-        value = self.get_manufacturer(self.article[25])
+        if self.context.tablename == 'substance_mixture':
+            value = self.get_manufacturer(self.article[25])
+        elif self.context.tablename == 'manufacturer':
+            value = self.get_manufacturer(self.article[0])
         if value:
             return {'title': title, 'value': value}
         return {}
