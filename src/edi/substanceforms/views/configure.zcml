@@ -10,42 +10,42 @@
     name="migrationview"
     for="*"
     class=".migrationview.Migrationview"
-    permission="zope2.View"
+    permission="cmf.ModifyPortalContent"
     />
 
   <browser:page
     name="herstellermigration"
     for="*"
     class=".herstellermigration.Migrationview"
-    permission="zope2.View"
+    permission="cmf.ModifyPortalContent"
     />
 
   <browser:page
     name="mixturemigration"
     for="*"
     class=".mixturemigration.Migrationview"
-    permission="zope2.View"
+    permission="cmf.ModifyPortalContent"
     />
 
   <browser:page
     name="productclassupdater"
     for="*"
     class=".productclassupdater.Migrationview"
-    permission="zope2.View"
+    permission="cmf.ModifyPortalContent"
     />
 
   <browser:page
     name="powdermigration"
     for="*"
     class=".powdermigration.Migrationview"
-    permission="zope2.View"
+    permission="cmf.ModifyPortalContent"
     />
 
   <browser:page
     name="reinstoffmigration"
     for="*"
     class=".reinstoffmigration.Migrationview"
-    permission="zope2.View"
+    permission="cmf.ModifyPortalContent"
     />
 
   <browser:page
@@ -75,7 +75,7 @@
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".tabelle_view.HerstellerFormView"
     template="tabelle_view.pt"
-    permission="zope2.View"
+    permission="cmf.ModifyPortalContent"
     />
 
     <browser:page
@@ -83,7 +83,7 @@
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".tabelle_view.SubstanceFormView"
     template="tabelle_view.pt"
-    permission="zope2.View"
+    permission="cmf.ModifyPortalContent"
     />
 
     <browser:page
@@ -91,7 +91,7 @@
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".tabelle_view.SubstancemixtureFormView"
     template="tabelle_view.pt"
-    permission="zope2.View"
+    permission="cmf.ModifyPortalContent"
     />
 
     <browser:page
@@ -99,7 +99,7 @@
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".tabelle_view.SpraypowderFormView"
     template="tabelle_view.pt"
-    permission="zope2.View"
+    permission="cmf.ModifyPortalContent"
     />
 
   <browser:page
@@ -115,7 +115,7 @@
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".update_view.UpdateFormView"
     template="update_view.pt"
-    permission="zope2.View"
+    permission="cmf.ModifyPortalContent"
     />
 
   <browser:page
@@ -123,7 +123,7 @@
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".create_manufacturer_form.CreateFormView"
     template = "create_view.pt"
-    permission="zope2.View"
+    permission="cmf.ModifyPortalContent"
     />
 
   <browser:page
@@ -131,7 +131,7 @@
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".create_substance_form.CreateFormView"
     template = "create_view.pt"
-    permission="zope2.View"
+    permission="cmf.ModifyPortalContent"
     />
 
   <browser:page
@@ -147,7 +147,7 @@
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".create_substance_form.DeleteFormView"
     template = "create_view.pt"
-    permission="zope2.View"
+    permission="cmf.ModifyPortalContent"
     />
 
   <browser:page
@@ -155,7 +155,7 @@
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".create_substance_form.SynonymFormView"
     template = "create_view.pt"
-    permission="zope2.View"
+    permission="cmf.ModifyPortalContent"
     />
 
   <browser:page
@@ -163,7 +163,7 @@
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".create_substance_form.DeleteSynonymsFormView"
     template = "create_view.pt"
-    permission="zope2.View"
+    permission="cmf.ModifyPortalContent"
     />
 
   <browser:page
@@ -171,7 +171,7 @@
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".create_manufacturer_form.UpdateFormView"
     template = "create_view.pt"
-    permission="zope2.View"
+    permission="cmf.ModifyPortalContent"
     />
 
   <browser:page
@@ -179,7 +179,7 @@
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".create_manufacturer_form.DeleteFormView"
     template = "create_view.pt"
-    permission="zope2.View"
+    permission="cmf.ModifyPortalContent"
     />
 
   <browser:page
@@ -195,7 +195,7 @@
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".create_mixture_form.DeleteFormView"
     template = "create_view.pt"
-    permission="zope2.View"
+    permission="cmf.ModifyPortalContent"
     />
 
   <browser:page
@@ -203,7 +203,7 @@
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".create_mixture_form.DeleteIngredientsFormView"
     template = "create_view.pt"
-    permission="zope2.View"
+    permission="cmf.ModifyPortalContent"
     />
 
   <browser:page
@@ -211,7 +211,7 @@
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".create_mixture_form.UpdateManufacturerFormView"
     template = "create_view.pt"
-    permission="zope2.View"
+    permission="cmf.ModifyPortalContent"
     />
 
   <browser:page
@@ -219,7 +219,7 @@
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".create_powder_form.UpdateFormView"
     template = "create_view.pt"
-    permission="zope2.View"
+    permission="cmf.ModifyPortalContent"
     />
 
   <browser:page
@@ -227,7 +227,7 @@
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".create_powder_form.DeleteFormView"
     template = "create_view.pt"
-    permission="zope2.View"
+    permission="cmf.ModifyPortalContent"
     />
 
   <browser:page
@@ -235,7 +235,7 @@
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".create_mixture_form.CreateFormView"
     template = "create_view.pt"
-    permission="zope2.View"
+    permission="cmf.ModifyPortalContent"
     />
 
   <browser:page
@@ -243,7 +243,7 @@
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".create_ingredient_view.CreateIngredientForm"
     template = "create_view.pt"
-    permission="zope2.View"
+    permission="cmf.ModifyPortalContent"
     />
 
   <browser:page
@@ -251,7 +251,7 @@
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".create_powder_form.CreateFormView"
     template = "create_view.pt"
-    permission="zope2.View"
+    permission="cmf.ModifyPortalContent"
     />
 
 </configure>

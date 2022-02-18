@@ -53,7 +53,7 @@ def possibleColumns(context):
         terms = []
         for i in tables:
             table = i[0]
-            terms.append(SimpleVocabulary.createTerm(table, table, table))
+            terms.append(SimpleVocabulary.createTerm(table, int(tables.index(table)), table))
     except:
         terms = []
 
@@ -92,13 +92,19 @@ class ITabelle(model.Schema):
     tablename = schema.Choice(
             title = u"Name der Datenbanktabelle",
             description = u"Der Name der Datenbanktabelle wird nur für interne Zugriffe verwendet\
-                    und dem Benutzer nicht angezeigt.",
+                    und dem Benutzer nicht angezeigt",
             source = possibleTables,
             )
 
     columns = schema.List(
-            title = u"Datenbankspalten",
-            description = u"Datenbankspalten auswählen, die berücksichtigt werden sollen",
+            title = u"Darstellung Einzelansicht",
+            description = u"Datenbankspalten auswählen, die in der Einzelansicht berücksichtigt werden sollen",
+            value_type=schema.Choice(source=possibleColumns),
+            )
+
+    resultcolumns = schema.List(
+            title = u"Darstellung Trefferliste",
+            description = u"Datenbankspalten auswählen, die in der Trefferliste berücksichtigt werden sollen",
             value_type=schema.Choice(source=possibleColumns),
             )
 
