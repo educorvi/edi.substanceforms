@@ -70,6 +70,30 @@ class SingleView(BrowserView):
 
         return fragments
 
+    def is_mixture(self):
+        if self.context.tablename == 'substance_mixture':
+            return True
+        else:
+            return False
+
+    def is_substance(self):
+        if self.context.tablename == 'substance':
+            return True
+        else:
+            return False
+
+    def is_manufacturer(self):
+        if self.context.tablename == 'manufacturer':
+            return True
+        else:
+            return False
+
+    def is_poweder(self):
+        if self.context.tablename == 'spray_powder':
+            return True
+        else:
+            return False
+
     def substance_type(self):
         title = "Typ des Wasch- und Reinigungsmittels"
         value = self.get_attr_translation('substance_types_new', self.article[5])

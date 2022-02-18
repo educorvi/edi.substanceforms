@@ -46,6 +46,7 @@
        </section>
      </article>
 
+        <div tal:condition="python: view/is_mixture">
 
             <section class="mt-3 mb-3" tal:condition="view/userCanEdit">
               <a class="btn btn-primary mb-3" tal:attributes="href python:context.absolute_url()+'/update-mixture-form?itemid=%s' % view.itemid" role="button">Artikel bearbeiten</a>
@@ -63,7 +64,9 @@
               <a class="btn btn-primary mb-3" tal:attributes="href python:context.absolute_url()+'/update-mixture-manufacturer-form?itemid=%s' % view.itemid" role="button">Hersteller aktualisieren</a>
             </section>
 
-          </div>
+        </div>
+
+        </div>
 
           <!-- Portlets -->
           <div class="col-lg-3 col-12">
