@@ -88,7 +88,7 @@ class SingleView(BrowserView):
         else:
             return False
 
-    def is_poweder(self):
+    def is_powder(self):
         if self.context.tablename == 'spray_powder':
             return True
         else:
