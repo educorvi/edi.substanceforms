@@ -216,6 +216,13 @@ class SingleView(BrowserView):
             return {'title': title, 'value': value}
         return {}
 
+    def homepage(self):
+        title = "Homepage"
+        value = self.article[4]
+        if value:
+            return {'title': title, 'value': value}
+        return {}
+
     def userCanEdit(self):
         if not ploneapi.user.is_anonymous():
             current = ploneapi.user.get_current()

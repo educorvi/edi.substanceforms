@@ -12,9 +12,7 @@
 
       <div class="container"
 	   id="main-content"
-	   tal:define="article view/article;
-	               machines view/machines;
-		       substances view/secsheet">
+	   tal:define="article view/article">
 
         <div class="row">
           <span class="col-12" tal:content="structure provider:plone.abovecontenttitle" />
@@ -22,55 +20,42 @@
 
         <div class="row">
 
-          <div class="col-lg-9 col-12">
-            <h1 tal:content="python:article[1]"/>
+          <dl class="col-lg-9 col-12">
+            <div class="row">
+              <div class="col-7">
+                <h1 tal:content="python:article[1]"/>
+              </div>
+            </div>
 	    <!--<span tal:content="structure provider:plone.belowcontenttitle" />-->
-            <!--
             <p tal:condition="python:article[2]" class="lead mt-5">
               <img class="icon" src="++theme++plonetheme.siguv/icons/siguv/dot.svg">
               <span tal:content="python:article[2]"/>
             </p>
-            -->
             <span tal:content="structure provider:plone.abovecontentbody" />
 
             <!-- TODO: Hier müssen alle anderen Attribute reingeschrieben werden -->
 
-    <article>
-
-      <section class="article-body clearfix">
-
-      <dl class="row key-value-pair">
-
-        <dt class="col col-sm-3" tal:condition="python:article[1]">Name</dt>
-        <dd class="col col-sm-6" tal:condition="python:article[1]" tal:content="python:article[1]"/>
-
-        <div class="w-100 divider"></div>
-
-        <dt class="col col-sm-3" tal:condition="python:article[2]">Beschreibung</dt>
-        <dd class="col col-sm-6" tal:condition="python:article[2]" tal:content="python:article[2]"/>
-
-        <div class="w-100 divider"></div>
-
-        <dt class="col col-sm-3" tal:condition="python:article[4]">Homepage</dt>
-        <dd class="col col-sm-6" tal:condition="python:article[4]" tal:content="python:article[4]"/>
-
-      </dl>
-
-      </section>
-
-    </article>
-
-
+     <article>
+       <section class="article-body clearfix" tal:define="definitions view/definitions">
+         <dl class="row key-value-pair">
+           <span tal:repeat="definition definitions" tal:replace="structure definition"/>
+         </dl>
+       </section>
+     </article>
 
             <section class="mt-3 mb-3" tal:condition="view/userCanEdit">
-              <a class="btn btn-primary" tal:attributes="href python:context.absolute_url()+'/update-manufacturer-form?itemid=%s' % view.itemid" role="button">Artikel Bearbeiten</a>
+              <a
+                class="btn btn-primary" tal:attributes="href python:context.absolute_url()+'/update-manufacturer-form?itemid=%s' % view.itemid"
+                role="button">Artikel Bearbeiten</a>
             </section>
 
             <section class="mt-3 mb-3" tal:condition="view/userCanEdit">
-              <a class="btn btn-primary" tal:attributes="href python:context.absolute_url()+'/delete-manufacturer-form?itemid=%s' % view.itemid" role="button">Artikel Löschen</a>
+              <a
+                class="btn btn-primary" tal:attributes="href python:context.absolute_url()+'/delete-manufacturer-form?itemid=%s' % view.itemid"
+                role="button">Artikel Löschen</a>
             </section>
 
-          </div>
+        </div>
 
           <!-- Portlets -->
           <div class="col-lg-3 col-12">
@@ -88,7 +73,7 @@
           <span class="col-lg-9 col-12" tal:content="structure provider:plone.belowcontentbody" />
         </div>
 
-      </div>
+      <!--</div>-->
 
     </tal:main-macro>
 </metal:main>
