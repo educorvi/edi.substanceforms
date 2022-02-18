@@ -82,7 +82,7 @@ class SingleView(BrowserView):
         if self.context.tablename == 'substance_mixture':
             value = self.get_attr_translation('branchen', self.article[4])
         elif self.context.tablename == 'substance':
-            value = False
+            value = self.get_attr_translation('branchen', self.article[8])
         if value:
             return {'title': title, 'value': value}
         return {}
@@ -92,7 +92,7 @@ class SingleView(BrowserView):
         if self.context.tablename == 'substance_mixture':
             value = self.get_manufacturer(self.article[25])
         elif self.context.tablename == 'manufacturer':
-            value = self.get_manufacturer(self.article[0])
+            value = False
         if value:
             return {'title': title, 'value': value}
         return {}
