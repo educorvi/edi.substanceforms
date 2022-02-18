@@ -44,23 +44,34 @@
      </article>
 
 
-            <section class="mt-3 mb-3" tal:condition="view/userCanEdit">
-              <a class="btn btn-primary mb-3" tal:attributes="href python:context.absolute_url()+'/update-mixture-form?itemid=%s' % view.itemid" role="button">Artikel bearbeiten</a>
-
-              <a class="btn btn-warning mb-3" tal:attributes="href python:context.absolute_url()+'/delete-mixture-form?itemid=%s' % view.itemid" role="button">Artikel löschen</a>
+            <section class="mt-3 mb-3">
+              <a
+                class="btn btn-primary mb-3" tal:attributes="href python:view.getRightUrl(article[12])" tal:condition="python:article[12]"
+                target="_blank" role="button">Weitere Informationen (externe Gestis-Stoffdatenbank)</a>
             </section>
 
             <section class="mt-3 mb-3" tal:condition="view/userCanEdit">
-              <a class="btn btn-primary mb-3" tal:attributes="href python:context.absolute_url()+'/create-ingredient-form?itemid=%s' % view.itemid" role="button">Bestandteil hinzufügen</a>
+              <a
+                class="btn btn-primary mb-3" tal:attributes="href python:context.absolute_url()+'/update-substance-form?itemid=%s' % view.itemid"
+                role="button">Artikel bearbeiten</a>
 
-              <a class="btn btn-warning mb-3" tal:attributes="href python:context.absolute_url()+'/delete-ingredients-form?itemid=%s' % view.itemid" role="button">Bestandteile löschen</a>
+              <a
+                class="btn btn-warning mb-3" tal:attributes="href python:context.absolute_url()+'/delete-substance-form?itemid=%s' % view.itemid"
+                role="button">Artikel löschen</a>
             </section>
 
             <section class="mt-3 mb-3" tal:condition="view/userCanEdit">
-              <a class="btn btn-primary mb-3" tal:attributes="href python:context.absolute_url()+'/update-mixture-manufacturer-form?itemid=%s' % view.itemid" role="button">Hersteller aktualisieren</a>
+              <a
+                class="btn btn-primary mb-3" tal:attributes="href python:context.absolute_url()+'/add-synonym-form?itemid=%s' % view.itemid"
+                role="button">Synonym hinzufügen</a>
+
+              <a
+                class="btn btn-warning mb-3" tal:attributes="href python:context.absolute_url()+'/delete-synonyms-form?itemid=%s' % view.itemid"
+                role="button">Synonyme löschen</a>
             </section>
 
-          </div>
+
+        </div>
 
           <!-- Portlets -->
           <div class="col-lg-3 col-12">
