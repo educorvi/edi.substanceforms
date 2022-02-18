@@ -109,7 +109,10 @@ class SingleView(BrowserView):
 
     def checked_emissions(self):
         title = "Emissionsarmes Produkt"
-        value = self.get_attr_translation('boolvocab', str(self.article[17]))
+        if self.context.tablename == 'substance_mixture':
+            value = self.get_attr_translation('boolvocab', str(self.article[17]))
+        elif self.context.tablename == 'spray_powder':
+            value = self.get_attr_translation('boolvocab', str(self.article[8]))
         if value:
             return {'title': title, 'value': value}
         return {}
@@ -239,6 +242,20 @@ class SingleView(BrowserView):
     def starting_material(self):
         title = "Ausgangsmaterial"
         value = self.article[5]
+        if value:
+            return {'title': title, 'value': value}
+        return {}
+
+    def volume_share(self):
+        title = "Volumenanteil"
+        value = self.article[7]
+        if value:
+            return {'title': title, 'value': value}
+        return {}
+
+    def median_share(self):
+        title = "Medianwert"
+        value = self.article[6]
         if value:
             return {'title': title, 'value': value}
         return {}
