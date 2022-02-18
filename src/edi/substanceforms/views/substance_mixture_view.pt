@@ -25,9 +25,11 @@
               <div class="col-7">
                 <h1 tal:content="python:article[1]"/>
               </div>
+              <!--
               <div class="col-5">
                 <img class="img-fluid" tal:condition="view/image_url" tal:attributes="src view/image_url">
               </div>
+              -->
             </div>
 	    <!--<span tal:content="structure provider:plone.belowcontenttitle" />-->
             <p tal:condition="python:article[2]" class="lead mt-5">
