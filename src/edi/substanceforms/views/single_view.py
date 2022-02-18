@@ -180,7 +180,7 @@ class SingleView(BrowserView):
 
     def application_areas(self):
         title = "Anwendungsgebiete"
-        value = self.translate_application_areas(self.new_application_areas_translation())
+        value = self.translate_application_areas(self.new_application_areas_translation2(self.article[0]))
         if value:
             return {'title': title, 'value': value}
         return {}
@@ -424,6 +424,20 @@ class SingleView(BrowserView):
     def new_application_areas_translation(self):
         applicationareas = []
         select = "SELECT area_id from areapairs WHERE mixture_id = %s" % self.itemid
+        areaids = self.db.execute(select)
+        # Continue here
+
+        for arid in areaids:
+            select = "SELECT application_area_name from application_areas WHERE application_area_id = %s" % arid
+            area_title = self.db.execute(select)
+            entry = {'title': area_title}
+            applicationareas.append(entry)
+        # self.db.close()
+        return applicationareas
+
+    def new_application_areas_translation2(self, id):
+        applicationareas = []
+        select = "SELECT area_id from areapairs WHERE mixture_id = %s" % id
         areaids = self.db.execute(select)
         # Continue here
 
