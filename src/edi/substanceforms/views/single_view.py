@@ -79,7 +79,10 @@ class SingleView(BrowserView):
 
     def branch(self):
         title = "Branche"
-        value = self.get_attr_translation('branchen', self.article[4])
+        if self.context.tablename == 'substance_mixture':
+            value = self.get_attr_translation('branchen', self.article[4])
+        elif self.context.tablename == 'substance':
+            value = self.get_attr_translation('branchen', self.article[8])
         if value:
             return {'title': title, 'value': value}
         return {}
@@ -195,6 +198,20 @@ class SingleView(BrowserView):
     def egnr(self):
         title = "EG-Nummer"
         value = self.article[5]
+        if value:
+            return {'title': title, 'value': value}
+        return {}
+
+    def dnel_lokal(self):
+        title = "DNEL Inhalation [mg/m3]: lokal"
+        value = self.article[9]
+        if value:
+            return {'title': title, 'value': value}
+        return {}
+
+    def dnel_systemisch(self):
+        title = "DNEL Inhalation [mg/m3]: systemisch"
+        value = self.article[10]
         if value:
             return {'title': title, 'value': value}
         return {}
