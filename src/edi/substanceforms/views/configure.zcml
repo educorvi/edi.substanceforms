@@ -139,7 +139,7 @@
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".create_substance_form.UpdateFormView"
     template = "create_view.pt"
-    permission="zope2.View"
+    permission="cmf.ModifyPortalContent"
     />
 
   <browser:page
