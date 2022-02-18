@@ -144,7 +144,10 @@ class SingleView(BrowserView):
 
     def date_checked(self):
         title = "Prüfdatum"
-        value = self.article[18]
+        if self.context.tablename == 'substance_mixture':
+            value = self.article[18]
+        elif self.context.tablename == 'spray_powder':
+            value = self.article[9]
         if value:
             return {'title': title, 'value': value}
         return {}
@@ -222,6 +225,20 @@ class SingleView(BrowserView):
     def homepage(self):
         title = "Homepage"
         value = self.article[4]
+        if value:
+            return {'title': title, 'value': value}
+        return {}
+
+    def product_class(self):
+        title = "Produktklasse"
+        value = self.article[4]
+        if value:
+            return {'title': title, 'value': value}
+        return {}
+
+    def starting_material(self):
+        title = "Ausgangsmaterial"
+        value = self.article[5]
         if value:
             return {'title': title, 'value': value}
         return {}

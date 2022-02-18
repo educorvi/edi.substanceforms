@@ -12,9 +12,7 @@
 
       <div class="container"
 	   id="main-content"
-	   tal:define="article view/article;
-	               machines view/machines;
-		       substances view/secsheet">
+	   tal:define="article view/article">
 
         <div class="row">
           <span class="col-12" tal:content="structure provider:plone.abovecontenttitle" />
@@ -22,13 +20,10 @@
 
         <div class="row">
 
-          <div class="col-lg-9 col-12">
+          <dl class="col-lg-9 col-12">
             <div class="row">
               <div class="col-7">
                 <h1 tal:content="python:article[1]"/>
-              </div>
-              <div class="col-5">
-                <img class="img-fluid" tal:condition="view/image_url" tal:attributes="src view/image_url">
               </div>
             </div>
 	    <!--<span tal:content="structure provider:plone.belowcontenttitle" />-->
@@ -40,63 +35,27 @@
 
             <!-- TODO: Hier müssen alle anderen Attribute reingeschrieben werden -->
 
-      <article>
-
-        <section class="article-body clearfix">
-
-          <dl class="row key-value-pair">
-
-	          <dt class="col col-sm-3" tal:condition="python:article[1]">Name</dt>
-	          <dd class="col col-sm-6" tal:condition="python:article[1]" tal:content="python:article[1]"/>
-
-            <div class="w-100 divider"></div>
-
-            <dt class="col col-sm-3" tal:condition="python:article[2]">Beschreibung</dt>
-	          <dd class="col col-sm-6" tal:condition="python:article[2]" tal:content="python:article[2]"/>
-
-            <div class="w-100 divider"></div>
-
-            <dt class="col col-sm-3" tal:condition="python:article[4]">Produktklasse</dt>
-	          <dd class="col col-sm-6" tal:condition="python:article[4]" tal:content="python:article[4]"/>
-
-            <div class="w-100 divider"></div>
-
-            <dt class="col col-sm-3" tal:condition="python:article[5]">Ausgangsmaterial</dt>
-	          <dd class="col col-sm-6" tal:condition="python:article[5]" tal:content="python:article[5]"/>
-
-            <div class="w-100 divider"></div>
-
-            <dt class="col col-sm-3" tal:condition="python:article[6]">Medianwert</dt>
-            <dd class="col col-sm-6" tal:condition="python:article[6]" tal:content="python:article[6]"/>
-
-            <div class="w-100 divider"></div>
-
-            <dt class="col col-sm-3" tal:condition="python:article[7]">Volumenanteil</dt>
-            <dd class="col col-sm-6" tal:condition="python:article[7]" tal:content="python:article[7]"/>
-
-            <div class="w-100 divider"></div>
-
-            <dt class="col col-sm-3" tal:condition="python: view.get_attr_translation('boolvocab', str(article[8]))">Emissionsgeprüft</dt>
-            <dd class="col col-sm-6" tal:condition="python: view.get_attr_translation('boolvocab', str(article[8]))" tal:content="python: view.get_attr_translation('boolvocab', str(article[8]))"/>
-
-            <div class="w-100 divider"></div>
-
-          </dl>
-
-      </section>
-
-      </article>
-
+     <article>
+       <section class="article-body clearfix" tal:define="definitions view/definitions">
+         <dl class="row key-value-pair">
+           <span tal:repeat="definition definitions" tal:replace="structure definition"/>
+         </dl>
+       </section>
+     </article>
 
             <section class="mt-3 mb-3" tal:condition="view/userCanEdit">
-              <a class="btn btn-primary" tal:attributes="href python:context.absolute_url()+'/update-powder-form?itemid=%s' % view.itemid" role="button">Artikel Bearbeiten</a>
+              <a
+                class="btn btn-primary" tal:attributes="href python:context.absolute_url()+'/update-powder-form?itemid=%s' % view.itemid"
+                role="button">Artikel Bearbeiten</a>
             </section>
 
             <section class="mt-3 mb-3" tal:condition="view/userCanEdit">
-              <a class="btn btn-primary" tal:attributes="href python:context.absolute_url()+'/delete-powder-form?itemid=%s' % view.itemid" role="button">Artikel Löschen</a>
+              <a
+                class="btn btn-primary" tal:attributes="href python:context.absolute_url()+'/delete-powder-form?itemid=%s' % view.itemid"
+                role="button">Artikel Löschen</a>
             </section>
 
-          </div>
+        </div>
 
           <!-- Portlets -->
           <div class="col-lg-3 col-12">
@@ -114,7 +73,7 @@
           <span class="col-lg-9 col-12" tal:content="structure provider:plone.belowcontentbody" />
         </div>
 
-      </div>
+      <!--</div>-->
 
     </tal:main-macro>
 </metal:main>
