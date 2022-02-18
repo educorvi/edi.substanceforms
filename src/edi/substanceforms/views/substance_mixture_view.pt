@@ -46,7 +46,7 @@
        </section>
      </article>
 
-        <div tal:condition="python: view/is_mixture">
+        <div tal:condition="view/is_mixture">
 
             <section class="mt-3 mb-3" tal:condition="view/userCanEdit">
               <a class="btn btn-primary mb-3" tal:attributes="href python:context.absolute_url()+'/update-mixture-form?itemid=%s' % view.itemid" role="button">Artikel bearbeiten</a>
