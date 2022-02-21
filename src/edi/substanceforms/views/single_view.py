@@ -293,6 +293,12 @@ class SingleView(BrowserView):
         elif self.context.tablename == 'substance':
             link = self.context.absolute_url() + '/update-substance-form?itemid=%s' % self.itemid
             return link
+        elif self.context.tablename == 'manufacturer':
+            link = self.context.absolute_url() + '/update-manufacturer-form?itemid=%s' % self.itemid
+            return link
+        elif self.context.tablename == 'spray_powder':
+            link = self.context.absolute_url() + '/update-powder-form?itemid=%s' % self.itemid
+            return link
 
     def delete_url(self):
         if self.context.tablename == 'substance_mixture':
@@ -300,6 +306,12 @@ class SingleView(BrowserView):
             return link
         elif self.context.tablename == 'substance':
             link = self.context.absolute_url()+'/delete-substance-form?itemid=%s' % self.itemid
+            return link
+        elif self.context.tablename == 'manufacturer':
+            link = self.context.absolute_url() + '/delete-manufacturer-form?itemid=%s' % self.itemid
+            return link
+        elif self.context.tablename == 'spray_powder':
+            link = self.context.absolute_url() + '/delete-powder-form?itemid=%s' % self.itemid
             return link
 
     def userCanEdit(self):

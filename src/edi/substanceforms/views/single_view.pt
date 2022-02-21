@@ -48,19 +48,25 @@
        </section>
      </article>
 
+        <div tal:condition="view/userCanEdit">
+
+          <section class="mt-3 mb-3" tal:condition="view/userCanEdit">
+          <a
+            class="btn btn-primary mb-3" tal:attributes="href view/edit_url"
+            role="button">Artikel bearbeiten</a>
+          <a
+            class="btn btn-warning mb-3" tal:attributes="href view/delete_url"
+            role="button">Artikel löschen</a>
+          </section>
+
+        </div>
+
         <div tal:condition="view/is_mixture">
-            <section class="mt-3 mb-3" tal:condition="view/userCanEdit">
-              <a class="btn btn-primary mb-3" tal:attributes="href python:context.absolute_url()+'/update-mixture-form?itemid=%s' % view.itemid" role="button">Artikel bearbeiten</a>
-
-              <a class="btn btn-warning mb-3" tal:attributes="href python:context.absolute_url()+'/delete-mixture-form?itemid=%s' % view.itemid" role="button">Artikel löschen</a>
-            </section>
-
             <section class="mt-3 mb-3" tal:condition="view/userCanEdit">
               <a class="btn btn-primary mb-3" tal:attributes="href python:context.absolute_url()+'/create-ingredient-form?itemid=%s' % view.itemid" role="button">Bestandteil hinzufügen</a>
 
               <a class="btn btn-warning mb-3" tal:attributes="href python:context.absolute_url()+'/delete-ingredients-form?itemid=%s' % view.itemid" role="button">Bestandteile löschen</a>
             </section>
-
             <section class="mt-3 mb-3" tal:condition="view/userCanEdit">
               <a class="btn btn-primary mb-3" tal:attributes="href python:context.absolute_url()+'/update-mixture-manufacturer-form?itemid=%s' % view.itemid" role="button">Hersteller aktualisieren</a>
             </section>
@@ -73,23 +79,6 @@
                 target="_blank" role="button">Weitere Informationen (externe Gestis-Stoffdatenbank)</a>
             </section>
 
-            <section class="mt-3 mb-3" tal:condition="view/userCanEdit">
-              <!--
-              <a
-                class="btn btn-primary mb-3" tal:attributes="href python:context.absolute_url()+'/update-substance-form?itemid=%s' % view.itemid"
-                role="button">Artikel bearbeiten</a> -->
-              <a
-                class="btn btn-primary mb-3" tal:attributes="href view/edit_url"
-                role="button">Artikel bearbeiten</a>
-
-              <!--
-              <a
-                class="btn btn-warning mb-3" tal:attributes="href python:context.absolute_url()+'/delete-substance-form?itemid=%s' % view.itemid"
-                role="button">Artikel löschen</a> -->
-              <a
-                class="btn btn-warning mb-3" tal:attributes="href view/delete_url"
-                role="button">Artikel löschen</a>
-            </section>
 
             <section class="mt-3 mb-3" tal:condition="view/userCanEdit">
               <a
@@ -100,36 +89,6 @@
                 class="btn btn-warning mb-3" tal:attributes="href python:context.absolute_url()+'/delete-synonyms-form?itemid=%s' % view.itemid"
                 role="button">Synonyme löschen</a>
             </section>
-        </div>
-
-        <div tal:condition="view/is_manufacturer">
-            <section class="mt-3 mb-3" tal:condition="view/userCanEdit">
-              <a
-                class="btn btn-primary" tal:attributes="href python:context.absolute_url()+'/update-manufacturer-form?itemid=%s' % view.itemid"
-                role="button">Artikel Bearbeiten</a>
-            </section>
-
-            <section class="mt-3 mb-3" tal:condition="view/userCanEdit">
-              <a
-                class="btn btn-primary" tal:attributes="href python:context.absolute_url()+'/delete-manufacturer-form?itemid=%s' % view.itemid"
-                role="button">Artikel Löschen</a>
-            </section>
-        </div>
-
-        <div tal:condition="view/is_powder">
-          <section class="mt-3 mb-3" tal:condition="view/userCanEdit">
-            <a
-              class="btn btn-primary" tal:attributes="href python:context.absolute_url()+'/update-powder-form?itemid=%s' % view.itemid"
-              role="button">Artikel Bearbeiten</a>
-          </section>
-
-          <section class="mt-3 mb-3" tal:condition="view/userCanEdit">
-            <a
-              class="btn btn-primary" tal:attributes="href python:context.absolute_url()+'/delete-powder-form?itemid=%s' % view.itemid"
-              role="button">Artikel Löschen</a>
-          </section>
-        </div>
-
         </div>
 
           <!-- Portlets -->
