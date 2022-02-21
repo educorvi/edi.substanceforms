@@ -3,6 +3,7 @@ from edi.substanceforms import _
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope.browserpage.viewpagetemplatefile import BoundPageTemplate
+from edi.substanceforms.content.tabelle import possibleColumns
 from edi.substanceforms.config import editrole
 from edi.substanceforms.helpers import get_vocabulary
 from plone import api as ploneapi
@@ -115,7 +116,6 @@ class SingleView(BrowserView):
         title = "Hersteller"
         if self.context.tablename == 'substance_mixture':
             value = self.get_manufacturer(self.article[25])
-            import pdb; pdb.set_trace()
         elif self.context.tablename == 'spray_powder':
             value = self.get_manufacturer(self.article[11])
         elif self.context.tablename == 'manufacturer':
