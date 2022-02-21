@@ -31,7 +31,7 @@ class CreateForm(Form):
     dnel_lokal = StringField("DNEL (lokal)", render_kw={'class': 'form-control'})
     dnel_systemisch = StringField("DNEL (systemisch)", render_kw={'class': 'form-control'})
     gestislink = StringField("Link in externe Datenbank", render_kw={'class': 'form-control'})
-    status = "published" 
+    status = "published"
     #image_url = FileField("Bild hochladen", render_kw={'class': 'form-control'})
 
 class UpdateForm(Form):
@@ -178,7 +178,7 @@ class UpdateFormView(CreateFormView):
                          skin_category='%s', branch='%s', dnel_lokal='%s', dnel_systemisch='%s', link='%s'
                          WHERE substance_id = %s;""" % (self.form.title.data,
                                                         self.form.description.data,
-                                                        self.form.casnr.data,
+                                                        check_value(self.form.casnr.data),
                                                         self.form.egnr.data,
                                                         check_value(self.form.concentration.data),
                                                         self.form.skin_category.data,
