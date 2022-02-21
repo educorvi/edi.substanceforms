@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import transaction
-from wtforms import Form, StringField, SelectField, IntegerField, FileField, BooleanField, HiddenField, FormField, FieldList
+from wtforms import Form, StringField, SelectField, IntegerField, FileField, BooleanField, HiddenField, FormField, FieldList, RadioField
 from wtforms import validators
 from collective.wtforms.views import WTFormView
 from edi.substanceforms.helpers import check_value
@@ -26,8 +26,8 @@ class CreateForm(Form):
     casnr = StringField("CAS-Nummer", render_kw={'class': 'form-control'})
     egnr = StringField("EG-Nummer", render_kw={'class': 'form-control'})
     concentration = IntegerField("Konzentration in wässriger Lösung", render_kw={'class': 'form-control'})
-    skin_category = SelectField("Hautschutzkategorie", choices = hskategorie, render_kw={'class': 'form-control'})
-    branch = SelectField("Branche", choices = branchen, render_kw={'class': 'form-control'})
+    skin_category = RadioField("Hautschutzkategorie", choices = hskategorie)
+    branch = RadioField("Branche", choices=branchen)
     dnel_lokal = StringField("DNEL (lokal)", render_kw={'class': 'form-control'})
     dnel_systemisch = StringField("DNEL (systemisch)", render_kw={'class': 'form-control'})
     gestislink = StringField("Link in externe Datenbank", render_kw={'class': 'form-control'})
@@ -41,8 +41,8 @@ class UpdateForm(Form):
     casnr = StringField("CAS-Nummer", render_kw={'class': 'form-control'})
     egnr = StringField("EG-Nummer", render_kw={'class': 'form-control'})
     concentration = IntegerField("Konzentration in wässriger Lösung", render_kw={'class': 'form-control'})
-    skin_category = SelectField("Hautschutzkategorie", choices = hskategorie, render_kw={'class': 'form-control'})
-    branch = SelectField("Branche", choices = branchen, render_kw={'class': 'form-control'})
+    skin_category = RadioField("Hautschutzkategorie", choices = hskategorie)
+    branch = RadioField("Branche", choices=branchen)
     #image_url = FileField("Neues Bild hochladen", render_kw={'class': 'form-control'})
     #no_image = BooleanField("Vorhandenes Bild entfernen", render_kw={'class': 'form-check-input'})
     dnel_lokal = StringField("DNEL (lokal)", render_kw={'class': 'form-control'})
