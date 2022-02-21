@@ -286,6 +286,11 @@ class SingleView(BrowserView):
             return {'title': title, 'value': value}
         return {}
 
+    def edit_url(self):
+        if self.context.tablename == 'substance_mixture':
+            link = self.context.absolute_url() + '/update-substance-form?itemid=%s' % self.itemid
+            return link
+
     def userCanEdit(self):
         if not ploneapi.user.is_anonymous():
             current = ploneapi.user.get_current()
