@@ -15,7 +15,7 @@ import psycopg2
 class CreateForm(Form):
 
     title = StringField("Titel", [validators.required()], render_kw={'class': 'form-control'})
-    description = StringField("Beschreibung", [validators.required()], render_kw={'class': 'form-control'})
+    description = StringField("Beschreibung", render_kw={'class': 'form-control'})
     manufacturer_id = SelectField(u"Hersteller des Druckbestäubungspuders", [validators.required()], render_kw={'class': 'form-control'})
     product_class = SelectField("Produktklasse", choices=product_class, render_kw={'class': 'form-control'})
     starting_material = StringField("Ausgangsmaterial", render_kw={'class': 'form-control'})
@@ -28,7 +28,7 @@ class CreateForm(Form):
 class UpdateForm(Form):
 
     title = StringField("Titel", [validators.required()], render_kw={'class': 'form-control'})
-    description = StringField("Beschreibung", [validators.required()], render_kw={'class': 'form-control'})
+    description = StringField("Beschreibung", render_kw={'class': 'form-control'})
     product_class = SelectField("Produktklasse", choices=product_class, render_kw={'class': 'form-control'})
     starting_material = StringField("Ausgangsmaterial", render_kw={'class': 'form-control'})
     median_value = FloatField("Medianwert", render_kw={'class': 'form-control'})
