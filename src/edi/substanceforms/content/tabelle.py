@@ -57,6 +57,8 @@ def possibleColumns(context):
     except:
         terms = []
 
+        import pdb; pdb.set_trace()
+
     return SimpleVocabulary(terms)
 
 @provider(IContextSourceBinder)
