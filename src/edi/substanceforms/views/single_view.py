@@ -3,6 +3,7 @@ from edi.substanceforms import _
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope.browserpage.viewpagetemplatefile import BoundPageTemplate
+from edi.substanceforms.content.tabelle import possibleColumns
 from edi.substanceforms.config import editrole
 from edi.substanceforms.helpers import get_vocabulary
 from plone import api as ploneapi
@@ -25,29 +26,294 @@ class SingleView(BrowserView):
         self.article = self.get_article()
         self.machines = []
         self.secsheet = []
+
+        #import pdb; pdb.set_trace()
+        self.definitions = self.get_definitions()
+        print(self.definitions)
+
         if self.context.tablename == 'substance_mixture':
             #self.machines = self.get_machines()
-            self.secsheet = self.get_recipes()
-            template = ViewPageTemplateFile('substance_mixture_view.pt')
+            #self.secsheet = self.get_recipes()
+            template = ViewPageTemplateFile('single_view.pt')
             self.image_url = self.get_image_url()
             self.template = BoundPageTemplate(template, self)
             return self.template()
         if self.context.tablename == 'substance':
             #self.machines = self.get_machines()
-            self.secsheet = self.get_recipes()
-            template = ViewPageTemplateFile('substance_view.pt')
+            #self.secsheet = self.get_recipes()
+            template = ViewPageTemplateFile('single_view.pt')
             self.template = BoundPageTemplate(template, self)
             return self.template()
         elif self.context.tablename == 'spray_powder':
-            template = ViewPageTemplateFile('spray_powder_view.pt')
+            template = ViewPageTemplateFile('single_view.pt')
             self.image_url = self.get_image_url()
             self.template = BoundPageTemplate(template, self)
             return self.template()
         elif self.context.tablename == 'manufacturer':
-            template = ViewPageTemplateFile('manufacturer_view.pt')
+            template = ViewPageTemplateFile('single_view.pt')
             self.template = BoundPageTemplate(template, self)
             return self.template()
         return self.index()
+
+    def get_definitions(self):
+        fragments = list()
+        columns = self.context.columns
+        for key in columns:
+            key_value_pair = getattr(self, key, None)
+
+            if key_value_pair:
+                entry = key_value_pair()
+                if entry:
+                    title = entry['title']
+                    value = entry['value']
+                    fragment = f'<dt class="col col-sm-5">{title}</dt><dd class="col col-sm-7">{value}</dd><div class="w-100 divider"></div>'
+                    fragments.append(fragment)
+
+        return fragments
+
+    def is_mixture(self):
+        if self.context.tablename == 'substance_mixture':
+            return True
+        else:
+            return False
+
+    def is_substance(self):
+        if self.context.tablename == 'substance':
+            return True
+        else:
+            return False
+
+    def is_manufacturer(self):
+        if self.context.tablename == 'manufacturer':
+            return True
+        else:
+            return False
+
+    def is_powder(self):
+        if self.context.tablename == 'spray_powder':
+            return True
+        else:
+            return False
+
+    def substance_type(self):
+        title = "Typ des Wasch- und Reinigungsmittels"
+        value = self.get_attr_translation('substance_types_new', self.article[5])
+        if value:
+            return {'title': title, 'value': value}
+        return {}
+
+    def branch(self):
+        title = "Branche"
+        if self.context.tablename == 'substance_mixture':
+            value = self.get_attr_translation('branchen', self.article[4])
+        elif self.context.tablename == 'substance':
+            value = self.get_attr_translation('branchen', self.article[8])
+        if value:
+            return {'title': title, 'value': value}
+        return {}
+
+    def manufacturer_id(self):
+        title = "Hersteller"
+        if self.context.tablename == 'substance_mixture':
+            value = self.get_manufacturer(self.article[25])
+        elif self.context.tablename == 'spray_powder':
+            value = self.get_manufacturer(self.article[11])
+        elif self.context.tablename == 'manufacturer':
+            value = False
+        if value:
+            return {'title': title, 'value': value}
+        return {}
+
+    def skin_category(self):
+        title = "Hautschutzmittelgruppe"
+        if self.context.tablename == 'substance_mixture':
+            value = self.get_attr_translation('hskategorie', self.article[16])
+        elif self.context.tablename == 'substance':
+            value = self.get_attr_translation('hskategorie', self.article[7])
+        if value:
+            return {'title': title, 'value': value}
+        return {}
+
+    def checked_emissions(self):
+        title = "Emissionsarmes Produkt"
+        if self.context.tablename == 'substance_mixture':
+            value = self.get_attr_translation('boolvocab', str(self.article[17]))
+        elif self.context.tablename == 'spray_powder':
+            value = self.get_attr_translation('boolvocab', str(self.article[8]))
+        if value:
+            return {'title': title, 'value': value}
+        return {}
+
+    def evaporation_lane_150(self):
+        title = "Verdampfungsfaktor 150 Grad"
+        value = self.article[10]
+        if value:
+            return {'title': title, 'value': value}
+        return {}
+
+    def evaporation_lane_160(self):
+        title = "Verdampfungsfaktor 160 Grad"
+        value = self.article[11]
+        if value:
+            return {'title': title, 'value': value}
+        return {}
+
+    def evaporation_lane_170(self):
+        title = "Verdampfungsfaktor 170 Grad"
+        value = self.article[12]
+        if value:
+            return {'title': title, 'value': value}
+        return {}
+
+    def evaporation_lane_180(self):
+        title = "Verdampfungsfaktor 180 Grad"
+        value = self.article[13]
+        if value:
+            return {'title': title, 'value': value}
+        return {}
+
+    def date_checked(self):
+        title = "Prüfdatum"
+        if self.context.tablename == 'substance_mixture':
+            value = self.article[18]
+        elif self.context.tablename == 'spray_powder':
+            value = self.article[9]
+        if value:
+            return {'title': title, 'value': value}
+        return {}
+
+    def flashpoint(self):
+        title = "Flammpunkt in °C"
+        value = self.article[19]
+        if value:
+            return {'title': title, 'value': value}
+        return {}
+
+    def ueg(self):
+        title = "UEG in g/m3"
+        value = self.article[14]
+        if value:
+            return {'title': title, 'value': value}
+        return {}
+
+    def response(self):
+        title = "Responsefaktor"
+        value = self.article[15]
+        if value:
+            return {'title': title, 'value': value}
+        return {}
+
+    def application_areas(self):
+        title = "Anwendungsgebiete"
+        value = self.translate_application_areas(self.new_application_areas_translation2(self.article[0]))
+        if value:
+            return {'title': title, 'value': value}
+        return {}
+
+    def usecases(self):
+        title = "Verwendungszwecke"
+        value = self.translate_usecases(self.new_usecase_translation2(self.article[0]))
+        if value:
+            return {'title': title, 'value': value}
+        return {}
+
+    def concentration(self):
+        title = "Konzentration in wässriger Lösung"
+        value = self.article[6]
+        if value:
+            return {'title': title, 'value': value}
+        return {}
+
+    def casnr(self):
+        title = "CAS-Nummer"
+        value = self.article[4]
+        if value:
+            return {'title': title, 'value': value}
+        return {}
+
+    def egnr(self):
+        title = "EG-Nummer"
+        value = self.article[5]
+        if value:
+            return {'title': title, 'value': value}
+        return {}
+
+    def dnel_lokal(self):
+        title = "DNEL Inhalation [mg/m3]: lokal"
+        value = self.article[9]
+        if value:
+            return {'title': title, 'value': value}
+        return {}
+
+    def dnel_systemisch(self):
+        title = "DNEL Inhalation [mg/m3]: systemisch"
+        value = self.article[10]
+        if value:
+            return {'title': title, 'value': value}
+        return {}
+
+    def homepage(self):
+        title = "Homepage"
+        value = self.article[4]
+        if value:
+            return {'title': title, 'value': value}
+        return {}
+
+    def product_class(self):
+        title = "Produktklasse"
+        value = self.article[4]
+        if value:
+            return {'title': title, 'value': value}
+        return {}
+
+    def starting_material(self):
+        title = "Ausgangsmaterial"
+        value = self.article[5]
+        if value:
+            return {'title': title, 'value': value}
+        return {}
+
+    def volume_share(self):
+        title = "Volumenanteil"
+        value = self.article[7]
+        if value:
+            return {'title': title, 'value': value}
+        return {}
+
+    def median_share(self):
+        title = "Medianwert"
+        value = self.article[6]
+        if value:
+            return {'title': title, 'value': value}
+        return {}
+
+    def edit_url(self):
+        if self.context.tablename == 'substance_mixture':
+            link = self.context.absolute_url() + '/update-mixture-form?itemid=%s' % self.itemid
+            return link
+        elif self.context.tablename == 'substance':
+            link = self.context.absolute_url() + '/update-substance-form?itemid=%s' % self.itemid
+            return link
+        elif self.context.tablename == 'manufacturer':
+            link = self.context.absolute_url() + '/update-manufacturer-form?itemid=%s' % self.itemid
+            return link
+        elif self.context.tablename == 'spray_powder':
+            link = self.context.absolute_url() + '/update-powder-form?itemid=%s' % self.itemid
+            return link
+
+    def delete_url(self):
+        if self.context.tablename == 'substance_mixture':
+            link = self.context.absolute_url()+'/delete-mixture-form?itemid=%s' % self.itemid
+            return link
+        elif self.context.tablename == 'substance':
+            link = self.context.absolute_url()+'/delete-substance-form?itemid=%s' % self.itemid
+            return link
+        elif self.context.tablename == 'manufacturer':
+            link = self.context.absolute_url() + '/delete-manufacturer-form?itemid=%s' % self.itemid
+            return link
+        elif self.context.tablename == 'spray_powder':
+            link = self.context.absolute_url() + '/delete-powder-form?itemid=%s' % self.itemid
+            return link
 
     def userCanEdit(self):
         if not ploneapi.user.is_anonymous():
@@ -136,17 +402,13 @@ class SingleView(BrowserView):
             select = "SELECT title from substance WHERE substance_id = %s" %sid
             substance_title = self.db.execute(select)
             entry = {'title':substance_title, 'concentration_min':concentration_min, 'concentration_max':concentration_max}
+            entry['resultstring'] = self.translate_recipes(entry)
             substances.append(entry)
         #self.db.close()
         return substances
 
     def translate_recipes(self, recipe):
-        resultstring = ""
-        index = 0
-        for i in recipe:
-            resultstring = resultstring + "%s (%s %s %s, %s %s %s), " % (recipe[index]['title'][0][0], ">=", recipe[index]['concentration_min'], "%", "<=", recipe[index]['concentration_max'], "%")
-            index = index + 1
-        resultstring = resultstring[:-2]
+        resultstring = "%s (%s %s %s, %s %s %s)" % (recipe['title'][0][0], ">=", recipe['concentration_min'], "%", "<=", recipe['concentration_max'], "%")
         return resultstring
 
     def get_attr_translation(self, attribute, value):
@@ -189,6 +451,20 @@ class SingleView(BrowserView):
         # self.db.close()
         return usecases
 
+    def new_usecase_translation2(self, id):
+        usecases = []
+        select = "SELECT usecase_id from usecasepairs WHERE mixture_id = %s" % id
+        usecaseids = self.db.execute(select)
+        # Continue here
+
+        for ucid in usecaseids:
+            select = "SELECT usecase_name from usecases WHERE usecase_id = %s" % ucid
+            usecase_title = self.db.execute(select)
+            entry = {'title': usecase_title}
+            usecases.append(entry)
+        # self.db.close()
+        return usecases
+
     def translate_usecases(self, usecases):
         resultstring = ""
         index = 0
@@ -215,6 +491,20 @@ class SingleView(BrowserView):
     def new_application_areas_translation(self):
         applicationareas = []
         select = "SELECT area_id from areapairs WHERE mixture_id = %s" % self.itemid
+        areaids = self.db.execute(select)
+        # Continue here
+
+        for arid in areaids:
+            select = "SELECT application_area_name from application_areas WHERE application_area_id = %s" % arid
+            area_title = self.db.execute(select)
+            entry = {'title': area_title}
+            applicationareas.append(entry)
+        # self.db.close()
+        return applicationareas
+
+    def new_application_areas_translation2(self, id):
+        applicationareas = []
+        select = "SELECT area_id from areapairs WHERE mixture_id = %s" % id
         areaids = self.db.execute(select)
         # Continue here
 

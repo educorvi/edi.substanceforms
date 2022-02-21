@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import transaction
-from wtforms import Form, StringField, SelectField, IntegerField, FileField, BooleanField, HiddenField, FormField, FieldList
+from wtforms import Form, StringField, SelectField, IntegerField, FileField, BooleanField, HiddenField, FormField, FieldList, RadioField
 from wtforms import validators
 from collective.wtforms.views import WTFormView
 from edi.substanceforms.helpers import check_value
@@ -26,23 +26,23 @@ class CreateForm(Form):
     casnr = StringField("CAS-Nummer", render_kw={'class': 'form-control'})
     egnr = StringField("EG-Nummer", render_kw={'class': 'form-control'})
     concentration = IntegerField("Konzentration in wässriger Lösung", render_kw={'class': 'form-control'})
-    skin_category = SelectField("Hautschutzkategorie", choices = hskategorie, render_kw={'class': 'form-control'})
-    branch = SelectField("Branche", choices = branchen, render_kw={'class': 'form-control'})
+    skin_category = RadioField("Hautschutzkategorie", choices = hskategorie)
+    branch = RadioField("Branche", choices=branchen)
     dnel_lokal = StringField("DNEL (lokal)", render_kw={'class': 'form-control'})
     dnel_systemisch = StringField("DNEL (systemisch)", render_kw={'class': 'form-control'})
     gestislink = StringField("Link in externe Datenbank", render_kw={'class': 'form-control'})
-    status = "published" 
+    status = "published"
     #image_url = FileField("Bild hochladen", render_kw={'class': 'form-control'})
 
 class UpdateForm(Form):
 
     title = StringField("Titel", [validators.required()], render_kw={'class': 'form-control'})
     description = StringField("Beschreibung", render_kw={'class': 'form-control'})
-    casnr = IntegerField("CAS-Nummer", render_kw={'class': 'form-control'})
+    casnr = StringField("CAS-Nummer", render_kw={'class': 'form-control'})
     egnr = StringField("EG-Nummer", render_kw={'class': 'form-control'})
     concentration = IntegerField("Konzentration in wässriger Lösung", render_kw={'class': 'form-control'})
-    skin_category = SelectField("Hautschutzkategorie", choices = hskategorie, render_kw={'class': 'form-control'})
-    branch = SelectField("Branche", choices = branchen, render_kw={'class': 'form-control'})
+    skin_category = RadioField("Hautschutzkategorie", choices = hskategorie)
+    branch = RadioField("Branche", choices=branchen)
     #image_url = FileField("Neues Bild hochladen", render_kw={'class': 'form-control'})
     #no_image = BooleanField("Vorhandenes Bild entfernen", render_kw={'class': 'form-check-input'})
     dnel_lokal = StringField("DNEL (lokal)", render_kw={'class': 'form-control'})
@@ -178,7 +178,7 @@ class UpdateFormView(CreateFormView):
                          skin_category='%s', branch='%s', dnel_lokal='%s', dnel_systemisch='%s', link='%s'
                          WHERE substance_id = %s;""" % (self.form.title.data,
                                                         self.form.description.data,
-                                                        self.form.casnr.data,
+                                                        check_value(self.form.casnr.data),
                                                         self.form.egnr.data,
                                                         check_value(self.form.concentration.data),
                                                         self.form.skin_category.data,
