@@ -20,7 +20,7 @@
 
         <div class="row">
 
-          <div class="col-lg-9 col-12">
+          <dl class="col-lg-9 col-12">
             <div class="row">
               <div class="col-7">
                 <h1 tal:content="python:article[1]"/>
@@ -91,7 +91,7 @@
             </section>
         </div>
 
-          </div>
+        </div>
 
           <!-- Portlets -->
           <div class="col-lg-3 col-12">
