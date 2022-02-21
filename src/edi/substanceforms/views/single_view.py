@@ -115,6 +115,7 @@ class SingleView(BrowserView):
         title = "Hersteller"
         if self.context.tablename == 'substance_mixture':
             value = self.get_manufacturer(self.article[25])
+            import pdb; pdb.set_trace()
         elif self.context.tablename == 'spray_powder':
             value = self.get_manufacturer(self.article[11])
         elif self.context.tablename == 'manufacturer':
