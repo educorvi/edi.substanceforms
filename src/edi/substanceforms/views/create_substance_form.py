@@ -159,7 +159,6 @@ class UpdateFormView(CreateFormView):
         self.form.description.default=self.result[0][1]
         self.form.casnr.default=self.result[0][2]
         self.form.egnr.default=self.result[0][3]
-        import pdb; pdb.set_trace()
         self.form.concentration.default=self.result[0][4]
         self.form.skin_category.default=self.result[0][5]
         self.form.branch.default=self.result[0][6]
