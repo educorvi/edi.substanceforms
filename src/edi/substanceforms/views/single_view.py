@@ -10,6 +10,7 @@ from plone import api as ploneapi
 from edi.substanceforms.lib import DBConnect
 import psycopg2
 
+from edi.substanceforms.content.tabelle import possibleColumns
 
 class SingleView(BrowserView):
 
@@ -97,6 +98,7 @@ class SingleView(BrowserView):
 
     def substance_type(self):
         title = "Typ des Wasch- und Reinigungsmittels"
+        import pdb; pdb.set_trace()
         value = self.get_attr_translation('substance_types_new', self.article[5])
         if value:
             return {'title': title, 'value': value}
