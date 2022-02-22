@@ -98,9 +98,8 @@ class SingleView(BrowserView):
 
     def substance_type(self):
         title = "Typ des Wasch- und Reinigungsmittels"
-        test = possibleColumns(self.context).getTerm('substance_type').token
-        import pdb; pdb.set_trace()
-        value = self.get_attr_translation('substance_types_new', self.article[5])
+        fieldindex = possibleColumns(self.context).getTerm('substance_type').token
+        value = self.get_attr_translation('substance_types_new', self.article[int(fieldindex)])
         if value:
             return {'title': title, 'value': value}
         return {}
