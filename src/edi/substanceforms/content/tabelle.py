@@ -62,6 +62,8 @@ def possibleColumns(context):
 
     #import pdb; pdb.set_trace()
 
+    import pdb; pdb.set_trace()
+
     return SimpleVocabulary(terms)
 
 @provider(IContextSourceBinder)
