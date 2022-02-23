@@ -233,7 +233,8 @@ class SingleView(BrowserView):
     def usecases(self):
         title = "Verwendungszwecke"
         fieldindex = possibleColumns(self.context).getTerm('usecases').token
-        value = self.translate_usecases(self.new_usecase_translation2(self.article[int(fieldindex)]))
+        mixtureid = possibleColumns(self.context).getTerm('substance_mixture_id').token
+        value = self.translate_usecases(self.new_usecase_translation2(self.article[int(mixtureid)]))
         if value:
             return {'title': title, 'value': value}
         return {}
