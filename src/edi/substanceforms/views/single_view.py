@@ -224,7 +224,8 @@ class SingleView(BrowserView):
     def application_areas(self):
         title = "Anwendungsgebiete"
         fieldindex = possibleColumns(self.context).getTerm('application_areas').token
-        value = self.translate_application_areas(self.new_application_areas_translation2(self.article[int(fieldindex)]))
+        mixtureid = possibleColumns(self.context).getTerm('substance_mixture_id').token
+        value = self.translate_application_areas(self.new_application_areas_translation2(self.article[int(mixtureid)]))
         if value:
             return {'title': title, 'value': value}
         return {}
