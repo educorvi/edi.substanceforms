@@ -75,7 +75,7 @@
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".tabelle_view.HerstellerFormView"
     template="tabelle_view.pt"
-    permission="cmf.ModifyPortalContent"
+    permission="zope2.View"
     />
 
     <browser:page
@@ -83,7 +83,7 @@
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".tabelle_view.SubstanceFormView"
     template="tabelle_view.pt"
-    permission="cmf.ModifyPortalContent"
+    permission="zope2.View"
     />
 
     <browser:page
@@ -91,7 +91,7 @@
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".tabelle_view.SubstancemixtureFormView"
     template="tabelle_view.pt"
-    permission="cmf.ModifyPortalContent"
+    permission="zope2.View"
     />
 
     <browser:page
@@ -99,7 +99,7 @@
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".tabelle_view.SpraypowderFormView"
     template="tabelle_view.pt"
-    permission="cmf.ModifyPortalContent"
+    permission="zope2.View"
     />
 
   <browser:page
