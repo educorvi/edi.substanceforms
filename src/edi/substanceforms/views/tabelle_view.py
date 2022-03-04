@@ -60,7 +60,7 @@ class TabelleFormView(WTFormView):
         results = []
         searchkey = self.context.tablename + '_id'
         searchtable = self.context.tablename
-        select = "SELECT %s, title FROM %s ORDER BY title ASC;" % (searchkey, searchtable)
+        select = "SELECT %s, title FROM %s WHERE status = 'published' ORDER BY title ASC;" % (searchkey, searchtable)
         try:
             conn = psycopg2.connect(host=self.host, user=self.username, password=self.password, dbname=self.dbname)
             cur = conn.cursor()
