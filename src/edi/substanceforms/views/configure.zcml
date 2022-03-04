@@ -49,6 +49,13 @@
     />
 
   <browser:page
+    name="reinstoffmigration-new"
+    for="*"
+    class=".reinstoffmigration_new.Migrationview"
+    permission="cmf.ModifyPortalContent"
+    />
+
+  <browser:page
     name="selector-view"
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".selector_view.SelectorView"
