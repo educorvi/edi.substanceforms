@@ -179,7 +179,7 @@ class UpdateFormView(CreateFormView):
                          WHERE substance_id = %s;""" % (self.form.title.data,
                                                         self.form.description.data,
                                                         check_value(self.form.casnr.data),
-                                                        self.form.egnr.data,
+                                                        check_value(self.form.egnr.data),
                                                         check_value(self.form.concentration.data),
                                                         self.form.skin_category.data,
                                                         self.form.branch.data,
