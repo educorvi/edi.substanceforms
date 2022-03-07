@@ -123,7 +123,6 @@ class Migrationview(BrowserView):
         zahl = 0
         for i in erg1:
             ergebnis = i.split('@')
-            import pdb;pdb.set_trace()
             reinstoff_title = ergebnis[6]
             reinstoff_uid = get_webcode(self)
             reinstoff_casnr = ergebnis[1]
