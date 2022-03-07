@@ -146,7 +146,7 @@ class UpdateFormView(CreateFormView):
                 if result:
                     return result
         self.itemid = self.request.get('itemid')
-        getter = """SELECT title, description, casnr, egnr, concentration, skin_category, branch, dnel_lokal, dnel_systemisch, link
+        getter = """SELECT title, description, casnr, egnr, concentration, skin_category, branch, formula, mol, link
                     FROM %s WHERE %s_id = %s;""" % (self.context.tablename,
                                                     self.context.tablename,
                                                     self.itemid)
@@ -155,16 +155,16 @@ class UpdateFormView(CreateFormView):
         return self.index()
 
     def renderForm(self):
-        self.form.title.default=self.result[0][1]
-        self.form.description.default=self.result[0][2]
-        self.form.casnr.default=self.result[0][4]
-        self.form.egnr.default=self.result[0][5]
-        self.form.concentration.default=self.result[0][6]
-        self.form.skin_category.default=self.result[0][7]
-        self.form.branch.default=self.result[0][8]
-        self.form.formula.default=self.result[0][11]
-        self.form.mol.default=self.result[0][12]
-        self.form.gestislink.default=self.result[0][14]
+        self.form.title.default = self.result[0][0]
+        self.form.description.default = self.result[0][1]
+        self.form.casnr.default = self.result[0][2]
+        self.form.egnr.default = self.result[0][3]
+        self.form.concentration.default = self.result[0][4]
+        self.form.skin_category.default = self.result[0][5]
+        self.form.branch.default = self.result[0][6]
+        self.form.formula.default = self.result[0][7]
+        self.form.mol.default = self.result[0][8]
+        self.form.gestislink.default = self.result[0][9]
         self.form.item_id.default=self.itemid
         self.form.process()
         return self.formTemplate()
