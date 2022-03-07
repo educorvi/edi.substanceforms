@@ -44,7 +44,7 @@ def possibleColumns(context):
 
         conn = psycopg2.connect(host=host, user=username, dbname=dbname, password=password)
         cur = conn.cursor()
-        select = "SELECT column_name FROM information_schema.columns WHERE table_name = '%s';" % tablename
+        select = "SELECT column_name FROM information_schema.columns WHERE table_name = '%s' ORDER BY ordinal_position;" % tablename
         cur.execute(select)
         tables = cur.fetchall()
         cur.close()
@@ -59,8 +59,6 @@ def possibleColumns(context):
             #terms.append(SimpleVocabulary.createTerm(table, table, table))
     except:
         terms = []
-
-    #import pdb; pdb.set_trace()
 
     return SimpleVocabulary(terms)
 

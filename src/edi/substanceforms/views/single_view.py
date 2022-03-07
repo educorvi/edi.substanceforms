@@ -10,6 +10,7 @@ from plone import api as ploneapi
 from edi.substanceforms.lib import DBConnect
 import psycopg2
 
+from edi.substanceforms.content.tabelle import possibleColumns
 
 class SingleView(BrowserView):
 
@@ -97,7 +98,8 @@ class SingleView(BrowserView):
 
     def substance_type(self):
         title = "Typ des Wasch- und Reinigungsmittels"
-        value = self.get_attr_translation('substance_types_new', self.article[5])
+        fieldindex = possibleColumns(self.context).getTerm('substance_type').token
+        value = self.get_attr_translation('substance_types_new', self.article[int(fieldindex)])
         if value:
             return {'title': title, 'value': value}
         return {}
@@ -105,9 +107,11 @@ class SingleView(BrowserView):
     def branch(self):
         title = "Branche"
         if self.context.tablename == 'substance_mixture':
-            value = self.get_attr_translation('branchen', self.article[4])
+            fieldindex = possibleColumns(self.context).getTerm('branch').token
+            value = self.get_attr_translation('branchen', self.article[int(fieldindex)])
         elif self.context.tablename == 'substance':
-            value = self.get_attr_translation('branchen', self.article[8])
+            fieldindex = possibleColumns(self.context).getTerm('branch').token
+            value = self.get_attr_translation('branchen', self.article[int(fieldindex)])
         if value:
             return {'title': title, 'value': value}
         return {}
@@ -115,9 +119,11 @@ class SingleView(BrowserView):
     def manufacturer_id(self):
         title = "Hersteller"
         if self.context.tablename == 'substance_mixture':
-            value = self.get_manufacturer(self.article[25])
+            fieldindex = possibleColumns(self.context).getTerm('manufacturer_id').token
+            value = self.get_manufacturer(self.article[int(fieldindex)])
         elif self.context.tablename == 'spray_powder':
-            value = self.get_manufacturer(self.article[11])
+            fieldindex = possibleColumns(self.context).getTerm('manufacturer_id').token
+            value = self.get_manufacturer(self.article[int(fieldindex)])
         elif self.context.tablename == 'manufacturer':
             value = False
         if value:
@@ -127,9 +133,11 @@ class SingleView(BrowserView):
     def skin_category(self):
         title = "Hautschutzmittelgruppe"
         if self.context.tablename == 'substance_mixture':
-            value = self.get_attr_translation('hskategorie', self.article[16])
+            fieldindex = possibleColumns(self.context).getTerm('skin_category').token
+            value = self.get_attr_translation('hskategorie', self.article[int(fieldindex)])
         elif self.context.tablename == 'substance':
-            value = self.get_attr_translation('hskategorie', self.article[7])
+            fieldindex = possibleColumns(self.context).getTerm('skin_category').token
+            value = self.get_attr_translation('hskategorie', self.article[int(fieldindex)])
         if value:
             return {'title': title, 'value': value}
         return {}
@@ -137,152 +145,176 @@ class SingleView(BrowserView):
     def checked_emissions(self):
         title = "Emissionsarmes Produkt"
         if self.context.tablename == 'substance_mixture':
-            value = self.get_attr_translation('boolvocab', str(self.article[17]))
+            fieldindex = possibleColumns(self.context).getTerm('checked_emissions').token
+            value = self.get_attr_translation('boolvocab', str(self.article[int(fieldindex)]))
         elif self.context.tablename == 'spray_powder':
-            value = self.get_attr_translation('boolvocab', str(self.article[8]))
+            fieldindex = possibleColumns(self.context).getTerm('checked_emissions').token
+            value = self.get_attr_translation('boolvocab', str(self.article[int(fieldindex)]))
         if value:
             return {'title': title, 'value': value}
         return {}
 
     def evaporation_lane_150(self):
         title = "Verdampfungsfaktor 150 Grad"
-        value = self.article[10]
+        fieldindex = possibleColumns(self.context).getTerm('evaporation_lane_150').token
+        value = self.article[int(fieldindex)]
         if value:
             return {'title': title, 'value': value}
         return {}
 
     def evaporation_lane_160(self):
         title = "Verdampfungsfaktor 160 Grad"
-        value = self.article[11]
+        fieldindex = possibleColumns(self.context).getTerm('evaporation_lane_160').token
+        value = self.article[int(fieldindex)]
         if value:
             return {'title': title, 'value': value}
         return {}
 
     def evaporation_lane_170(self):
         title = "Verdampfungsfaktor 170 Grad"
-        value = self.article[12]
+        fieldindex = possibleColumns(self.context).getTerm('evaporation_lane_170').token
+        value = self.article[int(fieldindex)]
         if value:
             return {'title': title, 'value': value}
         return {}
 
     def evaporation_lane_180(self):
         title = "Verdampfungsfaktor 180 Grad"
-        value = self.article[13]
+        fieldindex = possibleColumns(self.context).getTerm('evaporation_lane_180').token
+        value = self.article[int(fieldindex)]
         if value:
             return {'title': title, 'value': value}
         return {}
 
     def date_checked(self):
         title = "Prüfdatum"
+        fieldindex = possibleColumns(self.context).getTerm('date_checked').token
         if self.context.tablename == 'substance_mixture':
-            value = self.article[18]
+            value = self.article[int(fieldindex)]
         elif self.context.tablename == 'spray_powder':
-            value = self.article[9]
+            value = self.article[int(fieldindex)]
         if value:
             return {'title': title, 'value': value}
         return {}
 
     def flashpoint(self):
         title = "Flammpunkt in °C"
-        value = self.article[19]
+        fieldindex = possibleColumns(self.context).getTerm('flashpoint').token
+        value = self.article[int(fieldindex)]
         if value:
             return {'title': title, 'value': value}
         return {}
 
     def ueg(self):
         title = "UEG in g/m3"
-        value = self.article[14]
+        fieldindex = possibleColumns(self.context).getTerm('ueg').token
+        value = self.article[int(fieldindex)]
         if value:
             return {'title': title, 'value': value}
         return {}
 
     def response(self):
         title = "Responsefaktor"
-        value = self.article[15]
+        fieldindex = possibleColumns(self.context).getTerm('response').token
+        value = self.article[int(fieldindex)]
         if value:
             return {'title': title, 'value': value}
         return {}
 
     def application_areas(self):
         title = "Anwendungsgebiete"
-        value = self.translate_application_areas(self.new_application_areas_translation2(self.article[0]))
+        fieldindex = possibleColumns(self.context).getTerm('application_areas').token
+        mixtureid = possibleColumns(self.context).getTerm('substance_mixture_id').token
+        value = self.translate_application_areas(self.new_application_areas_translation2(self.article[int(mixtureid)]))
         if value:
             return {'title': title, 'value': value}
         return {}
 
     def usecases(self):
         title = "Verwendungszwecke"
-        value = self.translate_usecases(self.new_usecase_translation2(self.article[0]))
+        fieldindex = possibleColumns(self.context).getTerm('usecases').token
+        mixtureid = possibleColumns(self.context).getTerm('substance_mixture_id').token
+        value = self.translate_usecases(self.new_usecase_translation2(self.article[int(mixtureid)]))
         if value:
             return {'title': title, 'value': value}
         return {}
 
     def concentration(self):
         title = "Konzentration in wässriger Lösung"
-        value = self.article[6]
+        fieldindex = possibleColumns(self.context).getTerm('concentration').token
+        value = self.article[int(fieldindex)]
         if value:
             return {'title': title, 'value': value}
         return {}
 
     def casnr(self):
         title = "CAS-Nummer"
-        value = self.article[4]
+        fieldindex = possibleColumns(self.context).getTerm('casnr').token
+        value = self.article[int(fieldindex)]
         if value:
             return {'title': title, 'value': value}
         return {}
 
     def egnr(self):
         title = "EG-Nummer"
-        value = self.article[5]
+        fieldindex = possibleColumns(self.context).getTerm('egnr').token
+        value = self.article[int(fieldindex)]
         if value:
             return {'title': title, 'value': value}
         return {}
 
     def dnel_lokal(self):
         title = "DNEL Inhalation [mg/m3]: lokal"
-        value = self.article[9]
+        fieldindex = possibleColumns(self.context).getTerm('dnel_lokal').token
+        value = self.article[int(fieldindex)]
         if value:
             return {'title': title, 'value': value}
         return {}
 
     def dnel_systemisch(self):
         title = "DNEL Inhalation [mg/m3]: systemisch"
-        value = self.article[10]
+        fieldindex = possibleColumns(self.context).getTerm('dnel_systemisch').token
+        value = self.article[int(fieldindex)]
         if value:
             return {'title': title, 'value': value}
         return {}
 
     def homepage(self):
         title = "Homepage"
-        value = self.article[4]
+        fieldindex = possibleColumns(self.context).getTerm('homepage').token
+        value = self.article[int(fieldindex)]
         if value:
             return {'title': title, 'value': value}
         return {}
 
     def product_class(self):
         title = "Produktklasse"
-        value = self.article[4]
+        fieldindex = possibleColumns(self.context).getTerm('product_class').token
+        value = self.article[int(fieldindex)]
         if value:
             return {'title': title, 'value': value}
         return {}
 
     def starting_material(self):
         title = "Ausgangsmaterial"
-        value = self.article[5]
+        fieldindex = possibleColumns(self.context).getTerm('starting_material').token
+        value = self.article[int(fieldindex)]
         if value:
             return {'title': title, 'value': value}
         return {}
 
     def volume_share(self):
         title = "Volumenanteil"
-        value = self.article[7]
+        fieldindex = possibleColumns(self.context).getTerm('volume_share').token
+        value = self.article[int(fieldindex)]
         if value:
             return {'title': title, 'value': value}
         return {}
 
     def median_share(self):
         title = "Medianwert"
-        value = self.article[6]
+        fieldindex = possibleColumns(self.context).getTerm('median_share').token
+        value = self.article[int(fieldindex)]
         if value:
             return {'title': title, 'value': value}
         return {}

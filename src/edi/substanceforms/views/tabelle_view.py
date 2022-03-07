@@ -60,7 +60,7 @@ class TabelleFormView(WTFormView):
         results = []
         searchkey = self.context.tablename + '_id'
         searchtable = self.context.tablename
-        select = "SELECT %s, title FROM %s ORDER BY title ASC;" % (searchkey, searchtable)
+        select = "SELECT %s, title FROM %s WHERE status = 'published' ORDER BY title ASC;" % (searchkey, searchtable)
         try:
             conn = psycopg2.connect(host=self.host, user=self.username, password=self.password, dbname=self.dbname)
             cur = conn.cursor()
@@ -111,8 +111,6 @@ class SubstanceForm (BaseForm):
 
 class SubstanceMixtureForm (BaseForm):
     manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[], render_kw={'class':'form-control'})
-    detergent_special = BooleanField(u'Nur Sonderreiniger anzeigen?', render_kw={'class':'form-check-input'})
-
 class SprayPowderForm (BaseForm):
     manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[], render_kw={'class':'form-control'})
     median_value = FloatField(u'Bitte geben Sie den Medianwert ein', render_kw={'class':'form-control'})
@@ -241,14 +239,9 @@ class SubstancemixtureFormView(TabelleFormView):
             searchkey = self.context.tablename + '_id'
             searchtable = self.context.tablename
             manu_id = int(self.form.manu.data.split('ID:')[-1])
-            is_detergent_special = self.form.detergent_special.data
 
-            if manu_id == 'alle' and is_detergent_special == True:
-                select = "SELECT %s, title FROM %s WHERE detergent_special = True;" % (searchkey, searchtable)
-            elif manu_id == 'alle':
+            if manu_id == 'alle':
                 select = "SELECT %s, title FROM %s;" % (searchkey, searchtable)
-            elif is_detergent_special == True:
-                select = "SELECT %s, title FROM %s WHERE manufacturer_id = %s AND detergent_special = True;" % (searchkey, searchtable, manu_id)
             else:
                 select = "SELECT %s, title FROM %s WHERE manufacturer_id = %s;" % (searchkey, searchtable, manu_id)
 

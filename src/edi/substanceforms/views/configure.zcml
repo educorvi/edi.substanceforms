@@ -49,6 +49,13 @@
     />
 
   <browser:page
+    name="reinstoffmigration-new"
+    for="*"
+    class=".reinstoffmigration_new.Migrationview"
+    permission="cmf.ModifyPortalContent"
+    />
+
+  <browser:page
     name="selector-view"
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".selector_view.SelectorView"
@@ -75,7 +82,7 @@
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".tabelle_view.HerstellerFormView"
     template="tabelle_view.pt"
-    permission="cmf.ModifyPortalContent"
+    permission="zope2.View"
     />
 
     <browser:page
@@ -83,7 +90,7 @@
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".tabelle_view.SubstanceFormView"
     template="tabelle_view.pt"
-    permission="cmf.ModifyPortalContent"
+    permission="zope2.View"
     />
 
     <browser:page
@@ -91,7 +98,7 @@
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".tabelle_view.SubstancemixtureFormView"
     template="tabelle_view.pt"
-    permission="cmf.ModifyPortalContent"
+    permission="zope2.View"
     />
 
     <browser:page
@@ -99,7 +106,7 @@
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".tabelle_view.SpraypowderFormView"
     template="tabelle_view.pt"
-    permission="cmf.ModifyPortalContent"
+    permission="zope2.View"
     />
 
   <browser:page
