@@ -279,6 +279,24 @@ class SingleView(BrowserView):
             return {'title': title, 'value': value}
         return {}
 
+    def formula(self):
+        import pdb; pdb.set_trace()
+        title = "Formel"
+        fieldindex = possibleColumns(self.context).getTerm('formula').token
+        value = self.article[int(fieldindex)]
+        if value:
+            return {'title': title, 'value': value}
+        return {}
+
+
+    def mol(self):
+        title = "Molmasse [g/mol]"
+        fieldindex = possibleColumns(self.context).getTerm('mol').token
+        value = self.article[int(fieldindex)]
+        if value:
+            return {'title': title, 'value': value}
+        return {}
+
     def homepage(self):
         title = "Homepage"
         fieldindex = possibleColumns(self.context).getTerm('homepage').token

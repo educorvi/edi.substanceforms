@@ -28,8 +28,8 @@ class CreateForm(Form):
     concentration = IntegerField("Konzentration in wässriger Lösung", render_kw={'class': 'form-control'})
     skin_category = RadioField("Hautschutzkategorie", choices = hskategorie)
     branch = RadioField("Branche", choices=branchen)
-    dnel_lokal = StringField("DNEL (lokal)", render_kw={'class': 'form-control'})
-    dnel_systemisch = StringField("DNEL (systemisch)", render_kw={'class': 'form-control'})
+    formula = StringField("Formel", render_kw={'class': 'form-control'})
+    mol = StringField("Molmasse [g/mol]", render_kw={'class': 'form-control'})
     gestislink = StringField("Link in externe Datenbank", render_kw={'class': 'form-control'})
     status = "published"
     #image_url = FileField("Bild hochladen", render_kw={'class': 'form-control'})
@@ -45,8 +45,8 @@ class UpdateForm(Form):
     branch = RadioField("Branche", choices=branchen)
     #image_url = FileField("Neues Bild hochladen", render_kw={'class': 'form-control'})
     #no_image = BooleanField("Vorhandenes Bild entfernen", render_kw={'class': 'form-check-input'})
-    dnel_lokal = StringField("DNEL (lokal)", render_kw={'class': 'form-control'})
-    dnel_systemisch = StringField("DNEL (systemisch)", render_kw={'class': 'form-control'})
+    formula = StringField("Formel", render_kw={'class': 'form-control'})
+    mol = StringField("Molmasse [g/mol]", render_kw={'class': 'form-control'})
     gestislink = StringField("Link in externe Datenbank", render_kw={'class': 'form-control'})
     published = True
     item_id = HiddenField()
@@ -104,7 +104,7 @@ class CreateFormView(WTFormView):
         if button == 'Speichern': #and self.validate():
             conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
             cur = conn.cursor()
-            insert = """INSERT INTO substance (title, description, webcode, casnr, egnr, concentration, skin_category, branch, dnel_lokal, dnel_systemisch, link, status)
+            insert = """INSERT INTO substance (title, description, webcode, casnr, egnr, concentration, skin_category, branch, formula, mol, link, status)
             VALUES ('%s', '%s', '%s', %s, %s, %s, %s, %s, %s, %s, %s, %s);""" % (self.form.title.data,
                                                        self.form.description.data,
                                                        self.context.aq_parent.get_webcode(),
@@ -113,8 +113,8 @@ class CreateFormView(WTFormView):
                                                        check_value(self.form.concentration.data),
                                                        check_value(self.form.skin_category.data),
                                                        check_value(self.form.branch.data),
-                                                       check_value(self.form.dnel_lokal.data),
-                                                       check_value(self.form.dnel_systemisch.data),
+                                                       check_value(self.form.formula.data),
+                                                       check_value(self.form.mol.data),
                                                        check_value(self.form.gestislink.data),
                                                        check_value(self.form.status),
                                                                )
@@ -146,7 +146,7 @@ class UpdateFormView(CreateFormView):
                 if result:
                     return result
         self.itemid = self.request.get('itemid')
-        getter = """SELECT title, description, casnr, egnr, concentration, skin_category, branch, dnel_lokal, dnel_systemisch, link
+        getter = """SELECT title, description, casnr, egnr, concentration, skin_category, branch, formula, mol, link
                     FROM %s WHERE %s_id = %s;""" % (self.context.tablename,
                                                     self.context.tablename,
                                                     self.itemid)
@@ -155,16 +155,16 @@ class UpdateFormView(CreateFormView):
         return self.index()
 
     def renderForm(self):
-        self.form.title.default=self.result[0][0]
-        self.form.description.default=self.result[0][1]
-        self.form.casnr.default=self.result[0][2]
-        self.form.egnr.default=self.result[0][3]
-        self.form.concentration.default=self.result[0][4]
-        self.form.skin_category.default=self.result[0][5]
-        self.form.branch.default=self.result[0][6]
-        self.form.dnel_lokal.default=self.result[0][7]
-        self.form.dnel_systemisch.default=self.result[0][8]
-        self.form.gestislink.default=self.result[0][9]
+        self.form.title.default = self.result[0][0]
+        self.form.description.default = self.result[0][1]
+        self.form.casnr.default = self.result[0][2]
+        self.form.egnr.default = self.result[0][3]
+        self.form.concentration.default = self.result[0][4]
+        self.form.skin_category.default = self.result[0][5]
+        self.form.branch.default = self.result[0][6]
+        self.form.formula.default = self.result[0][7]
+        self.form.mol.default = self.result[0][8]
+        self.form.gestislink.default = self.result[0][9]
         self.form.item_id.default=self.itemid
         self.form.process()
         return self.formTemplate()
@@ -175,16 +175,16 @@ class UpdateFormView(CreateFormView):
         redirect_url = self.context.aq_parent.absolute_url()
         if button == 'Speichern': #and self.validate():
             command = """UPDATE substance SET title='%s', description='%s', casnr=%s, egnr=%s, concentration=%s,
-                         skin_category='%s', branch='%s', dnel_lokal='%s', dnel_systemisch='%s', link='%s'
+                         skin_category='%s', branch='%s', formula='%s', mol='%s', link='%s'
                          WHERE substance_id = %s;""" % (self.form.title.data,
                                                         self.form.description.data,
                                                         check_value(self.form.casnr.data),
-                                                        self.form.egnr.data,
+                                                        check_value(self.form.egnr.data),
                                                         check_value(self.form.concentration.data),
                                                         self.form.skin_category.data,
                                                         self.form.branch.data,
-                                                        self.form.dnel_lokal.data,
-                                                        self.form.dnel_systemisch.data,
+                                                        self.form.formula.data,
+                                                        self.form.mol.data,
                                                         self.form.gestislink.data,
                                                         self.form.item_id.data)
             self.db.execute(command)
