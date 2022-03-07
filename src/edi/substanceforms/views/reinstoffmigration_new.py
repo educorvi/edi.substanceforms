@@ -90,6 +90,7 @@ class Migrationview(BrowserView):
             cur.close()
 
             for i in tables:
+                import pdb; pdb.set_trace()
                 table = i[0]
                 if table == 'manufacturer' or table == 'substance' or table == 'substance_mixture' or table == 'spray_powder':
                     cur = conn.cursor()
