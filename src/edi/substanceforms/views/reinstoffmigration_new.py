@@ -144,8 +144,8 @@ class Migrationview(BrowserView):
                     "INSERT INTO substance (title, webcode, casnr, egnr, skin_category, branch, formula, mol, link, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",
                     (reinstoff_title, reinstoff_uid, reinstoff_casnr, reinstoff_egnr, reinstoff_skin,
                      reinstoff_formel, reinstoff_molmasse, reinstoff_branche, reinstoff_link, reinstoff_published))
-            conn.commit()
-            cur.close()
+                conn.commit()
+                cur.close()
 
             print('Successfully migrated SUBSTANCE '+str(zahl)+' '+reinstoff_title)
             zahl = zahl + 1
