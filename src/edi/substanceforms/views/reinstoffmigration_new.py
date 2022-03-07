@@ -142,7 +142,7 @@ class Migrationview(BrowserView):
                 cur.execute(
                     "INSERT INTO substance (title, webcode, casnr, egnr, skin_category, branch, formula, mol, link, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",
                     (reinstoff_title, reinstoff_uid, reinstoff_casnr, reinstoff_egnr, reinstoff_skin,
-                     reinstoff_formel, reinstoff_molmasse, reinstoff_branche, reinstoff_link, reinstoff_published))
+                     reinstoff_branche, reinstoff_formel, reinstoff_molmasse, reinstoff_link, reinstoff_published))
                 conn.commit()
                 cur.close()
 
