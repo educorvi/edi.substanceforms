@@ -124,34 +124,25 @@ class Migrationview(BrowserView):
         for i in erg1:
             ergebnis = i.split('@')
             import pdb;pdb.set_trace()
-            reinstoff_title = ergebnis[0]
+            reinstoff_title = ergebnis[6]
             reinstoff_uid = get_webcode(self)
-            reinstoff_casnr = ergebnis[3]
-            reinstoff_egnr = ergebnis[4]
-            reinstoff_lokal = ergebnis[5]
-            reinstoff_systemisch = ergebnis[6]
-            reinstoff_hinweise = ergebnis[10]
-            reinstoff_link_id = ergebnis[11]
-            reinstoff_link_available= ergebnis[12]
+            reinstoff_casnr = ergebnis[1]
+            reinstoff_egnr = ergebnis[2]
+            reinstoff_formel = ergebnis[7]
+            reinstoff_molmasse = ergebnis[8]
+            #reinstoff_link_id = ergebnis[11]
+            #reinstoff_link_available= ergebnis[12]
+            reinstoff_link = ergebnis[9]
             reinstoff_skin = 'id_wechselnd'
             reinstoff_branche = 'alle_branchen'
             reinstoff_published = 'published'
 
-            if reinstoff_link_available == "zum Stoff":
-                reinstoff_link = "https://gestis.dguv.de/data?name="+str(reinstoff_link_id)
-                cur = conn.cursor()
-
-                cur.execute(
-                    "INSERT INTO substance (title, webcode, casnr, egnr, skin_category, branch, dnel_lokal, dnel_systemisch, comments, link, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",
-                    (reinstoff_title, reinstoff_uid, reinstoff_casnr, reinstoff_egnr, reinstoff_skin, reinstoff_branche, reinstoff_lokal,
-                     reinstoff_systemisch, reinstoff_hinweise, reinstoff_link, reinstoff_published))
-            else:
+            if ergebnis[6] != 'Name':
                 cur = conn.cursor()
                 cur.execute(
-                    "INSERT INTO substance (title, webcode, casnr, egnr, skin_category, branch, dnel_lokal, dnel_systemisch, comments, link, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, NULL, %s);",
+                    "INSERT INTO substance (title, webcode, casnr, egnr, skin_category, branch, formula, mol, link, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",
                     (reinstoff_title, reinstoff_uid, reinstoff_casnr, reinstoff_egnr, reinstoff_skin,
-                     reinstoff_branche, reinstoff_lokal,
-                     reinstoff_systemisch, reinstoff_hinweise, reinstoff_published))
+                     reinstoff_formel, reinstoff_molmasse, reinstoff_branche, reinstoff_link, reinstoff_published))
             conn.commit()
             cur.close()
 
