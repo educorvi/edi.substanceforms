@@ -280,7 +280,6 @@ class SingleView(BrowserView):
         return {}
 
     def formula(self):
-        import pdb; pdb.set_trace()
         title = "Formel"
         fieldindex = possibleColumns(self.context).getTerm('formula').token
         value = self.article[int(fieldindex)]
