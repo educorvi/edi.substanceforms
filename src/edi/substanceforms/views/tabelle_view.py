@@ -73,6 +73,10 @@ class TabelleFormView(WTFormView):
         except:
             results = []
 
+        for i in results:
+            for m in i:
+                if m == False:
+                    m = ''
         import pdb; pdb.set_trace()
         #results = select um alle Produkte der Tabelle auszuwählen
         return results
