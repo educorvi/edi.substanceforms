@@ -96,7 +96,7 @@ class TabelleFormView(WTFormView):
                     liste2.append(i)
                 number2 = number2 + 1
             number = number + 1
-            ergebnislist.append(liste2)
+            ergebnislist.append(tuple(liste2))
             import pdb; pdb.set_trace()
 
 
