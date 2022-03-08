@@ -84,9 +84,9 @@ class TabelleFormView(WTFormView):
             results = []
 
         number = 0
-        number2 = 0
         for tuple in results:
             liste = list(tuple)
+            number2 = 0
             for i in liste:
                 if i == None:
                     try:
