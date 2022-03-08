@@ -84,11 +84,14 @@ class TabelleFormView(WTFormView):
             results = []
 
         number = 0
+        number2 = 0
         for tuple in results:
             liste = list(tuple)
             for i in liste:
                 if i == None:
-                    i = ''
+                    liste[number][number2] = ''
+                number2 = number2 + 1
+            number = number + 1
             import pdb; pdb.set_trace()
 
 
