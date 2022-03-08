@@ -85,7 +85,7 @@ class TabelleFormView(WTFormView):
 
         number = 0
         for tuple in results:
-            list = list(tuple)
+            liste = list(tuple)
             import pdb; pdb.set_trace()
 
 
