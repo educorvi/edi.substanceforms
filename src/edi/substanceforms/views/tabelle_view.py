@@ -89,7 +89,10 @@ class TabelleFormView(WTFormView):
             liste = list(tuple)
             for i in liste:
                 if i == None:
-                    liste[number][number2] = ''
+                    try:
+                        liste[number][number2] = ''
+                    except:
+                        import pdb; pdb.set_trace()
                 number2 = number2 + 1
             number = number + 1
             import pdb; pdb.set_trace()
