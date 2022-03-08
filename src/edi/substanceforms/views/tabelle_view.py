@@ -58,6 +58,7 @@ class TabelleFormView(WTFormView):
 
     def show_all(self):
         results = []
+        import pdb; pdb.set_trace()
         searchkey = self.context.tablename + '_id'
         searchtable = self.context.tablename
         select = "SELECT %s, title FROM %s WHERE status = 'published' ORDER BY title ASC;" % (searchkey, searchtable)
