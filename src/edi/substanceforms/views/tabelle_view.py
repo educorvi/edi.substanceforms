@@ -61,6 +61,7 @@ class TabelleFormView(WTFormView):
         searchkey = self.context.tablename + '_id'
         searchtable = self.context.tablename
         resultcolumns = self.context.resultcolumns
+        import pdb; pdb.set_trace()
         select = "SELECT %s, title, %s FROM %s WHERE status = 'published' ORDER BY title ASC;" % (searchkey, resultcolumns[0], searchtable)
         try:
             conn = psycopg2.connect(host=self.host, user=self.username, password=self.password, dbname=self.dbname)
