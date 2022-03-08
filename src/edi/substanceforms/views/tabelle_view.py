@@ -83,6 +83,7 @@ class TabelleFormView(WTFormView):
         except:
             results = []
 
+        ergebnislist = list()
         number = 0
         for tuple in results:
             liste = list(tuple)
@@ -90,12 +91,15 @@ class TabelleFormView(WTFormView):
             for i in liste:
                 if i == None:
                     try:
-                        results[number][number2] = ''
+                        liste[number][number2] = ''
                     except:
                         import pdb; pdb.set_trace()
                 number2 = number2 + 1
             number = number + 1
+            ergebnistuple = tuple(liste)
+            ergebnislist.append(ergebnistuple)
             import pdb; pdb.set_trace()
+
 
 
         import pdb; pdb.set_trace()
