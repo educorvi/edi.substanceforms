@@ -97,13 +97,11 @@ class TabelleFormView(WTFormView):
                 number2 = number2 + 1
             number = number + 1
             ergebnislist.append(tuple(liste2))
-            import pdb; pdb.set_trace()
 
 
 
-        import pdb; pdb.set_trace()
         #results = select um alle Produkte der Tabelle auszuwählen
-        return results
+        return ergebnislist
 
 
     def submit(self, button):
