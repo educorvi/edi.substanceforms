@@ -85,11 +85,11 @@ class TabelleFormView(WTFormView):
 
         ergebnislist = list()
         number = 0
-        for tuple in results:
-            liste = list(tuple)
+        for tupel in results:
+            liste = list(tupel)
             liste2 = list()
             number2 = 0
-            for i in tuple:
+            for i in tupel:
                 if i == None:
                     liste2.append('')
                 else:
