@@ -61,8 +61,17 @@ class TabelleFormView(WTFormView):
         searchkey = self.context.tablename + '_id'
         searchtable = self.context.tablename
         resultcolumns = self.context.resultcolumns
-        import pdb; pdb.set_trace()
-        select = "SELECT %s, title, %s FROM %s WHERE status = 'published' ORDER BY title ASC;" % (searchkey, resultcolumns[0], searchtable)
+        if len(resultcolumns) == 1:
+            select = "SELECT %s, title, %s FROM %s WHERE status = 'published' ORDER BY title ASC;" % (searchkey, resultcolumns[0], searchtable)
+        elif len(resultcolumns) == 2:
+            select = "SELECT %s, title, %s, %s FROM %s WHERE status = 'published' ORDER BY title ASC;" % (searchkey, resultcolumns[0], resultcolumns[1], searchtable)
+        elif len(resultcolumns) == 3:
+            select = "SELECT %s, title, %s, %s, %s FROM %s WHERE status = 'published' ORDER BY title ASC;" % (searchkey, resultcolumns[0], resultcolumns[1], resultcolumns[2], searchtable)
+        elif len(resultcolumns) == 4:
+            select = "SELECT %s, title, %s, %s, %s, %s FROM %s WHERE status = 'published' ORDER BY title ASC;" % (searchkey, resultcolumns[0], resultcolumns[1], resultcolumns[2], resultcolumns[3], searchtable)
+        elif len(resultcolumns) == 5:
+            select = "SELECT %s, title, %s, %s, %s, %s, %s FROM %s WHERE status = 'published' ORDER BY title ASC;" % (searchkey, resultcolumns[0], resultcolumns[1], resultcolumns[2], resultcolumns[3], resultcolumns[4], searchtable)
+
         try:
             conn = psycopg2.connect(host=self.host, user=self.username, password=self.password, dbname=self.dbname)
             cur = conn.cursor()

@@ -48,10 +48,12 @@
 
             <section class="mt-4" tal:condition="view/ergs | nothing">
               <table>
+              <!--
               <tr>
                 <th>Titel</th>
                 <th>Flammpunkt</th>
               </tr>
+              -->
               <tr tal:repeat="item view/ergs">
                 <td tal:attributes="href python: '%s/single_view?item=%s' %(context.absolute_url(), item[0])">
                   <h3 class="newsDescription">
