@@ -30,6 +30,9 @@
             <div class="mt-5" tal:condition="context/text" tal:content="structure context/text/output"/>
             <h2 i18n:translate="">Suche</h2>
             <form tal:replace="structure view/renderForm" />
+
+
+            <!--
             <section class="mt-4" tal:condition="view/ergs | nothing">
               <h2>Suchergebnisse</h2>
               <div class="list-item" tal:repeat="item view/ergs">
@@ -40,6 +43,24 @@
 	                </h3>
 		            </a>
 	            </div>
+	          </section>
+            -->
+
+            <section class="mt-4" tal:condition="view/ergs | nothing">
+              <table>
+              <tr>
+                <th>Titel</th>
+                <th>Flammpunkt</th>
+              </tr>
+              <tr tal:repeat="item view/ergs">
+                <td tal:attributes="href python: '%s/single_view?item=%s' %(context.absolute_url(), item[0])">
+                  <h3 class="newsDescription">
+                    <span tal:replace="python: item[1]"/>
+                  </h3>
+                </td>
+                <td tal:attributes="python: item[2]"/>
+              </tr>
+              </table>
 	          </section>
 
             <section class="mt-3" tal:condition="view/userCanAdd">
