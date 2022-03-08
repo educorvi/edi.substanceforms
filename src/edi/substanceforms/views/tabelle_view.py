@@ -58,7 +58,6 @@ class TabelleFormView(WTFormView):
 
     def show_all(self):
         results = []
-        import pdb; pdb.set_trace()
         searchkey = self.context.tablename + '_id'
         searchtable = self.context.tablename
         resultcolumns = self.context.resultcolumns
@@ -73,6 +72,8 @@ class TabelleFormView(WTFormView):
 
         except:
             results = []
+
+        import pdb; pdb.set_trace()
         #results = select um alle Produkte der Tabelle auszuwählen
         return results
 
