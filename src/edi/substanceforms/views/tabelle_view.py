@@ -87,16 +87,16 @@ class TabelleFormView(WTFormView):
         number = 0
         for tuple in results:
             liste = list(tuple)
+            liste2 = list()
             number2 = 0
-            for i in liste:
+            for i in tuple:
                 if i == None:
-                    try:
-                        liste[number][number2] = ''
-                    except:
-                        import pdb; pdb.set_trace()
+                    liste2.append('')
+                else:
+                    liste2.append(i)
                 number2 = number2 + 1
             number = number + 1
-            ergebnislist.append(liste)
+            ergebnislist.append(liste2)
             import pdb; pdb.set_trace()
 
 
