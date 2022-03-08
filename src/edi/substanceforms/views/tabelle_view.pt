@@ -60,7 +60,7 @@
                     <span tal:replace="python: item[1]"/>
                   </h3>
                 </td>
-                <td tal:attributes="python: item[2]"/>
+                <td tal:replace="python: item[2]"/>
               </tr>
               </table>
 	          </section>
