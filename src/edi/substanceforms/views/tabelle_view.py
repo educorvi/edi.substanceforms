@@ -90,7 +90,7 @@ class TabelleFormView(WTFormView):
             number2 = 0
             for i in tupel:
                 if i == None:
-                    liste2.append('')
+                    liste2.append(' ')
                 else:
                     liste2.append(i)
                 number2 = number2 + 1
