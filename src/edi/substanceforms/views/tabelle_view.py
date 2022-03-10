@@ -87,13 +87,15 @@ class TabelleFormView(WTFormView):
         number = 0
         for tupel in results:
             liste2 = list()
-            #number2 = 0
+            number2 = 0
             for i in tupel:
                 if i == None:
                     liste2.append('')
                 else:
                     liste2.append(i)
-                #number2 = number2 + 1
+                number2 = number2 + 1
+            while number < 5:
+                liste2.append(None)
             number = number + 1
             ergebnislist.append(tuple(liste2))
 
