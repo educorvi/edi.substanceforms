@@ -97,6 +97,8 @@ class TabelleFormView(WTFormView):
             number = number + 1
             ergebnislist.append(tuple(liste2))
 
+        import pdb; pdb.set_trace()
+
 
 
         #results = select um alle Produkte der Tabelle auszuwählen
