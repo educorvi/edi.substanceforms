@@ -95,7 +95,7 @@ class TabelleFormView(WTFormView):
                     liste2.append(i)
                 number2 = number2 + 1
             while number < 5:
-                liste2.append(None)
+                liste2.append('')
                 number = number + 1
             number = number + 1
             ergebnislist.append(tuple(liste2))
