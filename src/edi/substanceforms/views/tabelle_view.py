@@ -89,12 +89,17 @@ class TabelleFormView(WTFormView):
             import pdb; pdb.set_trace()
             liste2 = list()
             number2 = 0
+            number3 = 0
+            number4 = 0
             for i in tupel:
+                if number3 >= 2:
+                    import pdb; pdb.set_trace()
                 if i == None:
                     liste2.append(' ')
                 else:
                     liste2.append(i)
                 number2 = number2 + 1
+                number3 = number3 + 1
             while number2 < 5:
                 liste2.append('')
                 number2 = number2 + 1
