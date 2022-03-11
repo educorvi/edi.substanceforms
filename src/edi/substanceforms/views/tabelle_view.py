@@ -109,6 +109,8 @@ class TabelleFormView(WTFormView):
                         import pdb; pdb.set_trace()
                     else:
                         liste2.append(i)
+
+                    number4 = number4 + 1
                 else:
                     liste2.append(i)
                 number2 = number2 + 1
