@@ -9,7 +9,6 @@ import psycopg2
 from plone import api as ploneapi
 from edi.substanceforms.lib import DBConnect
 from edi.substanceforms.helpers import get_vocabulary
-from edi.substanceforms.views.single_view import get_attr_translation
 
 
 
@@ -58,6 +57,13 @@ class TabelleFormView(WTFormView):
             if addrole in roles or 'Manager' in roles or 'Site Administrator' in roles:
                 return self.context.absolute_url() + '/create-%s-form' % self.context.tablename
         return False
+
+    def get_attr_translation(self, attribute, value):
+        vocabulary = get_vocabulary(attribute)
+        for i in vocabulary:
+            if i[0] == value:
+                return i[1]
+        return value
 
     def show_all(self):
         results = []
