@@ -102,14 +102,13 @@ class TabelleFormView(WTFormView):
             for i in tupel:
                 if number3 >= 2:
                     column = self.context.resultcolumns[number4]
-                    if column == 'branch':
+                    if i == None:
+                        liste2.append(' ')
+                    elif column == 'branch':
                         translationresult = self.get_attr_translation('branchen', i)
                         import pdb; pdb.set_trace()
                     else:
                         liste2.append(i)
-
-                    if i == None:
-                        liste2.append(' ')
                 else:
                     liste2.append(i)
                 number2 = number2 + 1
