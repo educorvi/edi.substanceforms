@@ -106,7 +106,7 @@ class TabelleFormView(WTFormView):
                         liste2.append(' ')
                     elif column == 'branch':
                         translationresult = self.get_attr_translation('branchen', i)
-                        import pdb; pdb.set_trace()
+                        liste2.append(translationresult)
                     else:
                         liste2.append(i)
 
