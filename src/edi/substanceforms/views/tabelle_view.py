@@ -93,9 +93,11 @@ class TabelleFormView(WTFormView):
             number4 = 0
             for i in tupel:
                 if number3 >= 2:
-                    import pdb; pdb.set_trace()
-                if i == None:
-                    liste2.append(' ')
+                    column = self.context.resultcolumns[number4]
+                    if i == None:
+                        liste2.append(' ')
+                    else:
+                        import pdb; pdb.set_trace()
                 else:
                     liste2.append(i)
                 number2 = number2 + 1
