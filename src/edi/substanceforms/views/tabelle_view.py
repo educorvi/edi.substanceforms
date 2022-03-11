@@ -8,6 +8,9 @@ import requests
 import psycopg2
 from plone import api as ploneapi
 from edi.substanceforms.lib import DBConnect
+from edi.substanceforms.helpers import get_vocabulary
+from edi.substanceforms.views.single_view import get_attr_translation
+
 
 
 class LoginCredentials:
@@ -96,8 +99,11 @@ class TabelleFormView(WTFormView):
                     column = self.context.resultcolumns[number4]
                     if i == None:
                         liste2.append(' ')
-                    else:
+                    elif column == 'branch':
+                        translationresult = self.get_attr_translation('branchen', i)
                         import pdb; pdb.set_trace()
+                    else:
+                        liste2.append(i)
                 else:
                     liste2.append(i)
                 number2 = number2 + 1
