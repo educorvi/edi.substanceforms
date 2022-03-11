@@ -95,7 +95,6 @@ class TabelleFormView(WTFormView):
         ergebnislist = list()
         number = 0
         for tupel in results:
-            import pdb; pdb.set_trace()
             liste2 = list()
             number2 = 0
             number3 = 0
