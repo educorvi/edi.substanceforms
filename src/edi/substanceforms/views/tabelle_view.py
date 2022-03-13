@@ -107,6 +107,15 @@ class TabelleFormView(WTFormView):
                     elif column == 'branch':
                         translationresult = self.get_attr_translation('branchen', i)
                         liste2.append(translationresult)
+                    elif column == 'substance_type':
+                        translationresult = self.get_attr_translation('substance_types_new', i)
+                        liste2.append(translationresult)
+                    elif column == 'skin_category':
+                        translationresult = self.get_attr_translation('hskategorie', i)
+                        liste2.append(translationresult)
+                    elif column == 'checked_emissions':
+                        translationresult = self.get_attr_translation('boolvocab', i)
+                        liste2.append(translationresult)
                     else:
                         liste2.append(i)
 
