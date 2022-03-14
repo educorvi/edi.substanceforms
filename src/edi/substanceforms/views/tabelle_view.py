@@ -118,6 +118,8 @@ class TabelleFormView(WTFormView):
                     elif column == 'checked_emissions':
                         translationresult = self.get_attr_translation('boolvocab', i)
                         liste2.append(translationresult)
+                    elif column == 'evaporation_lane_150':
+                        liste2.append(i)
                     else:
                         liste2.append(i)
 
