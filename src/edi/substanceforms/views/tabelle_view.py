@@ -104,6 +104,8 @@ class TabelleFormView(WTFormView):
                     column = self.context.resultcolumns[number4]
                     if i == None:
                         liste2.append(' ')
+                    elif i == '':
+                        liste2.append(' ')
                     elif column == 'branch':
                         translationresult = self.get_attr_translation('branchen', i)
                         liste2.append(translationresult)
