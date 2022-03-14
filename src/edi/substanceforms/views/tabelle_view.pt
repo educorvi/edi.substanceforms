@@ -70,6 +70,21 @@
                     <span tal:replace="python: item[3]"/>
                   </h3>
                 </td>
+                <td tal:condition="python: item[4]">
+                  <h3 class="newsDescription">
+                    <span tal:replace="python: item[4]"/>
+                  </h3>
+                </td>
+                <td tal:condition="python: item[5]">
+                  <h3 class="newsDescription">
+                    <span tal:replace="python: item[5]"/>
+                  </h3>
+                </td>
+                <td tal:condition="python: item[6]">
+                  <h3 class="newsDescription">
+                    <span tal:replace="python: item[6]"/>
+                  </h3>
+                </td>
 
               </tr>
               </table>
