@@ -330,7 +330,7 @@ class SingleView(BrowserView):
 
     def median_value(self):
         title = "Medianwert"
-        fieldindex = possibleColumns(self.context).getTerm('median_share').token
+        fieldindex = possibleColumns(self.context).getTerm('median_value').token
         value = self.article[int(fieldindex)]
         if value:
             return {'title': title, 'value': value}
