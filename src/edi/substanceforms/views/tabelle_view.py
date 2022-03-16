@@ -120,6 +120,12 @@ class TabelleFormView(WTFormView):
                         liste2.append(translationresult)
                     elif column == 'evaporation_lane_150':
                         liste2.append(i)
+                    elif column == 'evaporation_lane_160':
+                        liste2.append(i)
+                    elif column == 'evaporation_lane_170':
+                        liste2.append(i)
+                    elif column == 'evaporation_lane_180':
+                        liste2.append(i)
                     else:
                         liste2.append(i)
 
