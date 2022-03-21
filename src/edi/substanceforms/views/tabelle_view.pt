@@ -50,7 +50,7 @@
                         <span tal:replace="python: item[1]"/>
                       </a>
                     </td>
-                    <td tal:repeat="index view/columnids" tal:content="python: item[index]"></td>
+                    <td tal:repeat="index view/columnids" tal:content="python: item[int(index)]"></td>
 
                   </tr>
                 </tbody>
