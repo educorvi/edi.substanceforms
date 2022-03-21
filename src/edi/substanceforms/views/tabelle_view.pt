@@ -46,7 +46,7 @@
                 <thead>
 
                 <tr>
-                  <th tal:repeat="column view/columnids" tal:content="python: resultcolumns[column]"/>
+                  <th tal:repeat="column view/columnids" tal:content="python: self.ergs[column]"/>
                 </tr>
 
                 </thead>
