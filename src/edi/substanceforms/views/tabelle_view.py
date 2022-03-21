@@ -8,7 +8,7 @@ import requests
 import psycopg2
 from plone import api as ploneapi
 from edi.substanceforms.lib import DBConnect
-from edi.substanceforms.helpers import get_vocabulary
+from edi.substanceforms.helpers import get_vocabulary, tableheads
 from edi.substanceforms.content.tabelle import possibleColumns
 
 
@@ -59,7 +59,8 @@ class TabelleFormView(WTFormView):
         return columnids
 
     def get_tablehead(self, column):
-        return 'Klaus'
+        result = tableheads(column)
+        return result
 
     def userCanAdd(self):
         if not ploneapi.user.is_anonymous():
