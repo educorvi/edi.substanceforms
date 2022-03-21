@@ -51,7 +51,8 @@
                       </a>
                     </td>
                     <td tal:repeat="index view/columnids">
-                      <span tal:content="python: view.get_attr_translation(resultcolumns[int(index)], item[int(index)])"/>
+                      <!--<span tal:content="python: view.get_attr_translation(resultcolumns[int(index)], item[int(index)])"/>-->
+                      <span tal:content="python: len(resultcolumns), len(item)"/>
                     </td>
                   </tr>
                 </tbody>
