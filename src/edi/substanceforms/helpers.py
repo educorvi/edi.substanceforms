@@ -80,5 +80,7 @@ def tableheads(cryptoname):
         "status": "Status",
         "productclass": "Produktklasse"
     }
-    result = headnames[cryptoname]
+    result = headnames.get(cryptoname)
+    if not result:
+        return cryptoname
     return result

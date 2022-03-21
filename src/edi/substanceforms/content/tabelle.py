@@ -7,6 +7,7 @@ from zope.interface import implementer
 from zope.interface import provider
 from zope.schema.vocabulary import SimpleVocabulary
 from zope.schema.interfaces import IContextSourceBinder
+from edi.substanceforms.helpers import tableheads
 import psycopg2
 #from z3c.form.browser.checkbox import CheckBoxFieldWidget
 
@@ -55,7 +56,7 @@ def possibleColumns(context):
         for i in tables[2:]:
             newtables.append(i[0])
             table = i[0]
-            terms.append(SimpleVocabulary.createTerm(table, int(newtables.index(table)), table))
+            terms.append(SimpleVocabulary.createTerm(table, int(newtables.index(table)), tableheads(table)))
             #terms.append(SimpleVocabulary.createTerm(table, table, table))
     except:
         terms = []
