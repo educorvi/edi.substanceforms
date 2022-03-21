@@ -48,3 +48,37 @@ def new_list_handler3(liste):
             if v[1] == i[0]:
                 result.append(v[0])
     return result
+
+def tableheads(cryptoname):
+    headnames = {
+        "substance_mixture_id": "ID",
+        "title": "Titel",
+        "description": "Beschreibung",
+        "webcode": "Webcode",
+        "branch": "Branche",
+        "substance_type": "Typ des Gefahrstoffgemisches",
+        "offset_print_manner": "Offset Druckverfahren",
+        "detergent_special": "Sonderreiniger",
+        "application_areas": "Anwendungsbereiche",
+        "usecases": "Anwendungsfälle",
+        "evaporation_lane_150": "Verdampfungsfaktor Bahntemperatur 150°C",
+        "evaporation_lane_160": "Verdampfungsfaktor Bahntemperatur 160°C",
+        "evaporation_lane_170": "Verdampfungsfaktor Bahntemperatur 170°C",
+        "evaporation_lane_180": "Verdampfungsfaktor Bahntemperatur 180°C",
+        "ueg": "Untere Explosionsgrenze",
+        "response": "Responsefaktor",
+        "skin_category": "Hautschutzmittelkategorie",
+        "checked_emissions": "Emissionsarmes Produkt",
+        "date_checked": "Datum letzte Prüfung",
+        "flashpoint": "Flammpunkt",
+        "values_range": "Wertebereich für Flammpunkt",
+        "classifications": "Klassifikationen",
+        "indicators": "Indikatoren",
+        "comments": "Kommentare",
+        "image_url": "Bild-URL",
+        "manufacturer_id": "Hersteller",
+        "status": "Status",
+        "productclass": "Produktklasse"
+    }
+    result = headnames[cryptoname]
+    return result
