@@ -46,7 +46,7 @@
                 <thead>
 
                 <tr>
-                  <th tal:repeat="column view/columnids" tal:content="self.context.resultcolumns[column]"/>
+                  <th tal:repeat="column context/resultcolumns" tal:content="python: view.get_tablehead(column)"/>
                 </tr>
 
                 </thead>

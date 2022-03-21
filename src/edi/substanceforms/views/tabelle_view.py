@@ -58,6 +58,9 @@ class TabelleFormView(WTFormView):
             columnids.append(possibleColumns(self.context).getTerm(i).token)
         return columnids
 
+    def get_tablehead(self, column):
+        return 'Klaus'
+
     def userCanAdd(self):
         if not ploneapi.user.is_anonymous():
             current = ploneapi.user.get_current()
