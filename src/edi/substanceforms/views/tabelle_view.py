@@ -9,6 +9,7 @@ import psycopg2
 from plone import api as ploneapi
 from edi.substanceforms.lib import DBConnect
 from edi.substanceforms.helpers import get_vocabulary
+from edi.substanceforms.content.tabelle import possibleColumns
 
 
 
@@ -35,6 +36,7 @@ class TabelleFormView(WTFormView):
 
     def __call__(self):
 
+        self.columnids = self.getindexfortablename()
         dbdata = self.context.aq_parent
         self.db = DBConnect(host=dbdata.host, db=dbdata.database, user=dbdata.username, password=dbdata.password)
 
@@ -49,6 +51,12 @@ class TabelleFormView(WTFormView):
                 if result:
                     return result
         return self.index()
+
+    def getindexfortablename(self):
+        columnids = list()
+        for i in self.context.resultcolumns:
+            columnids.append(possibleColumns(self.context).getTerm(i).token)
+        return columnids
 
     def userCanAdd(self):
         if not ploneapi.user.is_anonymous():
@@ -70,16 +78,12 @@ class TabelleFormView(WTFormView):
         searchkey = self.context.tablename + '_id'
         searchtable = self.context.tablename
         resultcolumns = self.context.resultcolumns
-        if len(resultcolumns) == 1:
-            select = "SELECT %s, title, %s FROM %s WHERE status = 'published' ORDER BY title ASC;" % (searchkey, resultcolumns[0], searchtable)
-        elif len(resultcolumns) == 2:
-            select = "SELECT %s, title, %s, %s FROM %s WHERE status = 'published' ORDER BY title ASC;" % (searchkey, resultcolumns[0], resultcolumns[1], searchtable)
-        elif len(resultcolumns) == 3:
-            select = "SELECT %s, title, %s, %s, %s FROM %s WHERE status = 'published' ORDER BY title ASC;" % (searchkey, resultcolumns[0], resultcolumns[1], resultcolumns[2], searchtable)
-        elif len(resultcolumns) == 4:
-            select = "SELECT %s, title, %s, %s, %s, %s FROM %s WHERE status = 'published' ORDER BY title ASC;" % (searchkey, resultcolumns[0], resultcolumns[1], resultcolumns[2], resultcolumns[3], searchtable)
-        elif len(resultcolumns) == 5:
-            select = "SELECT %s, title, %s, %s, %s, %s, %s FROM %s WHERE status = 'published' ORDER BY title ASC;" % (searchkey, resultcolumns[0], resultcolumns[1], resultcolumns[2], resultcolumns[3], resultcolumns[4], searchtable)
+
+        if not resultcolumns:
+            select = "SELECT %s, title FROM %s WHERE status = 'published' ORDER BY title ASC;" % (searchkey, searchtable)
+        else:
+            select = "SELECT * FROM %s WHERE status = 'published' ORDER BY title ASC;" % (searchtable)
+
 
         try:
             conn = psycopg2.connect(host=self.host, user=self.username, password=self.password, dbname=self.dbname)
@@ -92,61 +96,9 @@ class TabelleFormView(WTFormView):
         except:
             results = []
 
-        ergebnislist = list()
-        number = 0
-        for tupel in results:
-            liste2 = list()
-            number2 = 0
-            number3 = 0
-            number4 = 0
-            for i in tupel:
-                if number3 >= 2:
-                    column = self.context.resultcolumns[number4]
-                    if i == None:
-                        liste2.append(' ')
-                    elif i == '':
-                        liste2.append(' ')
-                    elif column == 'branch':
-                        translationresult = self.get_attr_translation('branchen', i)
-                        liste2.append(translationresult)
-                    elif column == 'substance_type':
-                        translationresult = self.get_attr_translation('substance_types_new', i)
-                        liste2.append(translationresult)
-                    elif column == 'skin_category':
-                        translationresult = self.get_attr_translation('hskategorie', i)
-                        liste2.append(translationresult)
-                    elif column == 'checked_emissions':
-                        translationresult = self.get_attr_translation('boolvocab', i)
-                        liste2.append(translationresult)
-                    elif column == 'evaporation_lane_150':
-                        liste2.append(i)
-                    elif column == 'evaporation_lane_160':
-                        liste2.append(i)
-                    elif column == 'evaporation_lane_170':
-                        liste2.append(i)
-                    elif column == 'evaporation_lane_180':
-                        liste2.append(i)
-                    else:
-                        liste2.append(i)
-
-                    number4 = number4 + 1
-                else:
-                    liste2.append(i)
-                number2 = number2 + 1
-                number3 = number3 + 1
-            while number2 < 5:
-                liste2.append('')
-                number2 = number2 + 1
-            number = number + 1
-            ergebnislist.append(tuple(liste2))
-
-
-
-
-
 
         #results = select um alle Produkte der Tabelle auszuwählen
-        return ergebnislist
+        return results
 
 
     def submit(self, button):
