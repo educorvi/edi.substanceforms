@@ -50,10 +50,9 @@
                         <span tal:replace="python: item[1]"/>
                       </a>
                     </td>
-                    <td tal:repeat="foo python: zip(columnids, resultcolumns)">
-                      <!--<span tal:content="python: view.get_attr_translation(resultcolumns[int(index)], item[int(index)])"/>-->
+                    <td tal:repeat="foo python: zip(resultcolumns, columnids)">
+                      <span tal:content="python: view.get_attr_translation(foo[0], item[int(foo[1])])"/>
                       <!--<span tal:content="python: len(resultcolumns), len(item)"/>-->
-                      <span tal:content="foo"/>
                     </td>
                   </tr>
                 </tbody>
