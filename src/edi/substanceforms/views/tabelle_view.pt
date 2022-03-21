@@ -11,7 +11,7 @@
     <tal:main-macro metal:define-macro="main">
 
       <div class="container"
-	   id="main-content">
+	   id="main-content" tal:define="resultcolumns context/resultcolumns; columnids view/columnids">
 
         <div class="row">
           <span class="col-12" tal:content="structure provider:plone.abovecontenttitle" />
@@ -50,8 +50,9 @@
                         <span tal:replace="python: item[1]"/>
                       </a>
                     </td>
-                    <td tal:repeat="index view/columnids" tal:content="python: item[int(index)]"></td>
-
+                    <td tal:repeat="index view/columnids">
+                      <span tal:content="python: view.get_attr_translation(resultcolumns[int(index)], item[int(index)])"/>
+                    </td>
                   </tr>
                 </tbody>
               </table>
