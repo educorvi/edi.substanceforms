@@ -70,28 +70,18 @@ class TabelleFormView(WTFormView):
         erg = list()
         for select in preselects:
             if not erg:
-                select = Template(select).render(value=value)
-                erg = self.db.execute(select)
+                sel = Template(select).render(value=value)
+                erg = self.db.execute(sel)
                 erg = [i[0] for i in erg]
             else:
                 res = erg
                 erg = []
-                if len(res) == 2:
-                    import pdb;pdb.set_trace()
                 for entry in res:
                     print(entry)
-                    select = Template(select).render(value=entry)
-                    if not erg:
-                        selerg = self.db.execute(select)
-                        erg = [i[0] for i in selerg]
-                    else:
-                        selerg = self.db.execute(select)
-                        erg += [i[0] for i in selerg]
-        try:
-            result = ', '.join(erg)
-        except:
-            import pdb; pdb.set_trace()
-
+                    sel = Template(select).render(value=entry)
+                    result = self.db.execute(sel)
+                    erg += [i[0] for i in result]
+        result = ', '.join(erg)
         return result
 
     def getindexfortablename(self):
