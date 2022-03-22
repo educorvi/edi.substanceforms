@@ -77,7 +77,6 @@ class TabelleFormView(WTFormView):
                 res = erg
                 erg = []
                 for entry in res:
-                    print(entry)
                     sel = Template(select).render(value=entry)
                     result = self.db.execute(sel)
                     erg += [i[0] for i in result]
