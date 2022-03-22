@@ -72,15 +72,21 @@ class TabelleFormView(WTFormView):
         for select in preselects:
             if not erg:
                 sel = Template(select).render(value=value)
-                erg = self.db.execute(sel)
-                erg = [i[0] for i in erg]
+                try:
+                    erg = self.db.execute(sel)
+                    erg = [i[0] for i in erg]
+                except:
+                    erg = ' '
             else:
                 res = erg
                 erg = []
                 for entry in res:
                     sel = Template(select).render(value=entry)
-                    result = self.db.execute(sel)
-                    erg += [i[0] for i in result]
+                    try:
+                        result = self.db.execute(sel)
+                        erg += [i[0] for i in result]
+                    except:
+                        result = ' '
         result = ', '.join(erg)
         return result
 
