@@ -42,21 +42,20 @@ class Preselect(Item):
     """
     """
 
-    def get_attr_translation(self, attribute, value):
-        vocabulary = get_vocabulary(attribute)
-        for i in vocabulary:
-            if i[0] == value:
-                return i[1]
-        return value
+    self.dbobj = self.aq_parent.aq_parent
+    self.db = DBConnect(host=self.dbobj.host, 
+                        db=self.dbobj.database, 
+                        user=self.dbobj.username, 
+                        password=self.dbobj.password)
 
     def get_erglist(self, value):
         dbdata = self.aq_parent.aq_parent
-        self.db = DBConnect(host=dbdata.host, db=dbdata.database, user=dbdata.username, password=dbdata.password)
         erg = list()
         for select in self.preselects:
             if not erg:
                 select = Template(select).render(value=value)
                 erg = self.db.execute(select)
+                erg = [i[0] for i in erg]
             else:
                 res = erg
                 erg = []
@@ -64,7 +63,8 @@ class Preselect(Item):
                     select = Template(select).render(value=entry)
                     if not erg:
                         erg = self.db.execute(select)
+                        erg = [i[0] for i in erg]
                     else:
-                        erg += self.db.execute(select)
-
-        return [self.get_attr_translation(self.vocab, i) for i in erg]
+                        erg = self.db.execute(select)
+                        erg += [i[0] for i in erg]
+        return erg

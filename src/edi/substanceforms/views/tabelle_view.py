@@ -100,7 +100,9 @@ class TabelleFormView(WTFormView):
         except:
             results = []
 
-
+        for preselect in self.context.moreresultcolumns:
+            obj = self.context[preselect]
+            obj.get_erglist(77)
         #results = select um alle Produkte der Tabelle auszuwählen
         return results
 
