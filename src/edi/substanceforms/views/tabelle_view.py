@@ -84,6 +84,7 @@ class TabelleFormView(WTFormView):
                     else:
                         erg = self.db.execute(select)
                         erg += [i[0] for i in erg]
+        import pdb; pdb.set_trace()
         return ', '.join(erg)
 
     def getindexfortablename(self):
