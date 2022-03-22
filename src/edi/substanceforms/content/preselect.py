@@ -42,12 +42,6 @@ class Preselect(Item):
     """
     """
 
-    self.dbobj = self.aq_parent.aq_parent
-    self.db = DBConnect(host=self.dbobj.host, 
-                        db=self.dbobj.database, 
-                        user=self.dbobj.username, 
-                        password=self.dbobj.password)
-
     def get_erglist(self, value):
         dbdata = self.aq_parent.aq_parent
         erg = list()
