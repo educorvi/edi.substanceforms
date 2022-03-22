@@ -7,6 +7,12 @@
   <!-- -*- extra stuff goes here -*- -->
 
     <permission
+        id="edi.substanceforms.AddPreselect"
+        title="edi.substanceforms: Add Preselect"
+    />
+
+
+    <permission
         id="edi.substanceforms.AddTabelle"
         title="edi.substanceforms: Add Tabelle"
     />
