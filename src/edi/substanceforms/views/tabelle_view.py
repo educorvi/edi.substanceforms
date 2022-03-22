@@ -55,15 +55,16 @@ class TabelleFormView(WTFormView):
         return self.index()
 
     def get_preselects(self):
-        brains = ploneapi.content.find(context=self.context, portal_type='Preselect')
+        brains = self.context.getFolderContents()
         preselects = []
         for i in brains:
-            entry = dict()
-            obj = i.getObject()
-            entry['id'] = obj.id
-            entry['title'] = obj.title
-            entry['preselects'] = obj.preselects
-            preselects.append(entry)
+            if i.portal_type == 'Preselect':
+                entry = dict()
+                obj = i.getObject()
+                entry['id'] = obj.id
+                entry['title'] = obj.title
+                entry['preselects'] = obj.preselects
+                preselects.append(entry)
         return preselects
 
     def get_preergs(self, preselects, value):
