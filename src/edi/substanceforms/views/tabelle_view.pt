@@ -48,6 +48,7 @@
                 <tr>
                   <th>Titel</th>
                   <th tal:repeat="column context/resultcolumns" tal:content="python: view.get_tablehead(column)"/>
+                  <th tal:repeat="pre view/preselects" tal:content="pre/title"/>
                 </tr>
 
                 </thead>
@@ -61,6 +62,9 @@
                     <td tal:repeat="foo python: zip(resultcolumns, columnids)">
                       <span tal:content="python: view.get_attr_translation(foo[0], item[int(foo[1])])"/>
                       <!--<span tal:content="python: len(resultcolumns), len(item)"/>-->
+                    </td>
+                    <td tal:repeat="pre view/preselects">
+                      <span tal:content="python: view.get_preergs(pre['preselects'], item[0])"/>
                     </td>
                   </tr>
                 </tbody>

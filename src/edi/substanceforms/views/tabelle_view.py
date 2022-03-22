@@ -10,6 +10,7 @@ from plone import api as ploneapi
 from edi.substanceforms.lib import DBConnect
 from edi.substanceforms.helpers import get_vocabulary, tableheads
 from edi.substanceforms.content.tabelle import possibleColumns
+from jinja2 import Template
 
 
 
@@ -44,6 +45,7 @@ class TabelleFormView(WTFormView):
         self.dbname = self.context.aq_parent.database
         self.username = self.context.aq_parent.username
         self.password = self.context.aq_parent.password
+        self.preselects = self.get_preselects()
         if self.submitted:
             button = self.hasButtonSubmitted()
             if button:
@@ -51,6 +53,38 @@ class TabelleFormView(WTFormView):
                 if result:
                     return result
         return self.index()
+
+    def get_preselects(self):
+        brains = ploneapi.content.find(context=self.context, portal_type='Preselect')
+        preselects = []
+        for i in brains:
+            entry = dict()
+            obj = i.getObject()
+            entry['id'] = obj.id
+            entry['title'] = obj.title
+            entry['preselects'] = obj.preselects
+            preselects.append(entry)
+        return preselects
+
+    def get_preergs(self, preselects, value):
+        erg = list()
+        for select in preselects:
+            if not erg:
+                select = Template(select).render(value=value)
+                erg = self.db.execute(select)
+                erg = [i[0] for i in erg]
+            else:
+                res = erg
+                erg = []
+                for entry in res:
+                    select = Template(select).render(value=entry)
+                    if not erg:
+                        erg = self.db.execute(select)
+                        erg = [i[0] for i in erg]
+                    else:
+                        erg = self.db.execute(select)
+                        erg += [i[0] for i in erg]
+        return ', '.join(erg)
 
     def getindexfortablename(self):
         columnids = list()
