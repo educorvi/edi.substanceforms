@@ -76,6 +76,8 @@ class TabelleFormView(WTFormView):
             else:
                 res = erg
                 erg = []
+                if len(entry) == 2:
+                    import pdb;pdb.set_trace()
                 for entry in res:
                     print(entry)
                     select = Template(select).render(value=entry)
