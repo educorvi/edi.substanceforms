@@ -77,13 +77,14 @@ class TabelleFormView(WTFormView):
                 res = erg
                 erg = []
                 for entry in res:
+                    print(entry)
                     select = Template(select).render(value=entry)
                     if not erg:
-                        erg = self.db.execute(select)
-                        erg = [i[0] for i in erg]
+                        selerg = self.db.execute(select)
+                        erg = [i[0] for i in selerg]
                     else:
-                        erg = self.db.execute(select)
-                        erg += [i[0] for i in erg]
+                        selerg = self.db.execute(select)
+                        erg += [i[0] for i in selerg]
         try:
             result = ', '.join(erg)
         except:
