@@ -76,7 +76,7 @@ class TabelleFormView(WTFormView):
             else:
                 res = erg
                 erg = []
-                if len(entry) == 2:
+                if len(res) == 2:
                     import pdb;pdb.set_trace()
                 for entry in res:
                     print(entry)
