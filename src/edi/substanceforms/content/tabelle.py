@@ -57,7 +57,8 @@ def possibleColumns(context):
         for i in tables[:2]:
             newtables.append(i[0])
             table = i[0]
-            terms.append(SimpleVocabulary.createTerm(table, int(newtables.index(table)), tableheads(table)))
+            mytoken = int(newtables.index(table)) + 2
+            terms.append(SimpleVocabulary.createTerm(table, mytoken, tableheads(table)))
             #terms.append(SimpleVocabulary.createTerm(table, table, table))
     except:
         terms = []
