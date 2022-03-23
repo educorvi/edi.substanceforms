@@ -78,7 +78,11 @@ def tableheads(cryptoname):
         "image_url": "Bild-URL",
         "manufacturer_id": "Hersteller",
         "status": "Status",
-        "productclass": "Produktklasse"
+        "productclass": "Produktklasse",
+        "product_class": "Produktklasse",
+        "starting_material": "Ausgangsmaterial",
+        "median_value": "Medianwert",
+        "volume_share": "Volumenanteil"
     }
     result = headnames.get(cryptoname)
     if not result:
