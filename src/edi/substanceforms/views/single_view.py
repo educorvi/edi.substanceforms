@@ -108,10 +108,10 @@ class SingleView(BrowserView):
         title = "Branche"
         if self.context.tablename == 'substance_mixture':
             fieldindex = possibleColumns(self.context).getTerm('branch').token
-            value = self.get_attr_translation('branchen', self.article[int(fieldindex)])
+            value = self.get_attr_translation('branch', self.article[int(fieldindex)])
         elif self.context.tablename == 'substance':
             fieldindex = possibleColumns(self.context).getTerm('branch').token
-            value = self.get_attr_translation('branchen', self.article[int(fieldindex)])
+            value = self.get_attr_translation('branch', self.article[int(fieldindex)])
         if value:
             return {'title': title, 'value': value}
         return {}
