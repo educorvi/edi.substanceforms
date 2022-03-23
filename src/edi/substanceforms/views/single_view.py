@@ -99,7 +99,7 @@ class SingleView(BrowserView):
     def substance_type(self):
         title = "Typ des Wasch- und Reinigungsmittels"
         fieldindex = possibleColumns(self.context).getTerm('substance_type').token
-        value = self.get_attr_translation('substance_types_new', self.article[int(fieldindex)])
+        value = self.get_attr_translation('substance_type', self.article[int(fieldindex)])
         if value:
             return {'title': title, 'value': value}
         return {}
@@ -108,10 +108,10 @@ class SingleView(BrowserView):
         title = "Branche"
         if self.context.tablename == 'substance_mixture':
             fieldindex = possibleColumns(self.context).getTerm('branch').token
-            value = self.get_attr_translation('branchen', self.article[int(fieldindex)])
+            value = self.get_attr_translation('branch', self.article[int(fieldindex)])
         elif self.context.tablename == 'substance':
             fieldindex = possibleColumns(self.context).getTerm('branch').token
-            value = self.get_attr_translation('branchen', self.article[int(fieldindex)])
+            value = self.get_attr_translation('branch', self.article[int(fieldindex)])
         if value:
             return {'title': title, 'value': value}
         return {}

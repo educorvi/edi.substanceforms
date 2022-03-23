@@ -94,9 +94,9 @@ boolvocab = [
 
 vocabularies = {
         'hskategorie':hskategorie,
-        'branchen':branchen,
+        'branch':branchen,
         'substance_types':substance_types,
-        'substance_types_new':substance_types_new,
+        'substance_type':substance_types_new,
         'produktkategorien':produktkategorien,
         'produktklassen':produktklassen,
         'classifications':classifications,

@@ -8,6 +8,10 @@ import requests
 import psycopg2
 from plone import api as ploneapi
 from edi.substanceforms.lib import DBConnect
+from edi.substanceforms.helpers import get_vocabulary, tableheads
+from edi.substanceforms.content.tabelle import possibleColumns
+from jinja2 import Template
+
 
 
 class LoginCredentials:
@@ -33,6 +37,7 @@ class TabelleFormView(WTFormView):
 
     def __call__(self):
 
+        self.columnids = self.getindexfortablename()
         dbdata = self.context.aq_parent
         self.db = DBConnect(host=dbdata.host, db=dbdata.database, user=dbdata.username, password=dbdata.password)
 
@@ -40,6 +45,7 @@ class TabelleFormView(WTFormView):
         self.dbname = self.context.aq_parent.database
         self.username = self.context.aq_parent.username
         self.password = self.context.aq_parent.password
+        self.preselects = self.get_preselects()
         if self.submitted:
             button = self.hasButtonSubmitted()
             if button:
@@ -47,6 +53,52 @@ class TabelleFormView(WTFormView):
                 if result:
                     return result
         return self.index()
+
+    def get_preselects(self):
+        brains = self.context.getFolderContents()
+        preselects = []
+        for i in brains:
+            if i.portal_type == 'Preselect':
+                entry = dict()
+                obj = i.getObject()
+                entry['id'] = obj.id
+                entry['title'] = obj.title
+                entry['preselects'] = obj.preselects
+                preselects.append(entry)
+        return preselects
+
+    def get_preergs(self, preselects, value):
+        erg = list()
+        for select in preselects:
+            if not erg:
+                sel = Template(select).render(value=value)
+                try:
+                    erg = self.db.execute(sel)
+                    erg = [i[0] for i in erg]
+                except:
+                    erg = ' '
+            else:
+                res = erg
+                erg = []
+                for entry in res:
+                    sel = Template(select).render(value=entry)
+                    try:
+                        result = self.db.execute(sel)
+                        erg += [i[0] for i in result]
+                    except:
+                        result = ' '
+        result = ', '.join(erg)
+        return result
+
+    def getindexfortablename(self):
+        columnids = list()
+        for i in self.context.resultcolumns:
+            columnids.append(possibleColumns(self.context).getTerm(i).token)
+        return columnids
+
+    def get_tablehead(self, column):
+        result = tableheads(column)
+        return result
 
     def userCanAdd(self):
         if not ploneapi.user.is_anonymous():
@@ -56,11 +108,25 @@ class TabelleFormView(WTFormView):
                 return self.context.absolute_url() + '/create-%s-form' % self.context.tablename
         return False
 
+    def get_attr_translation(self, attribute, value):
+        vocabulary = get_vocabulary(attribute)
+        for i in vocabulary:
+            if i[0] == value:
+                return i[1]
+        return value
+
     def show_all(self):
         results = []
         searchkey = self.context.tablename + '_id'
         searchtable = self.context.tablename
-        select = "SELECT %s, title FROM %s WHERE status = 'published' ORDER BY title ASC;" % (searchkey, searchtable)
+        resultcolumns = self.context.resultcolumns
+
+        if not resultcolumns:
+            select = "SELECT %s, title FROM %s WHERE status = 'published' ORDER BY title ASC;" % (searchkey, searchtable)
+        else:
+            select = "SELECT * FROM %s WHERE status = 'published' ORDER BY title ASC;" % (searchtable)
+
+
         try:
             conn = psycopg2.connect(host=self.host, user=self.username, password=self.password, dbname=self.dbname)
             cur = conn.cursor()
@@ -71,6 +137,7 @@ class TabelleFormView(WTFormView):
 
         except:
             results = []
+
         #results = select um alle Produkte der Tabelle auszuwählen
         return results
 

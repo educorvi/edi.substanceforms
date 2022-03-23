@@ -7,7 +7,9 @@ from zope.interface import implementer
 from zope.interface import provider
 from zope.schema.vocabulary import SimpleVocabulary
 from zope.schema.interfaces import IContextSourceBinder
+from edi.substanceforms.helpers import tableheads
 import psycopg2
+from plone import api as ploneapi
 #from z3c.form.browser.checkbox import CheckBoxFieldWidget
 
 from edi.substanceforms import _
@@ -52,14 +54,23 @@ def possibleColumns(context):
 
         terms = []
         newtables = list()
-        for i in tables:
+        for i in tables[:2]:
             newtables.append(i[0])
             table = i[0]
-            terms.append(SimpleVocabulary.createTerm(table, int(newtables.index(table)), table))
+            mytoken = int(newtables.index(table)) + 2
+            terms.append(SimpleVocabulary.createTerm(table, mytoken, tableheads(table)))
             #terms.append(SimpleVocabulary.createTerm(table, table, table))
     except:
         terms = []
 
+    return SimpleVocabulary(terms)
+
+@provider(IContextSourceBinder)
+def possiblePreselects(context):
+    terms = list()
+    brains = ploneapi.content.find(context=context, portal_type='Preselect')
+    for i in brains:
+        terms.append(SimpleVocabulary.createTerm(i.id, i.id, i.Title))
     return SimpleVocabulary(terms)
 
 @provider(IContextSourceBinder)
@@ -110,6 +121,12 @@ class ITabelle(model.Schema):
             description = u"Datenbankspalten auswählen, die in der Trefferliste berücksichtigt werden sollen",
             value_type=schema.Choice(source=possibleColumns),
             )
+
+    moreresultcolumns = schema.List(
+        title=u"Weitere Spalten für die Treffferliste",
+        description=u"Datenbankspalten auswählen, die zusätzlich in der Trefferliste berücksichtigt werden sollen",
+        value_type=schema.Choice(source=possiblePreselects),
+    )
 
     mixturetype = schema.Choice(
         title=u"Art des Gefahrstoffgemisches",
