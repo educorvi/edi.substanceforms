@@ -36,7 +36,6 @@ class TabelleFormView(WTFormView):
     buttons = ('Suche', 'Alle anzeigen', 'Abbrechen')
 
     def __call__(self):
-
         self.columnids = self.getindexfortablename()
         dbdata = self.context.aq_parent
         self.db = DBConnect(host=dbdata.host, db=dbdata.database, user=dbdata.username, password=dbdata.password)
@@ -289,7 +288,7 @@ class SubstancemixtureFormView(TabelleFormView):
             searchtable = self.context.tablename
 
             if mixturetype:
-                select = "SELECT %s, title FROM %s WHERE substance_type = '%s';" % (searchkey, searchtable, mixturetype)
+                select = "SELECT * FROM %s WHERE substance_type = '%s';" % (searchtable, mixturetype)
                 conn = psycopg2.connect(host=self.host, user=self.username, password=self.password,
                                         dbname=self.dbname)
                 cur = conn.cursor()

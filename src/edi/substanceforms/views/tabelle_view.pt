@@ -60,8 +60,9 @@
                       </a>
                     </td>
                     <td tal:repeat="foo python: zip(resultcolumns, columnids)">
-                      <span tal:content="python: view.get_attr_translation(foo[0], item[int(foo[1])])"/>
-                      <!--<span tal:content="python: len(resultcolumns), len(item)"/>-->
+			    <!---<span tal:content="foo"/>-->
+			    <!--<span tal:content="item"/>-->		    
+		      <span tal:content="python: view.get_attr_translation(foo[0], item[int(foo[1])])"/>
                     </td>
                     <td tal:repeat="pre view/preselects">
                       <span tal:content="python: view.get_preergs(pre['preselects'], item[0])"/>
