@@ -66,7 +66,7 @@
 		      <span tal:content="python: view.get_attr_translation(foo[0], item[int(foo[1])])"/>
                     </td>
                     <td tal:repeat="pre view/preselects">
-                      <span tal:content="python: view.get_preergs(pre['preselects'], item[0])"/>
+                      <span tal:content="python: view.get_preergs(pre['preselects'], pre['vocab'], item[0])"/>
                     </td>
                   </tr>
                 </tbody>

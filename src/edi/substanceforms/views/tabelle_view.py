@@ -67,10 +67,9 @@ class TabelleFormView(WTFormView):
                 preselects.append(entry)
         return preselects
 
-    def get_preergs(self, preselects, value):
+    def get_preergs(self, preselects, vocab, value):
         erg = list()
         for select in preselects:
-            import pdb; pdb.set_trace()
             if not erg:
                 sel = Template(select).render(value=value)
                 try:
@@ -88,6 +87,7 @@ class TabelleFormView(WTFormView):
                         erg += [i[0] for i in result]
                     except:
                         result = ' '
+
         result = ', '.join(erg)
         return result
 
