@@ -64,13 +64,13 @@ class TabelleFormView(WTFormView):
                 entry['title'] = obj.title
                 entry['preselects'] = obj.preselects
                 entry['vocab'] = obj.vocab
+                import pdb; pdb.set_trace()
                 preselects.append(entry)
         return preselects
 
     def get_preergs(self, preselects, value):
         erg = list()
         for select in preselects:
-            import pdb; pdb.set_trace()
             if not erg:
                 sel = Template(select).render(value=value)
                 try:
@@ -121,7 +121,6 @@ class TabelleFormView(WTFormView):
         searchkey = self.context.tablename + '_id'
         searchtable = self.context.tablename
         resultcolumns = self.context.resultcolumns
-        import pdb; pdb.set_trace()
 
         if not resultcolumns:
             select = "SELECT %s, title FROM %s WHERE status = 'published' ORDER BY title ASC;" % (searchkey, searchtable)
