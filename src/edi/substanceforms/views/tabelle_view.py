@@ -63,12 +63,14 @@ class TabelleFormView(WTFormView):
                 entry['id'] = obj.id
                 entry['title'] = obj.title
                 entry['preselects'] = obj.preselects
+                entry['vocab'] = obj.vocab
                 preselects.append(entry)
         return preselects
 
     def get_preergs(self, preselects, value):
         erg = list()
         for select in preselects:
+            import pdb; pdb.set_trace()
             if not erg:
                 sel = Template(select).render(value=value)
                 try:
