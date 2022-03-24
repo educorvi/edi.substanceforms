@@ -69,6 +69,7 @@ class TabelleFormView(WTFormView):
         return preselects
 
     def get_preergs(self, preselects, value):
+        import pdb; pdb.set_trace()
         erg = list()
         for select in preselects:
             if not erg:
