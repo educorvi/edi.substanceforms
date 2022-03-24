@@ -78,7 +78,6 @@ class TabelleFormView(WTFormView):
                 except:
                     erg = ' '
             else:
-                import pdb; pdb.set_trace()
                 res = erg
                 erg = []
                 for entry in res:
