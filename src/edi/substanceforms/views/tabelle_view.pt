@@ -42,7 +42,8 @@
                   </h3>
                 </a>
 	            </div>
-              <table tal:condition="view/columnids" class="table table-striped table-responsive">
+              <!--<table tal:condition="view/columnids" class="table table-striped table-responsive">-->
+              <table tal:condition="view/columnids" id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
                 <thead>
 
                 <tr>
@@ -61,7 +62,7 @@
                     </td>
                     <td tal:repeat="foo python: zip(resultcolumns, columnids)">
 			    <!---<span tal:content="foo"/>-->
-			    <!--<span tal:content="item"/>-->		    
+			    <!--<span tal:content="item"/>-->
 		      <span tal:content="python: view.get_attr_translation(foo[0], item[int(foo[1])])"/>
                     </td>
                     <td tal:repeat="pre view/preselects">
