@@ -64,7 +64,6 @@ class TabelleFormView(WTFormView):
                 entry['title'] = obj.title
                 entry['preselects'] = obj.preselects
                 entry['vocab'] = obj.vocab
-                import pdb; pdb.set_trace()
                 preselects.append(entry)
         return preselects
 
