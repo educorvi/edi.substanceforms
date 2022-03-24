@@ -70,6 +70,7 @@ class TabelleFormView(WTFormView):
     def get_preergs(self, preselects, value):
         erg = list()
         for select in preselects:
+            import pdb; pdb.set_trace()
             if not erg:
                 sel = Template(select).render(value=value)
                 try:
