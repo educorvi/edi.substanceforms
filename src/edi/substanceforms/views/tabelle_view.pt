@@ -43,7 +43,7 @@
                 </a>
 	            </div>
               <!--<table tal:condition="view/columnids" class="table table-striped table-responsive">-->
-              <table tal:condition="view/columnids" id="sortTable" class="table table-striped table-bordered table-sm table-responsive" cellspacing="0" width="100%">
+              <table tal:condition="view/columnids" id="sortTable" class="table table-striped table-responsive" cellspacing="0" width="100%">
                 <thead>
 
                 <tr>
