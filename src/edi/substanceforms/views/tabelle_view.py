@@ -54,17 +54,17 @@ class TabelleFormView(WTFormView):
         return self.index()
 
     def get_preselects(self):
-        brains = self.context.getFolderContents()
+        moreresultcolumns = self.context.moreresultcolumns
+        #brains = self.context.getFolderContents()
         preselects = []
-        for i in brains:
-            if i.portal_type == 'Preselect':
-                entry = dict()
-                obj = i.getObject()
-                entry['id'] = obj.id
-                entry['title'] = obj.title
-                entry['preselects'] = obj.preselects
-                entry['vocab'] = obj.vocab
-                preselects.append(entry)
+        for i in moreresultcolumns:
+            entry = dict()
+            obj = self.context[i]
+            entry['id'] = obj.id
+            entry['title'] = obj.title
+            entry['preselects'] = obj.preselects
+            entry['vocab'] = obj.vocab
+            preselects.append(entry)
         return preselects
 
     def get_preergs(self, preselects, vocab, value):
