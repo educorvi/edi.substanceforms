@@ -73,8 +73,12 @@ class TabelleFormView(WTFormView):
             if not erg:
                 sel = Template(select).render(value=value)
                 try:
-                    erg = self.db.execute(sel)
-                    erg = [i[0] for i in erg]
+                    resu = self.db.execute(sel)
+                    resu = [i[0] for i in resu]
+                    if vocab:
+                        erg = self.get_attr_translation(vocab, resu)
+                    else:
+                        erg = resu
                 except:
                     erg = ' '
             else:
@@ -83,7 +87,11 @@ class TabelleFormView(WTFormView):
                 for entry in res:
                     sel = Template(select).render(value=entry)
                     try:
-                        result = self.db.execute(sel)
+                        resu = self.db.execute(sel)
+                        if vocab:
+                            result = self.get_attr_translation(vocab, resu)
+                        else:
+                            result = resu
                         erg += [i[0] for i in result]
                     except:
                         result = ' '
