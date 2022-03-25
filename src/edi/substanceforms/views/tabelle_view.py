@@ -77,7 +77,7 @@ class TabelleFormView(WTFormView):
                     resu = [i[0] for i in resu]
                     if vocab:
                         import pdb; pdb.set_trace()
-                        erg = self.get_attr_translation(vocab, resu)
+                        erg = self.get_attr_translation(vocab, resu[0])
                     else:
                         erg = resu
                 except:
@@ -92,7 +92,7 @@ class TabelleFormView(WTFormView):
                         if vocab:
                             import pdb;
                             pdb.set_trace()
-                            result = self.get_attr_translation(vocab, resu)
+                            result = self.get_attr_translation(vocab, resu[0])
                         else:
                             result = resu
                         erg += [i[0] for i in result]
