@@ -98,7 +98,10 @@ class TabelleFormView(WTFormView):
                     except:
                         result = ' '
 
-        result = ', '.join(erg)
+        if vocab:
+            result = erg
+        else:
+            result = ', '.join(erg)
         return result
 
     def getindexfortablename(self):
