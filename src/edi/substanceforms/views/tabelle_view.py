@@ -54,26 +54,31 @@ class TabelleFormView(WTFormView):
         return self.index()
 
     def get_preselects(self):
-        brains = self.context.getFolderContents()
+        moreresultcolumns = self.context.moreresultcolumns
+        #brains = self.context.getFolderContents()
         preselects = []
-        for i in brains:
-            if i.portal_type == 'Preselect':
-                entry = dict()
-                obj = i.getObject()
-                entry['id'] = obj.id
-                entry['title'] = obj.title
-                entry['preselects'] = obj.preselects
-                preselects.append(entry)
+        for i in moreresultcolumns:
+            entry = dict()
+            obj = self.context[i]
+            entry['id'] = obj.id
+            entry['title'] = obj.title
+            entry['preselects'] = obj.preselects
+            entry['vocab'] = obj.vocab
+            preselects.append(entry)
         return preselects
 
-    def get_preergs(self, preselects, value):
+    def get_preergs(self, preselects, vocab, value):
         erg = list()
         for select in preselects:
             if not erg:
                 sel = Template(select).render(value=value)
                 try:
-                    erg = self.db.execute(sel)
-                    erg = [i[0] for i in erg]
+                    resu = self.db.execute(sel)
+                    resu = [i[0] for i in resu]
+                    if vocab:
+                        erg = self.get_attr_translation(vocab, resu[0])
+                    else:
+                        erg = resu
                 except:
                     erg = ' '
             else:
@@ -82,11 +87,20 @@ class TabelleFormView(WTFormView):
                 for entry in res:
                     sel = Template(select).render(value=entry)
                     try:
-                        result = self.db.execute(sel)
+                        resu = self.db.execute(sel)
+                        if vocab:
+                            pdb.set_trace()
+                            result = self.get_attr_translation(vocab, resu[0])
+                        else:
+                            result = resu
                         erg += [i[0] for i in result]
                     except:
                         result = ' '
-        result = ', '.join(erg)
+
+        if vocab:
+            result = erg
+        else:
+            result = ', '.join(erg)
         return result
 
     def getindexfortablename(self):
