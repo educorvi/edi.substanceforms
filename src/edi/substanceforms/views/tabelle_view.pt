@@ -72,7 +72,7 @@
                 </tbody>
               </table>
               <script>
-                $('#sortTable').DataTable({paging: false});
+                $('#sortTable').DataTable({paging: false}, {language: {search: "Suche in der Tabelle"}});
               </script>
             </section>
 
