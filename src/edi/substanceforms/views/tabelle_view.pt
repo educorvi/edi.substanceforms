@@ -73,10 +73,11 @@
               </table>
               <script>
                 $('#sortTable').DataTable({
+                      lengthMenu: false,
                       language: {
                           processing:     "Bitte warten...",
                           search:         "Suche in Tabelle: ",
-                          lengthMenu:     " ",
+                          lengthMenu:     "Zeige _MENU_ Elemente ",
                           info:           "Zeige Element _START_ bis _END_ von _TOTAL_ Elementen",
                           infoEmpty:      "Zeige Element 0 bis 0 von 0 Elementen",
                           infoFiltered:   "(Filtere _MAX_ Elemente insgesamt)",
