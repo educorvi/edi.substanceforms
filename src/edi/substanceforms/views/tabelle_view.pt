@@ -73,7 +73,7 @@
               </table>
               <script>
                 $('#sortTable').DataTable({
-                      lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "Alle"] ],
+                      "lengthMenu": [ [10, 25, 50, -1], [10, 25, 50, "Alle"] ],
                       language: {
                           processing:     "Bitte warten...",
                           search:         "Suche in Tabelle: ",
