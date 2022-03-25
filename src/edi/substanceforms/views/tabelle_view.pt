@@ -74,25 +74,25 @@
               <script>
                 $('#sortTable').DataTable({
                       language: {
-                          processing:     "Traitement en cours...",
-                          search:         "Rechercher&nbsp;:",
-                          lengthMenu:    "Afficher _MENU_ &eacute;l&eacute;ments",
-                          info:           "Affichage de l'&eacute;lement _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
-                          infoEmpty:      "Affichage de l'&eacute;lement 0 &agrave; 0 sur 0 &eacute;l&eacute;ments",
-                          infoFiltered:   "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
+                          processing:     "Bitte warten...",
+                          search:         "Suche in Tabelle: ",
+                          lengthMenu:    "Zeige _MENU_ Elemente",
+                          info:           "Zeige Element _START_ bis _END_ von _TOTAL_ Elementen",
+                          infoEmpty:      "Zeige Element 0 bis 0 von 0 Elementen",
+                          infoFiltered:   "(Filtere _MAX_ Elemente insgesamt)",
                           infoPostFix:    "",
-                          loadingRecords: "Chargement en cours...",
-                          zeroRecords:    "Aucun &eacute;l&eacute;ment &agrave; afficher",
-                          emptyTable:     "Aucune donnée disponible dans le tableau",
+                          loadingRecords: "Bitte warten...",
+                          zeroRecords:    "Keine Elemente gefunden",
+                          emptyTable:     "Keine Daten in Tabelle verfügbar",
                           paginate: {
-                              first:      "Premier",
-                              previous:   "Pr&eacute;c&eacute;dent",
-                              next:       "Suivant",
-                              last:       "Dernier"
+                              first:      "Erste",
+                              previous:   "Vorherige",
+                              next:       "Nächste",
+                              last:       "Letzte"
                           },
                           aria: {
-                              sortAscending:  ": activer pour trier la colonne par ordre croissant",
-                              sortDescending: ": activer pour trier la colonne par ordre décroissant"
+                              sortAscending:  ": Spalte in aufsteigender Reihenfolge sortieren",
+                              sortDescending: ": Spalte in absteigender Reihenfolge sortieren"
                           }
                       }
                   });
