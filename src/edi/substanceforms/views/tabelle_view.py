@@ -323,7 +323,7 @@ class SubstancemixtureFormView(TabelleFormView):
             if manu_id == 'alle':
                 select = "SELECT * FROM %s;" % (searchkey, searchtable)
             else:
-                select = "SELECT * FROM %s WHERE manufacturer_id = %s;" % (searchkey, searchtable, manu_id)
+                select = "SELECT * FROM %s WHERE manufacturer_id = %s;" % (searchtable, manu_id)
 
             try:
                 conn = psycopg2.connect(host=self.host, user=self.username, password=self.password, dbname=self.dbname)
