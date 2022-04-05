@@ -16,15 +16,12 @@ class Gefahrstoffliste(BrowserView):
         gemische = self.db.execute(select)
         for gemisch in gemische:
             mixture_entry = {}
-            import pdb; pdb.set_trace()
             selectoldid = "SELECT link FROM oldlinks WHERE mixture_id = %s" % gemisch[0]
-            #oldid = select oldid from mapping_table where id == gemisch.id
-            #if oldid:
-            #    mixture_entry['@id'] = oldid
-            #else:
-            #    mixture_entry[
-            #        '@id'] = dbname.tabelname.id  # über die Punkt-Notation könnten mehrere potenzielle Quellen
-            #    # angezapft werden
-            #mixture_entry['title'] = gemisch.title
-            #mixtures.append(mixture_entry)
+            oldid = self.db.execute(selectoldid)
+            if oldid:
+                mixture_entry['@id'] = oldid
+            else:
+                mixture_entry['@id'] = "bgetem.substance_mixture."+str(gemisch[0])  # über die Punkt-Notation könnten mehrere potenzielle Quellen angezapft werden
+            mixture_entry['title'] = gemisch[1]
+            mixtures.append(mixture_entry)
         return jsonlib.write(mixtures)
