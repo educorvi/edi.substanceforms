@@ -178,29 +178,69 @@ class Migrationview(BrowserView):
             cur.close()
 
             cur = conn.cursor()
-            # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
             cur.execute(
                 "INSERT INTO oldlinks (mixture_id, link) VALUES (%s, %s);",
                 (etikett_ids[0][0], etikett_link))
             conn.commit()
-            # print(etikett_title)  # correct
             cur.close()
 
 
         print('Successfully migrated DETERGENT_LABELS')
 
-        #for i in erg5:
-        #manuell
+        for i in erg5:
+            manuell_title = i.get('title')
+            manuell_link = i.get('@id')
+
+            cur = conn.cursor()
+            cur.execute(
+                "SELECT substance_mixture_id FROM substance_mixture WHERE title = '{0}';".format(manuell_title))
+            manuell_ids = cur.fetchall()
+            cur.close()
+
+            cur = conn.cursor()
+            cur.execute(
+                "INSERT INTO oldlinks (mixture_id, link) VALUES (%s, %s);",
+                (manuell_ids[0][0], manuell_link))
+            conn.commit()
+            cur.close()
 
         print('Successfully migrated DETERGENT_MANUAL')
 
-        #for i in erg6:
-        #datenblatt
+        for i in erg6:
+            datenblatt_title = i.get('title')
+            datenblatt_link = i.get('@id')
+
+            cur = conn.cursor()
+            cur.execute(
+                "SELECT substance_mixture_id FROM substance_mixture WHERE title = '{0}';".format(datenblatt_title))
+            datenblatt_ids = cur.fetchall()
+            cur.close()
+
+            cur = conn.cursor()
+            cur.execute(
+                "INSERT INTO oldlinks (mixture_id, link) VALUES (%s, %s);",
+                (datenblatt_ids[0][0], datenblatt_link))
+            conn.commit()
+            cur.close()
 
         print('Successfully migrated PRODUCT_DATASHEET')
 
-        #for i in erg7:
-        #heatset
+        for i in erg7:
+            heatset_title = i.get('title')
+            heatset_link = i.get('@id')
+
+            cur = conn.cursor()
+            cur.execute(
+                "SELECT substance_mixture_id FROM substance_mixture WHERE title = '{0}';".format(heatset_title))
+            heatset_ids = cur.fetchall()
+            cur.close()
+
+            cur = conn.cursor()
+            cur.execute(
+                "INSERT INTO oldlinks (mixture_id, link) VALUES (%s, %s);",
+                (heatset_ids[0][0], heatset_link))
+            conn.commit()
+            cur.close()
 
         print('Successfully migrated DETERGENT_HEATSET')
         print('CHEERS! DATA MIGRATION SUCCESSFULLY COMPLETED :)')
