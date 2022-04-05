@@ -177,12 +177,15 @@ class Migrationview(BrowserView):
             etikett_ids = cur.fetchall()
             cur.close()
 
-            cur = conn.cursor()
-            cur.execute(
-                "INSERT INTO oldlinks (mixture_id, link) VALUES (%s, %s);",
-                (etikett_ids[0][0], etikett_link))
-            conn.commit()
-            cur.close()
+            try:
+                cur = conn.cursor()
+                cur.execute(
+                    "INSERT INTO oldlinks (mixture_id, link) VALUES (%s, %s);",
+                    (etikett_ids[0][0], etikett_link))
+                conn.commit()
+                cur.close()
+            except:
+                print(etikett_title)
 
 
         print('Successfully migrated DETERGENT_LABELS')
@@ -197,12 +200,15 @@ class Migrationview(BrowserView):
             manuell_ids = cur.fetchall()
             cur.close()
 
-            cur = conn.cursor()
-            cur.execute(
-                "INSERT INTO oldlinks (mixture_id, link) VALUES (%s, %s);",
-                (manuell_ids[0][0], manuell_link))
-            conn.commit()
-            cur.close()
+            try:
+                cur = conn.cursor()
+                cur.execute(
+                    "INSERT INTO oldlinks (mixture_id, link) VALUES (%s, %s);",
+                    (manuell_ids[0][0], manuell_link))
+                conn.commit()
+                cur.close()
+            except:
+                print(manuell_title)
 
         print('Successfully migrated DETERGENT_MANUAL')
 
@@ -238,12 +244,15 @@ class Migrationview(BrowserView):
             heatset_ids = cur.fetchall()
             cur.close()
 
-            cur = conn.cursor()
-            cur.execute(
-                "INSERT INTO oldlinks (mixture_id, link) VALUES (%s, %s);",
-                (heatset_ids[0][0], heatset_link))
-            conn.commit()
-            cur.close()
+            try:
+                cur = conn.cursor()
+                cur.execute(
+                    "INSERT INTO oldlinks (mixture_id, link) VALUES (%s, %s);",
+                    (heatset_ids[0][0], heatset_link))
+                conn.commit()
+                cur.close()
+            except:
+                print(heatset_title)
 
         print('Successfully migrated DETERGENT_HEATSET')
         print('CHEERS! DATA MIGRATION SUCCESSFULLY COMPLETED :)')
