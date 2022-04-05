@@ -9,9 +9,7 @@ from edi.substanceforms.lib import DBConnect
 
 class Gefahrstoffliste(BrowserView):
     def __call__(self):
-        import pdb; pdb.set_trace()
-        dbdata = self.context.aq_parent
-        self.db = DBConnect(host=dbdata.host, db=dbdata.database, user=dbdata.username, password=dbdata.password)
+        self.db = DBConnect(host=self.context.host, db=self.context.database, user=self.context.username, password=self.context.password)
 
         mixtures = []
         select = "SELECT substance_mixture_id, title FROM substance_mixture WHERE status == 'published';"
