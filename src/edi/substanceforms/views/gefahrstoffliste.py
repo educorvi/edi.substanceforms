@@ -9,6 +9,7 @@ from edi.substanceforms.lib import DBConnect
 
 class Gefahrstoffliste(BrowserView):
     def __call__(self):
+        import pdb; pdb.set_trace()
         dbdata = self.context.aq_parent
         self.db = DBConnect(host=dbdata.host, db=dbdata.database, user=dbdata.username, password=dbdata.password)
 
