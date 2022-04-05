@@ -8,7 +8,7 @@
 
   <browser:page
     name="gefahrstoffliste"
-    for="Products.CMFCore.interfaces.IFolderish"
+    for="*"
     class=".gefahrstoffliste.Gefahrstoffliste"
     permission="zope2.View"
     />
