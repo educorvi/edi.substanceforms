@@ -224,7 +224,7 @@ class Migrationview(BrowserView):
                 conn.commit()
                 cur.close()
             except:
-                import pdb; pdb.set_trace()
+                print(datenblatt_title)
 
         print('Successfully migrated PRODUCT_DATASHEET')
 
