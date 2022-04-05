@@ -216,12 +216,20 @@ class Migrationview(BrowserView):
             datenblatt_ids = cur.fetchall()
             cur.close()
 
-            cur = conn.cursor()
-            cur.execute(
-                "INSERT INTO oldlinks (mixture_id, link) VALUES (%s, %s);",
-                (datenblatt_ids[0][0], datenblatt_link))
-            conn.commit()
-            cur.close()
+            try:
+                cur = conn.cursor()
+                cur.execute(
+                    "INSERT INTO oldlinks (mixture_id, link) VALUES (%s, %s);",
+                    (datenblatt_ids[0][0], datenblatt_link))
+                conn.commit()
+                cur.close()
+            except:
+                cur = conn.cursor()
+                cur.execute(
+                    "INSERT INTO oldlinks (mixture_id, link) VALUES (%s, %s);",
+                    (datenblatt_ids[0], datenblatt_link))
+                conn.commit()
+                cur.close()
 
         print('Successfully migrated PRODUCT_DATASHEET')
 
