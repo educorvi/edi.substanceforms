@@ -14,7 +14,6 @@ class Gefahrstoffliste(BrowserView):
         mixtures = []
         select = "SELECT substance_mixture_id, title FROM substance_mixture;"
         gemische = self.db.execute(select)
-        import pdb; pdb.set_trace()
         for gemisch in gemische:
             mixture_entry = {}
             selectoldid = "SELECT link FROM oldlinks WHERE mixture_id = %s" % gemisch[0]
