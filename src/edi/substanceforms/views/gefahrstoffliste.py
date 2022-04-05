@@ -19,7 +19,7 @@ class Gefahrstoffliste(BrowserView):
             selectoldid = "SELECT link FROM oldlinks WHERE mixture_id = %s" % gemisch[0]
             oldid = self.db.execute(selectoldid)
             if oldid:
-                mixture_entry['@id'] = oldid
+                mixture_entry['@id'] = oldid[0][0]
             else:
                 mixture_entry['@id'] = "bgetem.substance_mixture."+str(gemisch[0])  # über die Punkt-Notation könnten mehrere potenzielle Quellen angezapft werden
             mixture_entry['title'] = gemisch[1]
