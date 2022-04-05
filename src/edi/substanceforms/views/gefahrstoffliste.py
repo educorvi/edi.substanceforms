@@ -12,7 +12,7 @@ class Gefahrstoffliste(BrowserView):
         self.db = DBConnect(host=self.context.host, db=self.context.database, user=self.context.username, password=self.context.password)
 
         mixtures = []
-        select = "SELECT substance_mixture_id, title FROM substance_mixture WHERE status = 'published';"
+        select = "SELECT substance_mixture_id, title FROM substance_mixture;"
         gemische = self.db.execute(select)
         for gemisch in gemische:
             mixture_entry = {}
