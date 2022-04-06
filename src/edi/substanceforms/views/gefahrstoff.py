@@ -64,4 +64,4 @@ class Gefahrstoff(BrowserView):
 
         import pdb; pdb.set_trace()
 
-        return gefahrstoffdata
+        return jsonlib.write(gefahrstoffdata)
