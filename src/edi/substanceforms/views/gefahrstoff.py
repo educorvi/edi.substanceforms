@@ -48,8 +48,8 @@ class Gefahrstoff(BrowserView):
             inhaltsstoff['anteil'] = f">= {inhalt[3]}% - <= {inhalt[4]}%"
             inhaltsstoffe.append(inhaltsstoff)
 
-        produktclassselect = "SELECT class_name FROM productclasses WHERE class_id = %s" % data1[0][27]
-        productclass = self.db.execute(produktclassselect)
+        productclassselect = "SELECT class_name FROM productclasses WHERE class_id = %s" % data1[0][27]
+        productclass = self.db.execute(productclassselect)
 
         produktkategorien = {
             "label": "Reinigungsmittel im Etikettendruck",
@@ -75,7 +75,7 @@ class Gefahrstoff(BrowserView):
         gefahrstoffdata['wertebereich'] = data1[0][20]
         gefahrstoffdata['flammpunkt'] = data1[0][19]
         gefahrstoffdata['@id'] = gemischid
-        gefahrstoffdata['produktklasse'] = produktclass
+        gefahrstoffdata['produktklasse'] = productclass
 
 
         import pdb; pdb.set_trace()
