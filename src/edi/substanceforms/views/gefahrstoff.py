@@ -17,6 +17,12 @@ class Gefahrstoff(BrowserView):
         else:
             mixture_id = gemischid.split('.')[-1]
 
+        mixture_id = mixture_id[0][0]
+
+        data1select = "SELECT * FROM substance_mixture WHERE substance_mixture_id = %s" % mixture_id
+        data1 = self.db.execute(data1select)
+        #data2select = "SELECT * FROM manufacturer WHERE manufacturer_id = %s" % manu_id
+
 
         import pdb; pdb.set_trace()
 
