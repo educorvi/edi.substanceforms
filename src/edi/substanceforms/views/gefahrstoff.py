@@ -48,7 +48,8 @@ class Gefahrstoff(BrowserView):
             inhaltsstoff['anteil'] = f">= {inhalt[3]}% - <= {inhalt[4]}%"
             inhaltsstoffe.append(inhaltsstoff)
 
-        produktclass = "SELECT class_name FROM productclasses WHERE class_id = %s" % data1[0][27]
+        produktclassselect = "SELECT class_name FROM productclasses WHERE class_id = %s" % data1[0][27]
+        productclass = self.db.execute(produktclassselect)
 
         produktkategorien = {
             "label": "Reinigungsmittel im Etikettendruck",
