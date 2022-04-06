@@ -368,7 +368,7 @@ class SpraypowderFormView(TabelleFormView):
             searchtable = self.context.tablename
             manu_id = self.form.manu.data.split('ID:')[-1]
 
-            select = "SELECT * FROM %s WHERE manufacturer_id = %s;" % (searchkey, searchtable, manu_id)
+            select = "SELECT * FROM %s WHERE manufacturer_id = %s;" % (searchtable, manu_id)
 
             self.ergs = self.db.execute(select)
 
