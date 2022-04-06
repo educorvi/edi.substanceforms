@@ -21,7 +21,6 @@ class Gefahrstoff(BrowserView):
 
         data1select = "SELECT * FROM substance_mixture WHERE substance_mixture_id = %s" % mixture_id
         data1 = self.db.execute(data1select)
-        import pdb; pdb.set_trace()
         data2select = "SELECT * FROM manufacturer WHERE manufacturer_id = %s" % data1[0][25]
         data2 = self.db.execute(data2select)
         data3select = "SELECT * FROM recipes WHERE mixture_id = %s" % mixture_id
