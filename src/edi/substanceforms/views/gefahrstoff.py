@@ -49,7 +49,10 @@ class Gefahrstoff(BrowserView):
             inhaltsstoffe.append(inhaltsstoff)
 
         productclassselect = "SELECT class_name FROM productclasses WHERE class_id = %s" % data1[0][27]
-        productclass = self.db.execute(productclassselect)
+        try:
+            productclass = self.db.execute(productclassselect)
+        except:
+            productclass = None
 
         produktkategorien = {
             "label": "Reinigungsmittel im Etikettendruck",
