@@ -40,6 +40,8 @@ class Gefahrstoff(BrowserView):
             inhaltsstoff = {}
             select = "SELECT * FROM substance WHERE substance_id = %s" % inhalt[0][1]
             reinstoff = self.db.execute(select)
+            import pdb;
+            pdb.set_trace()
             inhaltsstoff['cas'] = reinstoff[0][4]
             inhaltsstoff['gefahrstoff'] = reinstoff[0][1]
             inhaltsstoff['anteil_min'] = inhalt[0][3]
