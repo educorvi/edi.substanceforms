@@ -22,7 +22,7 @@ class Gefahrstoff(BrowserView):
         data1select = "SELECT * FROM substance_mixture WHERE substance_mixture_id = %s" % mixture_id
         data1 = self.db.execute(data1select)
         import pdb; pdb.set_trace()
-        data2select = "SELECT * FROM manufacturer WHERE manufacturer_id = %s" % data1[25]
+        data2select = "SELECT * FROM manufacturer WHERE manufacturer_id = %s" % data1[0][25]
         data2 = self.db.execute(data2select)
         data3select = "SELECT * FROM recipes WHERE mixture_id = %s" % mixture_id
         data3 = self.db.execute(data3select)
@@ -30,35 +30,35 @@ class Gefahrstoff(BrowserView):
         gefahrstoffdata = {}
 
         hersteller = {}
-        hersteller['title'] = data2[1]
-        hersteller['@id'] = "bgetem.manufacturer."+str(data2[0])
-        hersteller['description'] = data2[2]
-        hersteller['homepage'] = data2[4]
+        hersteller['title'] = data2[0][1]
+        hersteller['@id'] = "bgetem.manufacturer."+str(data2[0][0])
+        hersteller['description'] = data2[0][2]
+        hersteller['homepage'] = data2[0][4]
 
         inhaltsstoffe = list()
         for inhalt in data3:
             inhaltsstoff = {}
-            select = "SELECT * FROM substance WHERE substance_id = %s" % inhalt[1]
+            select = "SELECT * FROM substance WHERE substance_id = %s" % inhalt[0][1]
             reinstoff = self.db.execute(select)
-            inhaltsstoff['cas'] = reinstoff[4]
-            inhaltsstoff['gefahrstoff'] = reinstoff[1]
-            inhaltsstoff['anteil_min'] = inhalt[3]
-            inhaltsstoff['anteil_max'] = inhalt[4]
+            inhaltsstoff['cas'] = reinstoff[0][4]
+            inhaltsstoff['gefahrstoff'] = reinstoff[0][1]
+            inhaltsstoff['anteil_min'] = inhalt[0][3]
+            inhaltsstoff['anteil_max'] = inhalt[0][4]
             inhaltsstoffe.append(inhaltsstoff)
 
-        produktclass = "SELECT class_name FROM productclasses WHERE class_id = %s" % data1[27]
+        produktclass = "SELECT class_name FROM productclasses WHERE class_id = %s" % data1[0][27]
 
         gefahrstoffdata['hersteller'] = hersteller
-        gefahrstoffdata['hskategorie'] = data1[16]
-        gefahrstoffdata['bemerkungen'] = data1[23]
+        gefahrstoffdata['hskategorie'] = data1[0][16]
+        gefahrstoffdata['bemerkungen'] = data1[0][23]
         gefahrstoffdata['chemikalienliste'] = inhaltsstoffe
-        gefahrstoffdata['UID'] = data1[3]
-        gefahrstoffdata['title'] = data1[1]
-        gefahrstoffdata['review_state'] = data1[26]
-        gefahrstoffdata['emissionsgeprueft'] = data1[17]
-        gefahrstoffdata['description'] = data1[2]
-        gefahrstoffdata['wertebereich'] = data1[20]
-        gefahrstoffdata['flammpunkt'] = data1[19]
+        gefahrstoffdata['UID'] = data1[0][3]
+        gefahrstoffdata['title'] = data1[0][1]
+        gefahrstoffdata['review_state'] = data1[0][26]
+        gefahrstoffdata['emissionsgeprueft'] = data1[0][17]
+        gefahrstoffdata['description'] = data1[0][2]
+        gefahrstoffdata['wertebereich'] = data1[0][20]
+        gefahrstoffdata['flammpunkt'] = data1[0][19]
         gefahrstoffdata['produktklasse'] = produktclass
 
 
