@@ -45,10 +45,18 @@ class Gefahrstoff(BrowserView):
             inhaltsstoff['gefahrstoff'] = reinstoff[0][1]
             inhaltsstoff['anteil_min'] = inhalt[3]
             inhaltsstoff['anteil_max'] = inhalt[4]
-            inhaltsstoff['anteil'] = f">= {inhalt[3]} - <= {inhalt[4]}"
+            inhaltsstoff['anteil'] = f">= {inhalt[3]}% - <= {inhalt[4]}%"
             inhaltsstoffe.append(inhaltsstoff)
 
         produktclass = "SELECT class_name FROM productclasses WHERE class_id = %s" % data1[0][27]
+
+        produktkategorien = {
+            "label": "Reinigungsmittel im Etikettendruck",
+            "offset": "Offsetdruck allgemein",
+            "heatset": "Heatsetwaschmittel",
+            "uv": "Reinigungsmittel im UV-Druck",
+            "special": "Sonderreiniger"
+        }
 
         gefahrstoffdata['hersteller'] = hersteller
         gefahrstoffdata['hskategorie'] = data1[0][16]
@@ -58,9 +66,11 @@ class Gefahrstoff(BrowserView):
         gefahrstoffdata['title'] = data1[0][1]
         gefahrstoffdata['review_state'] = data1[0][26]
         gefahrstoffdata['emissionsgeprueft'] = data1[0][17]
+        gefahrstoffdata['produktkategorie'] = produktkategorien[5]
         gefahrstoffdata['description'] = data1[0][2]
         gefahrstoffdata['wertebereich'] = data1[0][20]
         gefahrstoffdata['flammpunkt'] = data1[0][19]
+        gefahrstoffdata['@id'] = gemischid
         gefahrstoffdata['produktklasse'] = produktclass
 
 
