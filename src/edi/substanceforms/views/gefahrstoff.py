@@ -21,13 +21,46 @@ class Gefahrstoff(BrowserView):
 
         data1select = "SELECT * FROM substance_mixture WHERE substance_mixture_id = %s" % mixture_id
         data1 = self.db.execute(data1select)
-        #data2select = "SELECT * FROM manufacturer WHERE manufacturer_id = %s" % manu_id
-
-
-        import pdb; pdb.set_trace()
+        data2select = "SELECT * FROM manufacturer WHERE manufacturer_id = %s" % data1[25]
+        data2 = self.db.execute(data2select)
+        data3select = "SELECT * FROM recipes WHERE mixture_id = %s" % mixture_id
+        data3 = self.db.execute(data3select)
 
         gefahrstoffdata = {}
 
+        hersteller = {}
+        hersteller['title'] = data2[1]
+        hersteller['@id'] = "bgetem.manufacturer."+str(data2[0])
+        hersteller['description'] = data2[2]
+        hersteller['homepage'] = data2[4]
 
+        inhaltsstoffe = list()
+        for inhalt in data3:
+            inhaltsstoff = {}
+            select = "SELECT * FROM substance WHERE substance_id = %s" % inhalt[1]
+            reinstoff = self.db.execute(select)
+            inhaltsstoff['cas'] = reinstoff[4]
+            inhaltsstoff['gefahrstoff'] = reinstoff[1]
+            inhaltsstoff['anteil_min'] = inhalt[3]
+            inhaltsstoff['anteil_max'] = inhalt[4]
+            inhaltsstoffe.append(inhaltsstoff)
+
+        produktclass = "SELECT class_name FROM productclasses WHERE class_id = %s" % data1[27]
+
+        gefahrstoffdata['hersteller'] = hersteller
+        gefahrstoffdata['hskategorie'] = data1[16]
+        gefahrstoffdata['bemerkungen'] = data1[23]
+        gefahrstoffdata['chemikalienliste'] = inhaltsstoffe
+        gefahrstoffdata['UID'] = data1[3]
+        gefahrstoffdata['title'] = data1[1]
+        gefahrstoffdata['review_state'] = data1[26]
+        gefahrstoffdata['emissionsgeprueft'] = data1[17]
+        gefahrstoffdata['description'] = data1[2]
+        gefahrstoffdata['wertebereich'] = data1[20]
+        gefahrstoffdata['flammpunkt'] = data1[19]
+        gefahrstoffdata['produktklasse'] = produktclass
+
+
+        import pdb; pdb.set_trace()
 
         return gefahrstoffdata
