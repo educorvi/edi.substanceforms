@@ -7,10 +7,10 @@ from edi.substanceforms.lib import DBConnect
 
 class Gefahrstoff(BrowserView):
     def __call__(self):
+        import pdb; pdb.set_trace()
         self.db = DBConnect(host=self.context.host, db=self.context.database, user=self.context.username, password=self.context.password)
 
         gemischid = self.request.get('gemischid')+
-        import pdb; pdb.set_trace()
         #gemischid = "https://emissionsarme-produkte.bgetem.de/datenbank-chemie-dp/wasch-und-reinigungsmittel-fuer-den-etikettendruck/biolon-xi-fluessig"
         if gemischid.startswith('https://'):
             select = "SELECT mixture_id FROM oldlinks WHERE link = '%s'" % gemischid
