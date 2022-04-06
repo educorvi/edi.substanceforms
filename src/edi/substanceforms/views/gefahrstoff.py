@@ -58,6 +58,9 @@ class Gefahrstoff(BrowserView):
             "special": "Sonderreiniger"
         }
 
+        produktkategorie = list()
+        produktkategorie.append(produktkategorien[data1[0][5]])
+
         gefahrstoffdata['hersteller'] = hersteller
         gefahrstoffdata['hskategorie'] = data1[0][16]
         gefahrstoffdata['bemerkungen'] = data1[0][23]
@@ -66,7 +69,7 @@ class Gefahrstoff(BrowserView):
         gefahrstoffdata['title'] = data1[0][1]
         gefahrstoffdata['review_state'] = data1[0][26]
         gefahrstoffdata['emissionsgeprueft'] = data1[0][17]
-        gefahrstoffdata['produktkategorie'] = produktkategorien[data1[0][5]]
+        gefahrstoffdata['produktkategorie'] = produktkategorie
         gefahrstoffdata['description'] = data1[0][2]
         gefahrstoffdata['wertebereich'] = data1[0][20]
         gefahrstoffdata['flammpunkt'] = data1[0][19]
