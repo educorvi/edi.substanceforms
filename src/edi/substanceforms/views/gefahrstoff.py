@@ -12,7 +12,7 @@ class Gefahrstoff(BrowserView):
         #gemischid = self.request.get('gefahrstoffid')
         gemischid = "https://emissionsarme-produkte.bgetem.de/datenbank-chemie-dp/wasch-und-reinigungsmittel-fuer-den-etikettendruck/biolon-xi-fluessig"
         if gemischid.startswith('https://'):
-            select = "SELECT mixture_id FROM oldlinks WHERE link = %s" % gemischid
+            select = "SELECT mixture_id FROM oldlinks WHERE link = '%s'" % gemischid
             mixture_id = self.db.execute(select)
         else:
             mixture_id = gemischid.split('.')[-1]
