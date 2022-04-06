@@ -78,7 +78,4 @@ class Gefahrstoff(BrowserView):
         gefahrstoffdata['@id'] = gemischid
         gefahrstoffdata['produktklasse'] = productclass
 
-
-        import pdb; pdb.set_trace()
-
         return jsonlib.write(gefahrstoffdata)
