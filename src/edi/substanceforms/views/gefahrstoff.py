@@ -49,6 +49,7 @@ class Gefahrstoff(BrowserView):
         productclassselect = "SELECT class_name FROM productclasses WHERE class_id = %s" % data1[0][27]
         try:
             productclass = self.db.execute(productclassselect)
+            productclass = productclass[0][0]
         except:
             productclass = None
 
