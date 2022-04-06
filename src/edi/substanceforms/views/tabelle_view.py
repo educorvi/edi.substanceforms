@@ -193,8 +193,8 @@ class SubstanceMixtureForm (BaseForm):
     manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[], render_kw={'class':'form-control'})
 class SprayPowderForm (BaseForm):
     manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[], render_kw={'class':'form-control'})
-    median_value = FloatField(u'Bitte geben Sie den Medianwert ein', render_kw={'class':'form-control'})
-    volume_share = FloatField(u'Bitte geben Sie den Volumenanteil ein', render_kw={'class':'form-control'})
+    #median_value = FloatField(u'Bitte geben Sie den Medianwert ein', render_kw={'class':'form-control'})
+    #volume_share = FloatField(u'Bitte geben Sie den Volumenanteil ein', render_kw={'class':'form-control'})
 
 class HerstellerFormView(TabelleFormView):
     formClass = HerstellerForm
@@ -368,7 +368,7 @@ class SpraypowderFormView(TabelleFormView):
             searchtable = self.context.tablename
             manu_id = self.form.manu.data.split('ID:')[-1]
 
-            select = "SELECT %s, title FROM %s WHERE manufacturer_id = %s;" % (searchkey, searchtable, manu_id)
+            select = "SELECT * FROM %s WHERE manufacturer_id = %s;" % (searchkey, searchtable, manu_id)
 
             self.ergs = self.db.execute(select)
 
