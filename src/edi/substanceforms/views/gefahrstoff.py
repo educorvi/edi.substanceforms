@@ -66,7 +66,7 @@ class Gefahrstoff(BrowserView):
         gefahrstoffdata['title'] = data1[0][1]
         gefahrstoffdata['review_state'] = data1[0][26]
         gefahrstoffdata['emissionsgeprueft'] = data1[0][17]
-        gefahrstoffdata['produktkategorie'] = produktkategorien[5]
+        gefahrstoffdata['produktkategorie'] = produktkategorien[data1[0][5]]
         gefahrstoffdata['description'] = data1[0][2]
         gefahrstoffdata['wertebereich'] = data1[0][20]
         gefahrstoffdata['flammpunkt'] = data1[0][19]
