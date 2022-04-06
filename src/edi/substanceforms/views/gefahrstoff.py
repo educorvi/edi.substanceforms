@@ -43,6 +43,8 @@ class Gefahrstoff(BrowserView):
             pdb.set_trace()
             inhaltsstoff['cas'] = reinstoff[0][4]
             inhaltsstoff['gefahrstoff'] = reinstoff[0][1]
+            inhaltsstoff['anteil_min'] = inhalt[3]
+            inhaltsstoff['anteil_max'] = inhalt[4]
             inhaltsstoff['anteil'] = f">= {inhalt[3]} - <= {inhalt[4]}"
             inhaltsstoffe.append(inhaltsstoff)
 
