@@ -7,7 +7,6 @@ from edi.substanceforms.lib import DBConnect
 
 class Gefahrstoff(BrowserView):
     def __call__(self):
-        import pdb; pdb.set_trace()
         self.db = DBConnect(host=self.context.host, db=self.context.database, user=self.context.username, password=self.context.password)
 
         gemischid = self.request.get('gemischid')
@@ -40,8 +39,6 @@ class Gefahrstoff(BrowserView):
             inhaltsstoff = {}
             select = "SELECT * FROM substance WHERE substance_id = %s" % inhalt[1]
             reinstoff = self.db.execute(select)
-            import pdb;
-            pdb.set_trace()
             inhaltsstoff['cas'] = reinstoff[0][4]
             inhaltsstoff['gefahrstoff'] = reinstoff[0][1]
             inhaltsstoff['anteil_min'] = inhalt[3]
