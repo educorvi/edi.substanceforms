@@ -37,7 +37,7 @@ class Gefahrstoff(BrowserView):
         inhaltsstoffe = list()
         for inhalt in data3:
             inhaltsstoff = {}
-            select = "SELECT * FROM substance WHERE substance_id = %s" % inhalt[0][1]
+            select = "SELECT * FROM substance WHERE substance_id = %s" % inhalt[1]
             reinstoff = self.db.execute(select)
             import pdb;
             pdb.set_trace()
