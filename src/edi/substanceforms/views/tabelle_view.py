@@ -315,7 +315,6 @@ class SubstancemixtureFormView(TabelleFormView):
                     endselect = ";"
 
                     select = select + endselect
-                    import pdb; pdb.set_trace()
 
                 conn = psycopg2.connect(host=self.host, user=self.username, password=self.password,
                                         dbname=self.dbname)
