@@ -302,6 +302,7 @@ class SubstancemixtureFormView(TabelleFormView):
             searchtable = self.context.tablename
 
             if mixturetype:
+                import pdb; pdb.set_trace()
                 select = "SELECT * FROM %s WHERE substance_type = '%s';" % (searchtable, mixturetype)
                 conn = psycopg2.connect(host=self.host, user=self.username, password=self.password,
                                         dbname=self.dbname)
