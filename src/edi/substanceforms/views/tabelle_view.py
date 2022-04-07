@@ -305,13 +305,17 @@ class SubstancemixtureFormView(TabelleFormView):
                 if len(mixturetype) == 1:
                     select = "SELECT * FROM %s WHERE substance_type = '%s';" % (searchtable, mixturetype[0])
                 else:
+                    select = ""
                     beginselect = "SELECT * FROM %s WHERE substance_type = '%s'" % (searchtable, mixturetype[0])
+                    select = select + beginselect
+                    mixturetype.pop(0)
                     for i in mixturetype:
-                        import pdb; pdb.set_trace()
                         addedselect = " OR substance_type = '%s'" % i
+                        select = select + addedselect
                     endselect = ";"
 
-                    select = beginselect + addedselect + endselect
+                    select = select + endselect
+                    import pdb; pdb.set_trace()
 
                 conn = psycopg2.connect(host=self.host, user=self.username, password=self.password,
                                         dbname=self.dbname)
