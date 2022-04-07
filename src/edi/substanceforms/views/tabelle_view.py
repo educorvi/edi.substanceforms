@@ -305,9 +305,9 @@ class SubstancemixtureFormView(TabelleFormView):
                 if len(mixturetype) == 1:
                     select = "SELECT * FROM %s WHERE substance_type = '%s';" % (searchtable, mixturetype[0])
                 else:
-                    beginselect = "SELECT * FROM %s WHERE substance_type = '%s' " % (searchtable, mixturetype[0])
+                    beginselect = "SELECT * FROM %s WHERE substance_type = '%s'" % (searchtable, mixturetype[0])
                     for i in mixturetype:
-                        addedselect = "OR substance_type = '%s' " % i
+                        addedselect = " OR substance_type = '%s'" % i
                     endselect = ";"
 
                     select = beginselect + addedselect + endselect
