@@ -115,7 +115,7 @@ class SingleView(BrowserView):
                 res = erg
                 erg = []
                 for entry in res:
-                    sel = Template(select).render(value=self.itemid)
+                    sel = Template(select).render(value=entry)
                     try:
                         resu = self.db.execute(sel)
                         if vocabulary:
