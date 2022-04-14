@@ -111,6 +111,7 @@ class SingleView(BrowserView):
                         erg = resu
                 except:
                     erg = ' '
+                import pdb;pdb.set_trace()
             else:
                 res = erg
                 erg = []
