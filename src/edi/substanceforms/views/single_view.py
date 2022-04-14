@@ -91,7 +91,6 @@ class SingleView(BrowserView):
         for select in preselects:
             title = select['title']
             value = self.get_preergs(select)
-            import pdb; pdb.set_trace()
             if value:
                 fragment = f'<dt class="col col-sm-5">{title}</dt><dd class="col col-sm-7">{value}</dd><div class="w-100 divider"></div>'
                 fragments.append(fragment)
@@ -129,12 +128,14 @@ class SingleView(BrowserView):
                         result = []
         if len(erg) == 1:
             return erg[0]
-        else:
+        elif erg > 1:
             htmlstring = '<span><ul>'
             for element in erg:
                 htmlstring += f'<li>{element}</li>'
             htmlstring += '</ul></span>'
             return htmlstring
+        else:
+            return ''
 
     def is_mixture(self):
         if self.context.tablename == 'substance_mixture':
