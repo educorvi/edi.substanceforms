@@ -9,6 +9,8 @@ from edi.substanceforms.helpers import get_vocabulary
 from plone import api as ploneapi
 from edi.substanceforms.lib import DBConnect
 import psycopg2
+from jinja2 import Template
+
 
 from edi.substanceforms.content.tabelle import possibleColumns
 
@@ -31,6 +33,8 @@ class SingleView(BrowserView):
         #import pdb; pdb.set_trace()
         self.definitions = self.get_definitions()
         print(self.definitions)
+
+        self.more_definitions = self.get_more_definitions()
 
         if self.context.tablename == 'substance_mixture':
             #self.machines = self.get_machines()
@@ -60,7 +64,7 @@ class SingleView(BrowserView):
         fragments = list()
         columns = self.context.columns
         for key in columns:
-            key_value_pair = getattr(self, key, None)
+            key_value_pair = getattr(self, key, None) # hole die Methode für Aufbereitung der Daten in DB-Spalte key
 
             if key_value_pair:
                 entry = key_value_pair()
@@ -71,6 +75,67 @@ class SingleView(BrowserView):
                     fragments.append(fragment)
 
         return fragments
+
+    def get_more_definitions(self):
+        fragments = list()
+        preselects = list()
+        for column in self.context.morecolumns:
+            entry = dict()
+            obj = self.context[column]
+            entry['id'] = obj.id
+            entry['title'] = obj.title
+            entry['preselects'] = obj.preselects
+            entry['vocab'] = obj.vocab
+            preselects.append(entry)
+
+        for select in preselects:
+            title = select['title']
+            value = self.get_preergs(select)
+            if value:
+                fragment = f'<dt class="col col-sm-5">{title}</dt><dd class="col col-sm-7">{value}</dd><div class="w-100 divider"></div>'
+                fragments.append(fragment)
+        return fragments
+
+    def get_preergs(self, preselect):
+        erg = list()
+        vocabulary = preselect.get('vocab')
+        preselects = preselect.get('preselects')
+        for select in preselects:
+            if not erg:
+                sel = Template(select).render(value=self.itemid)
+                try:
+                    resu = self.db.execute(sel)
+                    resu = [i[0] for i in resu]
+                    if vocabulary:
+                        erg = [self.get_attr_translation(vocabulary, i) for i in resu]
+                    else:
+                        erg = resu
+                except:
+                    erg = []
+            else:
+                res = erg
+                erg = []
+                for entry in res:
+                    sel = Template(select).render(value=entry)
+                    try:
+                        resu = self.db.execute(sel)
+                        if vocabulary:
+                            result = [self.get_attr_translation(vocabulary, i) for i in resu]
+                        else:
+                            result = resu
+                        erg += [i[0] for i in result]
+                    except:
+                        result = []
+        if len(erg) == 1:
+            return erg[0]
+        elif len(erg) > 1:
+            htmlstring = '<span><ul>'
+            for element in erg:
+                htmlstring += f'<li>{element}</li>'
+            htmlstring += '</ul></span>'
+            return htmlstring
+        else:
+            return ''
 
     def is_mixture(self):
         if self.context.tablename == 'substance_mixture':

@@ -7,6 +7,13 @@
   -*- extra stuff goes here -*-
 
   <browser:page
+    name="gefahrstoff"
+    for="*"
+    class=".gefahrstoff.Gefahrstoff"
+    permission="zope2.View"
+    />
+
+  <browser:page
     name="gefahrstoffliste"
     for="*"
     class=".gefahrstoffliste.Gefahrstoffliste"

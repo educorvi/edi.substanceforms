@@ -193,8 +193,8 @@ class SubstanceMixtureForm (BaseForm):
     manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[], render_kw={'class':'form-control'})
 class SprayPowderForm (BaseForm):
     manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[], render_kw={'class':'form-control'})
-    median_value = FloatField(u'Bitte geben Sie den Medianwert ein', render_kw={'class':'form-control'})
-    volume_share = FloatField(u'Bitte geben Sie den Volumenanteil ein', render_kw={'class':'form-control'})
+    #median_value = FloatField(u'Bitte geben Sie den Medianwert ein', render_kw={'class':'form-control'})
+    #volume_share = FloatField(u'Bitte geben Sie den Volumenanteil ein', render_kw={'class':'form-control'})
 
 class HerstellerFormView(TabelleFormView):
     formClass = HerstellerForm
@@ -302,7 +302,20 @@ class SubstancemixtureFormView(TabelleFormView):
             searchtable = self.context.tablename
 
             if mixturetype:
-                select = "SELECT * FROM %s WHERE substance_type = '%s';" % (searchtable, mixturetype)
+                if len(mixturetype) == 1:
+                    select = "SELECT * FROM %s WHERE substance_type = '%s';" % (searchtable, mixturetype[0])
+                else:
+                    select = ""
+                    beginselect = "SELECT * FROM %s WHERE substance_type = '%s'" % (searchtable, mixturetype[0])
+                    select = select + beginselect
+                    mixturetype.pop(0)
+                    for i in mixturetype:
+                        addedselect = " OR substance_type = '%s'" % i
+                        select = select + addedselect
+                    endselect = ";"
+
+                    select = select + endselect
+
                 conn = psycopg2.connect(host=self.host, user=self.username, password=self.password,
                                         dbname=self.dbname)
                 cur = conn.cursor()
@@ -368,7 +381,7 @@ class SpraypowderFormView(TabelleFormView):
             searchtable = self.context.tablename
             manu_id = self.form.manu.data.split('ID:')[-1]
 
-            select = "SELECT %s, title FROM %s WHERE manufacturer_id = %s;" % (searchkey, searchtable, manu_id)
+            select = "SELECT * FROM %s WHERE manufacturer_id = %s;" % (searchtable, manu_id)
 
             self.ergs = self.db.execute(select)
 
