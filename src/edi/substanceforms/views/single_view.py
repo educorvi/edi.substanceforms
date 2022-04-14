@@ -91,6 +91,7 @@ class SingleView(BrowserView):
         for select in preselects:
             title = select['title']
             value = self.get_preergs(select)
+            import pdb; pdb.set_trace()
             if value:
                 fragment = f'<dt class="col col-sm-5">{title}</dt><dd class="col col-sm-7">{value}</dd><div class="w-100 divider"></div>'
                 fragments.append(fragment)
