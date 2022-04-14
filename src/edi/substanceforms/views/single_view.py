@@ -128,7 +128,7 @@ class SingleView(BrowserView):
                         result = []
         if len(erg) == 1:
             return erg[0]
-        elif erg > 1:
+        elif len(erg) > 1:
             htmlstring = '<span><ul>'
             for element in erg:
                 htmlstring += f'<li>{element}</li>'
