@@ -139,7 +139,7 @@ class ITabelle(model.Schema):
         title=u"Art des Gefahrstoffgemisches",
         description=u"Art des Gefahrstoffgemisches auswählen (aus Tabelle substance_mixutre)",
         value_type=schema.Choice(source=mixturetypes),
-        required = Falsed
+        required = False
     )
 
     artikeltyp = schema.TextLine(
