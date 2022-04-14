@@ -34,7 +34,7 @@ class SingleView(BrowserView):
         self.definitions = self.get_definitions()
         print(self.definitions)
 
-        self.moredefinitions = self.get_more_definitions()
+        self.more_definitions = self.get_more_definitions()
 
         if self.context.tablename == 'substance_mixture':
             #self.machines = self.get_machines()
