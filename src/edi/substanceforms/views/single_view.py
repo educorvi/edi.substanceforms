@@ -106,12 +106,11 @@ class SingleView(BrowserView):
                     resu = self.db.execute(sel)
                     resu = [i[0] for i in resu]
                     if vocabulary:
-                        erg = self.get_attr_translation(vocabulary, resu[0])
+                        erg = [self.get_attr_translation(vocabulary, i) for i in resu]
                     else:
                         erg = resu
                 except:
-                    erg = ' '
-                import pdb;pdb.set_trace()
+                    erg = []
             else:
                 res = erg
                 erg = []
@@ -120,18 +119,20 @@ class SingleView(BrowserView):
                     try:
                         resu = self.db.execute(sel)
                         if vocabulary:
-                            result = self.get_attr_translation(vocabulary, resu[0])
+                            result = [self.get_attr_translation(vocabulary, i) for i in resu]
                         else:
                             result = resu
                         erg += [i[0] for i in result]
                     except:
-                        result = ' '
-        if vocabulary:
-            result = erg
+                        result = []
+        if len(erg) == 1:
+            return erg[0]
         else:
-            result = ', '.join(erg)
-        return result
-
+            htmlstring = '<span><ul>'
+            for element in erg:
+                htmlstring += f'<li>{element}</li>'
+            htmlstring += '</ul></span>'
+            return htmlstring
 
     def is_mixture(self):
         if self.context.tablename == 'substance_mixture':
