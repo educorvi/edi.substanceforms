@@ -117,6 +117,12 @@ class ITabelle(model.Schema):
             value_type=schema.Choice(source=possibleColumns),
             )
 
+    morecolumns = schema.List(
+        title=u"Weitere Spalten für die Einzelansicht",
+        description=u"Datenbankspalten auswählen, die zusätzlich in der Einzelansicht berücksichtigt werden sollen",
+        value_type=schema.Choice(source=possiblePreselects),
+    )
+
     resultcolumns = schema.List(
             title = u"Darstellung Trefferliste",
             description = u"Datenbankspalten auswählen, die in der Trefferliste berücksichtigt werden sollen",
@@ -133,7 +139,7 @@ class ITabelle(model.Schema):
         title=u"Art des Gefahrstoffgemisches",
         description=u"Art des Gefahrstoffgemisches auswählen (aus Tabelle substance_mixutre)",
         value_type=schema.Choice(source=mixturetypes),
-        required = False
+        required = Falsed
     )
 
     artikeltyp = schema.TextLine(
