@@ -41,6 +41,20 @@
     permission="cmf.ModifyPortalContent"
     />
 
+   <browser:page
+    name="dentalmigration"
+    for="*"
+    class=".dentalmigration.Migrationview"
+    permission="cmf.ModifyPortalContent"
+    />
+
+   <browser:page
+    name="dentalherstellermigration"
+    for="*"
+    class=".dentalherstellermigration.Migrationview"
+    permission="cmf.ModifyPortalContent"
+    />
+
   <browser:page
     name="oldlinkmigration"
     for="*"
