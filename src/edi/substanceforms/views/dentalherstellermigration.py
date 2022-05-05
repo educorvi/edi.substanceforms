@@ -124,7 +124,9 @@ class Migrationview(BrowserView):
 
 
 
-                if not dental_manufacturer_id:
+                if dental_manufacturer_id:
+                    print("VORHANDEN: "+dental_hersteller)
+                else:
                     print(dental_hersteller)
                     #cur = conn.cursor()
                     #cur.execute("INSERT INTO manufacturer (title, webcode) VALUES (%s, %s);" % (dental_hersteller, dental_uid))
