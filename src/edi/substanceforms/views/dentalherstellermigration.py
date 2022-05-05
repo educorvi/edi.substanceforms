@@ -128,10 +128,10 @@ class Migrationview(BrowserView):
                     print("VORHANDEN: "+dental_hersteller)
                 else:
                     print(dental_hersteller)
-                    #cur = conn.cursor()
-                    #cur.execute("INSERT INTO manufacturer (title, webcode) VALUES (%s, %s);" % (dental_hersteller, dental_uid))
-                    #conn.commit()
-                    #cur.close()
+                    cur = conn.cursor()
+                    cur.execute("INSERT INTO manufacturer (title, webcode) VALUES (%s, %s);" % (dental_hersteller, dental_uid))
+                    conn.commit()
+                    cur.close()
 
 
         print('Successfully migrated MANUFACTURER_DENTAL')
