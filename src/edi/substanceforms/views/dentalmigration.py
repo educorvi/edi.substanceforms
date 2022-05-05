@@ -140,6 +140,8 @@ class Migrationview(BrowserView):
                 conn.commit()
                 # print(etikett_title)  # correct
                 cur.close()
+
+                print(dental_title)
             else:
                 print("Dumm gelaufen")
 
