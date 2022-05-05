@@ -129,7 +129,7 @@ class Migrationview(BrowserView):
                 else:
                     print(dental_hersteller)
                     cur = conn.cursor()
-                    cur.execute("INSERT INTO manufacturer (title, webcode) VALUES (%s, %s);" % (dental_hersteller, dental_uid))
+                    cur.execute("INSERT INTO manufacturer (title, webcode) VALUES ('%s', '%s');" % (dental_hersteller, dental_uid))
                     conn.commit()
                     cur.close()
 
