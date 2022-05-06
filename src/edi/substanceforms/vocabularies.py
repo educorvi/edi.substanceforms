@@ -10,6 +10,7 @@ branchen = [
     (u"druck_und_papier", u"Druck und Papierverarbeitung"),
     (u"elektrohandwerke", u"Elektrohandwerke"),
     (u"elektrotechnische_industrie", u"Elektrotechnische Industrie"),
+    (u"dentaltechnik", u"Dentaltechnik"),
     (u"energie_und_wasser", u"Energie und Wasserwirtschaft"),
     (u"feinmechanik", u"Feinmechanik"),
     (u"textil_und_mode", u"Textil und Mode"),

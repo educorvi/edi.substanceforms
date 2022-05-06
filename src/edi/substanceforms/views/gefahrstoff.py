@@ -58,7 +58,8 @@ class Gefahrstoff(BrowserView):
             "offset": "Offsetdruck allgemein",
             "heatset": "Heatsetwaschmittel",
             "uv": "Reinigungsmittel im UV-Druck",
-            "special": "Sonderreiniger"
+            "special": "Sonderreiniger",
+            "dental": "Dentaltechnik"
         }
 
         produktkategorie = list()
