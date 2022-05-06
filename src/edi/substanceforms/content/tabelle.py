@@ -68,6 +68,7 @@ def possibleColumns(context):
 
 @provider(IContextSourceBinder)
 def possiblePreselects(context):
+    import pdb; pdb.set_trace()
     terms = list()
     brains = ploneapi.content.find(context=context, portal_type='Preselect')
     for i in brains:
