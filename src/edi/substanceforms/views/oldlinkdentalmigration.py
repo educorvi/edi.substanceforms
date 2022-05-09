@@ -56,7 +56,6 @@ class Migrationview(BrowserView):
             entries = getCatalogData(payload)
             newentries = list()
             for i in entries:
-                import pdb; pdb.set_trace()
                 data = getItemData(i)
                 newentries.append(data)
                 # import pdb; pdb.set_trace()

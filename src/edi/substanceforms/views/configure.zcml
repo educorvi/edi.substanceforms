@@ -65,7 +65,7 @@
   <browser:page
     name="oldlinkdentalmigration"
     for="*"
-    class=".oldlinkmigration.Migrationview"
+    class=".oldlinkdentalmigration.Migrationview"
     permission="cmf.ModifyPortalContent"
     />
 
