@@ -12,6 +12,7 @@ from plone import api as ploneapi
 import requests
 import psycopg2
 import csv
+from requests.auth import HTTPBasicAuth
 
 authtuple = ('admin', 'Bg2011eteM')
 
@@ -33,19 +34,17 @@ class Migrationview(BrowserView):
         self.password = self.context.aq_parent.password
 
         def getCatalogData(query):
-            token = getAuthToken()
             headers = {
                 'Accept': 'application/json',
             }
-            results = requests.get(searchurl, headers=headers, params=query, auth=authtuple)
+            results = requests.get(searchurl, headers=headers, params=query, auth=HTTPBasicAuth('bgetem', 'rhein'))
             return results.json().get('items')
 
         def getItemData(entry):
-            token = getAuthToken()
             headers = {
                 'Accept': 'application/json',
             }
-            results = requests.get(entry.get('@id'), headers=headers, auth=authtuple)
+            results = requests.get(entry.get('@id'), headers=headers, auth=HTTPBasicAuth('bgetem', 'rhein'))
             return results.json()
 
         def getDental():
