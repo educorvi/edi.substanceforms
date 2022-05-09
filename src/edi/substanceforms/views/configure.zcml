@@ -63,6 +63,13 @@
     />
 
   <browser:page
+    name="oldlinkdentalmigration"
+    for="*"
+    class=".oldlinkmigration.Migrationview"
+    permission="cmf.ModifyPortalContent"
+    />
+
+  <browser:page
     name="productclassupdater"
     for="*"
     class=".productclassupdater.Migrationview"
