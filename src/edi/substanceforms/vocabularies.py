@@ -22,7 +22,9 @@ substance_types = [
     (u'detergent_heatset', u'Heatsetwaschmittel'),
     (u'detergent_manual', u'Reinigungsmittel manueller Gebrauch'),
     ('product_datasheet', u'Wasch- und Reinigungsmittel für den Offsetdruck'),
-    ('offset', u'Wasch- und Reinigungsmittel für den Offsetdruck')
+    ('offset', u'Wasch- und Reinigungsmittel für den Offsetdruck'),
+    ('dental', u'Gefahrstoffgemische aus der Dentaltechnik'),
+    ('textil', u'Gefahrstoffgemische aus der Textil- und Modeindustrie')
     ]
 
 substance_types_new = [

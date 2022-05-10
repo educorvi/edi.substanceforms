@@ -59,7 +59,8 @@ class Gefahrstoff(BrowserView):
             "heatset": "Heatsetwaschmittel",
             "uv": "Reinigungsmittel im UV-Druck",
             "special": "Sonderreiniger",
-            "dental": "Dentaltechnik"
+            "dental": "Dentaltechnik",
+            "textil": "Textil und Mode"
         }
 
         produktkategorie = list()

@@ -49,6 +49,13 @@
     />
 
    <browser:page
+    name="textilmigration"
+    for="*"
+    class=".textilmigration.Migrationview"
+    permission="cmf.ModifyPortalContent"
+    />
+
+   <browser:page
     name="dentalherstellermigration"
     for="*"
     class=".dentalherstellermigration.Migrationview"
@@ -56,9 +63,30 @@
     />
 
   <browser:page
+    name="textilherstellermigration"
+    for="*"
+    class=".textilherstellermigration.Migrationview"
+    permission="cmf.ModifyPortalContent"
+    />
+
+  <browser:page
     name="oldlinkmigration"
     for="*"
     class=".oldlinkmigration.Migrationview"
+    permission="cmf.ModifyPortalContent"
+    />
+
+  <browser:page
+    name="oldlinkdentalmigration"
+    for="*"
+    class=".oldlinkdentalmigration.Migrationview"
+    permission="cmf.ModifyPortalContent"
+    />
+
+  <browser:page
+    name="oldlinktextilmigration"
+    for="*"
+    class=".oldlinktextilmigration.Migrationview"
     permission="cmf.ModifyPortalContent"
     />
 
