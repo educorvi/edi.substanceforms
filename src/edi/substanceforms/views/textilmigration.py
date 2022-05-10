@@ -134,7 +134,7 @@ class Migrationview(BrowserView):
                 cur = conn.cursor()
                 # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
                 cur.execute(
-                    "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, skin_category, manufacturer_id, status) VALUES (%s, %s, %s, 'dentaltechnik', 'dental', %s, %s, %s);",
+                    "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, skin_category, manufacturer_id, status) VALUES (%s, %s, %s, 'textil_und_mode', 'textil', %s, %s, %s);",
                     (textil_title, textil_desc, textil_uid, textil_skin_category,
                      textil_manufacturer_id[0], textil_published))
                 conn.commit()
