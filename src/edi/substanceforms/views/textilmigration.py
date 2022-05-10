@@ -50,7 +50,7 @@ class Migrationview(BrowserView):
         def getDental():
             payload = {'portal_type': 'Gefahrstoff',
                        'b_size': 500,
-                       'path': '/praevention/datenbanken/gefahrstoffe/dentaltechnik',
+                       'path': '/praevention/datenbanken/gefahrstoffe/textil-und-mode',
                        'sort_on': 'sortable_title',
                        'metadata_fields': 'UID'}
             entries = getCatalogData(payload)
@@ -59,7 +59,7 @@ class Migrationview(BrowserView):
                 data = getItemData(i)
                 newentries.append(data)
                 # import pdb; pdb.set_trace()
-                print("Fetched DENTAL: " + i.get('title'))
+                print("Fetched TEXTILE: " + i.get('title'))
             return newentries
 
         def check_webcode(self, generated_webcode):
@@ -111,44 +111,44 @@ class Migrationview(BrowserView):
         conn = psycopg2.connect(host=hostname, user=username, password=password, dbname=database)
 
         for i in erg:
-            dental_title = i.get('title')
-            dental_desc = i.get('description')
-            dental_uid = get_webcode(self)
-            dental_skin_category = i.get('hskategorie')
-            dental_review_state = i.get('review_state')
+            textil_title = i.get('title')
+            textil_desc = i.get('description')
+            textil_uid = get_webcode(self)
+            textil_skin_category = i.get('hskategorie')
+            textil_review_state = i.get('review_state')
 
 
-            if dental_review_state == 'published':
-                dental_published = 'published'
+            if textil_review_state == 'published':
+                textil_published = 'published'
             else:
-                dental_published = 'private'
+                textil_published = 'private'
 
             if i.get('hersteller'):
-                dental_manufacturer_name = i.get('hersteller')
+                textil_manufacturer_name = i.get('hersteller')
                 cur = conn.cursor()
                 cur.execute(
-                    "SELECT manufacturer_id FROM manufacturer WHERE title = '{0}';".format(dental_manufacturer_name))
-                dental_manufacturer_id = cur.fetchall()
+                    "SELECT manufacturer_id FROM manufacturer WHERE title = '{0}';".format(textil_manufacturer_name))
+                textil_manufacturer_id = cur.fetchall()
                 cur.close()
 
                 cur = conn.cursor()
                 # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
                 cur.execute(
                     "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, skin_category, manufacturer_id, status) VALUES (%s, %s, %s, 'dentaltechnik', 'dental', %s, %s, %s);",
-                    (dental_title, dental_desc, dental_uid, dental_skin_category,
-                     dental_manufacturer_id[0], dental_published))
+                    (textil_title, textil_desc, textil_uid, textil_skin_category,
+                     textil_manufacturer_id[0], textil_published))
                 conn.commit()
                 # print(etikett_title)  # correct
                 cur.close()
 
-                print(dental_title)
+                print(textil_title)
             else:
                 print("Dumm gelaufen")
 
 
 
 
-        print('Successfully migrated DENTAL')
+        print('Successfully migrated TEXTILE')
 
 
         print('CHEERS! DATA MIGRATION SUCCESSFULLY COMPLETED :)')
