@@ -27,13 +27,12 @@ class LoginCredentials:
 
 class BaseForm(Form):
     """Base Form"""
-
     #search = StringField("Suchbegriff", render_kw={'class':'form-control'})
     #manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[])
 
 class TabelleFormView(WTFormView):
     formClass = BaseForm
-    buttons = ('Suche', 'Alle anzeigen', 'Abbrechen')
+    buttons = ('Suche', 'Alle anzeigen')
 
     def __call__(self):
         self.columnids = self.getindexfortablename()
@@ -184,15 +183,16 @@ class TabelleFormView(WTFormView):
             return self.request.response.redirect(url)
 
 class HerstellerForm (BaseForm):
-    manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[], render_kw={'class':'form-control'})
+    manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[], render_kw={'class':'form-control edi-select'})
 
 class SubstanceForm (BaseForm):
-    substance_id = SelectField(u"Suchbegriff", choices=[], render_kw={'class': 'form-control'})
+    substance_id = SelectField(u"Suchbegriff", choices=[], render_kw={'class': 'form-control edi-select'})
 
 class SubstanceMixtureForm (BaseForm):
-    manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[], render_kw={'class':'form-control'})
+    manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[], render_kw={'class':'form-control edi-select'})
+
 class SprayPowderForm (BaseForm):
-    manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[], render_kw={'class':'form-control'})
+    manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[], render_kw={'class':'form-control edi-select'})
     #median_value = FloatField(u'Bitte geben Sie den Medianwert ein', render_kw={'class':'form-control'})
     #volume_share = FloatField(u'Bitte geben Sie den Volumenanteil ein', render_kw={'class':'form-control'})
 
