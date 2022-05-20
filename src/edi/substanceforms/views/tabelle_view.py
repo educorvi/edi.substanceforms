@@ -303,7 +303,8 @@ class SubstancemixtureFormView(TabelleFormView):
                     select = select + endselect
             conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
             cur = conn.cursor()
-            cur.execute("SELECT DISTINCT substance_mixture.manufacturer_id, manufacturer.title FROM manufacturer, substance_mixture WHERE substance_mixture.manufacturer_id = manufacturer.manufacturer_id ORDER BY title;")
+            #cur.execute("SELECT DISTINCT substance_mixture.manufacturer_id, manufacturer.title FROM manufacturer, substance_mixture WHERE substance_mixture.manufacturer_id = manufacturer.manufacturer_id ORDER BY title;")
+            cur.execute(select)
             erg = cur.fetchall()
             manus = [(result[0], result[1] + ' ID:' + str(result[0])) for result in erg]
             cur.close
