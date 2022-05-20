@@ -50,6 +50,11 @@ class TabelleFormView(WTFormView):
                 result = self.submit(button)
                 if result:
                     return result
+        else:
+            button = "Alle anzeigen"
+            result = self.submit(button)
+            if result:
+                return result
         return self.index()
 
     def get_preselects(self):
