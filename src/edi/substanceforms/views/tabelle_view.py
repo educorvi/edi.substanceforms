@@ -27,13 +27,12 @@ class LoginCredentials:
 
 class BaseForm(Form):
     """Base Form"""
-
     #search = StringField("Suchbegriff", render_kw={'class':'form-control'})
     #manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[])
 
 class TabelleFormView(WTFormView):
     formClass = BaseForm
-    buttons = ('Suche', 'Alle anzeigen', 'Abbrechen')
+    buttons = ('Suche', 'Alle anzeigen')
 
     def __call__(self):
         self.columnids = self.getindexfortablename()
@@ -51,6 +50,11 @@ class TabelleFormView(WTFormView):
                 result = self.submit(button)
                 if result:
                     return result
+        else:
+            button = "Alle anzeigen"
+            result = self.submit(button)
+            if result:
+                return result
         return self.index()
 
     def get_preselects(self):
@@ -184,15 +188,16 @@ class TabelleFormView(WTFormView):
             return self.request.response.redirect(url)
 
 class HerstellerForm (BaseForm):
-    manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[], render_kw={'class':'form-control'})
+    manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[], render_kw={'class':'form-control edi-select'})
 
 class SubstanceForm (BaseForm):
-    substance_id = SelectField(u"Suchbegriff", choices=[], render_kw={'class': 'form-control'})
+    substance_id = SelectField(u"Suchbegriff", choices=[], render_kw={'class': 'form-control edi-select'})
 
 class SubstanceMixtureForm (BaseForm):
-    manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[], render_kw={'class':'form-control'})
+    manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[], render_kw={'class':'form-control edi-select'})
+
 class SprayPowderForm (BaseForm):
-    manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[], render_kw={'class':'form-control'})
+    manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[], render_kw={'class':'form-control edi-select'})
     #median_value = FloatField(u'Bitte geben Sie den Medianwert ein', render_kw={'class':'form-control'})
     #volume_share = FloatField(u'Bitte geben Sie den Volumenanteil ein', render_kw={'class':'form-control'})
 
@@ -281,9 +286,25 @@ class SubstancemixtureFormView(TabelleFormView):
 
     def renderForm(self):
         try:
+            mixturetype = self.context.mixturetype
+            if mixturetype:
+                if len(mixturetype) == 1:
+                    select = "SELECT DISTINCT substance_mixture.manufacturer_id, manufacturer.title FROM manufacturer, substance_mixture WHERE substance_mixture.manufacturer_id = manufacturer.manufacturer_id AND substance_type = '%s' ORDER BY title;" % (mixturetype[0])
+                else:
+                    select = ""
+                    beginselect = "SELECT DISTINCT substance_mixture.manufacturer_id, manufacturer.title FROM manufacturer, substance_mixture WHERE substance_mixture.manufacturer_id = manufacturer.manufacturer_id AND (substance_type = '%s'" % (mixturetype[0])
+                    select = select + beginselect
+                    mixturetype.pop(0)
+                    for i in mixturetype:
+                        addedselect = " OR substance_type = '%s'" % i
+                        select = select + addedselect
+                    endselect = ") ORDER BY title;"
+
+                    select = select + endselect
             conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
             cur = conn.cursor()
-            cur.execute("SELECT manufacturer_id, title FROM manufacturer ORDER BY title;")
+            #cur.execute("SELECT DISTINCT substance_mixture.manufacturer_id, manufacturer.title FROM manufacturer, substance_mixture WHERE substance_mixture.manufacturer_id = manufacturer.manufacturer_id ORDER BY title;")
+            cur.execute(select)
             erg = cur.fetchall()
             manus = [(result[0], result[1] + ' ID:' + str(result[0])) for result in erg]
             cur.close
@@ -360,7 +381,7 @@ class SpraypowderFormView(TabelleFormView):
         try:
             conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
             cur = conn.cursor()
-            cur.execute("SELECT manufacturer_id, title FROM manufacturer ORDER BY title;")
+            cur.execute("SELECT DISTINCT spray_powder.manufacturer_id, manufacturer.title FROM manufacturer, spray_powder WHERE spray_powder.manufacturer_id = manufacturer.manufacturer_id ORDER BY title;")
             erg = cur.fetchall()
             manus = [(result[0], result[1] + ' ID:' + str(result[0])) for result in erg]
             cur.close

@@ -24,7 +24,7 @@ class CreateForm(Form):
     title = StringField(u"Titel", [validators.required()], render_kw={'class': 'form-control'})
     description = StringField(u"Beschreibung", render_kw={'class': 'form-control'})
     branch = RadioField("Branche", [validators.required()], choices=branchen)
-    manufacturer_id = SelectField(u"Hersteller des Wasch- und Reinigungsmittels", [validators.required()], render_kw={'class': 'form-control'})
+    manufacturer_id = SelectField(u"Hersteller des Wasch- und Reinigungsmittels", [validators.required()], render_kw={'class': 'form-control edi-select'})
     substance_type = RadioField(u"Art des Wasch- und Reinigungsmittels", [validators.required()], choices=substance_types_new)
     usecases = MultiCheckboxField(u"Anwendungszwecke für Etikettenreiniger", choices=usecases)
     application_areas = MultiCheckboxField(u"Anwendungsgebiete für Sonderreiniger", choices=application_areas)
@@ -79,7 +79,7 @@ class DeleteIngredientsForm(Form):
     item_id = HiddenField()
 
 class UpdateManufacturerForm(Form):
-    manufacturer_id = SelectField(u"Hersteller des Wasch- und Reinigungsmittels", [validators.required()], render_kw={'class': 'form-control'})
+    manufacturer_id = SelectField(u"Hersteller des Wasch- und Reinigungsmittels", [validators.required()], render_kw={'class': 'form-control edi-select'})
     item_id = HiddenField()
 
 class CreateFormView(WTFormView):

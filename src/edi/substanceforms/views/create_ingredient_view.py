@@ -21,7 +21,7 @@ class MultiCheckboxField(SelectMultipleField):
 
 class CreateForm(Form):
 
-    substance = SelectField(u"Reinstoff", [validators.required()], render_kw={'class': 'form-control'})
+    substance = SelectField(u"Reinstoff", [validators.required()], render_kw={'class': 'form-control edi-select'})
     concentration_min = FloatField(u"Konzentration minimum", render_kw={'class': 'form-control'})
     concentration_max = FloatField(u"Konzentration maximum", render_kw={'class': 'form-control'})
     itemid = HiddenField(u'MixtureID')
