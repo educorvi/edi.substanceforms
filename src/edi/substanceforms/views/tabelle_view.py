@@ -363,6 +363,7 @@ class SpraypowderFormView(TabelleFormView):
 
     def renderForm(self):
         try:
+            import pdb; pdb.set_trace()
             conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
             cur = conn.cursor()
             cur.execute("SELECT DISTINCT spray_powder.manufacturer_id, manufacturer.title FROM manufacturer, spray_powder WHERE spray_powder.manufacturer_id = manufacturer.manufacturer_id ORDER BY title;")
