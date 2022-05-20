@@ -16,8 +16,8 @@ class CreateForm(Form):
 
     title = StringField("Titel", [validators.required()], render_kw={'class': 'form-control'})
     description = StringField("Beschreibung", render_kw={'class': 'form-control'})
-    manufacturer_id = SelectField(u"Hersteller des Druckbestäubungspuders", [validators.required()], render_kw={'class': 'form-control'})
-    product_class = SelectField("Produktklasse", choices=product_class, render_kw={'class': 'form-control'})
+    manufacturer_id = SelectField(u"Hersteller des Druckbestäubungspuders", [validators.required()], render_kw={'class': 'form-control edi-select'})
+    product_class = SelectField("Produktklasse", choices=product_class, render_kw={'class': 'form-control edi-select'})
     starting_material = StringField("Ausgangsmaterial", render_kw={'class': 'form-control'})
     median_value = FloatField("Medianwert", render_kw={'class': 'form-control'})
     volume_share = FloatField("Volumenanteil", render_kw={'class': 'form-control'})
@@ -29,7 +29,7 @@ class UpdateForm(Form):
 
     title = StringField("Titel", [validators.required()], render_kw={'class': 'form-control'})
     description = StringField("Beschreibung", render_kw={'class': 'form-control'})
-    product_class = SelectField("Produktklasse", choices=product_class, render_kw={'class': 'form-control'})
+    product_class = SelectField("Produktklasse", choices=product_class, render_kw={'class': 'form-control edi-select'})
     starting_material = StringField("Ausgangsmaterial", render_kw={'class': 'form-control'})
     median_value = FloatField("Medianwert", render_kw={'class': 'form-control'})
     volume_share = FloatField("Volumenanteil", render_kw={'class': 'form-control'})
