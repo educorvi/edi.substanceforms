@@ -365,7 +365,7 @@ class SpraypowderFormView(TabelleFormView):
         try:
             conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
             cur = conn.cursor()
-            cur.execute("SELECT manufacturer_id, title FROM manufacturer ORDER BY title;")
+            cur.execute("SELECT DISTINCT spray_powder.manufacturer_id, manufacturer.title FROM manufacturer, spray_powder WHERE spray_powder.manufacturer_id = manufacturer.manufacturer_id ORDER BY title;")
             erg = cur.fetchall()
             manus = [(result[0], result[1] + ' ID:' + str(result[0])) for result in erg]
             cur.close
