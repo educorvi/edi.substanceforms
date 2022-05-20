@@ -286,7 +286,6 @@ class SubstancemixtureFormView(TabelleFormView):
 
     def renderForm(self):
         try:
-            import pdb; pdb.set_trace()
             mixturetype = self.context.mixturetype
             if mixturetype:
                 if len(mixturetype) == 1:
