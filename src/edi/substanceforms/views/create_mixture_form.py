@@ -34,7 +34,7 @@ class CreateForm(Form):
     evaporation_lane_160 = FloatField(u"Verdampfungsfaktor bei 160 Grad Celsius", render_kw={'class': 'form-control'})
     evaporation_lane_170 = FloatField(u"Verdampfungsfaktor bei 170 Grad Celsius", render_kw={'class': 'form-control'})
     evaporation_lane_180 = FloatField(u"Verdampfungsfaktor bei 180 Grad Celsius", render_kw={'class': 'form-control'})
-    productclass = SelectField(u"Produktklasse", [validators.required()], render_kw={'class': 'form-control edi-select'})
+    productclass = RadioField("Branche", [validators.required()], choices=produktklassenid)
     ueg = StringField(u"UEG", render_kw={'class': 'form-control'})
     response = StringField(u"Response-Faktor", render_kw={'class': 'form-control'})
     skin_category = RadioField(u"Hautschutz-Kategorie", [validators.required()], choices=hskategorie)
@@ -112,7 +112,6 @@ class CreateFormView(WTFormView):
             manus = []
 
         self.form.manufacturer_id.choices = manus
-        self.form.productclass.choices = produktklassenid
         self.form.process()
         return self.formTemplate()
 
