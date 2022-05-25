@@ -48,6 +48,14 @@ produktklassen = [
     (u'waschmittel_emulsionen', u'Waschmittel auf wässriger Basis/Emulsionen')
     ]
 
+produktklassenid = [
+    (1, u'Hochsiedende Waschmittel/Reinigungsöle'),
+    (2, u'UV-Waschmittel'),
+    (3, u'Hochsiedende Waschmittel'),
+    (4, u'Wasch- und Reinigungsmittel auf Basis organischer Lösemittel'),
+    (5, u'Wasserbasierte Waschmittel')
+    ]
+
 product_class = [
     (u'fein', u'fein'),
     (u'mittel', u'mittel'),
@@ -102,6 +110,7 @@ vocabularies = {
         'substance_type':substance_types_new,
         'produktkategorien':produktkategorien,
         'produktklassen':produktklassen,
+        'produktklassenid': produktklassen,
         'classifications':classifications,
         'usecases':usecases,
         'application_areas':application_areas,
