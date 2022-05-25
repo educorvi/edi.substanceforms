@@ -370,7 +370,7 @@ class SingleView(BrowserView):
         return {}
 
     def product_class(self):
-        title = "Produktklasse"
+        title = "Produktklassee"
         if self.context.tablename == 'substance_mixture':
             fieldindex = possibleColumns(self.context).getTerm('productclass').token
             value = self.get_attr_translation('produktklassenid', self.article[int(fieldindex)])
