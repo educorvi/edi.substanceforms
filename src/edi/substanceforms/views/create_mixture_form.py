@@ -34,7 +34,7 @@ class CreateForm(Form):
     evaporation_lane_160 = FloatField(u"Verdampfungsfaktor bei 160 Grad Celsius", render_kw={'class': 'form-control'})
     evaporation_lane_170 = FloatField(u"Verdampfungsfaktor bei 170 Grad Celsius", render_kw={'class': 'form-control'})
     evaporation_lane_180 = FloatField(u"Verdampfungsfaktor bei 180 Grad Celsius", render_kw={'class': 'form-control'})
-    productclass = RadioField("Branche", [validators.required()], choices=produktklassenid)
+    productclass = RadioField("Produktklasse", [validators.required()], choices=produktklassenid)
     ueg = StringField(u"UEG", render_kw={'class': 'form-control'})
     response = StringField(u"Response-Faktor", render_kw={'class': 'form-control'})
     skin_category = RadioField(u"Hautschutz-Kategorie", [validators.required()], choices=hskategorie)
@@ -59,7 +59,7 @@ class UpdateForm(Form):
     evaporation_lane_160 = FloatField(u"Verdampfungsfaktor bei 160 Grad Celsius", render_kw={'class': 'form-control'})
     evaporation_lane_170 = FloatField(u"Verdampfungsfaktor bei 170 Grad Celsius", render_kw={'class': 'form-control'})
     evaporation_lane_180 = FloatField(u"Verdampfungsfaktor bei 180 Grad Celsius", render_kw={'class': 'form-control'})
-    productclass = SelectField(u"Produktklasse", [validators.required()], render_kw={'class': 'form-control edi-select'})
+    productclass = RadioField("Produktklasse", [validators.required()], choices=produktklassenid)
     ueg = StringField(u"UEG", render_kw={'class': 'form-control'})
     response = StringField(u"Response-Faktor", render_kw={'class': 'form-control'})
     skin_category = RadioField(u"Hautschutz-Kategorie", choices=hskategorie)
@@ -230,7 +230,7 @@ class UpdateFormView(CreateFormView):
         getter = """SELECT title, description, branch, substance_type,
                     application_areas, usecases, evaporation_lane_150, evaporation_lane_160, evaporation_lane_170,
                     evaporation_lane_180, ueg, response, skin_category, checked_emissions, date_checked, flashpoint,
-                    values_range, comments, image_url
+                    values_range, comments, image_url, productclass
                     FROM %s WHERE %s_id = %s;""" % (self.context.tablename,
                                                     self.context.tablename,
                                                     self.itemid)
@@ -254,6 +254,7 @@ class UpdateFormView(CreateFormView):
         self.form.evaporation_lane_160.default = self.result[0][7]
         self.form.evaporation_lane_170.default = self.result[0][8]
         self.form.evaporation_lane_180.default = self.result[0][9]
+        self.form.productclass.default = self.result[0][18]
         self.form.ueg.default = self.result[0][10]
         self.form.response.default = self.result[0][11]
         self.form.skin_category.default = self.result[0][12]
