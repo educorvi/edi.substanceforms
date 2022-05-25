@@ -374,6 +374,7 @@ class SingleView(BrowserView):
         if self.context.tablename == 'substance_mixture':
             fieldindex = possibleColumns(self.context).getTerm('productclass').token
             value = self.get_attr_translation('produktklassenid', self.article[int(fieldindex)])
+            import pdb; pdb.set_trace()
         elif self.context.tablename == 'spray_powder':
             fieldindex = possibleColumns(self.context).getTerm('productclass').token
             value = self.get_attr_translation('produktklassenid', self.article[int(fieldindex)])
