@@ -276,7 +276,7 @@ class UpdateFormView(CreateFormView):
             command = """UPDATE substance_mixture SET title=%s, description=%s, branch=%s, substance_type=%s,
                          evaporation_lane_150=%s, evaporation_lane_160=%s, evaporation_lane_170=%s, evaporation_lane_180=%s,
                          ueg=%s, response=%s, skin_category=%s, checked_emissions=%s,
-                         flashpoint=%s, values_range=%s, comments=%s
+                         flashpoint=%s, values_range=%s, comments=%s, productclass=%s
                          WHERE substance_mixture_id = %s;""" % \
                                                         (check_value(self.form.title.data),
                                                         check_value(self.form.description.data),
@@ -293,6 +293,7 @@ class UpdateFormView(CreateFormView):
                                                         check_value(self.form.flashpoint.data),
                                                         check_value(self.form.values_range.data),
                                                         check_value(self.form.comments.data),
+                                                        check_value(self.form.productclass.data),
                                                         check_value(self.form.item_id.data))
             self.db.execute(command)
 
