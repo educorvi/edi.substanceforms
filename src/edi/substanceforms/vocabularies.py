@@ -111,6 +111,7 @@ vocabularies = {
         'produktkategorien':produktkategorien,
         'produktklassen':produktklassen,
         'produktklassenid': produktklassenid,
+        'productclass': produktklassenid,
         'classifications':classifications,
         'usecases':usecases,
         'application_areas':application_areas,
