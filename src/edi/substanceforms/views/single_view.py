@@ -380,6 +380,14 @@ class SingleView(BrowserView):
         if value:
             return {'title': title, 'value': value}
 
+    def product_class(self):
+        title = "Produktklasse"
+        fieldindex = possibleColumns(self.context).getTerm('product_class').token
+        value = self.article[int(fieldindex)]
+        if value:
+            return {'title': title, 'value': value}
+        return {}
+
     def starting_material(self):
         title = "Ausgangsmaterial"
         fieldindex = possibleColumns(self.context).getTerm('starting_material').token
