@@ -127,6 +127,7 @@ class TabelleFormView(WTFormView):
         return False
 
     def get_attr_translation(self, attribute, value):
+        print(attribute, value)
         vocabulary = get_vocabulary(attribute)
         for i in vocabulary:
             if i[0] == value:
