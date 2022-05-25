@@ -255,6 +255,7 @@ class UpdateFormView(CreateFormView):
         self.form.evaporation_lane_170.default = self.result[0][8]
         self.form.evaporation_lane_180.default = self.result[0][9]
         self.form.productclass.default = self.result[0][18]
+        import pdb; pdb.set_trace()
         self.form.ueg.default = self.result[0][10]
         self.form.response.default = self.result[0][11]
         self.form.skin_category.default = self.result[0][12]
