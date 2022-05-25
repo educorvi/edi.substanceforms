@@ -110,7 +110,7 @@ vocabularies = {
         'substance_type':substance_types_new,
         'produktkategorien':produktkategorien,
         'produktklassen':produktklassen,
-        'produktklassenid': produktklassen,
+        'produktklassenid': produktklassenid,
         'classifications':classifications,
         'usecases':usecases,
         'application_areas':application_areas,
