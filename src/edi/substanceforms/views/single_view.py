@@ -369,6 +369,17 @@ class SingleView(BrowserView):
             return {'title': title, 'value': value}
         return {}
 
+    def productclass(self):
+        title = "Produktklasse"
+        if self.context.tablename == 'substance_mixture':
+            fieldindex = possibleColumns(self.context).getTerm('productclass').token
+            value = self.get_attr_translation('produktklassenid', self.article[int(fieldindex)])
+        elif self.context.tablename == 'spray_powder':
+            fieldindex = possibleColumns(self.context).getTerm('productclass').token
+            value = self.get_attr_translation('produktklassenid', self.article[int(fieldindex)])
+        if value:
+            return {'title': title, 'value': value}
+
     def product_class(self):
         title = "Produktklasse"
         fieldindex = possibleColumns(self.context).getTerm('product_class').token

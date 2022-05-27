@@ -9,7 +9,7 @@ from wtforms import validators
 from collective.wtforms.views import WTFormView
 from edi.substanceforms.helpers import check_value, list_handler, reverse_list_handler, new_list_handler, get_vocabulary, new_list_handler2, new_list_handler3
 from edi.substanceforms.vocabularies import substance_types, hskategorie, produktkategorien, produktklassen, branchen
-from edi.substanceforms.vocabularies import classifications, usecases, application_areas, substance_types_new
+from edi.substanceforms.vocabularies import classifications, usecases, application_areas, substance_types_new, produktklassenid
 from plone import api as ploneapi
 from edi.substanceforms.lib import DBConnect
 import requests
@@ -34,6 +34,7 @@ class CreateForm(Form):
     evaporation_lane_160 = FloatField(u"Verdampfungsfaktor bei 160 Grad Celsius", render_kw={'class': 'form-control'})
     evaporation_lane_170 = FloatField(u"Verdampfungsfaktor bei 170 Grad Celsius", render_kw={'class': 'form-control'})
     evaporation_lane_180 = FloatField(u"Verdampfungsfaktor bei 180 Grad Celsius", render_kw={'class': 'form-control'})
+    productclass = RadioField("Produktklasse", [validators.required()], choices=produktklassenid)
     ueg = StringField(u"UEG", render_kw={'class': 'form-control'})
     response = StringField(u"Response-Faktor", render_kw={'class': 'form-control'})
     skin_category = RadioField(u"Hautschutz-Kategorie", [validators.required()], choices=hskategorie)
@@ -58,6 +59,7 @@ class UpdateForm(Form):
     evaporation_lane_160 = FloatField(u"Verdampfungsfaktor bei 160 Grad Celsius", render_kw={'class': 'form-control'})
     evaporation_lane_170 = FloatField(u"Verdampfungsfaktor bei 170 Grad Celsius", render_kw={'class': 'form-control'})
     evaporation_lane_180 = FloatField(u"Verdampfungsfaktor bei 180 Grad Celsius", render_kw={'class': 'form-control'})
+    productclass = RadioField("Produktklasse", [validators.required()], choices=produktklassenid)
     ueg = StringField(u"UEG", render_kw={'class': 'form-control'})
     response = StringField(u"Response-Faktor", render_kw={'class': 'form-control'})
     skin_category = RadioField(u"Hautschutz-Kategorie", choices=hskategorie)
@@ -108,6 +110,7 @@ class CreateFormView(WTFormView):
             manus = [(result[0], result[1] + ' ID:' + str(result[0])) for result in erg]
         except:
             manus = []
+
         self.form.manufacturer_id.choices = manus
         self.form.process()
         return self.formTemplate()
@@ -227,7 +230,7 @@ class UpdateFormView(CreateFormView):
         getter = """SELECT title, description, branch, substance_type,
                     application_areas, usecases, evaporation_lane_150, evaporation_lane_160, evaporation_lane_170,
                     evaporation_lane_180, ueg, response, skin_category, checked_emissions, date_checked, flashpoint,
-                    values_range, comments, image_url
+                    values_range, comments, image_url, productclass
                     FROM %s WHERE %s_id = %s;""" % (self.context.tablename,
                                                     self.context.tablename,
                                                     self.itemid)
@@ -251,6 +254,7 @@ class UpdateFormView(CreateFormView):
         self.form.evaporation_lane_160.default = self.result[0][7]
         self.form.evaporation_lane_170.default = self.result[0][8]
         self.form.evaporation_lane_180.default = self.result[0][9]
+        self.form.productclass.default = self.result[0][19]
         self.form.ueg.default = self.result[0][10]
         self.form.response.default = self.result[0][11]
         self.form.skin_category.default = self.result[0][12]
@@ -272,7 +276,7 @@ class UpdateFormView(CreateFormView):
             command = """UPDATE substance_mixture SET title=%s, description=%s, branch=%s, substance_type=%s,
                          evaporation_lane_150=%s, evaporation_lane_160=%s, evaporation_lane_170=%s, evaporation_lane_180=%s,
                          ueg=%s, response=%s, skin_category=%s, checked_emissions=%s,
-                         flashpoint=%s, values_range=%s, comments=%s
+                         flashpoint=%s, values_range=%s, comments=%s, productclass=%s
                          WHERE substance_mixture_id = %s;""" % \
                                                         (check_value(self.form.title.data),
                                                         check_value(self.form.description.data),
@@ -289,6 +293,7 @@ class UpdateFormView(CreateFormView):
                                                         check_value(self.form.flashpoint.data),
                                                         check_value(self.form.values_range.data),
                                                         check_value(self.form.comments.data),
+                                                        check_value(self.form.productclass.data),
                                                         check_value(self.form.item_id.data))
             self.db.execute(command)
 

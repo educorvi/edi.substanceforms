@@ -109,6 +109,7 @@ class TabelleFormView(WTFormView):
 
     def getindexfortablename(self):
         columnids = list()
+        print(self.context.resultcolumns)
         for i in self.context.resultcolumns:
             columnids.append(possibleColumns(self.context).getTerm(i).token)
         return columnids
@@ -126,6 +127,7 @@ class TabelleFormView(WTFormView):
         return False
 
     def get_attr_translation(self, attribute, value):
+        print(attribute, value)
         vocabulary = get_vocabulary(attribute)
         for i in vocabulary:
             if i[0] == value:
