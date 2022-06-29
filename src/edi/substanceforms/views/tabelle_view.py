@@ -291,7 +291,6 @@ class SubstancemixtureFormView(TabelleFormView):
             mixturetype = self.context.mixturetype
             if mixturetype:
                 if len(mixturetype) == 1:
-                    import pdb; pdb.set_trace()
                     select = "SELECT DISTINCT substance_mixture.manufacturer_id, manufacturer.title FROM manufacturer, substance_mixture WHERE substance_mixture.manufacturer_id = manufacturer.manufacturer_id AND substance_type = '%s' ORDER BY title;" % (mixturetype[0])
                 else:
                     select = ""
@@ -356,11 +355,12 @@ class SubstancemixtureFormView(TabelleFormView):
             searchkey = self.context.tablename + '_id'
             searchtable = self.context.tablename
             manu_id = int(self.form.manu.data.split('ID:')[-1])
+            mixturetype = self.context.mixturetype
 
             if manu_id == 'alle':
                 select = "SELECT * FROM %s;" % (searchkey, searchtable)
             else:
-                select = "SELECT * FROM %s WHERE manufacturer_id = %s;" % (searchtable, manu_id)
+                select = "SELECT * FROM %s WHERE manufacturer_id = %s AND substance_type = '%s';" % (searchtable, manu_id, mixturetype[0])
 
             try:
                 conn = psycopg2.connect(host=self.host, user=self.username, password=self.password, dbname=self.dbname)
