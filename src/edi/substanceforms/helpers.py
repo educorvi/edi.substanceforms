@@ -82,7 +82,7 @@ def tableheads(cryptoname):
         "product_class": "Produktklasse",
         "starting_material": "Ausgangsmaterial",
         "median_value": "Medianwert",
-        "volume_share": "Volumenanteil"
+        "volume_share": "Volumenanteil < 10 µm"
     }
     result = headnames.get(cryptoname)
     if not result:
