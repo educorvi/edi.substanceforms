@@ -220,7 +220,7 @@ class SingleView(BrowserView):
         return {}
 
     def evaporation_lane_150(self):
-        title = "Verdampfungsfaktor 150 Grad"
+        title = "Verdampfungsfaktor 150 °C"
         fieldindex = possibleColumns(self.context).getTerm('evaporation_lane_150').token
         value = self.article[int(fieldindex)]
         if value:
@@ -228,7 +228,7 @@ class SingleView(BrowserView):
         return {}
 
     def evaporation_lane_160(self):
-        title = "Verdampfungsfaktor 160 Grad"
+        title = "Verdampfungsfaktor 160 °C"
         fieldindex = possibleColumns(self.context).getTerm('evaporation_lane_160').token
         value = self.article[int(fieldindex)]
         if value:
@@ -236,7 +236,7 @@ class SingleView(BrowserView):
         return {}
 
     def evaporation_lane_170(self):
-        title = "Verdampfungsfaktor 170 Grad"
+        title = "Verdampfungsfaktor 170 °C"
         fieldindex = possibleColumns(self.context).getTerm('evaporation_lane_170').token
         value = self.article[int(fieldindex)]
         if value:
@@ -244,7 +244,7 @@ class SingleView(BrowserView):
         return {}
 
     def evaporation_lane_180(self):
-        title = "Verdampfungsfaktor 180 Grad"
+        title = "Verdampfungsfaktor 180 °C"
         fieldindex = possibleColumns(self.context).getTerm('evaporation_lane_180').token
         value = self.article[int(fieldindex)]
         if value:
