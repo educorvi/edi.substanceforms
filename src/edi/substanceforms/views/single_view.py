@@ -397,7 +397,7 @@ class SingleView(BrowserView):
         return {}
 
     def volume_share(self):
-        title = "Volumenanteil"
+        title = "Volumenanteil < 10 µm"
         fieldindex = possibleColumns(self.context).getTerm('volume_share').token
         value = self.article[int(fieldindex)]
         if value:
