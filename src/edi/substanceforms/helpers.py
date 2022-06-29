@@ -65,7 +65,7 @@ def tableheads(cryptoname):
         "evaporation_lane_160": "Verdampfungsfaktor Bahntemperatur 160°C",
         "evaporation_lane_170": "Verdampfungsfaktor Bahntemperatur 170°C",
         "evaporation_lane_180": "Verdampfungsfaktor Bahntemperatur 180°C",
-        "ueg": "Untere Explosionsgrenze",
+        "ueg": "Untere Explosionsgrenze in g/m3",
         "response": "Responsefaktor",
         "skin_category": "Hautschutzmittelkategorie",
         "checked_emissions": "Emissionsarmes Produkt",
