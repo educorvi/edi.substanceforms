@@ -81,7 +81,7 @@ def tableheads(cryptoname):
         "productclass": "Produktklasse",
         "product_class": "Produktklasse",
         "starting_material": "Ausgangsmaterial",
-        "median_value": "Medianwert",
+        "median_value": "Medianwert in µm",
         "volume_share": "Volumenanteil < 10 µm"
     }
     result = headnames.get(cryptoname)
