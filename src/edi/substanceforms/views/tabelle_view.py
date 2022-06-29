@@ -291,6 +291,7 @@ class SubstancemixtureFormView(TabelleFormView):
             mixturetype = self.context.mixturetype
             if mixturetype:
                 if len(mixturetype) == 1:
+                    import pdb; psb.set_trace()
                     select = "SELECT DISTINCT substance_mixture.manufacturer_id, manufacturer.title FROM manufacturer, substance_mixture WHERE substance_mixture.manufacturer_id = manufacturer.manufacturer_id AND substance_type = '%s' ORDER BY title;" % (mixturetype[0])
                 else:
                     select = ""
