@@ -107,7 +107,7 @@ class TabelleFormView(WTFormView):
             try:
                 result = ', '.join(erg)
             except:
-                import pdb; pdb.set_trace()
+                result = ''
         return result
 
     def getindexfortablename(self):
