@@ -104,6 +104,8 @@ class TabelleFormView(WTFormView):
         if vocab:
             result = erg
         else:
+            if not erg:
+                erg = ''
             result = ', '.join(erg)
         return result
 
