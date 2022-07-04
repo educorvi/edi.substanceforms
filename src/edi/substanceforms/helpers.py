@@ -61,11 +61,11 @@ def tableheads(cryptoname):
         "detergent_special": "Sonderreiniger",
         "application_areas": "Anwendungsbereiche",
         "usecases": "Anwendungsfälle",
-        "evaporation_lane_150": "Verdampfungsfaktor Bahntemperatur 150°C",
-        "evaporation_lane_160": "Verdampfungsfaktor Bahntemperatur 160°C",
-        "evaporation_lane_170": "Verdampfungsfaktor Bahntemperatur 170°C",
-        "evaporation_lane_180": "Verdampfungsfaktor Bahntemperatur 180°C",
-        "ueg": "Untere Explosionsgrenze",
+        "evaporation_lane_150": "Verdampfungsfaktor Bahntemperatur 150 °C",
+        "evaporation_lane_160": "Verdampfungsfaktor Bahntemperatur 160 °C",
+        "evaporation_lane_170": "Verdampfungsfaktor Bahntemperatur 170 °C",
+        "evaporation_lane_180": "Verdampfungsfaktor Bahntemperatur 180 °C",
+        "ueg": "Untere Explosionsgrenze in g/m3",
         "response": "Responsefaktor",
         "skin_category": "Hautschutzmittelkategorie",
         "checked_emissions": "Emissionsarmes Produkt",
@@ -81,8 +81,8 @@ def tableheads(cryptoname):
         "productclass": "Produktklasse",
         "product_class": "Produktklasse",
         "starting_material": "Ausgangsmaterial",
-        "median_value": "Medianwert",
-        "volume_share": "Volumenanteil"
+        "median_value": "Medianwert in µm",
+        "volume_share": "Volumenanteil < 10 µm"
     }
     result = headnames.get(cryptoname)
     if not result:

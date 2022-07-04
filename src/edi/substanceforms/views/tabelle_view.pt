@@ -39,6 +39,7 @@
           <div class="col-12">
             <section class="mt-4" tal:condition="view/ergs | nothing">
               <h2>Ergebnisse</h2>
+              <!--
               <div tal:condition="not: view/columnids" class="list-item" tal:repeat="item view/ergs">
                 <hr class="media-default" />
                 <a tal:attributes="href python: '%s/single_view?item=%s' %(context.absolute_url(), item[0])">
@@ -47,8 +48,9 @@
                   </h3>
                 </a>
 	            </div>
+	            -->
               <!--<table tal:condition="view/columnids" class="table table-striped table-responsive">-->
-              <table tal:condition="view/columnids" id="sortTable" class="table table-striped table-bordered table-responsive" 
+              <table id="sortTable" class="table table-striped table-bordered table-responsive"
                      cellspacing="0" width="100%" style="max-width:100%;">
                 <thead>
 
@@ -316,13 +318,13 @@
             "noMulti": "Dieses Feld kann nur einzeln bearbeitet werden, nicht als Teil einer Mengen-Änderung."
         }
     }
-}  
+}
 
 
 
 
 });
-	      });      
+	      });
       </script>
 
       <script>
