@@ -104,10 +104,10 @@ class TabelleFormView(WTFormView):
         if vocab:
             result = erg
         else:
-            import pdb; pdb.set_trace()
-            if not erg:
-                erg = ''
-            result = ', '.join(erg)
+            try:
+                result = ', '.join(erg)
+            except:
+                import pdb; pdb.set_trace()
         return result
 
     def getindexfortablename(self):
