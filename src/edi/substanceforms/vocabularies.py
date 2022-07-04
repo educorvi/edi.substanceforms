@@ -100,7 +100,10 @@ application_areas = [
 boolvocab = [
     (u'True', u'Ja'),
     (u'False', u'Nein'),
-    (u'None', u'Nein')
+    (u'None', u'Nein'),
+    (u'true', u'Ja'),
+    (u'false', u'Nein'),
+    (u'none', u'Nein')
     ]
 
 vocabularies = {
