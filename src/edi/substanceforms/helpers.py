@@ -70,7 +70,7 @@ def tableheads(cryptoname):
         "skin_category": "Hautschutzmittelkategorie",
         "checked_emissions": "Emissionsarmes Produkt",
         "date_checked": "Datum letzte Prüfung",
-        "flashpoint": "Flammpunkt in °C",
+        "flashpoint": "Flammpunkt [°C]",
         "values_range": "Flammpunkt in Wertebereich",
         "classifications": "Klassifikationen",
         "indicators": "Indikatoren",
