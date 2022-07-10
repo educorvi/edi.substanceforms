@@ -40,8 +40,8 @@
         <span tal:condition="nocall: python: field.flags.required" title="Eingabe erforderlich">*</span>
       <input class="form-control" tal:attributes="list string:${field/label/field_id}datalistOptions;
                                                   id field/id;
-						  name field/name" 
-	     placeholder="Bitte Suchbegriff eingeben...">
+						  name field/name"
+	     placeholder="Bitte auswählen...">
       <div tal:condition="errors" tal:attributes="id string:${field/label/field_id}ValidationFeedback" class="invalid-feedback">
         <ul tal:repeat="error errors">
           <li i18n:translate="" tal:content="error" tal:condition="python: type(error) != list"/>
