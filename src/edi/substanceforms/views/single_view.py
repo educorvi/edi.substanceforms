@@ -263,7 +263,7 @@ class SingleView(BrowserView):
         return {}
 
     def flashpoint(self):
-        title = "Flammpunkt in °C"
+        title = "Flammpunkt [°C]"
         fieldindex = possibleColumns(self.context).getTerm('flashpoint').token
         value = self.article[int(fieldindex)]
         if value:
