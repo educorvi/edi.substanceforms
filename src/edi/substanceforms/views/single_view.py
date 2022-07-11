@@ -271,8 +271,7 @@ class SingleView(BrowserView):
         if value:
             if rangevalue:
                 newvalue = "< "+str(value)
-                rangeresult = {'title': title, 'value': newvalue}
-                return rangeresult
+                return {'title': title, 'value': newvalue}
             return {'title': title, 'value': value}
         return {}
 
