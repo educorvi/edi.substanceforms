@@ -268,7 +268,6 @@ class SingleView(BrowserView):
         value = self.article[int(fieldindex)]
         rangefieldindex = possibleColumns(self.context).getTerm('values_range').token
         rangevalue = self.article[int(rangefieldindex)]
-        import pdb; pdb.set_trace()
         if value:
             if rangevalue:
                 newvalue = "< "+str(value)
