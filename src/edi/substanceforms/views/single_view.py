@@ -270,6 +270,10 @@ class SingleView(BrowserView):
         rangevalue = self.article[int(rangefieldindex)]
         import pdb; pdb.set_trace()
         if value:
+            if rangevalue:
+                newvalue = "< "+str(value)
+                rangeresult = {'title': title, 'value': newvalue}
+                return rangeresult
             return {'title': title, 'value': value}
         return {}
 
