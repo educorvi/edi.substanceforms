@@ -266,6 +266,8 @@ class SingleView(BrowserView):
         title = "Flammpunkt [°C]"
         fieldindex = possibleColumns(self.context).getTerm('flashpoint').token
         value = self.article[int(fieldindex)]
+        rangefieldindex = possibleColumns(self.context).getTerm('values_range').token
+        rangevalue = self.article[int(fieldindex)]
         import pdb; pdb.set_trace()
         if value:
             return {'title': title, 'value': value}
