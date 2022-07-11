@@ -270,7 +270,7 @@ class SingleView(BrowserView):
         rangevalue = self.article[int(rangefieldindex)]
         if value:
             if rangevalue:
-                newvalue = "< "+str(value)
+                newvalue = "> "+str(value)
                 return {'title': title, 'value': newvalue}
             return {'title': title, 'value': value}
         return {}
