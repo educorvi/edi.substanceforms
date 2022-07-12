@@ -208,7 +208,7 @@
     name="update-substance-form"
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".create_substance_form.UpdateFormView"
-    template = "create_view.pt"
+    template = "update_view_template.pt"
     permission="cmf.ModifyPortalContent"
     />
 
@@ -240,7 +240,7 @@
     name="update-manufacturer-form"
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".create_manufacturer_form.UpdateFormView"
-    template = "create_view.pt"
+    template = "update_view_template.pt"
     permission="cmf.ModifyPortalContent"
     />
 
@@ -256,7 +256,7 @@
     name="update-mixture-form"
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".create_mixture_form.UpdateFormView"
-    template = "create_view.pt"
+    template = "update_view_template.pt"
     permission="cmf.ModifyPortalContent"
     />
 
@@ -280,7 +280,7 @@
     name="update-mixture-manufacturer-form"
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".create_mixture_form.UpdateManufacturerFormView"
-    template = "create_view.pt"
+    template = "update_view_template.pt"
     permission="cmf.ModifyPortalContent"
     />
 
@@ -288,7 +288,7 @@
     name="update-powder-form"
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".create_powder_form.UpdateFormView"
-    template = "create_view.pt"
+    template = "update_view_template.pt"
     permission="cmf.ModifyPortalContent"
     />
 
@@ -312,7 +312,7 @@
     name="create-ingredient-form"
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".create_ingredient_view.CreateIngredientForm"
-    template = "create_view.pt"
+    template = "create_ingredient_template.pt"
     permission="cmf.ModifyPortalContent"
     />
 
