@@ -22,7 +22,7 @@
 
           <div class="col-lg-9 col-12">
 
-	    <h1 tal:content="Bestandteil hinzufügen"/>
+	    <h1>Bestandteil hinzufügen</h1>
 	    <!--<span tal:content="structure provider:plone.belowcontenttitle" />-->
             <p class="lead mt-5">
               <img class="icon" src="++theme++plonetheme.siguv/icons/siguv/dot.svg">
