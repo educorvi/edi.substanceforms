@@ -273,7 +273,11 @@ class SingleView(BrowserView):
                 newvalue = "> "+str(value)
                 return {'title': title, 'value': newvalue}
             return {'title': title, 'value': value}
-        return {}
+        else:
+            try:
+                return {'title': title, 'value': 'nicht anwendbar'}
+            except:
+                return {}
 
     def ueg(self):
         title = "Untere Explosionsgrenze (UEG) [g/m3]"
