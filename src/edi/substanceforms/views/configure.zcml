@@ -272,7 +272,7 @@
     name="delete-ingredients-form"
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".create_mixture_form.DeleteIngredientsFormView"
-    template = "create_view.pt"
+    template = "delete_ingredient_template.pt"
     permission="cmf.ModifyPortalContent"
     />
 
