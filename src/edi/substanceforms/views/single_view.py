@@ -220,7 +220,7 @@ class SingleView(BrowserView):
         return {}
 
     def evaporation_lane_150(self):
-        title = "Verdampfungsfaktor 150 °C"
+        title = "Verdampfungsfaktor Fv (Bahntemperatur 150 °C)"
         fieldindex = possibleColumns(self.context).getTerm('evaporation_lane_150').token
         value = self.article[int(fieldindex)]
         if value:
@@ -228,7 +228,7 @@ class SingleView(BrowserView):
         return {}
 
     def evaporation_lane_160(self):
-        title = "Verdampfungsfaktor 160 °C"
+        title = "Verdampfungsfaktor Fv (Bahntemperatur 160 °C)"
         fieldindex = possibleColumns(self.context).getTerm('evaporation_lane_160').token
         value = self.article[int(fieldindex)]
         if value:
@@ -236,7 +236,7 @@ class SingleView(BrowserView):
         return {}
 
     def evaporation_lane_170(self):
-        title = "Verdampfungsfaktor 170 °C"
+        title = "Verdampfungsfaktor Fv (Bahntemperatur 170 °C)"
         fieldindex = possibleColumns(self.context).getTerm('evaporation_lane_170').token
         value = self.article[int(fieldindex)]
         if value:
@@ -244,7 +244,7 @@ class SingleView(BrowserView):
         return {}
 
     def evaporation_lane_180(self):
-        title = "Verdampfungsfaktor 180 °C"
+        title = "Verdampfungsfaktor Fv (Bahntemperatur 180 °C)"
         fieldindex = possibleColumns(self.context).getTerm('evaporation_lane_180').token
         value = self.article[int(fieldindex)]
         if value:
@@ -263,15 +263,24 @@ class SingleView(BrowserView):
         return {}
 
     def flashpoint(self):
-        title = "Flammpunkt in °C"
+        title = "Flammpunkt [°C]"
         fieldindex = possibleColumns(self.context).getTerm('flashpoint').token
         value = self.article[int(fieldindex)]
+        rangefieldindex = possibleColumns(self.context).getTerm('values_range').token
+        rangevalue = self.article[int(rangefieldindex)]
         if value:
+            if rangevalue:
+                newvalue = "> "+str(value)
+                return {'title': title, 'value': newvalue}
             return {'title': title, 'value': value}
-        return {}
+        else:
+            try:
+                return {'title': title, 'value': 'nicht anwendbar'}
+            except:
+                return {}
 
     def ueg(self):
-        title = "UEG in g/m3"
+        title = "Untere Explosionsgrenze (UEG) [g/m3]"
         fieldindex = possibleColumns(self.context).getTerm('ueg').token
         value = self.article[int(fieldindex)]
         if value:
