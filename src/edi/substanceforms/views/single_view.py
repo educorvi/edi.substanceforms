@@ -280,7 +280,7 @@ class SingleView(BrowserView):
                 return {}
 
     def ueg(self):
-        title = "Untere Explosionsgrenze (UEG) [g/m3]"
+        title = "Untere Explosionsgrenze (UEG) [g/m³]"
         fieldindex = possibleColumns(self.context).getTerm('ueg').token
         value = self.article[int(fieldindex)]
         if value:
