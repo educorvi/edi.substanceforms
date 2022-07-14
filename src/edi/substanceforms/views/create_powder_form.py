@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import transaction
-from wtforms import Form, StringField, SelectField, IntegerField, FileField, FloatField, BooleanField, HiddenField
+from wtforms import Form, StringField, SelectField, IntegerField, FileField, FloatField, BooleanField, HiddenField, RadioField
 from wtforms import validators
 from collective.wtforms.views import WTFormView
 from edi.substanceforms.helpers import check_value
@@ -17,7 +17,8 @@ class CreateForm(Form):
     title = StringField("Titel", [validators.required()], render_kw={'class': 'form-control'})
     description = StringField("Beschreibung", render_kw={'class': 'form-control'})
     manufacturer_id = SelectField(u"Hersteller des Druckbestäubungspuders", [validators.required()], render_kw={'class': 'form-control edi-select'})
-    product_class = SelectField("Produktklasse", choices=product_class, render_kw={'class': 'form-control edi-select'})
+    #product_class = SelectField("Produktklasse", choices=product_class, render_kw={'class': 'form-control edi-select'})
+    product_class = RadioField("Produktklasse", choices=product_class)
     starting_material = StringField("Ausgangsmaterial", render_kw={'class': 'form-control'})
     median_value = FloatField("Medianwert in µm", render_kw={'class': 'form-control'})
     volume_share = FloatField("Volumenanteil < 10 µm", render_kw={'class': 'form-control'})
@@ -29,7 +30,8 @@ class UpdateForm(Form):
 
     title = StringField("Titel", [validators.required()], render_kw={'class': 'form-control'})
     description = StringField("Beschreibung", render_kw={'class': 'form-control'})
-    product_class = SelectField("Produktklasse", choices=product_class, render_kw={'class': 'form-control edi-select'})
+    #product_class = SelectField("Produktklasse", choices=product_class, render_kw={'class': 'form-control edi-select'})
+    product_class = RadioField("Produktklasse", choices=product_class)
     starting_material = StringField("Ausgangsmaterial", render_kw={'class': 'form-control'})
     median_value = FloatField("Medianwert in µm", render_kw={'class': 'form-control'})
     volume_share = FloatField("Volumenanteil < 10 µm", render_kw={'class': 'form-control'})
