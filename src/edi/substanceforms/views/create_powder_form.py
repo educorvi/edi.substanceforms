@@ -162,7 +162,6 @@ class UpdateFormView(CreateFormView):
         self.form.date_checked.default = self.result[0][7]
         self.form.item_id.default=self.itemid
         self.form.process()
-        import pdb; pdb.set_trace()
         return self.formTemplate()
 
     def submit(self, button):
