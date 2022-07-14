@@ -143,7 +143,7 @@ class UpdateFormView(CreateFormView):
                 if result:
                     return result
         self.itemid = self.request.get('itemid')
-        getter = """SELECT title, description, product_class, starting_material, median_value, volume_share, checked_emissions
+        getter = """SELECT title, description, product_class, starting_material, median_value, volume_share, checked_emissions, date_checked
                     FROM %s WHERE %s_id = %s;""" % (self.context.tablename,
                                                     self.context.tablename,
                                                     self.itemid)
@@ -159,6 +159,7 @@ class UpdateFormView(CreateFormView):
         self.form.median_value.default=self.result[0][4]
         self.form.volume_share.default=self.result[0][5]
         self.form.checked_emissions.default=self.result[0][6]
+        self.form.date_checked.default = self.result[0][7]
         self.form.item_id.default=self.itemid
         self.form.process()
         import pdb; pdb.set_trace()
