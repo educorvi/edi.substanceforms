@@ -159,6 +159,7 @@ class UpdateFormView(CreateFormView):
         self.form.checked_emissions.default=self.result[0][6]
         self.form.item_id.default=self.itemid
         self.form.process()
+        import pdb; pdb.set_trace()
         return self.formTemplate()
 
     def submit(self, button):
