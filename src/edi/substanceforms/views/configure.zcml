@@ -240,7 +240,7 @@
     name="update-manufacturer-form"
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".create_manufacturer_form.UpdateFormView"
-    template = "update_view_template.pt"
+    template = "update_manufacturer_template.pt"
     permission="cmf.ModifyPortalContent"
     />
 

@@ -60,12 +60,12 @@ def tableheads(cryptoname):
         "offset_print_manner": "Offset Druckverfahren",
         "detergent_special": "Sonderreiniger",
         "application_areas": "Anwendungsbereiche",
-        "usecases": "Anwendungsfälle",
+        "usecases": "Verwendungszwecke",
         "evaporation_lane_150": "Verdampfungsfaktor Fv (Bahntemperatur 150 °C)",
         "evaporation_lane_160": "Verdampfungsfaktor Fv (Bahntemperatur 160 °C)",
         "evaporation_lane_170": "Verdampfungsfaktor Fv (Bahntemperatur 170 °C)",
         "evaporation_lane_180": "Verdampfungsfaktor Fv (Bahntemperatur 180 °C)",
-        "ueg": "Untere Explosionsgrenze (UEG) [g/m3]",
+        "ueg": "Untere Explosionsgrenze (UEG) [g/m³]",
         "response": "Responsefaktor",
         "skin_category": "Hautschutzmittelkategorie",
         "checked_emissions": "Emissionsarmes Produkt",
@@ -81,8 +81,8 @@ def tableheads(cryptoname):
         "productclass": "Produktklasse",
         "product_class": "Produktklasse",
         "starting_material": "Ausgangsmaterial",
-        "median_value": "Medianwert in µm",
-        "volume_share": "Volumenanteil < 10 µm"
+        "median_value": "Medianwert [µm]",
+        "volume_share": "Volumenanteil < 10 µm [Vol.-%]"
     }
     result = headnames.get(cryptoname)
     if not result:

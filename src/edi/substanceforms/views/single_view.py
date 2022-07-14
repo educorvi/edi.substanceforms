@@ -280,7 +280,7 @@ class SingleView(BrowserView):
                 return {}
 
     def ueg(self):
-        title = "Untere Explosionsgrenze (UEG) [g/m3]"
+        title = "Untere Explosionsgrenze (UEG) [g/m³]"
         fieldindex = possibleColumns(self.context).getTerm('ueg').token
         value = self.article[int(fieldindex)]
         if value:
@@ -406,7 +406,7 @@ class SingleView(BrowserView):
         return {}
 
     def volume_share(self):
-        title = "Volumenanteil < 10 µm"
+        title = "Volumenanteil < 10 µm [Vol.-%]"
         fieldindex = possibleColumns(self.context).getTerm('volume_share').token
         value = self.article[int(fieldindex)]
         if value:
@@ -414,7 +414,7 @@ class SingleView(BrowserView):
         return {}
 
     def median_value(self):
-        title = "Medianwert in µm"
+        title = "Medianwert [µm]"
         fieldindex = possibleColumns(self.context).getTerm('median_value').token
         value = self.article[int(fieldindex)]
         if value:
