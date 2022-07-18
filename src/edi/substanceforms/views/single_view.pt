@@ -40,7 +40,7 @@
 
             <!-- TODO: Hier müssen alle anderen Attribute reingeschrieben werden -->
 
-    <div>
+    <div tal:condition="view/notice">
       <p tal:content="view/notice"/>
     </div>
 
