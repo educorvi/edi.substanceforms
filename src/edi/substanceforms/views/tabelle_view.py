@@ -291,16 +291,15 @@ class SubstancemixtureFormView(TabelleFormView):
 
     def renderForm(self):
         try:
-            mixturetypetopop = self.context.mixturetype
-            if mixturetypetopop:
-                if len(mixturetypetopop) == 1:
+            mixturetype = self.context.mixturetype
+            if mixturetype:
+                if len(mixturetype) == 1:
                     select = "SELECT DISTINCT substance_mixture.manufacturer_id, manufacturer.title FROM manufacturer, substance_mixture WHERE substance_mixture.manufacturer_id = manufacturer.manufacturer_id AND substance_type = '%s' ORDER BY title;" % (mixturetype[0])
                 else:
                     select = ""
                     beginselect = "SELECT DISTINCT substance_mixture.manufacturer_id, manufacturer.title FROM manufacturer, substance_mixture WHERE substance_mixture.manufacturer_id = manufacturer.manufacturer_id AND substance_type = '%s'" % (mixturetype[0])
                     select = select + beginselect
-                    #mixturetypetopop.pop(0)
-                    for i in mixturetypetopop:
+                    for i in mixturetype[1:]:
                         addedselect = " OR substance_type = '%s'" % i
                         select = select + addedselect
                     endselect = ") ORDER BY title;"
@@ -334,8 +333,7 @@ class SubstancemixtureFormView(TabelleFormView):
                     select = ""
                     beginselect = "SELECT * FROM %s WHERE substance_type = '%s'" % (searchtable, mixturetype[0])
                     select = select + beginselect
-                    #mixturetype.pop(0)
-                    for i in mixturetype:
+                    for i in mixturetype[1:]:
                         addedselect = " OR substance_type = '%s'" % i
                         select = select + addedselect
                     endselect = ";"
