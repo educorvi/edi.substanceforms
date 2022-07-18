@@ -41,7 +41,7 @@
             <!-- TODO: Hier müssen alle anderen Attribute reingeschrieben werden -->
 
     <div tal:condition="view/notice">
-      <p tal:content="view/notice"/>
+      <span tal:replace="structure view/notice/output"/>
     </div>
 
      <article>

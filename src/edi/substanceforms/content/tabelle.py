@@ -116,7 +116,7 @@ class ITabelle(model.Schema):
             source = possibleTables,
             )
 
-    notice = schema.Text(
+    notice = RichText(
         title=u"Hinweistext zur Anzeige in der Einzelansicht",
         description=u"Dieser Hinweistext wird in der Einzelansicht eines Produktes der Tabelle angezeigt"
     )
