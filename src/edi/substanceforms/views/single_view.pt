@@ -40,8 +40,8 @@
 
             <!-- TODO: Hier müssen alle anderen Attribute reingeschrieben werden -->
 
-    <div tal:condition="view/notice">
-      <span tal:replace="structure view/notice/output"/>
+    <div tal:condition="context/notice">
+      <span tal:replace="structure context/notice/output"/>
     </div>
 
      <article>
