@@ -40,10 +40,6 @@
 
             <!-- TODO: Hier müssen alle anderen Attribute reingeschrieben werden -->
 
-    <div tal:condition="context/notice">
-      <span tal:replace="structure context/notice/output"/>
-    </div>
-
      <article>
        <section class="article-body clearfix" tal:define="definitions view/definitions;
                                                           moredefinitions view/more_definitions">
@@ -53,6 +49,10 @@
          </dl>
        </section>
      </article>
+
+      <div tal:condition="context/notice">
+        <span tal:replace="structure context/notice/output"/>
+      </div>
 
         <div tal:condition="view/userCanEdit">
 

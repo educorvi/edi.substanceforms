@@ -137,10 +137,6 @@ class SingleView(BrowserView):
         else:
             return ''
 
-    def notice(self):
-        if self.context.notice:
-            return self.context.notice
-
     def is_mixture(self):
         if self.context.tablename == 'substance_mixture':
             return True
