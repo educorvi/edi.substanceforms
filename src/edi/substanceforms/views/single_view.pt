@@ -40,6 +40,10 @@
 
             <!-- TODO: Hier müssen alle anderen Attribute reingeschrieben werden -->
 
+    <div>
+      <p tal:content="view/notice"/>
+    </div>
+
      <article>
        <section class="article-body clearfix" tal:define="definitions view/definitions;
                                                           moredefinitions view/more_definitions">

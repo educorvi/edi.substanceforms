@@ -137,6 +137,9 @@ class SingleView(BrowserView):
         else:
             return ''
 
+    def notice(self):
+        import pdb;pdb.set_trace()
+
     def is_mixture(self):
         if self.context.tablename == 'substance_mixture':
             return True
