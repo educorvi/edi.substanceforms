@@ -152,6 +152,13 @@ class ITabelle(model.Schema):
         required = False
     )
 
+    kurt = schema.List(
+        title=u"Art des Gefahrstoffgemisches",
+        description=u"Art des Gefahrstoffgemisches auswählen (aus Tabelle substance_mixutre)",
+        value_type=schema.Choice(source=mixturetypes),
+        required=False
+    )
+
     artikeltyp = schema.TextLine(
             title = u"Name des Artikeltyps der in dieser Tabelle gespeichert wird",
             default = u"Produkt",
