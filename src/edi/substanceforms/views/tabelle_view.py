@@ -299,7 +299,7 @@ class SubstancemixtureFormView(TabelleFormView):
                     select = ""
                     beginselect = "SELECT DISTINCT substance_mixture.manufacturer_id, manufacturer.title FROM manufacturer, substance_mixture WHERE substance_mixture.manufacturer_id = manufacturer.manufacturer_id AND substance_type = '%s'" % (mixturetype[0])
                     select = select + beginselect
-                    mixturetypetopop.pop(0)
+                    #mixturetypetopop.pop(0)
                     for i in mixturetypetopop:
                         addedselect = " OR substance_type = '%s'" % i
                         select = select + addedselect
@@ -334,7 +334,7 @@ class SubstancemixtureFormView(TabelleFormView):
                     select = ""
                     beginselect = "SELECT * FROM %s WHERE substance_type = '%s'" % (searchtable, mixturetype[0])
                     select = select + beginselect
-                    mixturetype.pop(0)
+                    #mixturetype.pop(0)
                     for i in mixturetype:
                         addedselect = " OR substance_type = '%s'" % i
                         select = select + addedselect
