@@ -51,7 +51,8 @@ class CreateIngredientForm(WTFormView):
         itemid = self.request.get('itemid')
         select = "SELECT substance.title FROM substance, recipes, substance_mixture WHERE recipes.mixture_id = %s AND substance.substance_id = recipes.substance_id" % itemid
         result = self.db.execute(select)
-        return result
+        if result:
+            return result
 
     def renderForm(self):
         try:
