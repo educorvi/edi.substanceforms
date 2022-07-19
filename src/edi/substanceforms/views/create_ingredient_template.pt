@@ -24,9 +24,12 @@
 
 	    <h1>Bestandteil hinzufügen</h1>
 
-      <div>
-        <span tal:repeat="substance view/alreadyselected" tal:replace="structure substance"/>
-      </div>
+      <table>
+        <thead></thead>
+        <tbody>
+        <td tal:repeat="substance view/alreadyselected" tal:replace="structure substance"/>
+        </tbody>
+      </table>>
 
 	    <!--<span tal:content="structure provider:plone.belowcontenttitle" />-->
             <p class="lead mt-5">
