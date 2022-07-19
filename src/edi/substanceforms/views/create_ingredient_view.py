@@ -48,14 +48,15 @@ class CreateIngredientForm(WTFormView):
         return self.index()
 
     def alreadyselected(self):
+        newresult = list()
         itemid = self.request.get('itemid')
         select = "SELECT DISTINCT substance.title FROM substance, recipes, substance_mixture WHERE recipes.mixture_id = %s AND substance.substance_id = recipes.substance_id" % itemid
         result = self.db.execute(select)
-        import pdb; pdb.set_trace()
-        newresult = result[0]
-        if result:
+        for i in result:
+            newresult.append(i[0])
+        if newresult:
             try:
-                return result[0][0]
+                return newresult
             except:
                 pass
 
