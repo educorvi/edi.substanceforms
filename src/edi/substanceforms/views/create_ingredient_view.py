@@ -54,6 +54,8 @@ class CreateIngredientForm(WTFormView):
         if result:
             try:
                 return result[0][0]
+            except:
+                pass
 
     def renderForm(self):
         try:
