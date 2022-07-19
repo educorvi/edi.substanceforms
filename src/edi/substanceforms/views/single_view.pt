@@ -50,6 +50,10 @@
        </section>
      </article>
 
+      <div tal:condition="context/notice">
+        <span tal:replace="structure context/notice/output"/>
+      </div>
+
         <div tal:condition="view/userCanEdit">
 
           <section class="mt-3 mb-3" tal:condition="view/userCanEdit">

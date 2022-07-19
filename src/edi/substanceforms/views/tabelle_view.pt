@@ -57,7 +57,7 @@
 
                 <tr>
                   <th>Titel</th>
-                  <th tal:repeat="column context/resultcolumns" tal:content="python: view.get_tablehead(column)"/>
+                  <th tal:repeat="column context/resultcolumns" tal:content="structure python: view.get_tablehead(column)"/>
                   <th tal:repeat="pre view/preselects" tal:content="pre/title"/>
                 </tr>
 

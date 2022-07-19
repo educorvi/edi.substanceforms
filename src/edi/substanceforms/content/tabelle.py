@@ -116,6 +116,11 @@ class ITabelle(model.Schema):
             source = possibleTables,
             )
 
+    notice = RichText(
+        title=u"Hinweistext zur Anzeige in der Einzelansicht",
+        description=u"Dieser Hinweistext wird in der Einzelansicht eines Produktes der Tabelle angezeigt"
+    )
+
     columns = schema.List(
             title = u"Darstellung Einzelansicht",
             description = u"Datenbankspalten auswählen, die in der Einzelansicht berücksichtigt werden sollen",

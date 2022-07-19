@@ -47,6 +47,9 @@ class CreateIngredientForm(WTFormView):
 
         return self.index()
 
+    def alreadyselected(self):
+        return self.request.get('itemid')
+
     def renderForm(self):
         try:
             select = "SELECT substance_id, title, casnr, egnr FROM substance ORDER BY title;"
