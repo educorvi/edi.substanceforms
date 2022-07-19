@@ -48,7 +48,8 @@ class CreateIngredientForm(WTFormView):
         return self.index()
 
     def alreadyselected(self):
-        select = "SELECT DISTINCT substance.title || ' (>= ' || cast((recipes.concentration_min) as varchar(50)) || '%, <= ' || cast((recipes.concentration_max) as varchar(50)) || '% )' FROM substance, recipes, substance_mixture WHERE recipes.mixture_id = {{ value }} AND substance.substance_id = recipes.substance_id"
+        itemid = self.request.get('itemid')
+        select = "SELECT DISTINCT substance.title || ' (>= ' || cast((recipes.concentration_min) as varchar(50)) || '%, <= ' || cast((recipes.concentration_max) as varchar(50)) || '% )' FROM substance, recipes, substance_mixture WHERE recipes.mixture_id = itemid AND substance.substance_id = recipes.substance_id"
         result = self.db.execute(select)
         return result
 
