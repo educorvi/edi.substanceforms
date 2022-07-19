@@ -48,7 +48,7 @@ class CreateIngredientForm(WTFormView):
         return self.index()
 
     def alreadyselected(self):
-        import pdb; pdb.set_trace()
+        return self.request.get('itemid')
 
     def renderForm(self):
         try:
