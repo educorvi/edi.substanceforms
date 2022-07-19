@@ -24,8 +24,8 @@
 
 	    <h1>Bestandteil hinzufügen</h1>
 
-<div>
-        <span tal:replace="view/alreadyselected"/>
+      <div>
+        <span tal:repeat="substance view/alreadyselected" tal:replace="structure substance"/>
       </div>
 
 	    <!--<span tal:content="structure provider:plone.belowcontenttitle" />-->
