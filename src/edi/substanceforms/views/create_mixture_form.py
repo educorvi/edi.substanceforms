@@ -432,7 +432,7 @@ class DeleteIngredientsFormView(CreateFormView):
             for i in result:
                 newresult.append(i)
         except:
-            newresult = False
+            newresult = list()
         if newresult:
             try:
                 return newresult
