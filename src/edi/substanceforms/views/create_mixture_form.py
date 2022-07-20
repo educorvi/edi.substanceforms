@@ -424,7 +424,6 @@ class DeleteIngredientsFormView(CreateFormView):
         return self.index()
 
     def alreadyselected(self):
-        import pdb; pdb.set_trace()
         newresult = list()
         itemid = self.request.get('itemid')
         select = "SELECT DISTINCT substance.substance_id, substance.title FROM substance, recipes, substance_mixture WHERE recipes.mixture_id = %s AND substance.substance_id = recipes.substance_id" % itemid
