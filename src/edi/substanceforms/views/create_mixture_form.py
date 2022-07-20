@@ -444,6 +444,7 @@ class DeleteIngredientsFormView(CreateFormView):
     def renderForm(self):
         self.form.item_id.default=self.itemid
         bestandteile = self.alreadyselected()
+        import pdb; pdb.set_trace()
         optionlist = list()
         for i in bestandteile:
             optionlist.append(i)
