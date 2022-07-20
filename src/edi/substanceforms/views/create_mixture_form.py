@@ -462,10 +462,10 @@ class DeleteIngredientsFormView(CreateFormView):
                     command = "DELETE FROM recipes WHERE mixture_id = %s AND substance_id = %s" % (self.form.item_id.data, i)
                     import pdb; pdb.set_trace()
                     self.db.execute(command)
-                    message = u'Die Bestandteile wurden erfolgreich gelöscht'
-                    ploneapi.portal.show_message(message=message, type='info', request=self.request)
+                message = u'Die Bestandteile wurden erfolgreich gelöscht'
+                ploneapi.portal.show_message(message=message, type='info', request=self.request)
 
-                    return self.request.response.redirect(redirect_url)
+                return self.request.response.redirect(redirect_url)
             else:
                 message = u'Die Bestandteile wurden nicht gelöscht, da das Bestätigungsfeld nicht ausgewählt war.'
                 ploneapi.portal.show_message(message=message, type='error', request=self.request)
