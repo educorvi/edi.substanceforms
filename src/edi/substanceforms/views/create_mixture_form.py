@@ -453,6 +453,7 @@ class DeleteIngredientsFormView(CreateFormView):
         """
         redirect_url = self.context.absolute_url() + '/single_view?item=' + self.form.item_id.data
         if button == 'Speichern' and self.form.sure.data is True: #and self.validate():
+            import pdb; pdb.set_trace()
             command = "DELETE FROM recipes WHERE mixture_id = %s" % (self.form.item_id.data)
             self.db.execute(command)
             message = u'Die Bestandteile wurden erfolgreich gelöscht'
