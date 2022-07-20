@@ -430,7 +430,6 @@ class DeleteIngredientsFormView(CreateFormView):
         result = self.db.execute(select)
         for i in result:
             newresult.append(i)
-        import pdb; pdb.set_trace()
         if newresult:
             try:
                 return newresult
@@ -443,6 +442,8 @@ class DeleteIngredientsFormView(CreateFormView):
         self.form.item_id.default=self.itemid
         bestandteile = self.alreadyselected()
         optionlist = list()
+        for i in bestandteile:
+            optionlist.append(i)
         self.form.ingres.choices = optionlist
         self.form.process()
         return self.formTemplate()
