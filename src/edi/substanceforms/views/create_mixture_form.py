@@ -429,7 +429,7 @@ class DeleteIngredientsFormView(CreateFormView):
         select = "SELECT DISTINCT substance.substance_id, substance.title FROM substance, recipes, substance_mixture WHERE recipes.mixture_id = %s AND substance.substance_id = recipes.substance_id" % itemid
         result = self.db.execute(select)
         for i in result:
-            newresult.append(i[0])
+            newresult.append(i)
         import pdb; pdb.set_trace()
         if newresult:
             try:
