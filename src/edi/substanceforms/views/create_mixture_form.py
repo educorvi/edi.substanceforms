@@ -452,15 +452,16 @@ class DeleteIngredientsFormView(CreateFormView):
         """
         """
         redirect_url = self.context.absolute_url() + '/single_view?item=' + self.form.item_id.data
-        if button == 'Speichern' and self.form.sure.data is True: #and self.validate():
+        if button == 'Speichern': #and self.validate():
             import pdb; pdb.set_trace()
-            command = "DELETE FROM recipes WHERE mixture_id = %s" % (self.form.item_id.data)
-            self.db.execute(command)
-            message = u'Die Bestandteile wurden erfolgreich gelöscht'
-            ploneapi.portal.show_message(message=message, type='info', request=self.request)
+            for i in self.form.ingres.data:
+                command = "DELETE FROM recipes WHERE mixture_id = %s AND substance_id = %s" % (self.form.item_id.data, i)
+                self.db.execute(command)
+                message = u'Die Bestandteile wurden erfolgreich gelöscht'
+                ploneapi.portal.show_message(message=message, type='info', request=self.request)
 
-            self.db.close()
-            return self.request.response.redirect(redirect_url)
+                self.db.close()
+                return self.request.response.redirect(redirect_url)
 
         elif button == 'Speichern' and self.form.sure.data is False:
             message = u'Die Bestandteile wurden nicht gelöscht, da das Bestätigungsfeld nicht ausgewählt war.'
