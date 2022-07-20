@@ -77,7 +77,6 @@ class DeleteForm(Form):
     item_id = HiddenField()
 
 class DeleteIngredientsForm(Form):
-    sure = BooleanField("Bestandteile löschen", render_kw={'class': 'form-check-input'})
     ingres = MultiCheckboxField(u"Bestandteile", choices=[])
     item_id = HiddenField()
 
@@ -410,6 +409,7 @@ class DeleteFormView(CreateFormView):
 
 class DeleteIngredientsFormView(CreateFormView):
     formClass = DeleteIngredientsForm
+    buttons = ('Speichern', 'Abbrechen')
 
     def __call__(self):
         dbdata = self.context.aq_parent
@@ -460,7 +460,6 @@ class DeleteIngredientsFormView(CreateFormView):
             if self.form.ingres.data:
                 for i in self.form.ingres.data:
                     command = "DELETE FROM recipes WHERE mixture_id = %s AND substance_id = %s" % (self.form.item_id.data, i)
-                    import pdb; pdb.set_trace()
                     self.db.execute(command)
                 message = u'Die Bestandteile wurden erfolgreich gelöscht'
                 ploneapi.portal.show_message(message=message, type='info', request=self.request)
