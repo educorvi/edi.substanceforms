@@ -78,6 +78,7 @@ class DeleteForm(Form):
 
 class DeleteIngredientsForm(Form):
     sure = BooleanField("Bestandteile löschen", render_kw={'class': 'form-check-input'})
+    ingres = MultiCheckboxField(u"Bestandteile", choices=[])
     item_id = HiddenField()
 
 class UpdateManufacturerForm(Form):
@@ -426,10 +427,11 @@ class DeleteIngredientsFormView(CreateFormView):
         import pdb; pdb.set_trace()
         newresult = list()
         itemid = self.request.get('itemid')
-        select = "SELECT DISTINCT substance.title FROM substance, recipes, substance_mixture WHERE recipes.mixture_id = %s AND substance.substance_id = recipes.substance_id" % itemid
+        select = "SELECT DISTINCT substance.substance_id, substance.title FROM substance, recipes, substance_mixture WHERE recipes.mixture_id = %s AND substance.substance_id = recipes.substance_id" % itemid
         result = self.db.execute(select)
         for i in result:
             newresult.append(i[0])
+        import pdb; pdb.set_trace()
         if newresult:
             try:
                 return newresult
@@ -440,6 +442,9 @@ class DeleteIngredientsFormView(CreateFormView):
 
     def renderForm(self):
         self.form.item_id.default=self.itemid
+        bestandteile = self.alreadyselected()
+        optionlist = list()
+        self.form.ingres.choices = optionlist
         self.form.process()
         return self.formTemplate()
 
