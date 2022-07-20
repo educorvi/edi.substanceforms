@@ -468,6 +468,7 @@ class DeleteIngredientsFormView(CreateFormView):
             else:
                 message = u'Die Bestandteile wurden nicht gelöscht, da das Bestätigungsfeld nicht ausgewählt war.'
                 ploneapi.portal.show_message(message=message, type='error', request=self.request)
+                return self.request.response.redirect(redirect_url)
 
 
         elif button == 'Abbrechen':
