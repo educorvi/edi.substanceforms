@@ -460,6 +460,7 @@ class DeleteIngredientsFormView(CreateFormView):
             if self.form.ingres.data:
                 for i in self.form.ingres.data:
                     command = "DELETE FROM recipes WHERE mixture_id = %s AND substance_id = %s" % (self.form.item_id.data, i)
+                    import pdb; pdb.set_trace()
                     self.db.execute(command)
                     message = u'Die Bestandteile wurden erfolgreich gelöscht'
                     ploneapi.portal.show_message(message=message, type='info', request=self.request)
