@@ -420,7 +420,6 @@ class DeleteIngredientsFormView(CreateFormView):
                 if result:
                     return result
         self.itemid = self.request.get('itemid')
-        self.db.close()
         return self.index()
 
     def alreadyselected(self):
@@ -434,8 +433,9 @@ class DeleteIngredientsFormView(CreateFormView):
         if newresult:
             try:
                 return newresult
+                self.db.close()
             except:
-                pass
+                self.db.close()
 
 
     def renderForm(self):
