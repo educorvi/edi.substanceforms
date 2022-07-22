@@ -77,7 +77,7 @@ class DeleteForm(Form):
     item_id = HiddenField()
 
 class DeleteIngredientsForm(Form):
-    ingres = MultiCheckboxField(u"Bestandteile", choices=[])
+    ingres = MultiCheckboxField(u"Bitte wählen Sie die Bestandteile aus, die Sie löschen möchten", choices=[])
     item_id = HiddenField()
 
 class UpdateManufacturerForm(Form):
