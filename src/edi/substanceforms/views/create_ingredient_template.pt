@@ -33,7 +33,7 @@
             </p>
             <span tal:content="structure provider:plone.abovecontentbody" />
 
-            <h2>Bereits hinzugefügte Bestandteile:</h2>
+            <h2 tal:condition="view/alreadyselected">Bereits hinzugefügte Bestandteile:</h2>
             <ul>
               <li tal:repeat="substance view/alreadyselected" tal:content="substance"/>
             </ul>
