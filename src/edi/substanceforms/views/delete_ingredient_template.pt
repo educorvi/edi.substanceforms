@@ -31,11 +31,6 @@
             </p>
             <span tal:content="structure provider:plone.abovecontentbody" />
 
-        <h2 tal:condition="view/alreadyselected">Bereits hinzugefügte Bestandteile:</h2>
-        <ul>
-          <li tal:repeat="substance view/alreadyselected" tal:content="substance"/>
-        </ul>
-
             <section class="mt-3 mb-3">
 	      <form tal:replace="structure view/renderForm" />
 	    </section>
