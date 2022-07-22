@@ -27,7 +27,7 @@
 	    <!--<span tal:content="structure provider:plone.belowcontenttitle" />-->
             <p class="lead mt-5">
               <img class="icon" src="++theme++plonetheme.siguv/icons/siguv/dot.svg">
-	      <span>Bitte bearbeiten Sie das folgende Formular um den Artikel in der Datenbank zu speichern</span>
+	      <span>Bitte bearbeiten Sie das folgende Formular um ausgewählte Bestandteile aus der Datenbank zu löschen</span>
             </p>
             <span tal:content="structure provider:plone.abovecontentbody" />
 
