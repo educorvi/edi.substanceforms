@@ -58,9 +58,9 @@ class Csvexport(BrowserView):
                 newchecked_emissions = self.get_attr_translation('boolvocab', str(checked_emissions))
                 newvalues_range = self.get_attr_translation('boolvocab', str(values_range))
 
-                writer.writerow(id, title, description, newbranch, newsubstancetype, evap_150, evap_160, evap_170, evap_180,
+                writer.writerow([id, title, description, newbranch, newsubstancetype, evap_150, evap_160, evap_170, evap_180,
                                 ueg, response, newskincategory, newchecked_emissions, date_checked, flashpoint, newvalues_range,
-                                classifications, indicators, comments, manufacturer, status, productclass)
+                                classifications, indicators, comments, manufacturer, status, productclass])
 
                 #import pdb; pdb.set_trace()
 
