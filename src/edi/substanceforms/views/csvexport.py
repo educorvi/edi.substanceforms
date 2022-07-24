@@ -25,6 +25,8 @@ class Csvexport(BrowserView):
                                  'Verdampfungsfaktor 180', 'UEG', 'Responsefaktor', 'Hautschutzmittelkategorie',
                                  'Emissionsgeprüft', 'Prüfdatum', 'Flammpunkt', 'Wertebereich', 'Klassifikationen',
                                  'Indikatoren', 'Kommentare', 'Hersteller', 'Status', 'Produktklasse'])
+
+            """
             for i in mixtures:
                 id = i[0]
                 title = i[1]
@@ -61,7 +63,7 @@ class Csvexport(BrowserView):
                 #import pdb; pdb.set_trace()
 
 
-
+"""
         return template
 
     def get_attr_translation(self, attribute, value):
