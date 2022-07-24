@@ -123,12 +123,18 @@ class Csvexport(BrowserView):
 
                 if isinstance(zusammensetzung, list):
                     newzusammensetzung = zusammensetzung[0].split('@')
-                    try:
+                    if len(zusammensetzung) == 1:
                         writer.writerow([id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas, newusecases, evap_150, evap_160, evap_170, evap_180,
                                         ueg, response, newskincategory, newchecked_emissions, date_checked, flashpoint, newvalues_range,
-                                        classifications, indicators, comments, manufacturer, status, newproductclass, newzusammensetzung[0], newzusammensetzung[1], newzusammensetzung[2]])
-                    except:
-                        import pdb; pdb.set_trace()
+                                        classifications, indicators, comments, manufacturer, status, newproductclass, newzusammensetzung[0], None, None])
+                    elif len(zusammensetzung) == 2:
+                        writer.writerow([id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas, newusecases, evap_150, evap_160, evap_170, evap_180,
+                                        ueg, response, newskincategory, newchecked_emissions, date_checked, flashpoint, newvalues_range,
+                                        classifications, indicators, comments, manufacturer, status, newproductclass, newzusammensetzung[0], newzusammensetzung[1], None])
+                    else:
+                        writer.writerow([id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas, newusecases, evap_150, evap_160, evap_170, evap_180,
+                                        ueg, response, newskincategory, newchecked_emissions, date_checked, flashpoint, newvalues_range,
+                                        classifications, indicators, comments, manufacturer, status, newproductclass, newzusammensetzung[0], newzusammensetzung[1], newzusammensetzung[3]])
                     if len(zusammensetzung) > 1:
                         zusammensetzung.pop(0)
                         for i in zusammensetzung:
