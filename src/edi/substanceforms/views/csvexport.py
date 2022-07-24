@@ -75,7 +75,7 @@ class Csvexport(BrowserView):
                     applicationareas.append(area_title)
 
                 if applicationareas:
-                    newapplicationareas = applicationareas[0][0][0]
+                    newapplicationareas = applicationareas[0][0]
                 else:
                     newapplicationareas = "keine Angabe"
 
