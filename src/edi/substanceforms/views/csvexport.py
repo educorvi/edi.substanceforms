@@ -2,6 +2,7 @@
 
 from Products.Five.browser import BrowserView
 from edi.substanceforms.lib import DBConnect
+from edi.substanceforms.helpers import get_vocabulary
 import csv
 
 
@@ -16,9 +17,48 @@ class Csvexport(BrowserView):
         mixtureselect = "SELECT * FROM substance_mixture"
         mixtures = self.db.execute(mixtureselect)
 
-        import pdb; pdb.set_trace()
+        for i in mixtures:
+            id = i[0]
+            title = i[1]
+            description = i[2]
+            webcode = i[3]
+            branch = i[4]
+            substance_type = i[5]
+            evap_150 = i[10]
+            evap_160 = i[11]
+            evap_170 = i[12]
+            evap_180 = i[13]
+            ueg = i[14]
+            response = i[15]
+            skin_category = i[16]
+            checked_emissions = i[17]
+            date_checked = i[18]
+            flashpoint = i[19]
+            values_range = i[20]
+            classifications = i[21]
+            indicators = i[22]
+            comments = i[23]
+            manufacturer_id = i[25]
+            status = i[26]
+            productclass = i[27]
 
+            manufacturer = self.db.execute("SELECT title FROM manufacturer WHERE manufacturer_id = %s" % manufacturer_id)
+            newbranch = self.get_attr_translation('branch', branch)
+            newsubstancetype = self.get_attr_translation('substance_type', substance_type)
+            newskincategory = self.get_attr_translation('hskategorie', skin_category)
+            newchecked_emissions = self.get_attr_translation('boolvocab', checked_emissions)
+            newvalues_range = self.get_attr_translation('boolvocab', values_range)
+
+
+            import pdb; pdb.set_trace()
 
 
 
         return template
+
+    def get_attr_translation(self, attribute, value):
+        vocabulary = get_vocabulary(attribute)
+        for i in vocabulary:
+            if i[0] == value:
+                return i[1]
+        return value
