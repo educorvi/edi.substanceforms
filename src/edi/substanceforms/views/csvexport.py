@@ -23,7 +23,7 @@ class Csvexport(BrowserView):
                                  'application_areas', 'usecases', 'Verdampfungsfaktor 150', 'Verdampfungsfaktor 160', 'Verdampfungsfaktor 170',
                                  'Verdampfungsfaktor 180', 'UEG', 'Responsefaktor', 'Hautschutzmittelkategorie',
                                  'Emissionsgeprüft', 'Prüfdatum', 'Flammpunkt', 'Wertebereich', 'Klassifikationen',
-                                 'Indikatoren', 'Kommentare', 'Hersteller', 'Status', 'Produktklasse'])
+                                 'Indikatoren', 'Kommentare', 'Hersteller', 'Status', 'Produktklasse', 'Zusammensetung'])
 
 
             for i in mixtures:
@@ -97,10 +97,30 @@ class Csvexport(BrowserView):
                 else:
                     newusecases = "keine Angabe"
 
+                newentries = list()
+                number = 0
+                with open(
+                    '/home/plone_buildout/praevention/src/edi.substanceforms/src/edi/substanceforms/views/zusammensetzung.csv',
+                    newline='') as csvfile2:
+                    reader = csv.reader(csvfile2, delimiter=';', quotechar='"')
+                    for row in reader:
+                        entry = '€'.join(row)
+                        newentries.append(entry)
+                        print("Fetched SUBSTANCE NUMBER " + str(number))
+                        number = number + 1
+
+
+                zusammensetzung = "keine Angabe"
+                for e in newentries:
+                    zusammensetzungsresult = e.split('€')
+                    if title == e[0]:
+                        zusammensetzung = e[1]
+                        break;
+
 
                 writer.writerow([id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas, newusecases, evap_150, evap_160, evap_170, evap_180,
                                 ueg, response, newskincategory, newchecked_emissions, date_checked, flashpoint, newvalues_range,
-                                classifications, indicators, comments, manufacturer, status, newproductclass])
+                                classifications, indicators, comments, manufacturer, status, newproductclass, zusammensetzung])
 
                 #import pdb; pdb.set_trace()
 
