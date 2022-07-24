@@ -18,7 +18,7 @@ class Csvexport(BrowserView):
         mixtures = self.db.execute(mixtureselect)
 
         with open('/home/plone_buildout/plone52/src/edi.substanceforms/src/edi/substanceforms/views/test.csv', 'w', newline='') as csvfile:
-            writer = csv.writer(csvfile, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+            writer = csv.writer(csvfile, delimiter=';', quotechar='"')
             writer.writerow(['ID', 'Titel', 'Beschreibung', 'Webcode', 'Branche', 'Typ des Gefahrstoffgemischs',
                                  'Verdampfungsfaktor 150', 'Verdampfungsfaktor 160', 'Verdampfungsfaktor 170',
                                  'Verdampfungsfaktor 180', 'UEG', 'Responsefaktor', 'Hautschutzmittelkategorie',
