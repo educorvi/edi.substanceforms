@@ -123,11 +123,11 @@ class Csvexport(BrowserView):
 
                 if isinstance(zusammensetzung, list):
                     newzusammensetzung = zusammensetzung[0].split('@')
-                    if len(zusammensetzung) == 1:
+                    if len(newzusammensetzung) == 1:
                         writer.writerow([id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas, newusecases, evap_150, evap_160, evap_170, evap_180,
                                         ueg, response, newskincategory, newchecked_emissions, date_checked, flashpoint, newvalues_range,
                                         classifications, indicators, comments, manufacturer, status, newproductclass, newzusammensetzung[0], None, None])
-                    elif len(zusammensetzung) == 2:
+                    elif len(newzusammensetzung) == 2:
                         writer.writerow([id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas, newusecases, evap_150, evap_160, evap_170, evap_180,
                                         ueg, response, newskincategory, newchecked_emissions, date_checked, flashpoint, newvalues_range,
                                         classifications, indicators, comments, manufacturer, status, newproductclass, newzusammensetzung[0], newzusammensetzung[1], None])
