@@ -60,10 +60,14 @@ class Csvexport(BrowserView):
                 newskincategory = self.get_attr_translation('hskategorie', skin_category)
                 newchecked_emissions = self.get_attr_translation('boolvocab', str(checked_emissions))
                 newvalues_range = self.get_attr_translation('boolvocab', str(values_range))
+                if productclass:
+                    newproductclass = (self.db.execute("SELECT class_name FROM productclasses WHERE class_id = %s" % productclass))[0][0]
+                else:
+                    newproductclass = 'keine Angabe'
 
                 writer.writerow([id, title, description, newbranch, newsubstancetype, evap_150, evap_160, evap_170, evap_180,
                                 ueg, response, newskincategory, newchecked_emissions, date_checked, flashpoint, newvalues_range,
-                                classifications, indicators, comments, manufacturer, status, productclass])
+                                classifications, indicators, comments, manufacturer, status, newproductclass])
 
                 #import pdb; pdb.set_trace()
 
