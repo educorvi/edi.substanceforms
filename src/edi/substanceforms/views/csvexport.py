@@ -123,18 +123,18 @@ class Csvexport(BrowserView):
 
                 if isinstance(zusammensetzung, list):
                     newzusammensetzung = zusammensetzung[0].split('@')
-                    writer.writerow([id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas, newusecases, evap_150, evap_160, evap_170, evap_180,
-                                    ueg, response, newskincategory, newchecked_emissions, date_checked, flashpoint, newvalues_range,
-                                    classifications, indicators, comments, manufacturer, status, newproductclass, newzusammensetzung[0], newzusammensetzung[1], newzusammensetzung[2]])
                     try:
-                        if len(zusammensetzung) > 1:
-                            zusammensetzung.pop(0)
-                            for i in zusammensetzung:
-                                elementtitle, elementcas, elementconcentration = i.split('@')
-                                writer.writerow([None, None, None, None, None, None, None, None, None, None, None, None, None,
-                                                 None, None, None, None, None, None, None, None, None, None, None, None, elementtitle, elementcas, elementconcentration])
+                        writer.writerow([id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas, newusecases, evap_150, evap_160, evap_170, evap_180,
+                                        ueg, response, newskincategory, newchecked_emissions, date_checked, flashpoint, newvalues_range,
+                                        classifications, indicators, comments, manufacturer, status, newproductclass, newzusammensetzung[0], newzusammensetzung[1], newzusammensetzung[2]])
                     except:
                         import pdb; pdb.set_trace()
+                    if len(zusammensetzung) > 1:
+                        zusammensetzung.pop(0)
+                        for i in zusammensetzung:
+                            elementtitle, elementcas, elementconcentration = i.split('@')
+                            writer.writerow([None, None, None, None, None, None, None, None, None, None, None, None, None,
+                                             None, None, None, None, None, None, None, None, None, None, None, None, elementtitle, elementcas, elementconcentration])
                 else:
                     writer.writerow(
                         [id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas, newusecases,
