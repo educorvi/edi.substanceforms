@@ -74,8 +74,10 @@ class Csvexport(BrowserView):
                     area_title = self.db.execute(select)
                     applicationareas.append(area_title)
 
+                newapplicationareas = list()
                 if applicationareas:
-                    newapplicationareas = applicationareas[0][0][0]
+                    for i in applicationareas:
+                        newapplicationareas.append(i[0][0])
                 else:
                     newapplicationareas = "keine Angabe"
 
@@ -88,8 +90,10 @@ class Csvexport(BrowserView):
                     usecase_title = self.db.execute(select)
                     usecases.append(usecase_title)
 
+                newusecases = list()
                 if usecases:
-                    newusecases = usecases
+                    for i in usecases:
+                        newusecases.append(i[0][0])
                 else:
                     newusecases = "keine Angabe"
 
