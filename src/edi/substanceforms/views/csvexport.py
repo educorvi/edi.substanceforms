@@ -20,7 +20,7 @@ class Csvexport(BrowserView):
         with open('/home/plone_buildout/praevention/src/edi.substanceforms/src/edi/substanceforms/views/test.csv', 'w', newline='') as csvfile:
             writer = csv.writer(csvfile, delimiter=';', quotechar='"')
             writer.writerow(['ID', 'Titel', 'Beschreibung', 'Webcode', 'Branche', 'Typ des Gefahrstoffgemischs',
-                                 'Verdampfungsfaktor 150', 'Verdampfungsfaktor 160', 'Verdampfungsfaktor 170',
+                                 'application_areas', 'Verdampfungsfaktor 150', 'Verdampfungsfaktor 160', 'Verdampfungsfaktor 170',
                                  'Verdampfungsfaktor 180', 'UEG', 'Responsefaktor', 'Hautschutzmittelkategorie',
                                  'Emissionsgeprüft', 'Prüfdatum', 'Flammpunkt', 'Wertebereich', 'Klassifikationen',
                                  'Indikatoren', 'Kommentare', 'Hersteller', 'Status', 'Produktklasse'])
@@ -65,7 +65,17 @@ class Csvexport(BrowserView):
                 else:
                     newproductclass = 'keine Angabe'
 
-                writer.writerow([id, title, description, newbranch, newsubstancetype, evap_150, evap_160, evap_170, evap_180,
+                applicationareas = []
+                select = "SELECT area_id from areapairs WHERE mixture_id = %s" % id
+                areaids = self.db.execute(select)
+
+                for arid in areaids:
+                    select = "SELECT application_area_name from application_areas WHERE application_area_id = %s" % arid
+                    area_title = self.db.execute(select)
+                    applicationareas.append(area_title)
+
+
+                writer.writerow([id, title, description, newbranch, newsubstancetype, applicationareas, evap_150, evap_160, evap_170, evap_180,
                                 ueg, response, newskincategory, newchecked_emissions, date_checked, flashpoint, newvalues_range,
                                 classifications, indicators, comments, manufacturer, status, newproductclass])
 
