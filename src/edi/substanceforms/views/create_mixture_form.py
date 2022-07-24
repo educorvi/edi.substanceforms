@@ -77,7 +77,7 @@ class DeleteForm(Form):
     item_id = HiddenField()
 
 class DeleteIngredientsForm(Form):
-    sure = BooleanField("Bestandteile löschen", render_kw={'class': 'form-check-input'})
+    ingres = MultiCheckboxField(u"Bitte wählen Sie die Bestandteile aus, die Sie löschen möchten", choices=[])
     item_id = HiddenField()
 
 class UpdateManufacturerForm(Form):
@@ -409,6 +409,7 @@ class DeleteFormView(CreateFormView):
 
 class DeleteIngredientsFormView(CreateFormView):
     formClass = DeleteIngredientsForm
+    buttons = ('Löschen', 'Abbrechen')
 
     def __call__(self):
         dbdata = self.context.aq_parent
@@ -420,12 +421,34 @@ class DeleteIngredientsFormView(CreateFormView):
                 if result:
                     return result
         self.itemid = self.request.get('itemid')
-        self.db.close()
         return self.index()
+
+    def alreadyselected(self):
+        newresult = list()
+        itemid = self.request.get('itemid')
+        select = "SELECT DISTINCT substance.substance_id, substance.title FROM substance, recipes, substance_mixture WHERE recipes.mixture_id = %s AND substance.substance_id = recipes.substance_id" % itemid
+        try:
+            result = self.db.execute(select)
+            for i in result:
+                newresult.append(i)
+        except:
+            newresult = list()
+        if newresult:
+            try:
+                return newresult
+                self.db.close()
+            except:
+                self.db.close()
 
 
     def renderForm(self):
         self.form.item_id.default=self.itemid
+        bestandteile = self.alreadyselected()
+        optionlist = list()
+        if bestandteile:
+            for i in bestandteile:
+                optionlist.append(i)
+            self.form.ingres.choices = optionlist
         self.form.process()
         return self.formTemplate()
 
@@ -433,23 +456,25 @@ class DeleteIngredientsFormView(CreateFormView):
         """
         """
         redirect_url = self.context.absolute_url() + '/single_view?item=' + self.form.item_id.data
-        if button == 'Speichern' and self.form.sure.data is True: #and self.validate():
-            command = "DELETE FROM recipes WHERE mixture_id = %s" % (self.form.item_id.data)
-            self.db.execute(command)
-            message = u'Die Bestandteile wurden erfolgreich gelöscht'
-            ploneapi.portal.show_message(message=message, type='info', request=self.request)
+        if button == 'Löschen': #and self.validate():
+            if self.form.ingres.data:
+                for i in self.form.ingres.data:
+                    command = "DELETE FROM recipes WHERE mixture_id = %s AND substance_id = %s" % (self.form.item_id.data, i)
+                    self.db.execute(command)
+                message = u'Die Bestandteile wurden erfolgreich gelöscht'
+                ploneapi.portal.show_message(message=message, type='info', request=self.request)
 
-            self.db.close()
-            return self.request.response.redirect(redirect_url)
+                return self.request.response.redirect(redirect_url)
+            else:
+                message = u'Die Bestandteile wurden nicht gelöscht, da das Bestätigungsfeld nicht ausgewählt war.'
+                ploneapi.portal.show_message(message=message, type='error', request=self.request)
+                return self.request.response.redirect(redirect_url)
 
-        elif button == 'Speichern' and self.form.sure.data is False:
-            message = u'Die Bestandteile wurden nicht gelöscht, da das Bestätigungsfeld nicht ausgewählt war.'
-            ploneapi.portal.show_message(message=message, type='error', request=self.request)
 
         elif button == 'Abbrechen':
             return self.request.response.redirect(redirect_url)
 
-
+        self.db.close()
 class UpdateManufacturerFormView(CreateFormView):
     formClass = UpdateManufacturerForm
 
