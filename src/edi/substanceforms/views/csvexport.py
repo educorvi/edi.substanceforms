@@ -134,7 +134,7 @@ class Csvexport(BrowserView):
                                 writer.writerow([None, None, None, None, None, None, None, None, None, None, None, None, None,
                                                  None, None, None, None, None, None, None, None, None, None, None, None, elementtitle, elementcas, elementconcentration])
                     except:
-                        import pdb; pdb.set_trace()
+                        writer.writerow(["KEKKKKKKKKKKKK"])
                 else:
                     writer.writerow(
                         [id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas, newusecases,
