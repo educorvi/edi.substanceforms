@@ -23,7 +23,7 @@ class Csvexport(BrowserView):
                                  'application_areas', 'usecases', 'Verdampfungsfaktor 150', 'Verdampfungsfaktor 160', 'Verdampfungsfaktor 170',
                                  'Verdampfungsfaktor 180', 'UEG', 'Responsefaktor', 'Hautschutzmittelkategorie',
                                  'Emissionsgeprüft', 'Prüfdatum', 'Flammpunkt', 'Wertebereich', 'Klassifikationen',
-                                 'Indikatoren', 'Kommentare', 'Hersteller', 'Status', 'Produktklasse', 'Zusammensetung'])
+                                 'Indikatoren', 'Kommentare', 'Hersteller', 'Status', 'Produktklasse', 'Zusammensetung', 'CAS-Nummer Bestandteil', 'Konzentration Bestandteil'])
 
 
             for i in mixtures:
@@ -122,20 +122,22 @@ class Csvexport(BrowserView):
 
 
                 if isinstance(zusammensetzung, list):
+                    elementtitle, elementcas, elementconcentration = zusammensetzung[0].split('@')
                     writer.writerow([id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas, newusecases, evap_150, evap_160, evap_170, evap_180,
                                     ueg, response, newskincategory, newchecked_emissions, date_checked, flashpoint, newvalues_range,
-                                    classifications, indicators, comments, manufacturer, status, newproductclass, zusammensetzung[0]])
+                                    classifications, indicators, comments, manufacturer, status, newproductclass, elementtitle, elementcas, elementconcentration])
                     if len(zusammensetzung) > 1:
                         zusammensetzung.pop(0)
                         for i in zusammensetzung:
+                            elementtitle, elementcas, elementconcentration = i.split('@')
                             writer.writerow([None, None, None, None, None, None, None, None, None, None, None, None, None,
-                                             None, None, None, None, None, None, None, None, None, None, None, None, i])
+                                             None, None, None, None, None, None, None, None, None, None, None, None, elementtitle, elementcas, elementconcentration])
                 else:
                     writer.writerow(
                         [id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas, newusecases,
                          evap_150, evap_160, evap_170, evap_180, ueg, response, newskincategory, newchecked_emissions,
                          date_checked, flashpoint, newvalues_range, classifications, indicators, comments, manufacturer,
-                         status, newproductclass, zusammensetzung])
+                         status, newproductclass, zusammensetzung, None, None])
 
 
                 #import pdb; pdb.set_trace()
