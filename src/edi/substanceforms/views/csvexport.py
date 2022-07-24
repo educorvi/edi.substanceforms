@@ -122,11 +122,11 @@ class Csvexport(BrowserView):
 
 
                 if isinstance(zusammensetzung, list):
+                    elementtitle, elementcas, elementconcentration = zusammensetzung[0].split('@')
+                    writer.writerow([id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas, newusecases, evap_150, evap_160, evap_170, evap_180,
+                                    ueg, response, newskincategory, newchecked_emissions, date_checked, flashpoint, newvalues_range,
+                                    classifications, indicators, comments, manufacturer, status, newproductclass, elementtitle, elementcas, elementconcentration])
                     try:
-                        elementtitle, elementcas, elementconcentration = zusammensetzung[0].split('@')
-                        writer.writerow([id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas, newusecases, evap_150, evap_160, evap_170, evap_180,
-                                        ueg, response, newskincategory, newchecked_emissions, date_checked, flashpoint, newvalues_range,
-                                        classifications, indicators, comments, manufacturer, status, newproductclass, elementtitle, elementcas, elementconcentration])
                         if len(zusammensetzung) > 1:
                             zusammensetzung.pop(0)
                             for i in zusammensetzung:
@@ -134,7 +134,7 @@ class Csvexport(BrowserView):
                                 writer.writerow([None, None, None, None, None, None, None, None, None, None, None, None, None,
                                                  None, None, None, None, None, None, None, None, None, None, None, None, elementtitle, elementcas, elementconcentration])
                     except:
-                        writer.writerow(["KEKKKKKKKKKKKK"])
+                        import pdb; pdb.set_trace()
                 else:
                     writer.writerow(
                         [id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas, newusecases,
