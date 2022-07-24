@@ -138,9 +138,18 @@ class Csvexport(BrowserView):
                     if len(zusammensetzung) > 1:
                         zusammensetzung.pop(0)
                         for i in zusammensetzung:
-                            elementtitle, elementcas, elementconcentration = i.split('@')
-                            writer.writerow([None, None, None, None, None, None, None, None, None, None, None, None, None,
-                                             None, None, None, None, None, None, None, None, None, None, None, None, elementtitle, elementcas, elementconcentration])
+                            newzusammensetzung = i.split('@')
+                            if len(newzusammensetzung) == 1:
+                                writer.writerow([None, None, None, None, None, None, None, None, None, None, None, None, None,
+                                                 None, None, None, None, None, None, None, None, None, None, None, None, newzusammensetzung[0], None, None])
+                            elif len(newzusammensetzung) == 2:
+                                writer.writerow(
+                                    [None, None, None, None, None, None, None, None, None, None, None, None, None,
+                                     None, None, None, None, None, None, None, None, None, None, None, None, newzusammensetzung[0], newzusammensetzung[1], None])
+                            else:
+                                writer.writerow(
+                                    [None, None, None, None, None, None, None, None, None, None, None, None, None,
+                                     None, None, None, None, None, None, None, None, None, None, None, None, newzusammensetzung[0], newzusammensetzung[1], newzusammensetzung[3]])
                 else:
                     writer.writerow(
                         [id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas, newusecases,
