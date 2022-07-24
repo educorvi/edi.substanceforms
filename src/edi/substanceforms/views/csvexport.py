@@ -17,7 +17,7 @@ class Csvexport(BrowserView):
         mixtureselect = "SELECT * FROM substance_mixture"
         mixtures = self.db.execute(mixtureselect)
 
-        with open('/home/plone_buildout/plone52/src/edi.substanceforms/src/edi/substanceforms/views/test.csv', 'a', newline='') as csvfile:
+        with open('/home/plone_buildout/praevention/src/edi.substanceforms/src/edi/substanceforms/views/test.csv', 'w', newline='') as csvfile:
             writer = csv.writer(csvfile, delimiter=';', quotechar='"')
             writer.writerow(['ID', 'Titel', 'Beschreibung', 'Webcode', 'Branche', 'Typ des Gefahrstoffgemischs',
                                  'Verdampfungsfaktor 150', 'Verdampfungsfaktor 160', 'Verdampfungsfaktor 170',
