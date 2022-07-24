@@ -135,7 +135,7 @@ class Csvexport(BrowserView):
                         else:
                             writer.writerow([id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas, newusecases, evap_150, evap_160, evap_170, evap_180,
                                             ueg, response, newskincategory, newchecked_emissions, date_checked, flashpoint, newvalues_range,
-                                            classifications, indicators, comments, manufacturer, status, newproductclass, newzusammensetzung[0], newzusammensetzung[1], newzusammensetzung[3]])
+                                            classifications, indicators, comments, manufacturer, status, newproductclass, newzusammensetzung[0], newzusammensetzung[1], newzusammensetzung[2]])
                     except:
                         import pdb; pdb.set_trace()
                     if len(zusammensetzung) > 1:
@@ -152,7 +152,7 @@ class Csvexport(BrowserView):
                             else:
                                 writer.writerow(
                                     [None, None, None, None, None, None, None, None, None, None, None, None, None,
-                                     None, None, None, None, None, None, None, None, None, None, None, None, newzusammensetzung[0], newzusammensetzung[1], newzusammensetzung[3]])
+                                     None, None, None, None, None, None, None, None, None, None, None, None, newzusammensetzung[0], newzusammensetzung[1], newzusammensetzung[2]])
                 else:
                     writer.writerow(
                         [id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas, newusecases,
