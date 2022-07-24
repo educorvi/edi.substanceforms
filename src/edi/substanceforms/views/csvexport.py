@@ -17,7 +17,7 @@ class Csvexport(BrowserView):
         mixtureselect = "SELECT * FROM substance_mixture"
         mixtures = self.db.execute(mixtureselect)
 
-        with open('eggs.csv', 'w', newline='') as csvfile:
+        with open('test.csv', 'w', newline='') as csvfile:
             writer = csv.writer(csvfile, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL)
             writer.writerow(['ID', 'Titel', 'Beschreibung', 'Webcode', 'Branche', 'Typ des Gefahrstoffgemischs',
                                  'Verdampfungsfaktor 150', 'Verdampfungsfaktor 160', 'Verdampfungsfaktor 170',
@@ -57,7 +57,7 @@ class Csvexport(BrowserView):
                 newvalues_range = self.get_attr_translation('boolvocab', str(values_range))
 
 
-                import pdb; pdb.set_trace()
+                #import pdb; pdb.set_trace()
 
 
 
