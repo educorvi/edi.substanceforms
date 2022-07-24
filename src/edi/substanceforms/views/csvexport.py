@@ -89,7 +89,7 @@ class Csvexport(BrowserView):
                     usecases.append(usecase_title)
 
                 if usecases:
-                    newusecases = usecases[0][0][0]
+                    newusecases = usecases[0][0]
                 else:
                     newusecases = "keine Angabe"
 
