@@ -121,9 +121,22 @@ class Csvexport(BrowserView):
                             zusammensetzung.append(i)
 
 
-                writer.writerow([id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas, newusecases, evap_150, evap_160, evap_170, evap_180,
-                                ueg, response, newskincategory, newchecked_emissions, date_checked, flashpoint, newvalues_range,
-                                classifications, indicators, comments, manufacturer, status, newproductclass, zusammensetzung])
+                if isinstance(zusammensetzung, list):
+                    writer.writerow([id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas, newusecases, evap_150, evap_160, evap_170, evap_180,
+                                    ueg, response, newskincategory, newchecked_emissions, date_checked, flashpoint, newvalues_range,
+                                    classifications, indicators, comments, manufacturer, status, newproductclass, zusammensetzung[0]])
+                    if len(zusammensetzung) > 1:
+                        zusammensetzung.pop(0)
+                        for i in zusammensetzung:
+                            writer.writerow([None, None, None, None, None, None, None, None, None, None, None, None, None,
+                                             None, None, None, None, None, None, None, None, None, None, None, None, i])
+                else:
+                    writer.writerow(
+                        [id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas, newusecases,
+                         evap_150, evap_160, evap_170, evap_180, ueg, response, newskincategory, newchecked_emissions,
+                         date_checked, flashpoint, newvalues_range, classifications, indicators, comments, manufacturer,
+                         status, newproductclass, zusammensetzung])
+
 
                 #import pdb; pdb.set_trace()
 
