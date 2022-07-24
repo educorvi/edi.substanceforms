@@ -113,8 +113,8 @@ class Csvexport(BrowserView):
                 zusammensetzung = "keine Angabe"
                 for e in newentries:
                     zusammensetzungsresult = e.split('€')
-                    if e[0] == title:
-                        zusammensetzung = e[1]
+                    if zusammensetzungsresult[0] == title:
+                        zusammensetzung = zusammensetzungsresult[1]
                         break;
 
 
