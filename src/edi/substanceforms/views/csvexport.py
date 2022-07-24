@@ -114,8 +114,11 @@ class Csvexport(BrowserView):
                 for e in newentries:
                     zusammensetzungsresult = e.split('€')
                     if zusammensetzungsresult[0] == title:
-                        zusammensetzung = zusammensetzungsresult[1]
-                        break;
+                        zusammensetzung = list()
+                        resu = zusammensetzungsresult[1]
+                        result = resu.split('|')
+                        for i in result:
+                            zusammensetzung.append(i)
 
 
                 writer.writerow([id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas, newusecases, evap_150, evap_160, evap_170, evap_180,
