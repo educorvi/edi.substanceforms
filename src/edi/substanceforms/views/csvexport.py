@@ -124,7 +124,6 @@ class Csvexport(BrowserView):
                 if isinstance(zusammensetzung, list):
                     try:
                         elementtitle, elementcas, elementconcentration = zusammensetzung[0].split('@')
-                        import pdb; pdb.set_trace()
                         writer.writerow([id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas, newusecases, evap_150, evap_160, evap_170, evap_180,
                                         ueg, response, newskincategory, newchecked_emissions, date_checked, flashpoint, newvalues_range,
                                         classifications, indicators, comments, manufacturer, status, newproductclass, elementtitle, elementcas, elementconcentration])
