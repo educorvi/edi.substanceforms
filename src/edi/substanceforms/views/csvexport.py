@@ -51,7 +51,10 @@ class Csvexport(BrowserView):
                 status = i[26]
                 productclass = i[27]
 
-                manufacturer = (self.db.execute("SELECT title FROM manufacturer WHERE manufacturer_id = %s" % manufacturer_id))[0][0]
+                if manufacturer_id:
+                    manufacturer = (self.db.execute("SELECT title FROM manufacturer WHERE manufacturer_id = %s" % manufacturer_id))[0][0]
+                else:
+                    manufacturer = 'keine Angabe'
                 newbranch = self.get_attr_translation('branch', branch)
                 newsubstancetype = self.get_attr_translation('substance_type', substance_type)
                 newskincategory = self.get_attr_translation('hskategorie', skin_category)
