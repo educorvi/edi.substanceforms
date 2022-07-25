@@ -70,6 +70,11 @@ class Csvexport(BrowserView):
                 else:
                     newclassifications = classifications
 
+                if indicators:
+                    newindicators = indicators.split('@')
+                else:
+                    newindicators = indicators
+
                 applicationareas = []
                 select = "SELECT area_id from areapairs WHERE mixture_id = %s" % id
                 areaids = self.db.execute(select)
@@ -132,15 +137,15 @@ class Csvexport(BrowserView):
                         if len(newzusammensetzung) == 1:
                             writer.writerow([id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas, newusecases, evap_150, evap_160, evap_170, evap_180,
                                             ueg, response, newskincategory, newchecked_emissions, date_checked, flashpoint, newvalues_range,
-                                            newclassifications, indicators, comments, manufacturer, status, newproductclass, newzusammensetzung[0], None, None])
+                                            newclassifications, newindicators, comments, manufacturer, status, newproductclass, newzusammensetzung[0], None, None])
                         elif len(newzusammensetzung) == 2:
                             writer.writerow([id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas, newusecases, evap_150, evap_160, evap_170, evap_180,
                                             ueg, response, newskincategory, newchecked_emissions, date_checked, flashpoint, newvalues_range,
-                                            newclassifications, indicators, comments, manufacturer, status, newproductclass, newzusammensetzung[0], newzusammensetzung[1], None])
+                                            newclassifications, newindicators, comments, manufacturer, status, newproductclass, newzusammensetzung[0], newzusammensetzung[1], None])
                         else:
                             writer.writerow([id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas, newusecases, evap_150, evap_160, evap_170, evap_180,
                                             ueg, response, newskincategory, newchecked_emissions, date_checked, flashpoint, newvalues_range,
-                                            newclassifications, indicators, comments, manufacturer, status, newproductclass, newzusammensetzung[0], newzusammensetzung[1], newzusammensetzung[2]])
+                                            newclassifications, newindicators, comments, manufacturer, status, newproductclass, newzusammensetzung[0], newzusammensetzung[1], newzusammensetzung[2]])
                     except:
                         import pdb; pdb.set_trace()
                     if len(zusammensetzung) > 1:
@@ -162,7 +167,7 @@ class Csvexport(BrowserView):
                     writer.writerow(
                         [id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas, newusecases,
                          evap_150, evap_160, evap_170, evap_180, ueg, response, newskincategory, newchecked_emissions,
-                         date_checked, flashpoint, newvalues_range, newclassifications, indicators, comments, manufacturer,
+                         date_checked, flashpoint, newvalues_range, newclassifications, newindicators, comments, manufacturer,
                          status, newproductclass, zusammensetzung, None, None])
 
 
