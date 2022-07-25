@@ -1,0 +1,61 @@
+ID;Titel;Beschreibung;Webcode;Produktklasse;Ausgangsmaterial;Medianwert;Volumenanteil;Emissionsgeprüft;Prüfdatum;Hersteller;Status
+13;K4 plus/15;;PD22290943;fein;Calciumcarbonat;19.5;7.6;Ja;2021-02-23;KSL Staubtechnik GmbH;published
+14;K4 plus/20;;PD22600561;mittel;Calciumcarbonat;22.2;4.6;Ja;2021-02-23;KSL Staubtechnik GmbH;published
+15;K4 plus/30;;PD22428835;mittel;Calciumcarbonat;30.2;3.9;Ja;2021-02-23;KSL Staubtechnik GmbH;published
+16;K4 plus/45;;PD22396078;grob;Calciumcarbonat;42.7;3.5;Ja;2021-02-23;KSL Staubtechnik GmbH;published
+17;K4/15;;PD22398911;fein;Calciumcarbonat;18.1;7.3;Ja;2021-02-23;KSL Staubtechnik GmbH;published
+18;K4/20;;PD22153784;mittel;Calciumcarbonat;21.9;4.8;Ja;2021-02-23;KSL Staubtechnik GmbH;published
+19;K4/30;;PD22252504;mittel;Calciumcarbonat;31.1;3.9;Ja;2021-02-23;KSL Staubtechnik GmbH;published
+20;K4/45;;PD22190827;grob;Calciumcarbonat;50.1;2.2;Ja;2021-02-23;KSL Staubtechnik GmbH;published
+21;K4/60;;PD22872702;grob;Calciumcarbonat;67.3;1.5;Ja;2021-02-23;KSL Staubtechnik GmbH;published
+22;K4/80;;PD22600347;grob;Calciumcarbonat;91.8;2.1;Ja;2021-02-23;KSL Staubtechnik GmbH;published
+1;BöttcherPro Silux 20;;PD22940750;fein;Stärke;19.3;9.5;Ja;2021-03-31;Felix Böttcher GmbH & Co. KG;published
+3;BöttcherPro Silux 30;;PD22360176;fein;Stärke;22.2;6.9;Ja;2021-03-31;Felix Böttcher GmbH & Co. KG;published
+4;BöttcherPro Silux 35;;PD22343761;mittel;Stärke;23.0;5.8;Ja;2021-03-31;Felix Böttcher GmbH & Co. KG;published
+5;ECOPOWDER C 5020;;PD22290790;fein;Stärke;21.0;5.7;Ja;2021-06-23;HI-TECH Chemicals BV;published
+36;S5/16;;PD22859412;fein;Starke;17.3;8.5;Ja;2021-02-23;KSL Staubtechnik GmbH;published
+2;BottcherPro Silux 23;;PD22476608;mittel;Starke;22.9;5.5;Ja;2021-03-31;Felix Böttcher GmbH & Co. KG;published
+6;ECOPOWDER C 5030;;PD22813024;mittel;Stärke;23.9;3.6;Ja;2021-06-23;HI-TECH Chemicals BV;published
+7;ECOPOWDER C 5050;;PD22311671;grob;Stärke;65.0;0.0;Ja;2021-06-23;HI-TECH Chemicals BV;published
+8;ECOPOWDER UC 20 ;;PD22115817;fein;Stärke;21.1;5.2;Ja;2021-06-23;HI-TECH Chemicals BV;published
+9;ECOPOWDER UC 30;;PD22534778;mittel;Stärke;24.4;2.6;Ja;2021-06-23;HI-TECH Chemicals BV;published
+10;ECOPOWDER UC 50;;PD22382692;grob;Stärke;54.8;0.0;Ja;2021-06-23;HI-TECH Chemicals BV;published
+11;Eurosil F-Optima coated;;PD22700724;mittel;Stärke;22.5;7.8;Ja;2021-10-07;DC DruckChemie GmbH;published
+12;Flowstar F-Optima coated;;PD22849886;mittel;Stärke;22.5;7.8;Ja;2021-10-07;FLOWSTAR GmbH;published
+23;Perfect Print Fein;;PD22407989;fein;Stärke;20.6;6.9;Ja;2021-03-10;Print Industry GmbH;published
+24;Perfect Print Grob;;PD22142009;grob;Stärke;61.9;0.0;Ja;2021-03-10;Print Industry GmbH;published
+25;Perfect Print Mittel;;PD22400697;mittel;Stärke;23.6;3.2;Ja;2021-03-10;Print Industry GmbH;published
+26;Russel-Webb - S88-15;;PD22711201;fein;Stärke;19.8;9.1;Ja;2021-03-10;Flint Group ;published
+27;Russel-Webb - S88-20 R;;PD22897618;mittel;Stärke;20.2;7.0;Ja;2021-03-10;Flint Group ;published
+28;Russel-Webb - S88-35;;PD22293823;grob;Stärke;38.4;2.2;Ja;2021-03-20;Flint Group ;published
+29;Russel-Webb - S88-35 R;;PD22245585;mittel;Stärke;38.0;2.4;Ja;2021-03-10;Flint Group ;published
+30;Russel-Webb - S88-50 R;;PD22525855;grob;Stärke;38.2;2.4;Ja;2021-03-10;Flint Group ;published
+31;S5 WL/16;;PD22243510;fein;Stärke;18.1;7.6;Ja;2021-02-23;KSL Staubtechnik GmbH;published
+32;S5 WL/20;;PD22808248;fein;Stärke;20.4;7.7;Ja;2021-02-23;KSL Staubtechnik GmbH;published
+33;S5 WL/22;;PD22625552;mittel;Stärke;23.8;3.3;Ja;2021-02-23;KSL Staubtechnik GmbH;published
+34;S5 WL/30;;PD22468845;mittel;Stärke;39.9;1.7;Ja;2021-02-23;KSL Staubtechnik GmbH;published
+35;S5 WL/45;;PD22351054;grob;Stärke;62.2;0.0;Ja;2021-02-23;KSL Staubtechnik GmbH;published
+37;S5/20;;PD22148152;fein;Stärke;20.3;6.3;Ja;2021-02-23;KSL Staubtechnik GmbH;published
+38;S5/22;;PD22564073;mittel;Stärke;25.5;3.5;Ja;2021-02-23;KSL Staubtechnik GmbH;published
+39;S5/30;;PD22394302;mittel;Stärke;39.1;1.6;Ja;2021-02-23;KSL Staubtechnik GmbH;published
+40;S5/45;;PD22837900;grob;Stärke;64.4;0.0;Ja;2021-02-23;KSL Staubtechnik GmbH;published
+41;Saphira Powder Pro 100-20 ;;PD22478685;fein;Stärke;19.8;9.1;Ja;2021-03-10;Heidelberger Druckmaschinen AG;published
+42;Saphira Powder Pro 100-35;;PD22203033;grob;Stärke;38.4;2.2;Ja;2021-03-10;Heidelberger Druckmaschinen AG;published
+43;Sun Powder 20C;;PD22474046;fein;Stärke;21.0;5.7;Ja;2021-06-23;Sun Chemical - Hartmann Druckfarben GmbH;published
+44;Sun Powder 20U;;PD22594297;fein;Stärke;21.1;5.2;Ja;2021-06-23;Sun Chemical - Hartmann Druckfarben GmbH;published
+45;Sun Powder 30C;;PD22316534;mittel;Stärke;23.9;3.6;Ja;2021-06-23;Sun Chemical - Hartmann Druckfarben GmbH;published
+46;Sun Powder 30U;;PD22425304;mittel;Stärke;24.4;2.6;Ja;2021-06-23;Sun Chemical - Hartmann Druckfarben GmbH;published
+47;Sun Powder 35C;;PD22934417;grob;Stärke;64.9;0.0;Ja;2021-06-23;Sun Chemical - Hartmann Druckfarben GmbH;published
+48;Sun Powder 35U;;PD22858400;grob;Stärke;64.8;0.0;Ja;2021-06-23;Sun Chemical - Hartmann Druckfarben GmbH;published
+49;Sun Powder 50C;;PD22146141;grob;Stärke;65.0;0.0;Ja;2021-06-23;Sun Chemical - Hartmann Druckfarben GmbH;published
+50;Sun Powder 50U;;PD22803952;grob;Stärke;64.8;0.0;Ja;2021-06-23;Sun Chemical - Hartmann Druckfarben GmbH;published
+51;Varn CC 20;;PD22783636;fein;Stärke;20.2;7.8;Ja;2021-03-10;Flint Group ;published
+52;Varn CC 30;;PD22206756;mittel;Stärke;23.4;3.8;Ja;2021-03-10;Flint Group ;published
+53;XLD-20 R;;PD22317893;fein;Stärke;21.0;5.7;Ja;2021-06-23;Archem PRS Ltd;published
+54;XLD-20 S;;PD22874534;fein;Stärke;21.1;5.2;Ja;2021-06-23;Archem PRS Ltd;published
+55;XLD-30 R;;PD22348950;mittel;Stärke;23.9;3.6;Ja;2021-06-23;Archem PRS Ltd;published
+56;XLD-30 S;;PD22236325;mittel;Stärke;24.4;2.6;Ja;2021-06-23;Archem PRS Ltd;published
+57;XLD-35 R;;PD22746216;grob;Stärke;64.9;0.0;Ja;2021-06-23;Archem PRS Ltd;published
+58;XLD-35 S;;PD22769516;grob;Stärke;64.8;0.0;Ja;2021-06-23;Archem PRS Ltd;published
+59;XLD-50 R;;PD22764347;grob;Stärke;65.0;0.0;Ja;2021-06-23;Archem PRS Ltd;published
+60;XLD-50 S;;PD22197935;grob;Stärke;64.8;0.0;Ja;2021-06-23;Archem PRS Ltd;published

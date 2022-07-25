@@ -73,46 +73,38 @@ class TabelleFormView(WTFormView):
 
     def get_preergs(self, preselects, vocab, value):
         erg = list()
+        res = list()
         for select in preselects:
             if not erg:
                 sel = Template(select).render(value=value)
-                try:
-                    resu = self.db.execute(sel)
-                    resu = [i[0] for i in resu]
-                    if vocab:
-                        erg = self.get_attr_translation(vocab, resu[0])
-                    else:
-                        erg = resu
-                except:
-                    erg = ' '
+                resu = self.db.execute(sel)
+                resu = [i[0] for i in resu]
+                if vocab:
+                    erg = self.get_attr_translation(vocab, resu[0])
+                else:
+                    erg = resu
             else:
                 res = erg
                 erg = []
                 for entry in res:
+                    if not entry:
+                        return ''
                     sel = Template(select).render(value=entry)
-                    try:
-                        resu = self.db.execute(sel)
-                        if vocab:
-                            pdb.set_trace()
-                            result = self.get_attr_translation(vocab, resu[0])
-                        else:
-                            result = resu
-                        erg += [i[0] for i in result]
-                    except:
-                        result = ' '
+                    resu = self.db.execute(sel)
+                    if vocab:
+                        result = self.get_attr_translation(vocab, resu[0])
+                    else:
+                        result = resu
+                    erg += [i[0] for i in result]
 
         if vocab:
             result = erg
         else:
-            try:
-                result = ', '.join(erg)
-            except:
-                result = ''
+            result = ', '.join(erg)
         return result
 
     def getindexfortablename(self):
         columnids = list()
-        print(self.context.resultcolumns)
         for i in self.context.resultcolumns:
             columnids.append(possibleColumns(self.context).getTerm(i).token)
         return columnids
@@ -130,7 +122,6 @@ class TabelleFormView(WTFormView):
         return False
 
     def get_attr_translation(self, attribute, value):
-        print(attribute, value)
         vocabulary = get_vocabulary(attribute)
         for i in vocabulary:
             if i[0] == value:

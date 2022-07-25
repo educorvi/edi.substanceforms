@@ -32,7 +32,9 @@ substance_types_new = [
     (u'uv', u'UV-Druck'),
     (u'heatset', u'Heatsetwaschmittel'),
     ('special', u'Sonderreiniger'),
-    ('offset', u'Offsetdruck (allgemein)')
+    ('offset', u'Offsetdruck (allgemein)'),
+    ('dental', u'Gefahrstoffgemische aus der Dentaltechnik'),
+    ('textil', u'Gefahrstoffgemische aus der Textil- und Modeindustrie')
     ]
 
 produktkategorien = [

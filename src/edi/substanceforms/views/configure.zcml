@@ -7,6 +7,20 @@
   -*- extra stuff goes here -*-
 
   <browser:page
+    name="csvmixture"
+    for="*"
+    class=".csvexport.Csvmixture"
+    permission="zope2.View"
+    />
+
+  <browser:page
+    name="csvpowder"
+    for="*"
+    class=".csvexport.Csvpowder"
+    permission="zope2.View"
+    />
+
+  <browser:page
     name="gefahrstoff"
     for="*"
     class=".gefahrstoff.Gefahrstoff"
