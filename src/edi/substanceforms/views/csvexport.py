@@ -192,8 +192,8 @@ class Csvexport(BrowserView):
                 powdervolumeshare = i[7]
                 powdercheckedemissions = i[8]
                 powderdatechecked = i[9]
-                powdermanufacturerid = i[10]
-                powderstatus = i[11]
+                powdermanufacturerid = i[11]
+                powderstatus = i[12]
 
                 if powdermanufacturerid:
                     powdermanufacturer = (self.db.execute("SELECT title FROM manufacturer WHERE manufacturer_id = %s" % powdermanufacturerid))[0][0]
