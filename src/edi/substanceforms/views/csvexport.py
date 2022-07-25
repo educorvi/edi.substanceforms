@@ -7,7 +7,18 @@ import csv
 
 
 class Csvmixture(BrowserView):
+
     def __call__(self):
+        self.create_mixture_file()
+        file = open('/tmp/mixtures.csv', 'rb')
+        file.seek(0)
+        filename = 'mixtures.csv'
+        RESPONSE = self.request.response
+        RESPONSE.setHeader('content-type', 'text/csv')
+        RESPONSE.setHeader('content-disposition', 'attachment; filename=%s' %filename)
+        return file.read()
+
+    def create_mixture_file(self):
         self.db = DBConnect(host=self.context.host, db=self.context.database, user=self.context.username,
                             password=self.context.password)
         template = '''<li class="heading" i18n:translate="">
@@ -171,7 +182,7 @@ class Csvmixture(BrowserView):
                          status, newproductclass, zusammensetzung, None, None])
 
 
-        return template
+        return None
 
     def get_attr_translation(self, attribute, value):
         vocabulary = get_vocabulary(attribute)
