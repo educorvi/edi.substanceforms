@@ -171,7 +171,40 @@ class Csvexport(BrowserView):
                          status, newproductclass, zusammensetzung, None, None])
 
 
-                #import pdb; pdb.set_trace()
+
+
+        powderselect = "SELECT * FROM spray_powder;"
+        powders = self.db.execute(powderselect)
+
+        with open('/home/plone_buildout/praevention/src/edi.substanceforms/src/edi/substanceforms/views/powders.csv', 'w', newline='') as powdercsv:
+            powderwriter = csv.writer(powdercsv, delimiter=';', quotechar='"')
+            powderwriter.writerow(['ID', 'Titel', 'Beschreibung', 'Webcode', 'Produktklasse', 'Ausgangsmaterial', 'Medianwert',
+                             'Volumenanteil', 'Emissionsgeprüft', 'Prüfdatum', 'Hersteller', 'Status'])
+
+            for i in powders:
+                powderid = i[0]
+                powdertitle = i[1]
+                powderdescription = i[2]
+                powderwebcode = i[3]
+                powderproductclass = i[4]
+                powderstartingmaterial = i[5]
+                powdermedian = i[6]
+                powdervolumeshare = i[7]
+                powdercheckedemissions = i[8]
+                powderdatechecked = i[9]
+                powdermanufacturerid = i[10]
+                powderstatus = i[11]
+
+                if powdermanufacturerid:
+                    powdermanufacturer = (self.db.execute("SELECT title FROM manufacturer WHERE manufacturer_id = %s" % manufacturer_id))[0][0]
+                else:
+                    powdermanufacturer = 'keine Angabe'
+                newpowdercheckedemissions = self.get_attr_translation('boolvocab', str(powdercheckedemissions))
+
+                powderwriter.writerow(
+                    [powderid, powdertitle, powderdescription, powderwebcode, powderproductclass, powderstartingmaterial,
+                     powdermedian, powdervolumeshare, newpowdercheckedemissions, powderdatechecked, powdermanufacturer,
+                     powderstatus])
 
 
         return template
