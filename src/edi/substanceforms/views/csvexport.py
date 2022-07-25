@@ -196,7 +196,7 @@ class Csvexport(BrowserView):
                 powderstatus = i[11]
 
                 if powdermanufacturerid:
-                    powdermanufacturer = (self.db.execute("SELECT title FROM manufacturer WHERE manufacturer_id = %s" % manufacturer_id))[0][0]
+                    powdermanufacturer = (self.db.execute("SELECT title FROM manufacturer WHERE manufacturer_id = %s" % powdermanufacturerid))[0][0]
                 else:
                     powdermanufacturer = 'keine Angabe'
                 newpowdercheckedemissions = self.get_attr_translation('boolvocab', str(powdercheckedemissions))
