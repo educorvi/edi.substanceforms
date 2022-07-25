@@ -65,7 +65,10 @@ class Csvexport(BrowserView):
                 else:
                     newproductclass = 'keine Angabe'
 
-                newclassifications = classifications.split('@')
+                if classifications:
+                    newclassifications = classifications.split('@')
+                else:
+                    newclassifications = classifications
 
                 applicationareas = []
                 select = "SELECT area_id from areapairs WHERE mixture_id = %s" % id
