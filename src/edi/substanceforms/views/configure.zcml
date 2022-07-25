@@ -7,9 +7,16 @@
   -*- extra stuff goes here -*-
 
   <browser:page
-    name="csvexport"
+    name="csvmixture"
     for="*"
-    class=".csvexport.Csvexport"
+    class=".csvexport.Csvmixture"
+    permission="zope2.View"
+    />
+
+  <browser:page
+    name="csvpowder"
+    for="*"
+    class=".csvexport.Csvpowder"
     permission="zope2.View"
     />
 

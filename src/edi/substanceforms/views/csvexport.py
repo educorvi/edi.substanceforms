@@ -6,7 +6,7 @@ from edi.substanceforms.helpers import get_vocabulary
 import csv
 
 
-class Csvexport(BrowserView):
+class Csvmixture(BrowserView):
     def __call__(self):
         self.db = DBConnect(host=self.context.host, db=self.context.database, user=self.context.username,
                             password=self.context.password)
@@ -17,7 +17,7 @@ class Csvexport(BrowserView):
         mixtureselect = "SELECT * FROM substance_mixture"
         mixtures = self.db.execute(mixtureselect)
 
-        with open('/home/plone_buildout/praevention/src/edi.substanceforms/src/edi/substanceforms/views/test.csv', 'w', newline='') as csvfile:
+        with open('/tmp/mixtures.csv', 'w', newline='') as csvfile:
             writer = csv.writer(csvfile, delimiter=';', quotechar='"')
             writer.writerow(['ID', 'Titel', 'Beschreibung', 'Webcode', 'Branche', 'Typ des Gefahrstoffgemischs',
                                  'application_areas', 'usecases', 'Verdampfungsfaktor 150', 'Verdampfungsfaktor 160', 'Verdampfungsfaktor 170',
@@ -171,12 +171,20 @@ class Csvexport(BrowserView):
                          status, newproductclass, zusammensetzung, None, None])
 
 
+        return template
 
+class Csvpower(BrowserView):
+    def __call__(self):
+        self.db = DBConnect(host=self.context.host, db=self.context.database, user=self.context.username,
+                            password=self.context.password)
+        template = '''<li class="heading" i18n:translate="">
+          Sample View
+        </li>'''
 
         powderselect = "SELECT * FROM spray_powder;"
         powders = self.db.execute(powderselect)
 
-        with open('/home/plone_buildout/praevention/src/edi.substanceforms/src/edi/substanceforms/views/powders.csv', 'w', newline='') as powdercsv:
+        with open('/tmp/powders.csv', 'w', newline='') as powdercsv:
             powderwriter = csv.writer(powdercsv, delimiter=';', quotechar='"')
             powderwriter.writerow(['ID', 'Titel', 'Beschreibung', 'Webcode', 'Produktklasse', 'Ausgangsmaterial', 'Medianwert',
                              'Volumenanteil', 'Emissionsgeprüft', 'Prüfdatum', 'Hersteller', 'Status'])
