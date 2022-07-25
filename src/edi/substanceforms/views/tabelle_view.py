@@ -93,7 +93,6 @@ class TabelleFormView(WTFormView):
                     try:
                         resu = self.db.execute(sel)
                         if vocab:
-                            pdb.set_trace()
                             result = self.get_attr_translation(vocab, resu[0])
                         else:
                             result = resu
