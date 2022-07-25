@@ -118,7 +118,7 @@ class Csvmixture(BrowserView):
                 newentries = list()
                 number = 0
                 with open(
-                    '/home/plone_buildout/praevention/src/edi.substanceforms/src/edi/substanceforms/views/zusammensetzung.csv',
+                    'zusammensetzung.csv',
                     newline='') as csvfile2:
                     reader = csv.reader(csvfile2, delimiter=';', quotechar='"')
                     for row in reader:
