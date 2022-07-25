@@ -173,6 +173,13 @@ class Csvmixture(BrowserView):
 
         return template
 
+    def get_attr_translation(self, attribute, value):
+        vocabulary = get_vocabulary(attribute)
+        for i in vocabulary:
+            if i[0] == value:
+                return i[1]
+        return value
+
 class Csvpowder(BrowserView):
     def __call__(self):
         self.db = DBConnect(host=self.context.host, db=self.context.database, user=self.context.username,
