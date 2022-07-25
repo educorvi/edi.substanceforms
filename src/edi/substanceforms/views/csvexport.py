@@ -173,7 +173,7 @@ class Csvmixture(BrowserView):
 
         return template
 
-class Csvpower(BrowserView):
+class Csvpowder(BrowserView):
     def __call__(self):
         self.db = DBConnect(host=self.context.host, db=self.context.database, user=self.context.username,
                             password=self.context.password)
