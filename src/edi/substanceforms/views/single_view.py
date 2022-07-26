@@ -255,10 +255,9 @@ class SingleView(BrowserView):
         title = "Prüfdatum"
         fieldindex = possibleColumns(self.context).getTerm('date_checked').token
         if self.context.tablename == 'substance_mixture':
-            value = self.article[int(fieldindex)]
-            import pdb;pdb.set_trace()
+            value = self.article[int(fieldindex)].strftime("%d.%m.%Y")
         elif self.context.tablename == 'spray_powder':
-            value = self.article[int(fieldindex)]
+            value = self.article[int(fieldindex)].strftime("%d.%m.%Y")
         if value:
             return {'title': title, 'value': value}
         return {}
