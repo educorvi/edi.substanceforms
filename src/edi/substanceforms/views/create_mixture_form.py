@@ -38,7 +38,7 @@ class CreateForm(Form):
     ueg = StringField(u"UEG in g/m3", render_kw={'class': 'form-control'})
     response = StringField(u"Response-Faktor", render_kw={'class': 'form-control'})
     skin_category = RadioField(u"Hautschutz-Kategorie", [validators.required()], choices=hskategorie)
-    date_checked = DateField(u"Datum der letzten Prüfung", description="YYYY-MM-DD, also beispielsweise 2020-09-30 für den 30.09.2020", render_kw={'class': 'form-control'})
+    date_checked = DateField(u"Datum der letzten Prüfung (YYYY-MM-DD)", render_kw={'class': 'form-control'})
     checked_emissions = BooleanField(u"Emissionsarmes Produkt", render_kw={'class': 'form-check-input'})
     flashpoint = IntegerField(u"Flammpunkt [°C]", render_kw={'class': 'form-control'})
     values_range = BooleanField(u"Wertebereich", render_kw={'class': 'form-check-input'})
