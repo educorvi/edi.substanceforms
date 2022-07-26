@@ -254,13 +254,14 @@ class SingleView(BrowserView):
     def date_checked(self):
         title = "Prüfdatum"
         fieldindex = possibleColumns(self.context).getTerm('date_checked').token
-        if self.context.tablename == 'substance_mixture':
-            value = self.article[int(fieldindex)]
-        elif self.context.tablename == 'spray_powder':
-            value = self.article[int(fieldindex)]
-        if value:
-            return {'title': title, 'value': value}
-        return {}
+        if self.article[int(fieldindex)]:
+            if self.context.tablename == 'substance_mixture':
+                value = self.article[int(fieldindex)].strftime("%d.%m.%Y")
+            elif self.context.tablename == 'spray_powder':
+                value = self.article[int(fieldindex)].strftime("%d.%m.%Y")
+            if value:
+                return {'title': title, 'value': value}
+            return {}
 
     def flashpoint(self):
         title = "Flammpunkt [°C]"

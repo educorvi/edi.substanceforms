@@ -38,7 +38,7 @@ class CreateForm(Form):
     ueg = StringField(u"UEG in g/m3", render_kw={'class': 'form-control'})
     response = StringField(u"Response-Faktor", render_kw={'class': 'form-control'})
     skin_category = RadioField(u"Hautschutz-Kategorie", [validators.required()], choices=hskategorie)
-    date_checked = DateField(u"Datum der letzten Prüfung (YYYY-MM-DD)", render_kw={'class': 'form-control'})
+    date_checked = DateField(u"Datum der letzten Prüfung (YYYY-MM-DD)", render_kw={'class': 'form-control', 'type': 'date'})
     checked_emissions = BooleanField(u"Emissionsarmes Produkt", render_kw={'class': 'form-check-input'})
     flashpoint = IntegerField(u"Flammpunkt [°C]", render_kw={'class': 'form-control'})
     values_range = BooleanField(u"Wertebereich", render_kw={'class': 'form-check-input'})
@@ -63,7 +63,7 @@ class UpdateForm(Form):
     ueg = StringField(u"UEG in g/m3", render_kw={'class': 'form-control'})
     response = StringField(u"Response-Faktor", render_kw={'class': 'form-control'})
     skin_category = RadioField(u"Hautschutz-Kategorie", choices=hskategorie)
-    date_checked = DateField(u"Datum der letzten Prüfung (YYYY-MM-DD)", render_kw={'class': 'form-control'})
+    date_checked = DateField(u"Datum der letzten Prüfung (YYYY-MM-DD)", render_kw={'class': 'form-control', 'type': 'date'})
     checked_emissions = BooleanField(u"Emissionsarmes Produkt", render_kw={'class': 'form-check-input'})
     flashpoint = IntegerField(u"Flammpunkt [°C]", render_kw={'class': 'form-control'})
     values_range = BooleanField(u"Wertebereich", render_kw={'class': 'form-check-input'})
@@ -157,7 +157,7 @@ class CreateFormView(WTFormView):
                                                         check_value(self.form.response.data),
                                                         check_value(self.form.skin_category.data),
                                                         self.form.checked_emissions.data,
-                                                        check_value(self.form.date_checked.data),
+                                                        check_value(self.form.date_checked.data.strftime("%Y-%m-%d")),
                                                         check_value(self.form.flashpoint.data),
                                                         self.form.values_range.data,
                                                         check_value(self.form.comments.data),
