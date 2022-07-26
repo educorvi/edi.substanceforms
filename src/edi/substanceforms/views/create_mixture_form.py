@@ -294,7 +294,7 @@ class UpdateFormView(CreateFormView):
                                                         check_value(self.form.values_range.data),
                                                         check_value(self.form.comments.data),
                                                         check_value(self.form.productclass.data),
-                                                        self.form.date_checked.data,
+                                                        str(self.form.date_checked.data),
                                                         check_value(self.form.item_id.data))
             self.db.execute(command)
 
