@@ -5,7 +5,6 @@ from edi.substanceforms.lib import DBConnect
 from edi.substanceforms.helpers import get_vocabulary
 import csv
 
-
 class Csvmixture(BrowserView):
 
     def __call__(self):
@@ -118,7 +117,7 @@ class Csvmixture(BrowserView):
                 newentries = list()
                 number = 0
                 with open(
-                    'zusammensetzung.csv',
+                    '/home/bgetem/praevention/src/edi.substanceforms/src/edi/substanceforms/views/zusammensetzung.csv',
                     newline='') as csvfile2:
                     reader = csv.reader(csvfile2, delimiter=';', quotechar='"')
                     for row in reader:
