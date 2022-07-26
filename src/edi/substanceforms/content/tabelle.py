@@ -118,7 +118,8 @@ class ITabelle(model.Schema):
 
     notice = RichText(
         title=u"Hinweistext zur Anzeige in der Einzelansicht",
-        description=u"Dieser Hinweistext wird in der Einzelansicht eines Produktes der Tabelle angezeigt"
+        description=u"Dieser Hinweistext wird in der Einzelansicht eines Produktes der Tabelle angezeigt",
+        required=False
     )
 
     columns = schema.List(
