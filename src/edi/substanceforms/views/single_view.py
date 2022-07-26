@@ -220,7 +220,7 @@ class SingleView(BrowserView):
         return {}
 
     def evaporation_lane_150(self):
-        title = "Verdampfungsfaktor F<sup>V</sup> (Bahntemperatur 150 °C)"
+        title = "Verdampfungsfaktor Fv (Bahntemperatur 150 °C)"
         fieldindex = possibleColumns(self.context).getTerm('evaporation_lane_150').token
         value = self.article[int(fieldindex)]
         if value:
