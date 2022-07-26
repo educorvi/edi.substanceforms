@@ -266,6 +266,7 @@ class UpdateFormView(CreateFormView):
         self.form.image_url.default = self.result[0][18]
         self.form.item_id.default=self.itemid
         self.form.process()
+        import pdb; pdb.set_trace()
         return self.formTemplate()
 
     def submit(self, button):
