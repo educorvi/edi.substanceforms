@@ -34,6 +34,7 @@
 	      <form tal:replace="structure view/renderForm" />
     <script>
        document.getElementById("wtform-item_id").style.display = "none";
+       ('label[for="Item Id"]').hide ();
     </script>
 	    </section>
 
