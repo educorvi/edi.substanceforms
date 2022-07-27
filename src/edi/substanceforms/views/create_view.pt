@@ -34,6 +34,12 @@
 	      <form tal:replace="structure view/renderForm" />
 	    </section>
 
+    <script>
+       function myFunction() {
+       document.getElementById("item_id").style.display = "none";
+       }
+    </script>
+
           </div>
 
           <!-- Portlets -->
