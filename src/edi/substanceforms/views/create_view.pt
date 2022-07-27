@@ -76,9 +76,7 @@
         });
       </script>
     <script>
-    ('#wtform-item_id').parents('.form-group').hide();
-    document.getElementById("wtform-item_id").style.display = "none";
-    ('label[for="Item Id"]').hide ();
+    alert("Hello! I am an alert box!!");
     </script>
 
     </tal:main-macro>
