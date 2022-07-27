@@ -76,7 +76,9 @@
         });
       </script>
     <script>
-    alert("Hello! I am an alert box!!");
+      $( document ).ready(function() {
+        alert("Hello! I am an alert box!!");
+      });
     </script>
 
     </tal:main-macro>
