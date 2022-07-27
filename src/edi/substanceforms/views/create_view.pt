@@ -33,7 +33,7 @@
             <section class="mt-3 mb-3">
 	      <form tal:replace="structure view/renderForm" />
     <script>
-       document.getElementById("item_id").style.display = "none";
+       document.getElementById("wtform-item_id").style.display = "none";
     </script>
 	    </section>
 
