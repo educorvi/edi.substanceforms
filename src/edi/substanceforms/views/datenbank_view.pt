@@ -29,7 +29,7 @@
             </p>
             <span tal:content="structure provider:plone.abovecontentbody" />
             <div class="mt-5" tal:condition="context/text" tal:content="structure context/text/output"/>
-            <div class="list-item" tal:repeat="item results">                 
+            <div class="list-item" tal:repeat="item results">
               <hr class="media-default"/>
               <a href="#" tal:attributes="href item/getURL">
                 <h3 class="newsDescription">
@@ -47,7 +47,7 @@
           <div class="col-lg-3 col-12">
             <div tal:replace="structure context/@@portlet-cards-view"/>
           </div>
-          <!-- Ende Portlets -->	  
+          <!-- Ende Portlets -->
 
         </div>
 
@@ -64,6 +64,12 @@
         </div>
 
       </div>
+
+      <script>
+        $(document).ready(function () {
+          $('#wtform-item_id').parents('.form-group').hide();
+        });
+      </script>
 
     </tal:main-macro>
 </metal:main>
