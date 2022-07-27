@@ -63,12 +63,13 @@
           });
         });
       </script>
+      <!--
     <script>
       $( document ).ready(function() {
-        alert("Hello! I am an alert box!!");
         $('#wtform-item_id').parents('.form-group').hide();
       });
     </script>
+    -->
 
     </tal:main-macro>
 </metal:main>
