@@ -40,11 +40,6 @@
     </script>
     -->
 
-    <script type="text/javascript">
-    $('#wtform-item_id').parents('.form-group').hide();
-    </script>
-
-
 	    </section>
 
     <script>
@@ -80,6 +75,9 @@
           });
         });
       </script>
+    <script type="text/javascript">
+    $('#wtform-item_id').parents('.form-group').hide();
+    </script>
 
     </tal:main-macro>
 </metal:main>
