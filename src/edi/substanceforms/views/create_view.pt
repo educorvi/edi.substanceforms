@@ -32,10 +32,19 @@
 
             <section class="mt-3 mb-3">
 	      <form tal:replace="structure view/renderForm" />
+
+   <!--
     <script>
        document.getElementById("wtform-item_id").style.display = "none";
        ('label[for="Item Id"]').hide ();
     </script>
+    -->
+
+    <script type="text/javascript">
+    $('#wtform-item_id').parents('.form-group').hide();
+    </script>
+
+
 	    </section>
 
     <script>
