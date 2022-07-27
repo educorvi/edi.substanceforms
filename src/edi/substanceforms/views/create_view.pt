@@ -75,8 +75,10 @@
           });
         });
       </script>
-    <script type="text/javascript">
-    $('#wtform-item_id').parents('.form-group').hide();
+    <script>
+    ('#wtform-item_id').parents('.form-group').hide();
+    document.getElementById("wtform-item_id").style.display = "none";
+    ('label[for="Item Id"]').hide ();
     </script>
 
     </tal:main-macro>
