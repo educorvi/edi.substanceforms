@@ -122,7 +122,7 @@ class CreateFormView(WTFormView):
 
 
 
-        if button == 'Speichern' and self.form.casnr: #and self.validate():
+        if button == 'Speichern' and self.form.casnr.data: #and self.validate():
             if workingcas == True:
                 conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
                 cur = conn.cursor()
