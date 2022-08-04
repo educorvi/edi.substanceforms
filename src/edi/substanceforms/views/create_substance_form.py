@@ -103,11 +103,10 @@ class CreateFormView(WTFormView):
         redirect_url = self.context.absolute_url() + '/reinstoffe-1'
 
 
-        if self.form.casnr:
-            import pdb; pdb.set_trace()
+        if self.form.casnr.data:
             index = 1
             checksum = 0
-            cas = self.form.casnr
+            cas = self.form.casnr.data
             newcas = cas.replace('-', '')
             validator = newcas[-1]
             newcas = newcas[:-1]
