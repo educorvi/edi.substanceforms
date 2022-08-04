@@ -104,6 +104,7 @@ class CreateFormView(WTFormView):
 
 
         if self.form.casnr:
+            import pdb; pdb.set_trace()
             index = 1
             checksum = 0
             cas = self.form.casnr
