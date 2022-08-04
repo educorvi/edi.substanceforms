@@ -102,7 +102,7 @@ class CreateFormView(WTFormView):
         """
         redirect_url = self.context.absolute_url() + '/reinstoffe-1'
 
-
+        workingcas = False
         if self.form.casnr.data:
             index = 1
             checksum = 0
