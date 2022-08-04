@@ -155,7 +155,7 @@ class CreateFormView(WTFormView):
             else:
                 message = u'Die CAS-Nummer enthält einen Fehler'
                 ploneapi.portal.show_message(message=message, type='error', request=self.request)
-                return self.request.response.redirect(redirect_url)
+                return None
 
 
         elif button == 'Speichern':
