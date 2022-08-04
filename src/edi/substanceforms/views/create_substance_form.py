@@ -106,7 +106,7 @@ class CreateFormView(WTFormView):
         if self.form.casnr.data:
             index = 1
             checksum = 0
-            cas = self.form.casnr.data
+            cas = self.form.casnr.data.strip()
             newcas = cas.replace('-', '')
             validator = newcas[-1]
             newcas = newcas[:-1]
@@ -130,7 +130,7 @@ class CreateFormView(WTFormView):
                 VALUES ('%s', '%s', '%s', %s, %s, %s, %s, %s, %s, %s, %s, %s);""" % (self.form.title.data,
                                                            self.form.description.data,
                                                            self.context.aq_parent.get_webcode(),
-                                                           check_value(self.form.casnr.data),
+                                                           check_value(self.form.casnr.data).strip(),
                                                            check_value(self.form.egnr.data),
                                                            check_value(self.form.concentration.data),
                                                            check_value(self.form.skin_category.data),
@@ -165,7 +165,7 @@ class CreateFormView(WTFormView):
             VALUES ('%s', '%s', '%s', %s, %s, %s, %s, %s, %s, %s, %s, %s);""" % (self.form.title.data,
                                                                                  self.form.description.data,
                                                                                  self.context.aq_parent.get_webcode(),
-                                                                                 check_value(self.form.casnr.data),
+                                                                                 check_value(self.form.casnr.data).strip(),
                                                                                  check_value(self.form.egnr.data),
                                                                                  check_value(
                                                                                      self.form.concentration.data),
