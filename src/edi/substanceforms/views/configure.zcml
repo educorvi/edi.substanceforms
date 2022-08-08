@@ -13,6 +13,14 @@
     permission="zope2.View"
     />
 
+
+  <browser:page
+    name="csvmixturenewsubstance"
+    for="*"
+    class=".csvexport.CsvmixtureNew"
+    permission="zope2.View"
+    />
+
   <browser:page
     name="csvpowder"
     for="*"
