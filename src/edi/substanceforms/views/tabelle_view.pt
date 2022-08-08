@@ -82,11 +82,11 @@
           <span class="col-lg-9 col-12" tal:content="structure provider:nva.contentcards" />
         </div>
 
-        <div class="row" tal:condition="context/endtext">
+        <div class="row mt-3" tal:condition="context/endtext">
           <div class="col-lg-9 col-12" tal:content="structure context/endtext/output"/>
         </div>
 
-        <div class="row">
+        <div class="row mt-3">
           <span class="col-lg-9 col-12" tal:content="structure provider:plone.belowcontentbody" />
         </div>
 
