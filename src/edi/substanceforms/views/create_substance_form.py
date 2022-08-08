@@ -100,32 +100,92 @@ class CreateFormView(WTFormView):
         if self.form.image_url.data.filename:
             image_url = self.create_image(self.form.image_url, self.form.title.data)
         """
-        redirect_url = self.context.aq_parent.absolute_url()
-        if button == 'Speichern': #and self.validate():
+        redirect_url = self.context.absolute_url() + '/reinstoffe-1'
+
+        workingcas = False
+        if self.form.casnr.data:
+            index = 1
+            checksum = 0
+            cas = self.form.casnr.data.strip()
+            newcas = cas.replace('-', '')
+            validator = newcas[-1]
+            newcas = newcas[:-1]
+            reversedcas = newcas[::-1]
+            for i in reversedcas:
+                checksum = checksum + (int(i) * index)
+                index = index + 1
+
+            if int(checksum) % 10 == int(validator):
+                workingcas = True
+            else:
+                workingcas = False
+
+
+
+        if button == 'Speichern' and self.form.casnr.data: #and self.validate():
+            if workingcas == True:
+                conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
+                cur = conn.cursor()
+                insert = """INSERT INTO substance (title, description, webcode, casnr, egnr, concentration, skin_category, branch, formula, mol, link, status)
+                VALUES ('%s', '%s', '%s', %s, %s, %s, %s, %s, %s, %s, %s, %s);""" % (self.form.title.data,
+                                                           self.form.description.data,
+                                                           self.context.aq_parent.get_webcode(),
+                                                           check_value(self.form.casnr.data).strip(),
+                                                           check_value(self.form.egnr.data),
+                                                           check_value(self.form.concentration.data),
+                                                           check_value(self.form.skin_category.data),
+                                                           check_value(self.form.branch.data),
+                                                           check_value(self.form.formula.data),
+                                                           check_value(self.form.mol.data),
+                                                           check_value(self.form.gestislink.data),
+                                                           check_value(self.form.status),
+                                                                   )
+
+
+                cur.execute(insert)
+                conn.commit()
+                cur.close()
+                conn.close()
+
+                message = u'Der Reinstoff wurde erfolgreich gespeichert.'
+                ploneapi.portal.show_message(message=message, type='info', request=self.request)
+
+                return self.request.response.redirect(redirect_url)
+
+            else:
+                message = u'Die CAS-Nummer enthält einen Fehler'
+                ploneapi.portal.show_message(message=message, type='error', request=self.request)
+                return None
+
+
+        elif button == 'Speichern':
             conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
             cur = conn.cursor()
             insert = """INSERT INTO substance (title, description, webcode, casnr, egnr, concentration, skin_category, branch, formula, mol, link, status)
             VALUES ('%s', '%s', '%s', %s, %s, %s, %s, %s, %s, %s, %s, %s);""" % (self.form.title.data,
-                                                       self.form.description.data,
-                                                       self.context.aq_parent.get_webcode(),
-                                                       check_value(self.form.casnr.data),
-                                                       check_value(self.form.egnr.data),
-                                                       check_value(self.form.concentration.data),
-                                                       check_value(self.form.skin_category.data),
-                                                       check_value(self.form.branch.data),
-                                                       check_value(self.form.formula.data),
-                                                       check_value(self.form.mol.data),
-                                                       check_value(self.form.gestislink.data),
-                                                       check_value(self.form.status),
-                                                               )
-
+                                                                                 self.form.description.data,
+                                                                                 self.context.aq_parent.get_webcode(),
+                                                                                 check_value(self.form.casnr.data).strip(),
+                                                                                 check_value(self.form.egnr.data),
+                                                                                 check_value(
+                                                                                     self.form.concentration.data),
+                                                                                 check_value(
+                                                                                     self.form.skin_category.data),
+                                                                                 check_value(self.form.branch.data),
+                                                                                 check_value(
+                                                                                     self.form.formula.data),
+                                                                                 check_value(self.form.mol.data),
+                                                                                 check_value(
+                                                                                     self.form.gestislink.data),
+                                                                                 check_value(self.form.status),
+                                                                                 )
 
             cur.execute(insert)
             conn.commit()
             cur.close()
             conn.close()
 
-            message = u'Das Wasch- und Reinigungsmittel wurde erfolgreich gespeichert.'
+            message = u'Der Reinstoff wurde erfolgreich gespeichert.'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
 
             return self.request.response.redirect(redirect_url)
