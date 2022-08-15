@@ -134,6 +134,11 @@ class CreateFormView(WTFormView):
         redirect_url = self.context.aq_parent.absolute_url()
         if button == 'Speichern': #and self.validate():
 
+            if not self.skin_category.data:
+                return None
+
+
+
             conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
             cur = conn.cursor()
             insert = """INSERT INTO substance_mixture (title, description, webcode, branch, substance_type,
