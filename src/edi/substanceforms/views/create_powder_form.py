@@ -65,9 +65,11 @@ class CreateFormView(WTFormView):
     def renderForm(self):
         try:
             command = "SELECT manufacturer_id, title FROM manufacturer ORDER BY title;"
-            manus = self.db.execute(command)
+            erg = self.db.execute(command)
+            manus = [(result[0], result[1] + ' ID:' + str(result[0])) for result in erg]
         except:
             manus = []
+
         self.form.manufacturer_id.choices = manus
         self.form.process()
         return self.formTemplate()
