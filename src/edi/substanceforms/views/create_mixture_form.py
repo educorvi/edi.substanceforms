@@ -501,7 +501,8 @@ class UpdateManufacturerFormView(CreateFormView):
     def renderForm(self):
         try:
             insert = "SELECT manufacturer_id, title FROM manufacturer ORDER BY title;"
-            manus = self.db.execute(insert)
+            erg = self.db.execute(insert)
+            manus = [(result[0], result[1] + ' ID:' + str(result[0])) for result in erg]
         except:
             manus = []
         self.form.manufacturer_id.choices = manus
@@ -514,7 +515,7 @@ class UpdateManufacturerFormView(CreateFormView):
         """
         redirect_url = self.context.absolute_url() + '/single_view?item=' + self.form.item_id.data
         if button == 'Speichern': #and self.validate():
-            command = """UPDATE substance_mixture SET manufacturer_id=%s WHERE substance_mixture_id = %s;""" % (self.form.manufacturer_id.data,
+            command = """UPDATE substance_mixture SET manufacturer_id=%s WHERE substance_mixture_id = %s;""" % (check_value(self.form.manufacturer_id.data.split('ID:')[-1]),
                                                                                                                 self.form.item_id.data)
             self.db.execute(command)
             message = u'Das Gefahrstoffgemisch wurde erfolgreich aktualisiert.'
