@@ -141,6 +141,10 @@ class CreateFormView(WTFormView):
 
 
             import pdb; pdb.set_trace()
+            if self.form.date_checked.data:
+                date_checked = self.form.date_checked.data.strftime("%Y-%m-%d")
+            else:
+                date_checked = ''
 
             conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
             cur = conn.cursor()
@@ -165,7 +169,7 @@ class CreateFormView(WTFormView):
                                                         check_value(self.form.response.data),
                                                         check_value(self.form.skin_category.data),
                                                         self.form.checked_emissions.data,
-                                                        check_value(self.form.date_checked.data.strftime("%Y-%m-%d")),
+                                                        check_value(date_checked),
                                                         check_value(self.form.flashpoint.data),
                                                         self.form.values_range.data,
                                                         check_value(self.form.comments.data),
