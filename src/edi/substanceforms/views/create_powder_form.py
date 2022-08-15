@@ -103,7 +103,7 @@ class CreateFormView(WTFormView):
                                                        check_value(self.form.checked_emissions.data),
                                                        check_value(self.form.date_checked.data),
                                                        check_value(image_url),
-                                                       self.form.manufacturer_id.data)
+                                                       check_value(self.form.manufacturer_id.data.split('ID:')[-1]))
 
             if self.form.image_url.data.filename:
 
