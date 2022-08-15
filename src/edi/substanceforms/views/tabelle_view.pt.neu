@@ -90,13 +90,15 @@
           <span class="col-lg-9 col-12" tal:content="structure provider:plone.belowcontentbody" />
         </div>
 
-	<script tal:attributes="src view/get_searchscript"></script>
-	<script tal:attributes="src view/get_hiddenscript"></script>
-	<script async tal:attributes="src view/get_tablescript"></script>
-
       </div>
+
+      <!--<script tal:attributes=src "view/get_tablescript" />
+      <script tal:attributes=src "view/get_searchscript" />
+      <script tal:attributes=src "view/get_hiddenscript" />-->
+
 
     </tal:main-macro>
 </metal:main>
+
 </body>
 </html>

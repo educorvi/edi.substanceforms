@@ -12,10 +12,8 @@
       />
 
   <!-- Publish static files -->
-  <plone:static
-      name="edi.substanceforms"
-      type="plone"
-      directory="static"
-      />
+  <browser:resourceDirectory
+    name="edi.substanceforms"
+    directory="static" />
 
 </configure>
