@@ -297,7 +297,7 @@ class SubstancemixtureFormView(TabelleFormView):
                     select = "SELECT DISTINCT substance_mixture.manufacturer_id, manufacturer.title FROM manufacturer, substance_mixture WHERE substance_mixture.manufacturer_id = manufacturer.manufacturer_id AND substance_type = '%s' ORDER BY title;" % (mixturetype[0])
                 else:
                     select = ""
-                    beginselect = "SELECT DISTINCT substance_mixture.manufacturer_id, manufacturer.title FROM manufacturer, substance_mixture WHERE (substance_mixture.manufacturer_id = manufacturer.manufacturer_id AND substance_type = '%s'" % (mixturetype[0])
+                    beginselect = "SELECT DISTINCT substance_mixture.manufacturer_id, manufacturer.title FROM manufacturer, substance_mixture WHERE substance_mixture.manufacturer_id = manufacturer.manufacturer_id AND (substance_type = '%s'" % (mixturetype[0])
                     select = select + beginselect
                     for i in mixturetype[1:]:
                         addedselect = " OR substance_type = '%s'" % i
