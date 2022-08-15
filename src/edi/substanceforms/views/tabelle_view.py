@@ -57,6 +57,15 @@ class TabelleFormView(WTFormView):
                 return result
         return self.index()
 
+    def get_tablescript(self):
+        return ploneapi.portal.get().absolute_url() + '/++resource++edi.substanceforms/tabelle.js'
+
+    def get_searchscript(self):
+        return ploneapi.portal.get().absolute_url() + '/++resource++edi.substanceforms/search.js'
+
+    def get_hiddenscript(self):
+        return ploneapi.portal.get().absolute_url() + '/++resource++edi.substanceforms/hidden.js'
+
     def get_preselects(self):
         moreresultcolumns = self.context.moreresultcolumns
         #brains = self.context.getFolderContents()
