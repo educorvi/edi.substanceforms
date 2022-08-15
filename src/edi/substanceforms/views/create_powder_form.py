@@ -23,7 +23,7 @@ class CreateForm(Form):
     median_value = FloatField("Medianwert in µm", render_kw={'class': 'form-control'})
     volume_share = FloatField("Volumenanteil < 10 µm", render_kw={'class': 'form-control'})
     checked_emissions = BooleanField("Emissionsgeprüft", render_kw={'class': 'form-check-input'})
-    date_checked = StringField("Prüfdatum", render_kw={'class': 'form-control'})
+    date_checked = StringField("Prüfdatum", render_kw={'class': 'form-control', 'type': 'date'})
     image_url = FileField("Bild hochladen", render_kw={'class': 'form-control'})
 
 class UpdateForm(Form):
