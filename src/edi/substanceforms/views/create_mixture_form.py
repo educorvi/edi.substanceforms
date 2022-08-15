@@ -140,7 +140,6 @@ class CreateFormView(WTFormView):
                 return None
 
 
-            import pdb; pdb.set_trace()
             if self.form.date_checked.data:
                 date_checked = self.form.date_checked.data.strftime("%Y-%m-%d")
             else:
