@@ -135,6 +135,8 @@ class CreateFormView(WTFormView):
         if button == 'Speichern': #and self.validate():
 
             if not self.form.skin_category.data:
+                message = u'Bitte füllen Sie das Feld "Hautschutz-Kategorie" aus'
+                ploneapi.portal.show_message(message=message, type='error', request=self.request)
                 return None
 
 
