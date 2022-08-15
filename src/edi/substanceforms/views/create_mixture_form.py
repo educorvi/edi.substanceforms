@@ -38,7 +38,7 @@ class CreateForm(Form):
     ueg = StringField(u"UEG in g/m3", render_kw={'class': 'form-control'})
     response = StringField(u"Response-Faktor", render_kw={'class': 'form-control'})
     skin_category = RadioField(u"Hautschutz-Kategorie", [validators.required()], choices=hskategorie)
-    date_checked = DateField(u"Datum der letzten Prüfung (YYYY-MM-DD)", render_kw={'class': 'form-control', 'type': 'date'})
+    date_checked = DateField(u"Datum der letzten Prüfung", render_kw={'class': 'form-control', 'type': 'date'})
     checked_emissions = BooleanField(u"Emissionsarmes Produkt", render_kw={'class': 'form-check-input'})
     flashpoint = IntegerField(u"Flammpunkt [°C]", render_kw={'class': 'form-control'})
     values_range = BooleanField(u"Wertebereich", render_kw={'class': 'form-check-input'})
@@ -63,7 +63,7 @@ class UpdateForm(Form):
     ueg = StringField(u"UEG in g/m3", render_kw={'class': 'form-control'})
     response = StringField(u"Response-Faktor", render_kw={'class': 'form-control'})
     skin_category = RadioField(u"Hautschutz-Kategorie", choices=hskategorie)
-    date_checked = DateField(u"Datum der letzten Prüfung (YYYY-MM-DD)", render_kw={'class': 'form-control', 'type': 'date'})
+    date_checked = DateField(u"Datum der letzten Prüfung", render_kw={'class': 'form-control', 'type': 'date'})
     checked_emissions = BooleanField(u"Emissionsarmes Produkt", render_kw={'class': 'form-check-input'})
     flashpoint = IntegerField(u"Flammpunkt [°C]", render_kw={'class': 'form-control'})
     values_range = BooleanField(u"Wertebereich", render_kw={'class': 'form-check-input'})
@@ -140,6 +140,7 @@ class CreateFormView(WTFormView):
                 return None
 
 
+            import pdb; pdb.set_trace()
 
             conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
             cur = conn.cursor()
