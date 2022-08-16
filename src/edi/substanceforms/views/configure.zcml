@@ -270,7 +270,7 @@
     name="delete-manufacturer-form"
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".create_manufacturer_form.DeleteFormView"
-    template = "create_view.pt"
+    template = "delete_view.pt"
     permission="cmf.ModifyPortalContent"
     />
 
