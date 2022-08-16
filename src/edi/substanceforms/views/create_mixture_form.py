@@ -284,10 +284,17 @@ class UpdateFormView(CreateFormView):
         """
         redirect_url = self.context.absolute_url() + '/single_view?item=' + self.form.item_id.data
         if button == 'Speichern': #and self.validate():
+
+            if self.form.date_checked.data:
+                import pdb; pdb.set_trace()
+                date_checked = self.form.date_checked.data.strftime("%Y-%m-%d")
+            else:
+                date_checked = ''
+
             command = """UPDATE substance_mixture SET title=%s, description=%s, branch=%s, substance_type=%s,
                          evaporation_lane_150=%s, evaporation_lane_160=%s, evaporation_lane_170=%s, evaporation_lane_180=%s,
                          ueg=%s, response=%s, skin_category=%s, checked_emissions=%s,
-                         flashpoint=%s, values_range=%s, comments=%s, productclass=%s, date_checked = %s
+                         flashpoint=%s, values_range=%s, comments=%s, productclass=%s, date_checked=%s
                          WHERE substance_mixture_id = %s;""" % \
                                                         (check_value(self.form.title.data),
                                                         check_value(self.form.description.data),
@@ -305,7 +312,7 @@ class UpdateFormView(CreateFormView):
                                                         check_value(self.form.values_range.data),
                                                         check_value(self.form.comments.data),
                                                         check_value(self.form.productclass.data),
-                                                        check_value(self.form.date_checked.data.strftime("%Y-%m-%d")),
+                                                        check_value(date_checked),
                                                         check_value(self.form.item_id.data))
             self.db.execute(command)
 
