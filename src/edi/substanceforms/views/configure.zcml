@@ -286,7 +286,7 @@
     name="delete-mixture-form"
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".create_mixture_form.DeleteFormView"
-    template = "create_view.pt"
+    template = "delete_view.pt"
     permission="cmf.ModifyPortalContent"
     />
 
