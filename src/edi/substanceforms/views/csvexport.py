@@ -297,10 +297,12 @@ class CsvmixtureNew(BrowserView):
                 else:
                     newusecases = "keine Angabe"
 
-                import pdb; pdb.set_trace()
-
                 zusammensetzungsselect = "SELECT * FROM recipes WHERE mixture_id = %s" % id
                 newentries = self.db.execute(zusammensetzungsselect)
+
+                if newentries:
+                    import pdb; pdb.set_trace()
+
 
 
                 zusammensetzung = "keine Angabe"
