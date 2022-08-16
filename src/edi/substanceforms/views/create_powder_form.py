@@ -25,6 +25,7 @@ class CreateForm(Form):
     checked_emissions = BooleanField("Emissionsgeprüft", render_kw={'class': 'form-check-input'})
     date_checked = StringField("Prüfdatum", render_kw={'class': 'form-control', 'type': 'date'})
     image_url = FileField("Bild hochladen", render_kw={'class': 'form-control'})
+    status = "published"
 
 class UpdateForm(Form):
 
@@ -99,7 +100,7 @@ class CreateFormView(WTFormView):
                 date_checked = ''
 
             insert = """INSERT INTO spray_powder VALUES (DEFAULT, '%s', '%s', '%s',
-                        %s, %s, %s, %s, %s, %s, %s, %s);""" % (self.form.title.data,
+                        %s, %s, %s, %s, %s, %s, %s, %s, %s);""" % (self.form.title.data,
                                                        self.form.description.data,
                                                        self.context.aq_parent.get_webcode(),
                                                        check_value(self.form.product_class.data),
@@ -109,7 +110,8 @@ class CreateFormView(WTFormView):
                                                        check_value(self.form.checked_emissions.data),
                                                        check_value(date_checked),
                                                        check_value(image_url),
-                                                       check_value(self.form.manufacturer_id.data.split('ID:')[-1]))
+                                                       check_value(self.form.manufacturer_id.data.split('ID:')[-1]),
+                                                       check_value(self.form.status))
 
             if self.form.image_url.data.filename:
 

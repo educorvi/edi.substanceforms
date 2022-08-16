@@ -44,6 +44,7 @@ class CreateForm(Form):
     values_range = BooleanField(u"Wertebereich", render_kw={'class': 'form-check-input'})
     image_url = FileField("Bilddatei hochladen", render_kw={'class': 'form-control'})
     comments = TextAreaField("Bemerkungen", render_kw={'class': 'form-control'})
+    status = "published"
 
 class UpdateForm(Form):
 
@@ -151,10 +152,10 @@ class CreateFormView(WTFormView):
                                                         evaporation_lane_150, evaporation_lane_160,
                                                         evaporation_lane_170, evaporation_lane_180, ueg, response,
                                                         skin_category, checked_emissions, date_checked, flashpoint,
-                                                        values_range, comments, image_url, manufacturer_id)
+                                                        values_range, comments, image_url, manufacturer_id, status)
                                                         VALUES ('%s', '%s', '%s', %s, '%s',
                                                         %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
-                                                        %s, %s);""" \
+                                                        %s, %s, %s);""" \
                                                         % (self.form.title.data,
                                                         self.form.description.data,
                                                         self.context.aq_parent.get_webcode(),
@@ -173,7 +174,9 @@ class CreateFormView(WTFormView):
                                                         self.form.values_range.data,
                                                         check_value(self.form.comments.data),
                                                         check_value(image_url),
-                                                        check_value(self.form.manufacturer_id.data.split('ID:')[-1]))
+                                                        check_value(self.form.manufacturer_id.data.split('ID:')[-1]),
+                                                        check_value(self.form.status))
+
 
             areaids = list()
             for i in self.form.application_areas.data:
