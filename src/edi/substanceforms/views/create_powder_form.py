@@ -186,7 +186,7 @@ class UpdateFormView(CreateFormView):
                 date_checked = ''
 
             command = """UPDATE spray_powder SET title='%s', description='%s', product_class='%s', starting_material='%s',
-                         median_value=%s, volume_share=%s, checked_emissions=%s, date_checked =
+                         median_value=%s, volume_share=%s, checked_emissions=%s, date_checked=%s
                          WHERE spray_powder_id = %s;""" % (self.form.title.data,
                                                         self.form.description.data,
                                                         self.form.product_class.data,
@@ -194,6 +194,7 @@ class UpdateFormView(CreateFormView):
                                                         check_value(self.form.median_value.data),
                                                         check_value(self.form.volume_share.data),
                                                         check_value(self.form.checked_emissions.data),
+                                                        check_value(date_checked)
                                                         self.form.item_id.data)
             self.db.execute(command)
             message = u'Der Druckbestäubungspuder wurde erfolgreich aktualisiert.'
