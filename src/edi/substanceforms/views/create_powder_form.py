@@ -194,7 +194,7 @@ class UpdateFormView(CreateFormView):
                                                         check_value(self.form.median_value.data),
                                                         check_value(self.form.volume_share.data),
                                                         check_value(self.form.checked_emissions.data),
-                                                        check_value(date_checked)
+                                                        check_value(date_checked),
                                                         self.form.item_id.data)
             self.db.execute(command)
             message = u'Der Druckbestäubungspuder wurde erfolgreich aktualisiert.'
