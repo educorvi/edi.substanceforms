@@ -311,7 +311,10 @@ class CsvmixtureNew(BrowserView):
                         cas = self.db.execute(casselect)
                         concentration_min = entry[3]
                         concentration_max = entry[4]
-                        singleentry.append(substance, cas, concentration_min, concentration_max)
+                        singleentry.append(substance)
+                        singleentry.append(cas)
+                        singleentry.append(concentration_min)
+                        singleentry.append(concentration_max)
                         entrylist.append(singleentry)
 
                 if len(entrylist) == 1:
