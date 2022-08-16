@@ -340,7 +340,7 @@ class CsvmixtureNew(BrowserView):
                          ueg, response, newskincategory, newchecked_emissions, date_checked, flashpoint,
                          newvalues_range,
                          newclassifications, newindicators, comments, manufacturer, status, newproductclass,
-                         entrylist[0])
+                         entrylist, None, None, None)
                 """
                 if isinstance(entrylist, list) and len(entrylist) >= 1:
                     for entry in entrylist:
