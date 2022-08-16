@@ -328,6 +328,7 @@ class CsvmixtureNew(BrowserView):
                              newclassifications, newindicators, comments, manufacturer, status, newproductclass,
                              entry[0][0][0], entry[1][0][0], entry[2], entry[3]])
                         if len(entrylist) > 1:
+                            import pdb; pdb.set_trace()
                             entrylist.pop(0)
                             writer.writerow(
                                 [None, None, None, None, None, None, None, None, None, None, None, None, None,
