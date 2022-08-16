@@ -317,6 +317,7 @@ class CsvmixtureNew(BrowserView):
                         singleentry.append(concentration_max)
                         entrylist.append(singleentry)
 
+                """
                 if len(entrylist) == 1:
                     writer.writerow(
                         [id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas,
@@ -325,6 +326,16 @@ class CsvmixtureNew(BrowserView):
                          newvalues_range,
                          newclassifications, newindicators, comments, manufacturer, status, newproductclass,
                          entrylist[0][0][0][0], entrylist[0][1][0][0], entrylist[0][2], entrylist[0][3]])
+                """
+                if len(entrylist) >= 1:
+                    for entry in entrylist:
+                        writer.writerow(
+                            [id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas,
+                             newusecases, evap_150, evap_160, evap_170, evap_180,
+                             ueg, response, newskincategory, newchecked_emissions, date_checked, flashpoint,
+                             newvalues_range,
+                             newclassifications, newindicators, comments, manufacturer, status, newproductclass,
+                             entry[0][0][0], entry[1][0][0], entry[2], entry[3]])
 
 
 
