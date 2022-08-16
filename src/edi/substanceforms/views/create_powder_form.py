@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import transaction
-from wtforms import Form, StringField, SelectField, IntegerField, FileField, FloatField, BooleanField, HiddenField, RadioField
+from wtforms import Form, StringField, SelectField, IntegerField, FileField, FloatField, BooleanField, HiddenField, RadioField, DateField
 from wtforms import validators
 from collective.wtforms.views import WTFormView
 from edi.substanceforms.helpers import check_value
@@ -23,7 +23,7 @@ class CreateForm(Form):
     median_value = FloatField("Medianwert in µm", render_kw={'class': 'form-control'})
     volume_share = FloatField("Volumenanteil < 10 µm", render_kw={'class': 'form-control'})
     checked_emissions = BooleanField("Emissionsgeprüft", render_kw={'class': 'form-check-input'})
-    date_checked = StringField("Prüfdatum", render_kw={'class': 'form-control', 'type': 'date'})
+    date_checked = DateField("Prüfdatum", render_kw={'class': 'form-control', 'type': 'date'})
     image_url = FileField("Bild hochladen", render_kw={'class': 'form-control'})
     status = "published"
 
@@ -37,7 +37,7 @@ class UpdateForm(Form):
     median_value = FloatField("Medianwert in µm", render_kw={'class': 'form-control'})
     volume_share = FloatField("Volumenanteil < 10 µm", render_kw={'class': 'form-control'})
     checked_emissions = BooleanField("Emissionsgeprüft", render_kw={'class': 'form-check-input'})
-    date_checked = StringField("Prüfdatum", render_kw={'class': 'form-control', 'type': 'date'})
+    date_checked = DateField("Prüfdatum", render_kw={'class': 'form-control', 'type': 'date'})
     item_id = HiddenField()
 
 class DeleteForm(Form):
