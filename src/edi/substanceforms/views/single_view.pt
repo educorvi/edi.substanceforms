@@ -43,7 +43,7 @@
      <article>
        <section class="article-body clearfix" tal:define="definitions view/definitions;
                                                           moredefinitions view/more_definitions">
-         <dl class="row key-value-pair">
+         <dl class="row keyvalue">
            <span tal:repeat="definition definitions" tal:replace="structure definition"/>
            <span tal:repeat="definition moredefinitions" tal:replace="structure definition"/>
          </dl>
