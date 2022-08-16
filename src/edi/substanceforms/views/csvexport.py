@@ -327,7 +327,7 @@ class CsvmixtureNew(BrowserView):
                          newclassifications, newindicators, comments, manufacturer, status, newproductclass,
                          entrylist[0][0][0][0], entrylist[0][1][0][0], entrylist[0][2], entrylist[0][3]])
                 """
-                if len(entrylist) >= 1:
+                if isinstance(entrylist, list) and len(entrylist) >= 1:
                     for entry in entrylist:
                         import pdb; pdb.set_trace()
                         writer.writerow(
