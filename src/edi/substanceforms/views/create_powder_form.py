@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import transaction
-from wtforms import Form, StringField, SelectField, IntegerField, FileField, FloatField, BooleanField, HiddenField, RadioField
+from wtforms import Form, StringField, SelectField, IntegerField, FileField, FloatField, BooleanField, HiddenField, RadioField, DateField
 from wtforms import validators
 from collective.wtforms.views import WTFormView
 from edi.substanceforms.helpers import check_value
@@ -23,8 +23,9 @@ class CreateForm(Form):
     median_value = FloatField("Medianwert in µm", render_kw={'class': 'form-control'})
     volume_share = FloatField("Volumenanteil < 10 µm", render_kw={'class': 'form-control'})
     checked_emissions = BooleanField("Emissionsgeprüft", render_kw={'class': 'form-check-input'})
-    date_checked = StringField("Prüfdatum", render_kw={'class': 'form-control'})
+    date_checked = DateField("Prüfdatum", render_kw={'class': 'form-control', 'type': 'date'})
     image_url = FileField("Bild hochladen", render_kw={'class': 'form-control'})
+    status = "published"
 
 class UpdateForm(Form):
 
@@ -36,7 +37,7 @@ class UpdateForm(Form):
     median_value = FloatField("Medianwert in µm", render_kw={'class': 'form-control'})
     volume_share = FloatField("Volumenanteil < 10 µm", render_kw={'class': 'form-control'})
     checked_emissions = BooleanField("Emissionsgeprüft", render_kw={'class': 'form-check-input'})
-    date_checked = StringField("Prüfdatum", render_kw={'class': 'form-control'})
+    date_checked = DateField("Prüfdatum", render_kw={'class': 'form-control', 'type': 'date'})
     item_id = HiddenField()
 
 class DeleteForm(Form):
@@ -65,9 +66,11 @@ class CreateFormView(WTFormView):
     def renderForm(self):
         try:
             command = "SELECT manufacturer_id, title FROM manufacturer ORDER BY title;"
-            manus = self.db.execute(command)
+            erg = self.db.execute(command)
+            manus = [(result[0], result[1] + ' ID:' + str(result[0])) for result in erg]
         except:
             manus = []
+
         self.form.manufacturer_id.choices = manus
         self.form.process()
         return self.formTemplate()
@@ -90,8 +93,14 @@ class CreateFormView(WTFormView):
             image_url = self.create_image(self.form.image_url, self.form.title.data)
         redirect_url = self.context.aq_parent.absolute_url()
         if button == 'Speichern': #and self.validate():
+
+            if self.form.date_checked.data:
+                date_checked = self.form.date_checked.data.strftime("%Y-%m-%d")
+            else:
+                date_checked = ''
+
             insert = """INSERT INTO spray_powder VALUES (DEFAULT, '%s', '%s', '%s',
-                        %s, %s, %s, %s, %s, %s, %s, %s);""" % (self.form.title.data,
+                        %s, %s, %s, %s, %s, %s, %s, %s, %s);""" % (self.form.title.data,
                                                        self.form.description.data,
                                                        self.context.aq_parent.get_webcode(),
                                                        check_value(self.form.product_class.data),
@@ -99,9 +108,10 @@ class CreateFormView(WTFormView):
                                                        check_value(self.form.median_value.data),
                                                        check_value(self.form.volume_share.data),
                                                        check_value(self.form.checked_emissions.data),
-                                                       check_value(self.form.date_checked.data),
+                                                       check_value(date_checked),
                                                        check_value(image_url),
-                                                       self.form.manufacturer_id.data)
+                                                       check_value(self.form.manufacturer_id.data.split('ID:')[-1]),
+                                                       check_value(self.form.status))
 
             if self.form.image_url.data.filename:
 
@@ -169,8 +179,14 @@ class UpdateFormView(CreateFormView):
         """
         redirect_url = self.context.absolute_url() + '/single_view?item=' + self.form.item_id.data
         if button == 'Speichern': #and self.validate():
+
+            if self.form.date_checked.data:
+                date_checked = self.form.date_checked.data.strftime("%Y-%m-%d")
+            else:
+                date_checked = ''
+
             command = """UPDATE spray_powder SET title='%s', description='%s', product_class='%s', starting_material='%s',
-                         median_value=%s, volume_share=%s, checked_emissions=%s
+                         median_value=%s, volume_share=%s, checked_emissions=%s, date_checked=%s
                          WHERE spray_powder_id = %s;""" % (self.form.title.data,
                                                         self.form.description.data,
                                                         self.form.product_class.data,
@@ -178,6 +194,7 @@ class UpdateFormView(CreateFormView):
                                                         check_value(self.form.median_value.data),
                                                         check_value(self.form.volume_share.data),
                                                         check_value(self.form.checked_emissions.data),
+                                                        check_value(date_checked),
                                                         self.form.item_id.data)
             self.db.execute(command)
             message = u'Der Druckbestäubungspuder wurde erfolgreich aktualisiert.'

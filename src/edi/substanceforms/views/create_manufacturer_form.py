@@ -13,6 +13,7 @@ class CreateForm(Form):
     title = StringField("Titel", [validators.required()], render_kw={'class': 'form-control'})
     description = StringField("Beschreibung", render_kw={'class': 'form-control'})
     homepage = StringField("Homepage", render_kw={'class': 'form-control'})
+    status = "published"
 
 class UpdateForm(Form):
 
@@ -49,10 +50,11 @@ class CreateFormView(WTFormView):
         if button == 'Speichern' and self.validate():
 
             if True:
-                insert = """INSERT INTO manufacturer VALUES (DEFAULT, '%s', '%s', '%s', %s);""" % (self.form.title.data,
+                insert = """INSERT INTO manufacturer VALUES (DEFAULT, '%s', '%s', '%s', %s, %s);""" % (self.form.title.data,
                                                             self.form.description.data,
                                                             self.context.aq_parent.get_webcode(),
-                                                            check_value(self.form.homepage.data))
+                                                            check_value(self.form.homepage.data),
+                                                            check_value(self.form.status))
                 self.db.execute(insert)
                 self.db.close()
                 message=u'Der Hersteller wurde erfolgreich gespeichert.'

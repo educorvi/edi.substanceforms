@@ -13,6 +13,14 @@
     permission="zope2.View"
     />
 
+
+  <browser:page
+    name="csvmixturenewsubstance"
+    for="*"
+    class=".csvexport.CsvmixtureNew"
+    permission="zope2.View"
+    />
+
   <browser:page
     name="csvpowder"
     for="*"
@@ -262,7 +270,7 @@
     name="delete-manufacturer-form"
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".create_manufacturer_form.DeleteFormView"
-    template = "create_view.pt"
+    template = "delete_view.pt"
     permission="cmf.ModifyPortalContent"
     />
 
@@ -278,7 +286,7 @@
     name="delete-mixture-form"
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".create_mixture_form.DeleteFormView"
-    template = "create_view.pt"
+    template = "delete_view.pt"
     permission="cmf.ModifyPortalContent"
     />
 

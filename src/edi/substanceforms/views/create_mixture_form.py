@@ -38,12 +38,13 @@ class CreateForm(Form):
     ueg = StringField(u"UEG in g/m3", render_kw={'class': 'form-control'})
     response = StringField(u"Response-Faktor", render_kw={'class': 'form-control'})
     skin_category = RadioField(u"Hautschutz-Kategorie", [validators.required()], choices=hskategorie)
-    date_checked = DateField(u"Datum der letzten Prüfung (YYYY-MM-DD)", render_kw={'class': 'form-control', 'type': 'date'})
+    date_checked = DateField(u"Datum der letzten Prüfung", render_kw={'class': 'form-control', 'type': 'date'})
     checked_emissions = BooleanField(u"Emissionsarmes Produkt", render_kw={'class': 'form-check-input'})
     flashpoint = IntegerField(u"Flammpunkt [°C]", render_kw={'class': 'form-control'})
     values_range = BooleanField(u"Wertebereich", render_kw={'class': 'form-check-input'})
     image_url = FileField("Bilddatei hochladen", render_kw={'class': 'form-control'})
     comments = TextAreaField("Bemerkungen", render_kw={'class': 'form-control'})
+    status = "published"
 
 class UpdateForm(Form):
 
@@ -63,7 +64,7 @@ class UpdateForm(Form):
     ueg = StringField(u"UEG in g/m3", render_kw={'class': 'form-control'})
     response = StringField(u"Response-Faktor", render_kw={'class': 'form-control'})
     skin_category = RadioField(u"Hautschutz-Kategorie", choices=hskategorie)
-    date_checked = DateField(u"Datum der letzten Prüfung (YYYY-MM-DD)", render_kw={'class': 'form-control', 'type': 'date'})
+    date_checked = DateField(u"Datum der letzten Prüfung", render_kw={'class': 'form-control', 'type': 'date'})
     checked_emissions = BooleanField(u"Emissionsarmes Produkt", render_kw={'class': 'form-check-input'})
     flashpoint = IntegerField(u"Flammpunkt [°C]", render_kw={'class': 'form-control'})
     values_range = BooleanField(u"Wertebereich", render_kw={'class': 'form-check-input'})
@@ -134,16 +135,27 @@ class CreateFormView(WTFormView):
         redirect_url = self.context.aq_parent.absolute_url()
         if button == 'Speichern': #and self.validate():
 
+            if not self.form.skin_category.data:
+                message = u'Bitte füllen Sie das Feld "Hautschutz-Kategorie" aus'
+                ploneapi.portal.show_message(message=message, type='error', request=self.request)
+                return None
+
+
+            if self.form.date_checked.data:
+                date_checked = self.form.date_checked.data.strftime("%Y-%m-%d")
+            else:
+                date_checked = ''
+
             conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
             cur = conn.cursor()
             insert = """INSERT INTO substance_mixture (title, description, webcode, branch, substance_type,
                                                         evaporation_lane_150, evaporation_lane_160,
                                                         evaporation_lane_170, evaporation_lane_180, ueg, response,
                                                         skin_category, checked_emissions, date_checked, flashpoint,
-                                                        values_range, comments, image_url, manufacturer_id)
+                                                        values_range, comments, image_url, manufacturer_id, status)
                                                         VALUES ('%s', '%s', '%s', %s, '%s',
                                                         %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
-                                                        %s, %s);""" \
+                                                        %s, %s, %s);""" \
                                                         % (self.form.title.data,
                                                         self.form.description.data,
                                                         self.context.aq_parent.get_webcode(),
@@ -157,12 +169,14 @@ class CreateFormView(WTFormView):
                                                         check_value(self.form.response.data),
                                                         check_value(self.form.skin_category.data),
                                                         self.form.checked_emissions.data,
-                                                        check_value(self.form.date_checked.data.strftime("%Y-%m-%d")),
+                                                        check_value(date_checked),
                                                         check_value(self.form.flashpoint.data),
                                                         self.form.values_range.data,
                                                         check_value(self.form.comments.data),
                                                         check_value(image_url),
-                                                        check_value(self.form.manufacturer_id.data.split('ID:')[-1]))
+                                                        check_value(self.form.manufacturer_id.data.split('ID:')[-1]),
+                                                        check_value(self.form.status))
+
 
             areaids = list()
             for i in self.form.application_areas.data:
@@ -273,10 +287,16 @@ class UpdateFormView(CreateFormView):
         """
         redirect_url = self.context.absolute_url() + '/single_view?item=' + self.form.item_id.data
         if button == 'Speichern': #and self.validate():
+
+            if self.form.date_checked.data:
+                date_checked = self.form.date_checked.data.strftime("%Y-%m-%d")
+            else:
+                date_checked = ''
+
             command = """UPDATE substance_mixture SET title=%s, description=%s, branch=%s, substance_type=%s,
                          evaporation_lane_150=%s, evaporation_lane_160=%s, evaporation_lane_170=%s, evaporation_lane_180=%s,
                          ueg=%s, response=%s, skin_category=%s, checked_emissions=%s,
-                         flashpoint=%s, values_range=%s, comments=%s, productclass=%s, date_checked = %s
+                         flashpoint=%s, values_range=%s, comments=%s, productclass=%s, date_checked=%s
                          WHERE substance_mixture_id = %s;""" % \
                                                         (check_value(self.form.title.data),
                                                         check_value(self.form.description.data),
@@ -294,7 +314,7 @@ class UpdateFormView(CreateFormView):
                                                         check_value(self.form.values_range.data),
                                                         check_value(self.form.comments.data),
                                                         check_value(self.form.productclass.data),
-                                                        check_value(self.form.date_checked.data.strftime("%Y-%m-%d")),
+                                                        check_value(date_checked),
                                                         check_value(self.form.item_id.data))
             self.db.execute(command)
 
@@ -494,7 +514,8 @@ class UpdateManufacturerFormView(CreateFormView):
     def renderForm(self):
         try:
             insert = "SELECT manufacturer_id, title FROM manufacturer ORDER BY title;"
-            manus = self.db.execute(insert)
+            erg = self.db.execute(insert)
+            manus = [(result[0], result[1] + ' ID:' + str(result[0])) for result in erg]
         except:
             manus = []
         self.form.manufacturer_id.choices = manus
@@ -507,7 +528,7 @@ class UpdateManufacturerFormView(CreateFormView):
         """
         redirect_url = self.context.absolute_url() + '/single_view?item=' + self.form.item_id.data
         if button == 'Speichern': #and self.validate():
-            command = """UPDATE substance_mixture SET manufacturer_id=%s WHERE substance_mixture_id = %s;""" % (self.form.manufacturer_id.data,
+            command = """UPDATE substance_mixture SET manufacturer_id=%s WHERE substance_mixture_id = %s;""" % (check_value(self.form.manufacturer_id.data.split('ID:')[-1]),
                                                                                                                 self.form.item_id.data)
             self.db.execute(command)
             message = u'Das Gefahrstoffgemisch wurde erfolgreich aktualisiert.'

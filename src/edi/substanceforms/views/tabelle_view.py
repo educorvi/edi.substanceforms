@@ -57,6 +57,15 @@ class TabelleFormView(WTFormView):
                 return result
         return self.index()
 
+    def get_tablescript(self):
+        return ploneapi.portal.get().absolute_url() + '/++resource++edi.substanceforms/tabelle.js'
+
+    def get_searchscript(self):
+        return ploneapi.portal.get().absolute_url() + '/++resource++edi.substanceforms/search.js'
+
+    def get_hiddenscript(self):
+        return ploneapi.portal.get().absolute_url() + '/++resource++edi.substanceforms/hidden.js'
+
     def get_preselects(self):
         moreresultcolumns = self.context.moreresultcolumns
         #brains = self.context.getFolderContents()
@@ -288,7 +297,7 @@ class SubstancemixtureFormView(TabelleFormView):
                     select = "SELECT DISTINCT substance_mixture.manufacturer_id, manufacturer.title FROM manufacturer, substance_mixture WHERE substance_mixture.manufacturer_id = manufacturer.manufacturer_id AND substance_type = '%s' ORDER BY title;" % (mixturetype[0])
                 else:
                     select = ""
-                    beginselect = "SELECT DISTINCT substance_mixture.manufacturer_id, manufacturer.title FROM manufacturer, substance_mixture WHERE substance_mixture.manufacturer_id = manufacturer.manufacturer_id AND substance_type = '%s'" % (mixturetype[0])
+                    beginselect = "SELECT DISTINCT substance_mixture.manufacturer_id, manufacturer.title FROM manufacturer, substance_mixture WHERE substance_mixture.manufacturer_id = manufacturer.manufacturer_id AND (substance_type = '%s'" % (mixturetype[0])
                     select = select + beginselect
                     for i in mixturetype[1:]:
                         addedselect = " OR substance_type = '%s'" % i
