@@ -313,7 +313,6 @@ class CsvmixtureNew(BrowserView):
                         concentration_max = entry[4]
                         singleentry.append(substance, cas, concentration_min, concentration_max)
                         entrylist.append(singleentry)
-                        import pdb; pdb.set_trace()
 
                 if len(entrylist) == 1:
                     writer.writerow(
