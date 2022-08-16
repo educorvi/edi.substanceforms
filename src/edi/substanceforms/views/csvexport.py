@@ -213,7 +213,7 @@ class CsvmixtureNew(BrowserView):
                                  'application_areas', 'usecases', 'Verdampfungsfaktor 150', 'Verdampfungsfaktor 160', 'Verdampfungsfaktor 170',
                                  'Verdampfungsfaktor 180', 'UEG', 'Responsefaktor', 'Hautschutzmittelkategorie',
                                  'Emissionsgeprüft', 'Prüfdatum', 'Flammpunkt', 'Wertebereich', 'Klassifikationen',
-                                 'Indikatoren', 'Kommentare', 'Hersteller', 'Status', 'Produktklasse', 'Zusammensetung', 'CAS-Nummer Bestandteil', 'Konzentration Bestandteil'])
+                                 'Indikatoren', 'Kommentare', 'Hersteller', 'Status', 'Produktklasse', 'Zusammensetung', 'CAS-Nummer Bestandteil', 'Konzentration Bestandteil (min)', 'Konzentration Bestandteil (max)'])
 
 
             for i in mixtures:
@@ -300,36 +300,30 @@ class CsvmixtureNew(BrowserView):
                 zusammensetzungsselect = "SELECT * FROM recipes WHERE mixture_id = %s" % id
                 newentries = self.db.execute(zusammensetzungsselect)
 
-                entrylist = list()
+                entrylist = "keine Angabe"
                 if newentries:
+                    entrylist = list()
                     for entry in newentries:
                         singleentry = list()
                         substanceselect = "SELECT title FROM substance WHERE substance_id = %s" % entry[1]
                         substance = self.db.execute(substanceselect)
+                        casselect = "SELECT casnr FROM substance WHERE substance_id = %s" % entry[1]
+                        cas = self.db.execute(casselect)
                         concentration_min = entry[3]
                         concentration_max = entry[4]
-                        singleentry.append(substance, concentration_min, concentration_max)
+                        singleentry.append(substance, cas, concentration_min, concentration_max)
                         entrylist.append(singleentry)
                         import pdb; pdb.set_trace()
 
-                    if len(newzusammensetzung) == 1:
-                        writer.writerow(
-                            [id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas,
-                             newusecases, evap_150, evap_160, evap_170, evap_180,
-                             ueg, response, newskincategory, newchecked_emissions, date_checked, flashpoint,
-                             newvalues_range,
-                             newclassifications, newindicators, comments, manufacturer, status, newproductclass,
-                             newzusammensetzung[0], None, None])
+                if len(entrylist) == 1:
+                    writer.writerow(
+                        [id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas,
+                         newusecases, evap_150, evap_160, evap_170, evap_180,
+                         ueg, response, newskincategory, newchecked_emissions, date_checked, flashpoint,
+                         newvalues_range,
+                         newclassifications, newindicators, comments, manufacturer, status, newproductclass,
+                         entrylist[0], entrylist[1], entrylist[2], entrylist[3]])
 
-                zusammensetzung = "keine Angabe"
-                for e in newentries:
-                    zusammensetzungsresult = e.split('€')
-                    if zusammensetzungsresult[0] == title:
-                        zusammensetzung = list()
-                        resu = zusammensetzungsresult[1]
-                        result = resu.split('|')
-                        for i in result:
-                            zusammensetzung.append(i)
 
 
                 if isinstance(zusammensetzung, list):
