@@ -324,7 +324,7 @@ class CsvmixtureNew(BrowserView):
                          ueg, response, newskincategory, newchecked_emissions, date_checked, flashpoint,
                          newvalues_range,
                          newclassifications, newindicators, comments, manufacturer, status, newproductclass,
-                         entrylist[0], entrylist[1], entrylist[2], entrylist[3]])
+                         singleentry[0][0], singleentry[0][1], singleentry[0][2], singleentry[0][3]])
 
 
 
