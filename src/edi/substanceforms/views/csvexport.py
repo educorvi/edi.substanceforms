@@ -326,13 +326,13 @@ class CsvmixtureNew(BrowserView):
                          newvalues_range,
                          newclassifications, newindicators, comments, manufacturer, status, newproductclass,
                          entrylist[0][0][0][0], entrylist[0][1][0][0], entrylist[0][2], entrylist[0][3]])
-                        if len(entrylist) > 1:
-                            entrylist.pop(0)
-                            for entry in entrylist:
-                                writer.writerow(
-                                    [None, None, None, None, None, None, None, None, None, None, None, None, None,
-                                     None,None, None, None, None, None, None, None, None, None, None, None,
-                                     entry[0][0][0], entry[1][0][0], entry[2], entry[3]])
+                    if len(entrylist) > 1:
+                        entrylist.pop(0)
+                        for entry in entrylist:
+                            writer.writerow(
+                                [None, None, None, None, None, None, None, None, None, None, None, None, None,
+                                 None,None, None, None, None, None, None, None, None, None, None, None,
+                                 entry[0][0][0], entry[1][0][0], entry[2], entry[3]])
                 else:
                     writer.writerow(
                         [id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas,
