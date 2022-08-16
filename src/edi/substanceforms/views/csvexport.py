@@ -329,6 +329,7 @@ class CsvmixtureNew(BrowserView):
                 """
                 if len(entrylist) >= 1:
                     for entry in entrylist:
+                        import pdb; pdb.set_trace()
                         writer.writerow(
                             [id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas,
                              newusecases, evap_150, evap_160, evap_170, evap_180,
