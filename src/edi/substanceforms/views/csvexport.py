@@ -300,10 +300,26 @@ class CsvmixtureNew(BrowserView):
                 zusammensetzungsselect = "SELECT * FROM recipes WHERE mixture_id = %s" % id
                 newentries = self.db.execute(zusammensetzungsselect)
 
+                entrylist = list()
                 if newentries:
-                    import pdb; pdb.set_trace()
+                    for entry in newentries:
+                        singleentry = list()
+                        substanceselect = "SELECT title FROM substance WHERE substance_id = %s" % entry[1]
+                        substance = self.db.execute(substanceselect)
+                        concentration_min = entry[3]
+                        concentration_max = entry[4]
+                        singleentry.append(substance, concentration_min, concentration_max)
+                        entrylist.append(singleentry)
+                        import pdb; pdb.set_trace()
 
-
+                    if len(newzusammensetzung) == 1:
+                        writer.writerow(
+                            [id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas,
+                             newusecases, evap_150, evap_160, evap_170, evap_180,
+                             ueg, response, newskincategory, newchecked_emissions, date_checked, flashpoint,
+                             newvalues_range,
+                             newclassifications, newindicators, comments, manufacturer, status, newproductclass,
+                             newzusammensetzung[0], None, None])
 
                 zusammensetzung = "keine Angabe"
                 for e in newentries:
