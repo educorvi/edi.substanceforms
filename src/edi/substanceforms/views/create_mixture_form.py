@@ -286,7 +286,6 @@ class UpdateFormView(CreateFormView):
         if button == 'Speichern': #and self.validate():
 
             if self.form.date_checked.data:
-                import pdb; pdb.set_trace()
                 date_checked = self.form.date_checked.data.strftime("%Y-%m-%d")
             else:
                 date_checked = ''
