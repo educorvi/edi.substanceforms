@@ -192,9 +192,9 @@ class CsvmixtureNew(BrowserView):
 
     def __call__(self):
         self.create_mixture_file()
-        file = open('/tmp/mixtures.csv', 'rb')
+        file = open('/tmp/mixturesnew.csv', 'rb')
         file.seek(0)
-        filename = 'mixtures.csv'
+        filename = 'mixturesnew.csv'
         RESPONSE = self.request.response
         RESPONSE.setHeader('content-type', 'text/csv')
         RESPONSE.setHeader('content-disposition', 'attachment; filename=%s' %filename)
@@ -207,7 +207,7 @@ class CsvmixtureNew(BrowserView):
         mixtureselect = "SELECT * FROM substance_mixture"
         mixtures = self.db.execute(mixtureselect)
 
-        with open('/tmp/mixtures.csv', 'w', newline='') as csvfile:
+        with open('/tmp/mixturesnew.csv', 'w', newline='') as csvfile:
             writer = csv.writer(csvfile, delimiter=';', quotechar='"')
             writer.writerow(['ID', 'Titel', 'Beschreibung', 'Webcode', 'Branche', 'Typ des Gefahrstoffgemischs',
                                  'application_areas', 'usecases', 'Verdampfungsfaktor 150', 'Verdampfungsfaktor 160', 'Verdampfungsfaktor 170',
