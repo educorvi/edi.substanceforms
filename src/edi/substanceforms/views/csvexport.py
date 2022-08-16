@@ -318,7 +318,6 @@ class CsvmixtureNew(BrowserView):
                         entrylist.append(singleentry)
 
                 if len(entrylist) == 1:
-                    import pdb; pdb.set_trace()
                     writer.writerow(
                         [id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas,
                          newusecases, evap_150, evap_160, evap_170, evap_180,
