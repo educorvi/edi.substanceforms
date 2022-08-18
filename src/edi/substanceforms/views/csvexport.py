@@ -192,9 +192,9 @@ class CsvmixtureNew(BrowserView):
 
     def __call__(self):
         self.create_mixture_file()
-        file = open('/tmp/mixtures.csv', 'rb')
+        file = open('/tmp/mixturesnew.csv', 'rb')
         file.seek(0)
-        filename = 'mixtures.csv'
+        filename = 'mixturesnew.csv'
         RESPONSE = self.request.response
         RESPONSE.setHeader('content-type', 'text/csv')
         RESPONSE.setHeader('content-disposition', 'attachment; filename=%s' %filename)
@@ -207,13 +207,13 @@ class CsvmixtureNew(BrowserView):
         mixtureselect = "SELECT * FROM substance_mixture"
         mixtures = self.db.execute(mixtureselect)
 
-        with open('/tmp/mixtures.csv', 'w', newline='') as csvfile:
+        with open('/tmp/mixturesnew.csv', 'w', newline='') as csvfile:
             writer = csv.writer(csvfile, delimiter=';', quotechar='"')
             writer.writerow(['ID', 'Titel', 'Beschreibung', 'Webcode', 'Branche', 'Typ des Gefahrstoffgemischs',
                                  'application_areas', 'usecases', 'Verdampfungsfaktor 150', 'Verdampfungsfaktor 160', 'Verdampfungsfaktor 170',
                                  'Verdampfungsfaktor 180', 'UEG', 'Responsefaktor', 'Hautschutzmittelkategorie',
                                  'Emissionsgeprüft', 'Prüfdatum', 'Flammpunkt', 'Wertebereich', 'Klassifikationen',
-                                 'Indikatoren', 'Kommentare', 'Hersteller', 'Status', 'Produktklasse', 'Zusammensetung', 'CAS-Nummer Bestandteil', 'Konzentration Bestandteil'])
+                                 'Indikatoren', 'Kommentare', 'Hersteller', 'Status', 'Produktklasse', 'Zusammensetung', 'CAS-Nummer Bestandteil', 'Konzentration Bestandteil (min)', 'Konzentration Bestandteil (max)'])
 
 
             for i in mixtures:
@@ -297,64 +297,62 @@ class CsvmixtureNew(BrowserView):
                 else:
                     newusecases = "keine Angabe"
 
-                import pdb; pdb.set_trace()
-
                 zusammensetzungsselect = "SELECT * FROM recipes WHERE mixture_id = %s" % id
                 newentries = self.db.execute(zusammensetzungsselect)
 
+                entrylist = "keine Angabe"
+                if newentries:
+                    entrylist = list()
+                    for entry in newentries:
+                        singleentry = list()
+                        substanceselect = "SELECT title FROM substance WHERE substance_id = %s" % entry[1]
+                        substance = self.db.execute(substanceselect)
+                        casselect = "SELECT casnr FROM substance WHERE substance_id = %s" % entry[1]
+                        cas = self.db.execute(casselect)
+                        concentration_min = entry[3]
+                        concentration_max = entry[4]
+                        singleentry.append(substance)
+                        singleentry.append(cas)
+                        singleentry.append(concentration_min)
+                        singleentry.append(concentration_max)
+                        entrylist.append(singleentry)
 
-                zusammensetzung = "keine Angabe"
-                for e in newentries:
-                    zusammensetzungsresult = e.split('€')
-                    if zusammensetzungsresult[0] == title:
-                        zusammensetzung = list()
-                        resu = zusammensetzungsresult[1]
-                        result = resu.split('|')
-                        for i in result:
-                            zusammensetzung.append(i)
 
-
-                if isinstance(zusammensetzung, list):
-                    newzusammensetzung = zusammensetzung[0].split('@')
-                    try:
-                        if len(newzusammensetzung) == 1:
-                            writer.writerow([id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas, newusecases, evap_150, evap_160, evap_170, evap_180,
-                                            ueg, response, newskincategory, newchecked_emissions, date_checked, flashpoint, newvalues_range,
-                                            newclassifications, newindicators, comments, manufacturer, status, newproductclass, newzusammensetzung[0], None, None])
-                        elif len(newzusammensetzung) == 2:
-                            writer.writerow([id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas, newusecases, evap_150, evap_160, evap_170, evap_180,
-                                            ueg, response, newskincategory, newchecked_emissions, date_checked, flashpoint, newvalues_range,
-                                            newclassifications, newindicators, comments, manufacturer, status, newproductclass, newzusammensetzung[0], newzusammensetzung[1], None])
-                        else:
-                            writer.writerow([id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas, newusecases, evap_150, evap_160, evap_170, evap_180,
-                                            ueg, response, newskincategory, newchecked_emissions, date_checked, flashpoint, newvalues_range,
-                                            newclassifications, newindicators, comments, manufacturer, status, newproductclass, newzusammensetzung[0], newzusammensetzung[1], newzusammensetzung[2]])
-                    except:
-                        import pdb; pdb.set_trace()
-                    if len(zusammensetzung) > 1:
-                        zusammensetzung.pop(0)
-                        for i in zusammensetzung:
-                            newzusammensetzung = i.split('@')
-                            if len(newzusammensetzung) == 1:
-                                writer.writerow([None, None, None, None, None, None, None, None, None, None, None, None, None,
-                                                 None, None, None, None, None, None, None, None, None, None, None, None, newzusammensetzung[0], None, None])
-                            elif len(newzusammensetzung) == 2:
-                                writer.writerow(
-                                    [None, None, None, None, None, None, None, None, None, None, None, None, None,
-                                     None, None, None, None, None, None, None, None, None, None, None, None, newzusammensetzung[0], newzusammensetzung[1], None])
-                            else:
-                                writer.writerow(
-                                    [None, None, None, None, None, None, None, None, None, None, None, None, None,
-                                     None, None, None, None, None, None, None, None, None, None, None, None, newzusammensetzung[0], newzusammensetzung[1], newzusammensetzung[2]])
+                if isinstance(entrylist, list) and len(entrylist) >= 1:
+                    writer.writerow(
+                        [id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas,
+                         newusecases, evap_150, evap_160, evap_170, evap_180,
+                         ueg, response, newskincategory, newchecked_emissions, date_checked, flashpoint,
+                         newvalues_range,
+                         newclassifications, newindicators, comments, manufacturer, status, newproductclass,
+                         entrylist[0][0][0][0], entrylist[0][1][0][0], entrylist[0][2], entrylist[0][3]])
+                    if len(entrylist) > 1:
+                        entrylist.pop(0)
+                        for entry in entrylist:
+                            writer.writerow(
+                                [None, None, None, None, None, None, None, None, None, None, None, None, None,
+                                 None,None, None, None, None, None, None, None, None, None, None, None,
+                                 entry[0][0][0], entry[1][0][0], entry[2], entry[3]])
                 else:
                     writer.writerow(
-                        [id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas, newusecases,
-                         evap_150, evap_160, evap_170, evap_180, ueg, response, newskincategory, newchecked_emissions,
-                         date_checked, flashpoint, newvalues_range, newclassifications, newindicators, comments, manufacturer,
-                         status, newproductclass, zusammensetzung, None, None])
+                        [id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas,
+                         newusecases, evap_150, evap_160, evap_170, evap_180,
+                         ueg, response, newskincategory, newchecked_emissions, date_checked, flashpoint,
+                         newvalues_range,
+                         newclassifications, newindicators, comments, manufacturer, status, newproductclass,
+                         entrylist, None, None, None])
+                """
+                if isinstance(entrylist, list) and len(entrylist) >= 1:
+                    for entry in entrylist:
+                        writer.writerow(
+                            [id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas,
+                             newusecases, evap_150, evap_160, evap_170, evap_180,
+                             ueg, response, newskincategory, newchecked_emissions, date_checked, flashpoint,
+                             newvalues_range,
+                             newclassifications, newindicators, comments, manufacturer, status, newproductclass,
+                             entry[0][0][0], entry[1][0][0], entry[2], entry[3]])
+                """
 
-
-        return None
 
     def get_attr_translation(self, attribute, value):
         vocabulary = get_vocabulary(attribute)
