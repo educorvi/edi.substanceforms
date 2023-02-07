@@ -1,34 +1,17 @@
 # -*- coding: utf-8 -*-
-from wtforms import Form, StringField, SelectField, IntegerField, BooleanField, FloatField
+import requests
+from wtforms import Form, SelectField
 from wtforms import validators
 from collective.wtforms.views import WTFormView
-from plone import api as ploneapi
 from edi.substanceforms.config import addrole
-import requests
-import psycopg2
 from plone import api as ploneapi
 from edi.substanceforms.lib import DBConnect
 from edi.substanceforms.helpers import get_vocabulary, tableheads
 from edi.substanceforms.content.tabelle import possibleColumns
 from jinja2 import Template
 
-
-
-class LoginCredentials:
-
-    login = {'login': 'restaccess', 'password': 'H9jCg768'}
-    authurl = u'http://emissionsarme-produkte.bgetem.de/@login'
-    searchurl = u'http://emissionsarme-produkte.bgetem.de/@search'
-
-    hostname = 'localhost'
-    username = 'seppo'
-    database = 'gefahrstoffdb'
-    password = 'reldbpassword'
-
 class BaseForm(Form):
     """Base Form"""
-    #search = StringField("Suchbegriff", render_kw={'class':'form-control'})
-    #manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[])
 
 class TabelleFormView(WTFormView):
     formClass = BaseForm
@@ -39,11 +22,8 @@ class TabelleFormView(WTFormView):
         dbdata = self.context.aq_parent
         self.db = DBConnect(host=dbdata.host, db=dbdata.database, user=dbdata.username, password=dbdata.password)
 
-        self.host = self.context.aq_parent.host
-        self.dbname = self.context.aq_parent.database
-        self.username = self.context.aq_parent.username
-        self.password = self.context.aq_parent.password
         self.preselects = self.get_preselects()
+
         if self.submitted:
             button = self.hasButtonSubmitted()
             if button:
@@ -68,7 +48,6 @@ class TabelleFormView(WTFormView):
 
     def get_preselects(self):
         moreresultcolumns = self.context.moreresultcolumns
-        #brains = self.context.getFolderContents()
         preselects = []
         for i in moreresultcolumns:
             entry = dict()
@@ -148,45 +127,25 @@ class TabelleFormView(WTFormView):
         else:
             select = "SELECT * FROM %s WHERE status = 'published' ORDER BY title ASC;" % (searchtable)
 
+        conn = self.db.connect()
+        results = conn.execute(select)
+        conn.close()
 
-        try:
-            conn = psycopg2.connect(host=self.host, user=self.username, password=self.password, dbname=self.dbname)
-            cur = conn.cursor()
-            cur.execute(select)
-            results = cur.fetchall()
-            cur.close
-            conn.close()
-
-        except:
-            results = []
-
-        #results = select um alle Produkte der Tabelle auszuwählen
         return results
 
 
     def submit(self, button):
-        #if button == 'Suche' and self.validate():
         if button == 'Alle anzeigen':
-
-            #print(self.context.mixturetype)
             self.ergs = self.show_all()
-        if button == 'Suche':
 
+        if button == 'Suche':
             searchkey = self.context.tablename + '_id'
             searchtable = self.context.tablename
-            #manu_id = self.form.manu.data
 
             select = "SELECT * FROM %s WHERE manufacturer_id = '%s';" % (searchkey, searchtable, manu_id)
-            try:
-                conn = psycopg2.connect(host=self.host, user=self.username, password=self.password, dbname=self.dbname)
-                cur = conn.cursor()
-                cur.execute(select)
-                self.ergs = cur.fetchall()
-                cur.close
-                conn.close()
-
-            except:
-                self.ergs = []
+            conn = self.db.connect()
+            self.ergs = conn.execute(select)
+            conn.close()
 
         elif button == 'Abbrechen':
             url = self.context.aq_parent.absolute_url()
@@ -203,23 +162,17 @@ class SubstanceMixtureForm (BaseForm):
 
 class SprayPowderForm (BaseForm):
     manu = SelectField(u'Bitte wählen Sie einen Hersteller aus:', choices=[], render_kw={'class':'form-control edi-select'})
-    #median_value = FloatField(u'Bitte geben Sie den Medianwert ein', render_kw={'class':'form-control'})
-    #volume_share = FloatField(u'Bitte geben Sie den Volumenanteil ein', render_kw={'class':'form-control'})
 
 class HerstellerFormView(TabelleFormView):
+    """ Erbt von TabelleFormView damit steht mit self.db eine Instanz der DB2Connect zur Verfügung """
+
     formClass = HerstellerForm
 
     def renderForm(self):
-        try:
-            conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
-            cur = conn.cursor()
-            cur.execute("SELECT manufacturer_id, title FROM manufacturer ORDER BY title;")
-            erg = cur.fetchall()
-            manus = [(result[0], result[1] + ' ID:' + str(result[0])) for result in erg]
-            cur.close
-            conn.close()
-        except:
-            manus = []
+        conn = self.db.connect()
+        erg = conn.execute("SELECT manufacturer_id, title FROM manufacturer ORDER BY title;")
+        manus = [(result[0], result[1] + ' ID:' + str(result[0])) for result in erg]
+        conn.close()
         self.form.manu.choices = manus
         self.form.process()
         return self.formTemplate()
@@ -237,31 +190,24 @@ class HerstellerFormView(TabelleFormView):
                 select = "SELECT %s, title FROM %s;" % (searchkey, searchtable)
             else:
                 select = "SELECT %s, title FROM %s WHERE manufacturer_id = '%s';" % (searchkey, searchtable, manu_id)
-            try:
-                conn = psycopg2.connect(host=self.host, user=self.username, password=self.password, dbname=self.dbname)
-                cur = conn.cursor()
-                cur.execute(select)
-                self.ergs = cur.fetchall()
-                cur.close
-                conn.close()
-
-            except:
-                self.ergs = []
+            conn = self.db.connect()
+            self.ergs = conn.execute(select)
+            conn.close()
 
         elif button == 'Abbrechen':
             url = self.context.aq_parent.absolute_url()
             return self.request.response.redirect(url)
+
 
 class SubstanceFormView(TabelleFormView):
     buttons = ('Suche', 'Abbrechen')
     formClass = SubstanceForm
 
     def renderForm(self):
-        try:
-            select = "SELECT substance_id, title, casnr, egnr FROM substance ORDER BY title;"
-            substances = self.db.execute(select)
-        except:
-            substances = []
+        conn = self.db.connect()
+        select = "SELECT substance_id, title, casnr, egnr FROM substance ORDER BY title;"
+        substances = conn.execute(select)
+        conn.close()
         optionlist = list()
         for i in substances:
             subid = i[0]
@@ -274,7 +220,6 @@ class SubstanceFormView(TabelleFormView):
         self.form.process()
         return self.formTemplate()
 
-
     def submit(self, button):
         if button == 'Suche':
 
@@ -282,39 +227,36 @@ class SubstanceFormView(TabelleFormView):
 
             if substance_id:
                 select = "SELECT substance_id, title FROM substance WHERE substance_id = %s;" % (substance_id)
-
-                self.ergs = self.db.execute(select)
+                conn = self.db.connect()
+                self.ergs = conn.execute(select)
+                conn.close()
 
 
 class SubstancemixtureFormView(TabelleFormView):
     formClass = SubstanceMixtureForm
 
     def renderForm(self):
-        try:
-            mixturetype = self.context.mixturetype
-            if mixturetype:
-                if len(mixturetype) == 1:
-                    select = "SELECT DISTINCT substance_mixture.manufacturer_id, manufacturer.title FROM manufacturer, substance_mixture WHERE substance_mixture.manufacturer_id = manufacturer.manufacturer_id AND substance_type = '%s' ORDER BY title;" % (mixturetype[0])
-                else:
-                    select = ""
-                    beginselect = "SELECT DISTINCT substance_mixture.manufacturer_id, manufacturer.title FROM manufacturer, substance_mixture WHERE substance_mixture.manufacturer_id = manufacturer.manufacturer_id AND (substance_type = '%s'" % (mixturetype[0])
-                    select = select + beginselect
-                    for i in mixturetype[1:]:
-                        addedselect = " OR substance_type = '%s'" % i
-                        select = select + addedselect
-                    endselect = ") ORDER BY title;"
+        select = ""
+        manus = []
+        mixturetype = self.context.mixturetype
 
-                    select = select + endselect
-            conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
-            cur = conn.cursor()
-            #cur.execute("SELECT DISTINCT substance_mixture.manufacturer_id, manufacturer.title FROM manufacturer, substance_mixture WHERE substance_mixture.manufacturer_id = manufacturer.manufacturer_id ORDER BY title;")
-            cur.execute(select)
-            erg = cur.fetchall()
-            manus = [(result[0], result[1] + ' ID:' + str(result[0])) for result in erg]
-            cur.close
+        if len(mixturetype) == 1:
+            select = "SELECT DISTINCT substance_mixture.manufacturer_id, manufacturer.title FROM manufacturer, substance_mixture WHERE substance_mixture.manufacturer_id = manufacturer.manufacturer_id AND substance_type = '%s' ORDER BY title;" % (mixturetype[0])
+        elif len(mixturetype) > 1:
+            beginselect = "SELECT DISTINCT substance_mixture.manufacturer_id, manufacturer.title FROM manufacturer, substance_mixture WHERE substance_mixture.manufacturer_id = manufacturer.manufacturer_id AND (substance_type = '%s'" % (mixturetype[0])
+            select = select + beginselect
+            for i in mixturetype[1:]:
+                addedselect = " OR substance_type = '%s'" % i
+                select = select + addedselect
+            endselect = ") ORDER BY title;"
+            select = select + endselect
+
+        if mixturetype and select:
+            conn = self.db.connect()
+            erg = conn.execute(select)
             conn.close()
-        except:
-            manus = []
+            manus = [(result[0], result[1] + ' ID:' + str(result[0])) for result in erg]
+
         self.form.manu.choices = manus
         self.form.process()
         return self.formTemplate()
@@ -340,12 +282,8 @@ class SubstancemixtureFormView(TabelleFormView):
 
                     select = select + endselect
 
-                conn = psycopg2.connect(host=self.host, user=self.username, password=self.password,
-                                        dbname=self.dbname)
-                cur = conn.cursor()
-                cur.execute(select)
-                self.ergs = cur.fetchall()
-                cur.close
+                conn = self.db.connect()
+                self.ergs = conn.execute(select)
                 conn.close()
 
             else:
@@ -363,35 +301,25 @@ class SubstancemixtureFormView(TabelleFormView):
             else:
                 select = "SELECT * FROM %s WHERE manufacturer_id = %s AND substance_type = '%s';" % (searchtable, manu_id, mixturetype[0])
 
-            try:
-                conn = psycopg2.connect(host=self.host, user=self.username, password=self.password, dbname=self.dbname)
-                cur = conn.cursor()
-                cur.execute(select)
-                self.ergs = cur.fetchall()
-                cur.close
-                conn.close()
-
-            except:
-                self.ergs = []
+            conn = self.db.connect()
+            self.ergs = conn.execute(select)
+            conn.close()
 
         elif button == 'Abbrechen':
             url = self.context.aq_parent.absolute_url()
             return self.request.response.redirect(url)
 
+
 class SpraypowderFormView(TabelleFormView):
     formClass = SprayPowderForm
 
     def renderForm(self):
-        try:
-            conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
-            cur = conn.cursor()
-            cur.execute("SELECT DISTINCT spray_powder.manufacturer_id, manufacturer.title FROM manufacturer, spray_powder WHERE spray_powder.manufacturer_id = manufacturer.manufacturer_id ORDER BY title;")
-            erg = cur.fetchall()
-            manus = [(result[0], result[1] + ' ID:' + str(result[0])) for result in erg]
-            cur.close
-            conn.close()
-        except:
-            manus = []
+        manus = []
+        select = "SELECT DISTINCT spray_powder.manufacturer_id, manufacturer.title FROM manufacturer, spray_powder WHERE spray_powder.manufacturer_id = manufacturer.manufacturer_id ORDER BY title;"
+        conn = self.db.connect()
+        erg = conn.execute(select)
+        conn.close()
+        manus = [(result[0], result[1] + ' ID:' + str(result[0])) for result in erg]
         self.form.manu.choices = manus
         self.form.process()
         return self.formTemplate()
@@ -408,7 +336,9 @@ class SpraypowderFormView(TabelleFormView):
 
             select = "SELECT * FROM %s WHERE manufacturer_id = %s;" % (searchtable, manu_id)
 
-            self.ergs = self.db.execute(select)
+            conn = self.db.connect()
+            self.ergs = conn.execute(select)
+            conn.close()
 
         elif button == 'Abbrechen':
             url = self.context.aq_parent.absolute_url()
