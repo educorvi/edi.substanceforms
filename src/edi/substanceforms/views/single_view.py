@@ -8,9 +8,7 @@ from edi.substanceforms.config import editrole
 from edi.substanceforms.helpers import get_vocabulary
 from plone import api as ploneapi
 from edi.substanceforms.lib import DBConnect
-import psycopg2
 from jinja2 import Template
-
 
 from edi.substanceforms.content.tabelle import possibleColumns
 
@@ -22,42 +20,14 @@ class SingleView(BrowserView):
         dbdata = self.context.aq_parent
         self.db = DBConnect(host=dbdata.host, db=dbdata.database, user=dbdata.username, password=dbdata.password)
         self.itemid = self.request.get('item')
-        self.host = self.context.aq_parent.host
-        self.dbname = self.context.aq_parent.database
-        self.username = self.context.aq_parent.username
-        self.password = self.context.aq_parent.password
         self.article = self.get_article()
         self.machines = []
         self.secsheet = []
 
-        #import pdb; pdb.set_trace()
         self.definitions = self.get_definitions()
-        print(self.definitions)
-
         self.more_definitions = self.get_more_definitions()
 
-        if self.context.tablename == 'substance_mixture':
-            #self.machines = self.get_machines()
-            #self.secsheet = self.get_recipes()
-            template = ViewPageTemplateFile('single_view.pt')
-            self.image_url = self.get_image_url()
-            self.template = BoundPageTemplate(template, self)
-            return self.template()
-        if self.context.tablename == 'substance':
-            #self.machines = self.get_machines()
-            #self.secsheet = self.get_recipes()
-            template = ViewPageTemplateFile('single_view.pt')
-            self.template = BoundPageTemplate(template, self)
-            return self.template()
-        elif self.context.tablename == 'spray_powder':
-            template = ViewPageTemplateFile('single_view.pt')
-            self.image_url = self.get_image_url()
-            self.template = BoundPageTemplate(template, self)
-            return self.template()
-        elif self.context.tablename == 'manufacturer':
-            template = ViewPageTemplateFile('single_view.pt')
-            self.template = BoundPageTemplate(template, self)
-            return self.template()
+        self.image_url = self.get_image_url()
         return self.index()
 
     def get_definitions(self):
@@ -65,7 +35,6 @@ class SingleView(BrowserView):
         columns = self.context.columns
         for key in columns:
             key_value_pair = getattr(self, key, None) # hole die Methode für Aufbereitung der Daten in DB-Spalte key
-
             if key_value_pair:
                 entry = key_value_pair()
                 if entry:
@@ -73,7 +42,6 @@ class SingleView(BrowserView):
                     value = entry['value']
                     fragment = f'<dt class="col col-sm-5">{title}</dt><dd class="col col-sm-7">{value}</dd><div class="w-100 divider"></div>'
                     fragments.append(fragment)
-
         return fragments
 
     def get_more_definitions(self):
@@ -103,29 +71,27 @@ class SingleView(BrowserView):
         for select in preselects:
             if not erg:
                 sel = Template(select).render(value=self.itemid)
-                try:
-                    resu = self.db.execute(sel)
-                    resu = [i[0] for i in resu]
-                    if vocabulary:
-                        erg = [self.get_attr_translation(vocabulary, i) for i in resu]
-                    else:
-                        erg = resu
-                except:
-                    erg = []
+                conn = self.db.connect()
+                resu = conn.execute(sel)
+                conn.close()
+                resu = [i[0] for i in resu]
+                if vocabulary:
+                    erg = [self.get_attr_translation(vocabulary, i) for i in resu]
+                else:
+                    erg = resu
             else:
                 res = erg
                 erg = []
                 for entry in res:
                     sel = Template(select).render(value=entry)
-                    try:
-                        resu = self.db.execute(sel)
-                        if vocabulary:
-                            result = [self.get_attr_translation(vocabulary, i) for i in resu]
-                        else:
-                            result = resu
-                        erg += [i[0] for i in result]
-                    except:
-                        result = []
+                    conn = self.db.connect()
+                    resu = self.db.execute(sel)
+                    conn.close()
+                    if vocabulary:
+                        result = [self.get_attr_translation(vocabulary, i) for i in resu]
+                    else:
+                        result = resu
+                    erg += [i[0] for i in result]
         if len(erg) == 1:
             return erg[0]
         elif len(erg) > 1:
@@ -362,7 +328,6 @@ class SingleView(BrowserView):
             return {'title': title, 'value': value}
         return {}
 
-
     def mol(self):
         title = "Molmasse [g/mol]"
         fieldindex = possibleColumns(self.context).getTerm('mol').token
@@ -459,26 +424,20 @@ class SingleView(BrowserView):
         return False
 
     def get_article(self):
-        conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
-        cur = conn.cursor()
         tablename = self.context.tablename
         select = "SELECT * from %s WHERE %s_id = %s" %(tablename, tablename, self.itemid)
-        cur.execute(select)
-        article = cur.fetchall()[0]
-        print(article)
-        cur.close
+        conn = self.db.connect()
+        article = conn.execute(select)
         conn.close()
         return article
 
     def get_image_url(self):
-        conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
-        cur = conn.cursor()
         tablename = self.context.tablename
         select = "SELECT image_url from %s WHERE %s_id = %s" % (tablename, tablename, self.itemid)
-        cur.execute(select)
-        uid = cur.fetchall()[0][0]
-        cur.close
+        conn = self.db.connect()
+        erg = self.db.execute(select)
         conn.close()
+        uid = erg[0][0]
 
         if uid:
             imageobj = ploneapi.content.get(UID=uid)
@@ -487,35 +446,19 @@ class SingleView(BrowserView):
         else:
             return False
 
-    """
-    def get_machines(self):
-        machine_titles = []
-        conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
-        cur = conn.cursor()
-        select = "SELECT machine_id from mixture_pairs WHERE mixture_id = %s" %self.itemid
-        cur.execute(select)
-        machine_ids = cur.fetchall() #TODO: muss evenutell noch behandelt werden
-        cur.close()
-        for i in machine_ids:
-            cur = conn.cursor()
-            select = "SELECT title from printing_machine WHERE printing_machine_id = %s" %i
-            cur.execute(select)
-            machine_title = cur.fetchall()
-            cur.close()
-            machine_titles.append(machine_title)
-        conn.close()
-        return machine_titles
-    """
-
     def get_synonyms(self):
         synonyms = []
         select = "SELECT synonym_name from synonyms WHERE substance_id = %s" %self.itemid
-        synonyms = self.db.execute(select)
+        conn = self.db.connect()
+        synonyms = conn.execute(select)
+        conn.close()
         return synonyms
 
     def get_manufacturer(self, manu):
         select = "SELECT title from manufacturer WHERE manufacturer_id = %s" %manu
-        manufacturer = self.db.execute(select)
+        conn = self.db.connect()
+        manufacturer = conn.execute(select)
+        conn.close()
         result = manufacturer[0][0]
         return result
 
@@ -529,17 +472,17 @@ class SingleView(BrowserView):
         return resultstring
 
     def get_recipes(self):
+        conn = self.db.connect()
         substances = []
         select = "SELECT substance_id, concentration_min, concentration_max from recipes WHERE mixture_id = %s" %self.itemid
-        substance_ids = self.db.execute(select)
-        # Continue here
+        substance_ids = conn.execute(select)
         for sid, concentration_min, concentration_max in substance_ids:
             select = "SELECT title from substance WHERE substance_id = %s" %sid
-            substance_title = self.db.execute(select)
+            substance_title = conn.execute(select)
             entry = {'title':substance_title, 'concentration_min':concentration_min, 'concentration_max':concentration_max}
             entry['resultstring'] = self.translate_recipes(entry)
             substances.append(entry)
-        #self.db.close()
+        conn.close()
         return substances
 
     def translate_recipes(self, recipe):
@@ -573,31 +516,31 @@ class SingleView(BrowserView):
         return result
 
     def new_usecase_translation(self):
+        conn = self.db.connect()
         usecases = []
         select = "SELECT usecase_id from usecasepairs WHERE mixture_id = %s" % self.itemid
-        usecaseids = self.db.execute(select)
-        # Continue here
+        usecaseids = conn.execute(select)
 
         for ucid in usecaseids:
             select = "SELECT usecase_name from usecases WHERE usecase_id = %s" % ucid
-            usecase_title = self.db.execute(select)
+            usecase_title = conn.execute(select)
             entry = {'title': usecase_title}
             usecases.append(entry)
-        # self.db.close()
+        conn.close()
         return usecases
 
     def new_usecase_translation2(self, id):
+        conn = self.db.connect()
         usecases = []
         select = "SELECT usecase_id from usecasepairs WHERE mixture_id = %s" % id
-        usecaseids = self.db.execute(select)
-        # Continue here
+        usecaseids = conn.execute(select)
 
         for ucid in usecaseids:
             select = "SELECT usecase_name from usecases WHERE usecase_id = %s" % ucid
-            usecase_title = self.db.execute(select)
+            usecase_title = conn.execute(select)
             entry = {'title': usecase_title}
             usecases.append(entry)
-        # self.db.close()
+        conn.close()
         return usecases
 
     def translate_usecases(self, usecases):
@@ -610,45 +553,45 @@ class SingleView(BrowserView):
         return resultstring
 
     def new_usecases_translation(self):
+        conn = self.db.connect()
         usecases = []
         select = "SELECT usecase_id from usecasepairs WHERE mixture_id = %s" % self.itemid
-        caseids = self.db.execute(select)
-        # Continue here
+        caseids = conn.execute(select)
 
         for caseid in caseids:
             select = "SELECT usecase_name from usecases WHERE usecase_id = %s" % caseid
-            case_title = self.db.execute(select)
+            case_title = conn.execute(select)
             entry = {'title': case_title}
             usecases.append(entry)
-        # self.db.close()
+        conn.close()
         return usecases
 
     def new_application_areas_translation(self):
+        conn = self.db.connect()
         applicationareas = []
         select = "SELECT area_id from areapairs WHERE mixture_id = %s" % self.itemid
-        areaids = self.db.execute(select)
-        # Continue here
+        areaids = conn.execute(select)
 
         for arid in areaids:
             select = "SELECT application_area_name from application_areas WHERE application_area_id = %s" % arid
-            area_title = self.db.execute(select)
+            area_title = conn.execute(select)
             entry = {'title': area_title}
             applicationareas.append(entry)
-        # self.db.close()
+        conn.close()
         return applicationareas
 
     def new_application_areas_translation2(self, id):
+        conn = self.db.connect()
         applicationareas = []
         select = "SELECT area_id from areapairs WHERE mixture_id = %s" % id
-        areaids = self.db.execute(select)
-        # Continue here
+        areaids = conn.execute(select)
 
         for arid in areaids:
             select = "SELECT application_area_name from application_areas WHERE application_area_id = %s" % arid
-            area_title = self.db.execute(select)
+            area_title = conn.execute(select)
             entry = {'title': area_title}
             applicationareas.append(entry)
-        # self.db.close()
+        conn.close()
         return applicationareas
 
     def translate_application_areas(self, areas):

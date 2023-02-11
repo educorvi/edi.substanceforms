@@ -151,6 +151,7 @@
     name="single_view"
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".single_view.SingleView"
+    template="single_view.pt"
     permission="zope2.View"
     />
 
