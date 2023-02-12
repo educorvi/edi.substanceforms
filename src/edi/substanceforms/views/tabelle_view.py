@@ -60,12 +60,13 @@ class TabelleFormView(WTFormView):
         return preselects
 
     def get_preergs(self, preselects, vocab, value):
+        conn = self.db.connect()
         erg = list()
         res = list()
         for select in preselects:
             if not erg:
                 sel = Template(select).render(value=value)
-                resu = self.db.execute(sel)
+                resu = conn.execute(sel)
                 resu = [i[0] for i in resu]
                 if vocab:
                     erg = self.get_attr_translation(vocab, resu[0])
@@ -78,7 +79,7 @@ class TabelleFormView(WTFormView):
                     if not entry:
                         return ''
                     sel = Template(select).render(value=entry)
-                    resu = self.db.execute(sel)
+                    resu = conn.execute(sel)
                     if vocab:
                         result = self.get_attr_translation(vocab, resu[0])
                     else:
@@ -89,6 +90,7 @@ class TabelleFormView(WTFormView):
             result = erg
         else:
             result = ', '.join(erg)
+        conn.close()
         return result
 
     def getindexfortablename(self):

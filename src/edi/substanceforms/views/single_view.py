@@ -85,7 +85,7 @@ class SingleView(BrowserView):
                 for entry in res:
                     sel = Template(select).render(value=entry)
                     conn = self.db.connect()
-                    resu = self.db.execute(sel)
+                    resu = conn.execute(sel)
                     conn.close()
                     if vocabulary:
                         result = [self.get_attr_translation(vocabulary, i) for i in resu]
@@ -435,7 +435,7 @@ class SingleView(BrowserView):
         tablename = self.context.tablename
         select = "SELECT image_url from %s WHERE %s_id = %s" % (tablename, tablename, self.itemid)
         conn = self.db.connect()
-        erg = self.db.execute(select)
+        erg = conn.execute(select)
         conn.close()
         uid = erg[0][0]
 

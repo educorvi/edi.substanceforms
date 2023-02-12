@@ -1,30 +1,28 @@
 # -*- coding: utf-8 -*-
-
 from Products.Five.browser import BrowserView
 import jsonlib
 from edi.substanceforms.lib import DBConnect
 
 
 class Gefahrstoff(BrowserView):
+
     def __call__(self):
         self.db = DBConnect(host=self.context.host, db=self.context.database, user=self.context.username, password=self.context.password)
-
+        conn = self.db.connect()
         gemischid = self.request.get('gemischid')
-        #gemischid = "https://emissionsarme-produkte.bgetem.de/datenbank-chemie-dp/wasch-und-reinigungsmittel-fuer-den-etikettendruck/biolon-xi-fluessig"
         if gemischid.startswith('https://'):
             select = "SELECT mixture_id FROM oldlinks WHERE link = '%s'" % gemischid
-            mixture_id = self.db.execute(select)
+            mixture_id = conn.execute(select)
         else:
             mixture_id = gemischid.split('.')[-1]
 
         mixture_id = mixture_id[0][0]
-
         data1select = "SELECT * FROM substance_mixture WHERE substance_mixture_id = %s" % mixture_id
-        data1 = self.db.execute(data1select)
+        data1 = conn.execute(data1select)
         data2select = "SELECT * FROM manufacturer WHERE manufacturer_id = %s" % data1[0][25]
-        data2 = self.db.execute(data2select)
+        data2 = conn.execute(data2select)
         data3select = "SELECT * FROM recipes WHERE mixture_id = %s" % mixture_id
-        data3 = self.db.execute(data3select)
+        data3 = conn.execute(data3select)
 
         gefahrstoffdata = {}
 
@@ -38,7 +36,7 @@ class Gefahrstoff(BrowserView):
         for inhalt in data3:
             inhaltsstoff = {}
             select = "SELECT * FROM substance WHERE substance_id = %s" % inhalt[1]
-            reinstoff = self.db.execute(select)
+            reinstoff = conn.execute(select)
             inhaltsstoff['cas'] = reinstoff[0][4]
             inhaltsstoff['gefahrstoff'] = reinstoff[0][1]
             inhaltsstoff['anteil_min'] = inhalt[3]
@@ -47,11 +45,8 @@ class Gefahrstoff(BrowserView):
             inhaltsstoffe.append(inhaltsstoff)
 
         productclassselect = "SELECT class_name FROM productclasses WHERE class_id = %s" % data1[0][27]
-        try:
-            productclass = self.db.execute(productclassselect)
-            productclass = productclass[0][0]
-        except:
-            productclass = None
+        productclass = conn.execute(productclassselect)
+        productclass = productclass[0][0]
 
         produktkategorien = {
             "label": "Reinigungsmittel im Etikettendruck",
@@ -81,4 +76,5 @@ class Gefahrstoff(BrowserView):
         gefahrstoffdata['@id'] = gemischid
         gefahrstoffdata['produktklasse'] = productclass
 
+        conn.close()
         return jsonlib.write(gefahrstoffdata)

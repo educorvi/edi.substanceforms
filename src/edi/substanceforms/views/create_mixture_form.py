@@ -4,7 +4,7 @@ import transaction
 from wtforms.widgets import CheckboxInput, ListWidget
 from wtforms import Form, StringField, FloatField, SelectField, DateField, BooleanField, IntegerField, TextAreaField, FileField, HiddenField
 from plone.namedfile import NamedBlobImage
-from wtforms import FileField, RadioField, SelectMultipleField
+from wtforms import RadioField, SelectMultipleField
 from wtforms import validators
 from collective.wtforms.views import WTFormView
 from edi.substanceforms.helpers import check_value, list_handler, reverse_list_handler, new_list_handler, get_vocabulary, new_list_handler2, new_list_handler3
@@ -12,8 +12,6 @@ from edi.substanceforms.vocabularies import substance_types, hskategorie, produk
 from edi.substanceforms.vocabularies import classifications, usecases, application_areas, substance_types_new, produktklassenid
 from plone import api as ploneapi
 from edi.substanceforms.lib import DBConnect
-import requests
-import psycopg2
 
 class MultiCheckboxField(SelectMultipleField):
     widget = ListWidget(prefix_label=False)
@@ -28,8 +26,6 @@ class CreateForm(Form):
     substance_type = RadioField(u"Art des Wasch- und Reinigungsmittels", [validators.required()], choices=substance_types_new)
     usecases = MultiCheckboxField(u"Anwendungszwecke für Etikettenreiniger", choices=usecases)
     application_areas = MultiCheckboxField(u"Anwendungsgebiete für Sonderreiniger", choices=application_areas)
-    #offset_print_manner = StringField(u"Offsetdruckverfahren", render_kw={'class': 'form-control'})
-    #detergent_special = BooleanField(u"Es handelt sich um einen Sonderreiniger", render_kw={'class': 'form-check-input'})
     evaporation_lane_150 = FloatField(u"Verdampfungsfaktor Fv (Bahntemperatur 150 °C)", render_kw={'class': 'form-control'})
     evaporation_lane_160 = FloatField(u"Verdampfungsfaktor Fv (Bahntemperatur 160 °C)", render_kw={'class': 'form-control'})
     evaporation_lane_170 = FloatField(u"Verdampfungsfaktor Fv (Bahntemperatur 170 °C)", render_kw={'class': 'form-control'})
@@ -54,8 +50,6 @@ class UpdateForm(Form):
     substance_type = RadioField(u"Art des Wasch- und Reinigungsmittels", [validators.required()], choices=substance_types_new)
     usecases = MultiCheckboxField(u"Anwendungszwecke für Etikettenreiniger", choices=usecases)
     application_areas = MultiCheckboxField(u"Anwendungsgebiete für Sonderreiniger", choices=application_areas)
-    #offset_print_manner = StringField(u"Offsetdruckverfahren", render_kw={'class': 'form-control'})
-    #detergent_special = BooleanField(u"Es handelt sich um einen Sonderreiniger", render_kw={'class': 'form-check-input'})
     evaporation_lane_150 = FloatField(u"Verdampfungsfaktor Fv (Bahntemperatur 150 °C)", render_kw={'class': 'form-control'})
     evaporation_lane_160 = FloatField(u"Verdampfungsfaktor Fv (Bahntemperatur 160 °C)", render_kw={'class': 'form-control'})
     evaporation_lane_170 = FloatField(u"Verdampfungsfaktor Fv (Bahntemperatur 170 °C)", render_kw={'class': 'form-control'})
@@ -92,10 +86,6 @@ class CreateFormView(WTFormView):
     def __call__(self):
         dbdata = self.context.aq_parent
         self.db = DBConnect(host=dbdata.host, db=dbdata.database, user=dbdata.username, password=dbdata.password)
-        self.host = self.context.aq_parent.host
-        self.dbname = self.context.aq_parent.database
-        self.username = self.context.aq_parent.username
-        self.password = self.context.aq_parent.password
         if self.submitted:
             button = self.hasButtonSubmitted()
             if button:
@@ -105,13 +95,14 @@ class CreateFormView(WTFormView):
         return self.index()
 
     def renderForm(self):
-        try:
-            select = "SELECT manufacturer_id, title FROM manufacturer ORDER BY title;"
-            erg = self.db.execute(select)
+        conn = self.db.connect()
+        select = "SELECT manufacturer_id, title FROM manufacturer ORDER BY title;"
+        erg = conn.execute(select)
+        conn.close()
+        if erg:
             manus = [(result[0], result[1] + ' ID:' + str(result[0])) for result in erg]
-        except:
+        else:
             manus = []
-
         self.form.manufacturer_id.choices = manus
         self.form.process()
         return self.formTemplate()
@@ -119,35 +110,27 @@ class CreateFormView(WTFormView):
     def create_image(self, image, title):
         filedata = image.data.read()
         filename = image.data.filename
-
         blobimage = NamedBlobImage(data=filedata, filename=filename)
         obj = ploneapi.content.create(type='Image', title=title, image=blobimage, container=self.context)
-
         obj.indexObject()
         transaction.commit()
-
         return obj.UID()
 
     def submit(self, button):
+        conn = self.db.connect()
         image_url = ''
         if self.form.image_url.data.filename:
             image_url = self.create_image(self.form.image_url, self.form.title.data)
         redirect_url = self.context.aq_parent.absolute_url()
-        if button == 'Speichern': #and self.validate():
-
+        if button == 'Speichern':
             if not self.form.skin_category.data:
                 message = u'Bitte füllen Sie das Feld "Hautschutz-Kategorie" aus'
                 ploneapi.portal.show_message(message=message, type='error', request=self.request)
                 return None
-
-
             if self.form.date_checked.data:
                 date_checked = self.form.date_checked.data.strftime("%Y-%m-%d")
             else:
                 date_checked = ''
-
-            conn = psycopg2.connect(host=self.host, user=self.username, dbname=self.dbname, password=self.password)
-            cur = conn.cursor()
             insert = """INSERT INTO substance_mixture (title, description, webcode, branch, substance_type,
                                                         evaporation_lane_150, evaporation_lane_160,
                                                         evaporation_lane_170, evaporation_lane_180, ueg, response,
@@ -176,57 +159,31 @@ class CreateFormView(WTFormView):
                                                         check_value(image_url),
                                                         check_value(self.form.manufacturer_id.data.split('ID:')[-1]),
                                                         check_value(self.form.status))
-
-
             areaids = list()
             for i in self.form.application_areas.data:
                 selectcommand = "SELECT substance_mixture_id FROM substance_mixture ORDER BY substance_mixture_id DESC LIMIT 1"
-                selectedid = self.db.execute(selectcommand)
+                selectedid = conn.execute(selectcommand)
                 areaids.append([int(i), (int(selectedid[0][0]))+1])
-
             caseids = list()
             for i in self.form.usecases.data:
                 selectcommand = "SELECT substance_mixture_id FROM substance_mixture ORDER BY substance_mixture_id DESC LIMIT 1"
-                selectedid = self.db.execute(selectcommand)
+                selectedid = conn.execute(selectcommand)
                 caseids.append([int(i), (int(selectedid[0][0])) + 1])
-
-            if self.form.image_url.data.filename:
-
-                try:
-                    self.db.execute(insert)
-                    for i in areaids:
-                        insertcommand = "INSERT INTO areapairs (area_id, mixture_id) VALUES (%s, %s)" % (i[0], i[1])
-                        self.db.execute(insertcommand)
-                    for i in caseids:
-                        insertcommand = "INSERT INTO usecasepairs (usecase_id, mixture_id) VALUES (%s, %s)" % (i[0], i[1])
-                        self.db.execute(insertcommand)
-                    message = u'Das Wasch- und Reinigungsmittel wurde erfolgreich gespeichert.'
-                    ploneapi.portal.show_message(message=message, type='info', request=self.request)
-                except:
-                    imageobj = ploneapi.content.get(UID=image_url)
-                    ploneapi.content.delete(imageobj)
-
-                    message = u'Fehler beim Hinzufügen des Gefahrstoffgemisches'
-                    ploneapi.portal.show_message(message=message, type='error', request=self.request)
-
-                self.db.close()
-
-            else:
-                self.db.execute(insert)
-                for i in areaids:
-                    insertcommand = "INSERT INTO areapairs (area_id, mixture_id) VALUES (%s, %s)" % (i[0], i[1])
-                    self.db.execute(insertcommand)
-                for i in caseids:
-                    insertcommand = "INSERT INTO usecasepairs (usecase_id, mixture_id) VALUES (%s, %s)" % (i[0], i[1])
-                    self.db.execute(insertcommand)
-                self.db.close()
-                message = u'Das Wasch- und Reinigungsmittel wurde erfolgreich gespeichert.'
-                ploneapi.portal.show_message(message=message, type='info', request=self.request)
-
+            conn.execute(insert)
+            for i in areaids:
+                insertcommand = "INSERT INTO areapairs (area_id, mixture_id) VALUES (%s, %s)" % (i[0], i[1])
+                conn.execute(insertcommand)
+            for i in caseids:
+                insertcommand = "INSERT INTO usecasepairs (usecase_id, mixture_id) VALUES (%s, %s)" % (i[0], i[1])
+                conn.execute(insertcommand)
+            message = u'Das Wasch- und Reinigungsmittel wurde erfolgreich gespeichert.'
+            ploneapi.portal.show_message(message=message, type='info', request=self.request)
+            conn.close()
             return self.request.response.redirect(redirect_url)
 
         elif button == 'Abbrechen':
             return self.request.response.redirect(redirect_url)
+
 
 class UpdateFormView(CreateFormView):
     formClass = UpdateForm
@@ -251,10 +208,11 @@ class UpdateFormView(CreateFormView):
 
         relationalgetter = "SELECT application_areas.application_area_name FROM application_areas, areapairs WHERE areapairs.mixture_id = %s and areapairs.area_id = application_areas.application_area_id ;" % self.itemid
         relationalgetter2 = "SELECT usecases.usecase_name FROM usecases, usecasepairs WHERE usecasepairs.mixture_id = %s and usecasepairs.usecase_id = usecases.usecase_id ;" % self.itemid
-        self.result = self.db.execute(getter)
-        self.relational = self.db.execute(relationalgetter)
-        self.relational2 = self.db.execute(relationalgetter2)
-        self.db.close()
+        conn = self.db.connect()
+        self.result = conn.execute(getter)
+        self.relational = conn.execute(relationalgetter)
+        self.relational2 = conn.execute(relationalgetter2)
+        conn.close()
         return self.index()
 
     def renderForm(self):
@@ -285,9 +243,9 @@ class UpdateFormView(CreateFormView):
     def submit(self, button):
         """
         """
+        conn = self.db.connect()
         redirect_url = self.context.absolute_url() + '/single_view?item=' + self.form.item_id.data
-        if button == 'Speichern': #and self.validate():
-
+        if button == 'Speichern':
             if self.form.date_checked.data:
                 date_checked = self.form.date_checked.data.strftime("%Y-%m-%d")
             else:
@@ -316,67 +274,24 @@ class UpdateFormView(CreateFormView):
                                                         check_value(self.form.productclass.data),
                                                         check_value(date_checked),
                                                         check_value(self.form.item_id.data))
-            self.db.execute(command)
 
-
-            """
-
-            neueliste = list()
-            neuevocab = list()
-            resultlist = list()
-            listtoadd = list()
-            vocabulary = get_vocabulary('application_areas')
-            for n in vocabulary:
-                neuevocab.append(n[0])
-            for i in self.form.application_areas.data:
-                getfromvocab = "SELECT DISTINCT mixture_id, area_id FROM areapairs, application_areas WHERE mixture_id = %s" % self.form.item_id.data
-                currentareas = self.db.execute(getfromvocab)
-                for v in currentareas:
-                    command = "SELECT application_area_name FROM application_areas WHERE application_area_id = %s" % v[1]
-                    result = self.db.execute(command)
-                    result = result[0][0]
-                    resultlist.append(result)
-                for m in neuevocab:
-                    #import pdb; pdb.set_trace()
-                    for l in resultlist:
-                        if i == l and i not in neueliste:
-                            neueliste.append(i)
-
-                if i not in neueliste:
-                    idcommand = "SELECT application_area_id FROM application_areas WHERE application_area_name = 'Reiniger_Leitstaende_Sensoren'"
-                    richtigeid = self.db.execute(idcommand)
-                    insertcommand = "INSERT INTO areapairs (area_id, mixture_id) VALUES (%s, %s);" % (richtigeid[0][0],
-                                                                                                   self.form.item_id.data)
-                    self.db.execute(insertcommand)
-
-            print(neueliste)
-            print(listtoadd)
-
-                #del newlist[::2]
-                #import pdb; pdb.set_trace()
-
-        """
-
+            conn.execute(command)
             deletecommand = "DELETE FROM areapairs WHERE mixture_id = %s" % self.form.item_id.data
-            self.db.execute(deletecommand)
+            conn.execute(deletecommand)
             for i in self.form.application_areas.data:
                 insertcommand = "INSERT INTO areapairs (area_id, mixture_id) VALUES (%s, %s)" % (int(i), self.form.item_id.data)
-                self.db.execute(insertcommand)
+                conn.execute(insertcommand)
 
             deletecommand2 = "DELETE FROM usecasepairs WHERE mixture_id = %s" % self.form.item_id.data
-            self.db.execute(deletecommand2)
+            conn.execute(deletecommand2)
             for i in self.form.usecases.data:
                 insertcommand2 = "INSERT INTO usecasepairs (usecase_id, mixture_id) VALUES (%s, %s)" % (
                 int(i), self.form.item_id.data)
-                self.db.execute(insertcommand2)
-
+                conn.execute(insertcommand2)
 
             message = u'Das Gefahrstoffgemisch wurde erfolgreich aktualisiert.'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
-            #message = u'Fehler beim Aktualisieren des Gefahrstoffgemisches'
-            #ploneapi.portal.show_message(message=message, type='error', request=self.request)
-
-            self.db.close()
+            conn.close()
             return self.request.response.redirect(redirect_url)
 
         elif button == 'Abbrechen':
@@ -395,7 +310,6 @@ class DeleteFormView(CreateFormView):
                 if result:
                     return result
         self.itemid = self.request.get('itemid')
-        self.db.close()
         return self.index()
 
 
@@ -407,18 +321,18 @@ class DeleteFormView(CreateFormView):
     def submit(self, button):
         """
         """
+        conn = self.db.connect()
         redirect_url = self.context.aq_parent.absolute_url()
         if button == 'Speichern' and self.form.sure.data is True: #and self.validate():
             command = "DELETE FROM substance_mixture WHERE substance_mixture_id = %s" % (self.form.item_id.data)
-            self.db.execute(command)
+            conn.execute(command)
             deletecommand = "DELETE FROM areapairs WHERE mixture_id = %s" % self.form.item_id.data
-            self.db.execute(deletecommand)
+            conn.execute(deletecommand)
             deletecommand2 = "DELETE FROM usecasepairs WHERE mixture_id = %s" % self.form.item_id.data
-            self.db.execute(deletecommand2)
+            conn.execute(deletecommand2)
             message = u'Das Gefahrstoffgemisch wurde erfolgreich gelöscht'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
-
-            self.db.close()
+            conn.close()
             return self.request.response.redirect(redirect_url)
 
         elif button == 'Speichern' and self.form.sure.data is False:
@@ -445,22 +359,15 @@ class DeleteIngredientsFormView(CreateFormView):
         return self.index()
 
     def alreadyselected(self):
+        conn = self.db.connect()
         newresult = list()
         itemid = self.request.get('itemid')
         select = "SELECT DISTINCT substance.substance_id, substance.title FROM substance, recipes, substance_mixture WHERE recipes.mixture_id = %s AND substance.substance_id = recipes.substance_id" % itemid
-        try:
-            result = self.db.execute(select)
-            for i in result:
-                newresult.append(i)
-        except:
-            newresult = list()
-        if newresult:
-            try:
-                return newresult
-                self.db.close()
-            except:
-                self.db.close()
-
+        result = conn.execute(select)
+        for i in result:
+            newresult.append(i)
+        conn.close()
+        return newresult
 
     def renderForm(self):
         self.form.item_id.default=self.itemid
@@ -476,26 +383,25 @@ class DeleteIngredientsFormView(CreateFormView):
     def submit(self, button):
         """
         """
+        conn = self.db.connect()
         redirect_url = self.context.absolute_url() + '/single_view?item=' + self.form.item_id.data
-        if button == 'Löschen': #and self.validate():
+        if button == 'Löschen': 
             if self.form.ingres.data:
                 for i in self.form.ingres.data:
                     command = "DELETE FROM recipes WHERE mixture_id = %s AND substance_id = %s" % (self.form.item_id.data, i)
-                    self.db.execute(command)
+                    conn.execute(command)
                 message = u'Die Bestandteile wurden erfolgreich gelöscht'
                 ploneapi.portal.show_message(message=message, type='info', request=self.request)
-
+                conn.close()
                 return self.request.response.redirect(redirect_url)
             else:
                 message = u'Die Bestandteile wurden nicht gelöscht, da das Bestätigungsfeld nicht ausgewählt war.'
                 ploneapi.portal.show_message(message=message, type='error', request=self.request)
                 return self.request.response.redirect(redirect_url)
-
-
         elif button == 'Abbrechen':
             return self.request.response.redirect(redirect_url)
 
-        self.db.close()
+
 class UpdateManufacturerFormView(CreateFormView):
     formClass = UpdateManufacturerForm
 
@@ -512,31 +418,28 @@ class UpdateManufacturerFormView(CreateFormView):
         return self.index()
 
     def renderForm(self):
-        try:
-            insert = "SELECT manufacturer_id, title FROM manufacturer ORDER BY title;"
-            erg = self.db.execute(insert)
-            manus = [(result[0], result[1] + ' ID:' + str(result[0])) for result in erg]
-        except:
-            manus = []
+        conn = self.db.connect()
+        insert = "SELECT manufacturer_id, title FROM manufacturer ORDER BY title;"
+        erg = conn.execute(insert)
+        manus = [(result[0], result[1] + ' ID:' + str(result[0])) for result in erg]
         self.form.manufacturer_id.choices = manus
         self.form.item_id.default = self.itemid
         self.form.process()
+        conn.close()
         return self.formTemplate()
 
     def submit(self, button):
         """
         """
+        conn = self.db.connect()
         redirect_url = self.context.absolute_url() + '/single_view?item=' + self.form.item_id.data
-        if button == 'Speichern': #and self.validate():
+        if button == 'Speichern':
             command = """UPDATE substance_mixture SET manufacturer_id=%s WHERE substance_mixture_id = %s;""" % (check_value(self.form.manufacturer_id.data.split('ID:')[-1]),
                                                                                                                 self.form.item_id.data)
-            self.db.execute(command)
+            conn.execute(command)
             message = u'Das Gefahrstoffgemisch wurde erfolgreich aktualisiert.'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
-            #message = u'Fehler beim Aktualisieren des Gefahrstoffgemisches'
-            #ploneapi.portal.show_message(message=message, type='error', request=self.request)
-
-            self.db.close()
+            conn.close()
             return self.request.response.redirect(redirect_url)
 
         elif button == 'Abbrechen':
