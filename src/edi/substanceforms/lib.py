@@ -8,11 +8,11 @@ class DBConnect(object):
         self.password=password
 
     def connect(self):
-        conn = psycopg2.connect(host=self.host,
-                                dbname=self.db,
-                                user=self.user,
-                                password=self.password)
-        return conn
+        self.conn = psycopg2.connect(host=self.host,
+                                    dbname=self.db,
+                                    user=self.user,
+                                    password=self.password)
+        return self
 
     def execute(self, command):
         results = False
