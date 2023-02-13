@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from wtforms.widgets import CheckboxInput, ListWidget
-from wtforms import Form, FloatField, SelectField, HiddenField
+from wtforms import Form, FloatField, SelectField, HiddenField, SelectMultipleField
 from plone.namedfile import NamedBlobImage
 from wtforms import validators
 from collective.wtforms.views import WTFormView
