@@ -289,7 +289,7 @@
   <browser:page
     name="productclassupdater"
     for="*"
-    class=".productclassupdater.Migrationview"
+    class=".migration_views.productclassupdater.Migrationview"
     permission="cmf.ModifyPortalContent"
     />
 
