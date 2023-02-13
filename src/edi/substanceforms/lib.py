@@ -12,7 +12,6 @@ class DBConnect(object):
                                     dbname=self.db,
                                     user=self.user,
                                     password=self.password)
-        return self
 
     def execute(self, command):
         results = False

@@ -20,7 +20,7 @@ class SingleView(BrowserView):
         dbdata = self.context.aq_parent
         self.db = DBConnect(host=dbdata.host, db=dbdata.database, user=dbdata.username, password=dbdata.password)
         self.itemid = self.request.get('item')
-        self.article = self.get_article()
+        self.article = self.get_article()[0]
         self.machines = []
         self.secsheet = []
 
@@ -71,9 +71,9 @@ class SingleView(BrowserView):
         for select in preselects:
             if not erg:
                 sel = Template(select).render(value=self.itemid)
-                conn = self.db.connect()
-                resu = conn.execute(sel)
-                conn.close()
+                self.db.connect()
+                resu = self.db.execute(sel)
+                self.db.close()
                 resu = [i[0] for i in resu]
                 if vocabulary:
                     erg = [self.get_attr_translation(vocabulary, i) for i in resu]
@@ -84,9 +84,9 @@ class SingleView(BrowserView):
                 erg = []
                 for entry in res:
                     sel = Template(select).render(value=entry)
-                    conn = self.db.connect()
-                    resu = conn.execute(sel)
-                    conn.close()
+                    self.db.connect()
+                    resu = self.db.execute(sel)
+                    self.db.close()
                     if vocabulary:
                         result = [self.get_attr_translation(vocabulary, i) for i in resu]
                     else:
@@ -426,17 +426,17 @@ class SingleView(BrowserView):
     def get_article(self):
         tablename = self.context.tablename
         select = "SELECT * from %s WHERE %s_id = %s" %(tablename, tablename, self.itemid)
-        conn = self.db.connect()
-        article = conn.execute(select)
-        conn.close()
+        self.db.connect()
+        article = self.db.execute(select)
+        self.db.close()
         return article
 
     def get_image_url(self):
         tablename = self.context.tablename
         select = "SELECT image_url from %s WHERE %s_id = %s" % (tablename, tablename, self.itemid)
-        conn = self.db.connect()
-        erg = conn.execute(select)
-        conn.close()
+        self.db.connect()
+        erg = self.db.execute(select)
+        self.db.close()
         uid = erg[0][0]
 
         if uid:
@@ -449,16 +449,16 @@ class SingleView(BrowserView):
     def get_synonyms(self):
         synonyms = []
         select = "SELECT synonym_name from synonyms WHERE substance_id = %s" %self.itemid
-        conn = self.db.connect()
-        synonyms = conn.execute(select)
-        conn.close()
+        self.db.connect()
+        synonyms = self.db.execute(select)
+        self.db.close()
         return synonyms
 
     def get_manufacturer(self, manu):
         select = "SELECT title from manufacturer WHERE manufacturer_id = %s" %manu
-        conn = self.db.connect()
-        manufacturer = conn.execute(select)
-        conn.close()
+        self.db.connect()
+        manufacturer = self.db.execute(select)
+        self.db.close()
         result = manufacturer[0][0]
         return result
 
@@ -472,17 +472,17 @@ class SingleView(BrowserView):
         return resultstring
 
     def get_recipes(self):
-        conn = self.db.connect()
+        self.db.connect()
         substances = []
         select = "SELECT substance_id, concentration_min, concentration_max from recipes WHERE mixture_id = %s" %self.itemid
-        substance_ids = conn.execute(select)
+        substance_ids = self.db.execute(select)
         for sid, concentration_min, concentration_max in substance_ids:
             select = "SELECT title from substance WHERE substance_id = %s" %sid
-            substance_title = conn.execute(select)
+            substance_title = self.db.execute(select)
             entry = {'title':substance_title, 'concentration_min':concentration_min, 'concentration_max':concentration_max}
             entry['resultstring'] = self.translate_recipes(entry)
             substances.append(entry)
-        conn.close()
+        self.db.close()
         return substances
 
     def translate_recipes(self, recipe):
@@ -516,31 +516,31 @@ class SingleView(BrowserView):
         return result
 
     def new_usecase_translation(self):
-        conn = self.db.connect()
+        self.db.connect()
         usecases = []
         select = "SELECT usecase_id from usecasepairs WHERE mixture_id = %s" % self.itemid
-        usecaseids = conn.execute(select)
+        usecaseids = self.db.execute(select)
 
         for ucid in usecaseids:
             select = "SELECT usecase_name from usecases WHERE usecase_id = %s" % ucid
-            usecase_title = conn.execute(select)
+            usecase_title = self.db.execute(select)
             entry = {'title': usecase_title}
             usecases.append(entry)
-        conn.close()
+        self.db.close()
         return usecases
 
     def new_usecase_translation2(self, id):
-        conn = self.db.connect()
+        self.db.connect()
         usecases = []
         select = "SELECT usecase_id from usecasepairs WHERE mixture_id = %s" % id
-        usecaseids = conn.execute(select)
+        usecaseids = self.db.execute(select)
 
         for ucid in usecaseids:
             select = "SELECT usecase_name from usecases WHERE usecase_id = %s" % ucid
-            usecase_title = conn.execute(select)
+            usecase_title = self.db.execute(select)
             entry = {'title': usecase_title}
             usecases.append(entry)
-        conn.close()
+        self.db.close()
         return usecases
 
     def translate_usecases(self, usecases):
@@ -553,45 +553,45 @@ class SingleView(BrowserView):
         return resultstring
 
     def new_usecases_translation(self):
-        conn = self.db.connect()
+        self.db.connect()
         usecases = []
         select = "SELECT usecase_id from usecasepairs WHERE mixture_id = %s" % self.itemid
-        caseids = conn.execute(select)
+        caseids = self.db.execute(select)
 
         for caseid in caseids:
             select = "SELECT usecase_name from usecases WHERE usecase_id = %s" % caseid
-            case_title = conn.execute(select)
+            case_title = self.db.execute(select)
             entry = {'title': case_title}
             usecases.append(entry)
-        conn.close()
+        self.db.close()
         return usecases
 
     def new_application_areas_translation(self):
-        conn = self.db.connect()
+        self.db.connect()
         applicationareas = []
         select = "SELECT area_id from areapairs WHERE mixture_id = %s" % self.itemid
-        areaids = conn.execute(select)
+        areaids = self.db.execute(select)
 
         for arid in areaids:
             select = "SELECT application_area_name from application_areas WHERE application_area_id = %s" % arid
-            area_title = conn.execute(select)
+            area_title = self.db.execute(select)
             entry = {'title': area_title}
             applicationareas.append(entry)
-        conn.close()
+        self.db.close()
         return applicationareas
 
     def new_application_areas_translation2(self, id):
-        conn = self.db.connect()
+        self.db.connect()
         applicationareas = []
         select = "SELECT area_id from areapairs WHERE mixture_id = %s" % id
-        areaids = conn.execute(select)
+        areaids = self.db.execute(select)
 
         for arid in areaids:
             select = "SELECT application_area_name from application_areas WHERE application_area_id = %s" % arid
-            area_title = conn.execute(select)
+            area_title = self.db.execute(select)
             entry = {'title': area_title}
             applicationareas.append(entry)
-        conn.close()
+        self.db.close()
         return applicationareas
 
     def translate_application_areas(self, areas):

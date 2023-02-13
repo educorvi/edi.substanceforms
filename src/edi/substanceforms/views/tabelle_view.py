@@ -60,13 +60,13 @@ class TabelleFormView(WTFormView):
         return preselects
 
     def get_preergs(self, preselects, vocab, value):
-        conn = self.db.connect()
+        self.db.connect()
         erg = list()
         res = list()
         for select in preselects:
             if not erg:
                 sel = Template(select).render(value=value)
-                resu = conn.execute(sel)
+                resu = self.db.execute(sel)
                 resu = [i[0] for i in resu]
                 if vocab:
                     erg = self.get_attr_translation(vocab, resu[0])
@@ -79,7 +79,7 @@ class TabelleFormView(WTFormView):
                     if not entry:
                         return ''
                     sel = Template(select).render(value=entry)
-                    resu = conn.execute(sel)
+                    resu = self.db.execute(sel)
                     if vocab:
                         result = self.get_attr_translation(vocab, resu[0])
                     else:
@@ -90,7 +90,7 @@ class TabelleFormView(WTFormView):
             result = erg
         else:
             result = ', '.join(erg)
-        conn.close()
+        self.db.close()
         return result
 
     def getindexfortablename(self):
@@ -254,9 +254,9 @@ class SubstancemixtureFormView(TabelleFormView):
             select = select + endselect
 
         if mixturetype and select:
-            conn = self.db.connect()
-            erg = conn.execute(select)
-            conn.close()
+            self.db.connect()
+            erg = self.db.execute(select)
+            self.db.close()
             manus = [(result[0], result[1] + ' ID:' + str(result[0])) for result in erg]
 
         self.form.manu.choices = manus
@@ -284,9 +284,9 @@ class SubstancemixtureFormView(TabelleFormView):
 
                     select = select + endselect
 
-                conn = self.db.connect()
-                self.ergs = conn.execute(select)
-                conn.close()
+                self.db.connect()
+                self.ergs = self.db.execute(select)
+                self.db.close()
 
             else:
                 self.ergs = self.show_all()
