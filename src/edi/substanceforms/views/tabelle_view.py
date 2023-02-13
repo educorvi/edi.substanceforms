@@ -130,8 +130,8 @@ class TabelleFormView(WTFormView):
             select = "SELECT * FROM %s WHERE status = 'published' ORDER BY title ASC;" % (searchtable)
 
         conn = self.db.connect()
-        results = conn.execute(select)
-        conn.close()
+        results = self.db.execute(select)
+        self.db.close()
 
         return results
 
@@ -146,8 +146,8 @@ class TabelleFormView(WTFormView):
 
             select = "SELECT * FROM %s WHERE manufacturer_id = '%s';" % (searchkey, searchtable, manu_id)
             conn = self.db.connect()
-            self.ergs = conn.execute(select)
-            conn.close()
+            self.ergs = self.db.execute(select)
+            self.db.close()
 
         elif button == 'Abbrechen':
             url = self.context.aq_parent.absolute_url()
@@ -172,9 +172,9 @@ class HerstellerFormView(TabelleFormView):
 
     def renderForm(self):
         conn = self.db.connect()
-        erg = conn.execute("SELECT manufacturer_id, title FROM manufacturer ORDER BY title;")
+        erg = self.db.execute("SELECT manufacturer_id, title FROM manufacturer ORDER BY title;")
         manus = [(result[0], result[1] + ' ID:' + str(result[0])) for result in erg]
-        conn.close()
+        self.db.close()
         self.form.manu.choices = manus
         self.form.process()
         return self.formTemplate()
@@ -193,8 +193,8 @@ class HerstellerFormView(TabelleFormView):
             else:
                 select = "SELECT %s, title FROM %s WHERE manufacturer_id = '%s';" % (searchkey, searchtable, manu_id)
             conn = self.db.connect()
-            self.ergs = conn.execute(select)
-            conn.close()
+            self.ergs = self.db.execute(select)
+            self.db.close()
 
         elif button == 'Abbrechen':
             url = self.context.aq_parent.absolute_url()
@@ -208,8 +208,8 @@ class SubstanceFormView(TabelleFormView):
     def renderForm(self):
         conn = self.db.connect()
         select = "SELECT substance_id, title, casnr, egnr FROM substance ORDER BY title;"
-        substances = conn.execute(select)
-        conn.close()
+        substances = self.db.execute(select)
+        self.db.close()
         optionlist = list()
         for i in substances:
             subid = i[0]
@@ -230,8 +230,8 @@ class SubstanceFormView(TabelleFormView):
             if substance_id:
                 select = "SELECT substance_id, title FROM substance WHERE substance_id = %s;" % (substance_id)
                 conn = self.db.connect()
-                self.ergs = conn.execute(select)
-                conn.close()
+                self.ergs = self.db.execute(select)
+                self.db.close()
 
 
 class SubstancemixtureFormView(TabelleFormView):
@@ -304,8 +304,8 @@ class SubstancemixtureFormView(TabelleFormView):
                 select = "SELECT * FROM %s WHERE manufacturer_id = %s AND substance_type = '%s';" % (searchtable, manu_id, mixturetype[0])
 
             conn = self.db.connect()
-            self.ergs = conn.execute(select)
-            conn.close()
+            self.ergs = self.db.execute(select)
+            self.db.close()
 
         elif button == 'Abbrechen':
             url = self.context.aq_parent.absolute_url()
@@ -319,8 +319,8 @@ class SpraypowderFormView(TabelleFormView):
         manus = []
         select = "SELECT DISTINCT spray_powder.manufacturer_id, manufacturer.title FROM manufacturer, spray_powder WHERE spray_powder.manufacturer_id = manufacturer.manufacturer_id ORDER BY title;"
         conn = self.db.connect()
-        erg = conn.execute(select)
-        conn.close()
+        erg = self.db.execute(select)
+        self.db.close()
         manus = [(result[0], result[1] + ' ID:' + str(result[0])) for result in erg]
         self.form.manu.choices = manus
         self.form.process()
@@ -339,8 +339,8 @@ class SpraypowderFormView(TabelleFormView):
             select = "SELECT * FROM %s WHERE manufacturer_id = %s;" % (searchtable, manu_id)
 
             conn = self.db.connect()
-            self.ergs = conn.execute(select)
-            conn.close()
+            self.ergs = self.db.execute(select)
+            self.db.close()
 
         elif button == 'Abbrechen':
             url = self.context.aq_parent.absolute_url()
