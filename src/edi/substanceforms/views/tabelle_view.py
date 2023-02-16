@@ -95,7 +95,6 @@ class TabelleFormView(WTFormView):
 
     def getindexfortablename(self):
         columnids = list()
-        import pdb; pdb.set_trace()
         for i in self.context.resultcolumns:
             columnids.append(possibleColumns(self.context).getTerm(i).token)
         return columnids
