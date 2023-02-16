@@ -41,7 +41,7 @@ class CreateIngredientForm(WTFormView):
         newresult = list()
         itemid = self.request.get('itemid')
         select = "SELECT DISTINCT substance.title FROM substance, recipes, substance_mixture WHERE recipes.mixture_id = %s AND substance.substance_id = recipes.substance_id" % itemid
-        conn = self.db.connect()
+        self.db.connect()
         result = conn.execute(select)
         conn.close()
         for i in result:
@@ -50,7 +50,7 @@ class CreateIngredientForm(WTFormView):
 
     def renderForm(self):
         select = "SELECT substance_id, title, casnr, egnr FROM substance ORDER BY title;"
-        conn = self.db.connect()
+        self.db.connect()
         substances = con.execute(select)
         optionlist = list()
         for i in substances:
@@ -65,7 +65,7 @@ class CreateIngredientForm(WTFormView):
         return self.formTemplate()
 
     def submit(self, button):
-        conn = self.db.connect()
+        self.db.connect()
         self.form.itemid.default = self.request.get('itemid')
         redirect_url = self.context.absolute_url()+'/single_view?item='+self.form.itemid.data
         if button == 'Speichern':

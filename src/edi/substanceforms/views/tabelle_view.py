@@ -129,7 +129,7 @@ class TabelleFormView(WTFormView):
         else:
             select = "SELECT * FROM %s WHERE status = 'published' ORDER BY title ASC;" % (searchtable)
 
-        conn = self.db.connect()
+        self.db.connect()
         results = self.db.execute(select)
         self.db.close()
 
@@ -145,7 +145,7 @@ class TabelleFormView(WTFormView):
             searchtable = self.context.tablename
 
             select = "SELECT * FROM %s WHERE manufacturer_id = '%s';" % (searchkey, searchtable, manu_id)
-            conn = self.db.connect()
+            self.db.connect()
             self.ergs = self.db.execute(select)
             self.db.close()
 
@@ -171,7 +171,7 @@ class HerstellerFormView(TabelleFormView):
     formClass = HerstellerForm
 
     def renderForm(self):
-        conn = self.db.connect()
+        self.db.connect()
         erg = self.db.execute("SELECT manufacturer_id, title FROM manufacturer ORDER BY title;")
         manus = [(result[0], result[1] + ' ID:' + str(result[0])) for result in erg]
         self.db.close()
@@ -192,7 +192,7 @@ class HerstellerFormView(TabelleFormView):
                 select = "SELECT %s, title FROM %s;" % (searchkey, searchtable)
             else:
                 select = "SELECT %s, title FROM %s WHERE manufacturer_id = '%s';" % (searchkey, searchtable, manu_id)
-            conn = self.db.connect()
+            self.db.connect()
             self.ergs = self.db.execute(select)
             self.db.close()
 
@@ -206,7 +206,7 @@ class SubstanceFormView(TabelleFormView):
     formClass = SubstanceForm
 
     def renderForm(self):
-        conn = self.db.connect()
+        self.db.connect()
         select = "SELECT substance_id, title, casnr, egnr FROM substance ORDER BY title;"
         substances = self.db.execute(select)
         self.db.close()
@@ -229,7 +229,7 @@ class SubstanceFormView(TabelleFormView):
 
             if substance_id:
                 select = "SELECT substance_id, title FROM substance WHERE substance_id = %s;" % (substance_id)
-                conn = self.db.connect()
+                self.db.connect()
                 self.ergs = self.db.execute(select)
                 self.db.close()
 
@@ -303,7 +303,7 @@ class SubstancemixtureFormView(TabelleFormView):
             else:
                 select = "SELECT * FROM %s WHERE manufacturer_id = %s AND substance_type = '%s';" % (searchtable, manu_id, mixturetype[0])
 
-            conn = self.db.connect()
+            self.db.connect()
             self.ergs = self.db.execute(select)
             self.db.close()
 
@@ -318,7 +318,7 @@ class SpraypowderFormView(TabelleFormView):
     def renderForm(self):
         manus = []
         select = "SELECT DISTINCT spray_powder.manufacturer_id, manufacturer.title FROM manufacturer, spray_powder WHERE spray_powder.manufacturer_id = manufacturer.manufacturer_id ORDER BY title;"
-        conn = self.db.connect()
+        self.db.connect()
         erg = self.db.execute(select)
         self.db.close()
         manus = [(result[0], result[1] + ' ID:' + str(result[0])) for result in erg]
@@ -338,7 +338,7 @@ class SpraypowderFormView(TabelleFormView):
 
             select = "SELECT * FROM %s WHERE manufacturer_id = %s;" % (searchtable, manu_id)
 
-            conn = self.db.connect()
+            self.db.connect()
             self.ergs = self.db.execute(select)
             self.db.close()
 

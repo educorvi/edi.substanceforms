@@ -8,7 +8,7 @@ class Gefahrstoff(BrowserView):
 
     def __call__(self):
         self.db = DBConnect(host=self.context.host, db=self.context.database, user=self.context.username, password=self.context.password)
-        conn = self.db.connect()
+        self.db.connect()
         gemischid = self.request.get('gemischid')
         if gemischid.startswith('https://'):
             select = "SELECT mixture_id FROM oldlinks WHERE link = '%s'" % gemischid

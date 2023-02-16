@@ -58,7 +58,7 @@ class CreateFormView(WTFormView):
         return self.index()
 
     def renderForm(self):
-        conn = self.db.connect()
+        self.db.connect()
         command = "SELECT manufacturer_id, title FROM manufacturer ORDER BY title;"
         erg = conn.execute(command)
         manus = [(result[0], result[1] + ' ID:' + str(result[0])) for result in erg]
@@ -77,7 +77,7 @@ class CreateFormView(WTFormView):
         return obj.UID()
 
     def submit(self, button):
-        conn = self.db.connect()
+        self.db.connect()
         image_url = ''
         if self.form.image_url.data.filename:
             image_url = self.create_image(self.form.image_url, self.form.title.data)
@@ -127,7 +127,7 @@ class UpdateFormView(CreateFormView):
                     FROM %s WHERE %s_id = %s;""" % (self.context.tablename,
                                                     self.context.tablename,
                                                     self.itemid)
-        conn = self.db.connect()
+        self.db.connect()
         self.result = conn.execute(getter)
         conn.close()
         return self.index()
@@ -198,7 +198,7 @@ class DeleteFormView(CreateFormView):
     def submit(self, button):
         """
         """
-        conn = self.db.connect()
+        self.db.connect()
         redirect_url = self.context.aq_parent.absolute_url()
         if button == 'Speichern' and self.form.sure.data is True: #and self.validate():
             command = "DELETE FROM spray_powder WHERE spray_powder_id = %s" % (self.form.item_id.data)

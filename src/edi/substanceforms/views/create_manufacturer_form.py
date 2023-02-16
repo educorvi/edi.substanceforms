@@ -40,7 +40,7 @@ class CreateFormView(WTFormView):
         return self.index()
 
     def submit(self, button):
-        conn = self.db.connect()
+        self.db.connect()
         redirect_url = self.context.aq_parent.absolute_url()
         if button == 'Speichern' and self.validate():
             insert = """INSERT INTO manufacturer VALUES (DEFAULT, '%s', '%s', '%s', %s, %s);""" % (self.form.title.data,
@@ -75,7 +75,7 @@ class UpdateFormView(CreateFormView):
                     FROM %s WHERE %s_id = %s;""" % (self.context.tablename,
                                                     self.context.tablename,
                                                     self.itemid)
-        conn = self.db.connect()
+        self.db.connect()
         self.result = conn.execute(getter)
         conn.close()
         return self.index()
@@ -91,7 +91,7 @@ class UpdateFormView(CreateFormView):
     def submit(self, button):
         """
         """
-        conn = self.db.connect()
+        self.db.connect()
         redirect_url = self.context.absolute_url() + '/single_view?item=' + self.form.item_id.data
         if button == 'Speichern': #and self.validate():
             command = """UPDATE manufacturer SET title='%s', description='%s', homepage='%s'
@@ -132,7 +132,7 @@ class DeleteFormView(CreateFormView):
     def submit(self, button):
         """
         """
-        conn = self.db.connect()
+        self.db.connect()
         redirect_url = self.context.aq_parent.absolute_url()
         if button == 'Speichern' and self.form.sure.data is True: #and self.validate():
             command = "DELETE FROM manufacturer WHERE manufacturer_id = %s" % (self.form.item_id.data)

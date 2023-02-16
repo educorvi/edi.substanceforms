@@ -95,7 +95,7 @@ class CreateFormView(WTFormView):
         return self.index()
 
     def renderForm(self):
-        conn = self.db.connect()
+        self.db.connect()
         select = "SELECT manufacturer_id, title FROM manufacturer ORDER BY title;"
         erg = conn.execute(select)
         conn.close()
@@ -117,7 +117,7 @@ class CreateFormView(WTFormView):
         return obj.UID()
 
     def submit(self, button):
-        conn = self.db.connect()
+        self.db.connect()
         image_url = ''
         if self.form.image_url.data.filename:
             image_url = self.create_image(self.form.image_url, self.form.title.data)
@@ -208,7 +208,7 @@ class UpdateFormView(CreateFormView):
 
         relationalgetter = "SELECT application_areas.application_area_name FROM application_areas, areapairs WHERE areapairs.mixture_id = %s and areapairs.area_id = application_areas.application_area_id ;" % self.itemid
         relationalgetter2 = "SELECT usecases.usecase_name FROM usecases, usecasepairs WHERE usecasepairs.mixture_id = %s and usecasepairs.usecase_id = usecases.usecase_id ;" % self.itemid
-        conn = self.db.connect()
+        self.db.connect()
         self.result = conn.execute(getter)
         self.relational = conn.execute(relationalgetter)
         self.relational2 = conn.execute(relationalgetter2)
@@ -243,7 +243,7 @@ class UpdateFormView(CreateFormView):
     def submit(self, button):
         """
         """
-        conn = self.db.connect()
+        self.db.connect()
         redirect_url = self.context.absolute_url() + '/single_view?item=' + self.form.item_id.data
         if button == 'Speichern':
             if self.form.date_checked.data:
@@ -321,7 +321,7 @@ class DeleteFormView(CreateFormView):
     def submit(self, button):
         """
         """
-        conn = self.db.connect()
+        self.db.connect()
         redirect_url = self.context.aq_parent.absolute_url()
         if button == 'Speichern' and self.form.sure.data is True: #and self.validate():
             command = "DELETE FROM substance_mixture WHERE substance_mixture_id = %s" % (self.form.item_id.data)
@@ -359,7 +359,7 @@ class DeleteIngredientsFormView(CreateFormView):
         return self.index()
 
     def alreadyselected(self):
-        conn = self.db.connect()
+        self.db.connect()
         newresult = list()
         itemid = self.request.get('itemid')
         select = "SELECT DISTINCT substance.substance_id, substance.title FROM substance, recipes, substance_mixture WHERE recipes.mixture_id = %s AND substance.substance_id = recipes.substance_id" % itemid
@@ -383,9 +383,9 @@ class DeleteIngredientsFormView(CreateFormView):
     def submit(self, button):
         """
         """
-        conn = self.db.connect()
+        self.db.connect()
         redirect_url = self.context.absolute_url() + '/single_view?item=' + self.form.item_id.data
-        if button == 'Löschen': 
+        if button == 'Löschen':
             if self.form.ingres.data:
                 for i in self.form.ingres.data:
                     command = "DELETE FROM recipes WHERE mixture_id = %s AND substance_id = %s" % (self.form.item_id.data, i)
@@ -418,7 +418,7 @@ class UpdateManufacturerFormView(CreateFormView):
         return self.index()
 
     def renderForm(self):
-        conn = self.db.connect()
+        self.db.connect()
         insert = "SELECT manufacturer_id, title FROM manufacturer ORDER BY title;"
         erg = conn.execute(insert)
         manus = [(result[0], result[1] + ' ID:' + str(result[0])) for result in erg]
@@ -431,7 +431,7 @@ class UpdateManufacturerFormView(CreateFormView):
     def submit(self, button):
         """
         """
-        conn = self.db.connect()
+        self.db.connect()
         redirect_url = self.context.absolute_url() + '/single_view?item=' + self.form.item_id.data
         if button == 'Speichern':
             command = """UPDATE substance_mixture SET manufacturer_id=%s WHERE substance_mixture_id = %s;""" % (check_value(self.form.manufacturer_id.data.split('ID:')[-1]),

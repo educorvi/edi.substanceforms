@@ -68,7 +68,7 @@ class CreateFormView(WTFormView):
         return self.index()
 
     def submit(self, button):
-        conn = self.db.connect()
+        self.db.connect()
         redirect_url = self.context.absolute_url() + '/reinstoffe-1'
         workingcas = False
         if self.form.casnr.data:
@@ -158,7 +158,7 @@ class UpdateFormView(CreateFormView):
                     FROM %s WHERE %s_id = %s;""" % (self.context.tablename,
                                                     self.context.tablename,
                                                     self.itemid)
-        conn = self.db.connect()
+        self.db.connect()
         self.result = conn.execute(getter)
         conn.close()
         return self.index()
@@ -181,7 +181,7 @@ class UpdateFormView(CreateFormView):
     def submit(self, button):
         """
         """
-        conn = self.db.connect()
+        self.db.connect()
         redirect_url = self.context.aq_parent.absolute_url()
         if button == 'Speichern': #and self.validate():
             command = """UPDATE substance SET title='%s', description='%s', casnr=%s, egnr=%s, concentration=%s,
@@ -229,7 +229,7 @@ class DeleteFormView(CreateFormView):
     def submit(self, button):
         """
         """
-        conn = self.db.connect()
+        self.db.connect()
         redirect_url = self.context.aq_parent.absolute_url()
         if button == 'Speichern' and self.form.sure.data is True: #and self.validate():
             command = "DELETE FROM substance WHERE substance_id = %s" % (self.form.item_id.data)
@@ -269,7 +269,7 @@ class SynonymFormView(CreateFormView):
     def submit(self, button):
         """
         """
-        conn = self.db.connect()
+        self.db.connect()
         redirect_url = self.context.absolute_url() + '/single_view?item=' + self.form.item_id.data
         if button == 'Speichern':
             insert = "INSERT INTO synonyms VALUES (DEFAULT, %s, '%s');" % (self.form.item_id.data,
@@ -305,7 +305,7 @@ class DeleteSynonymsFormView(CreateFormView):
     def submit(self, button):
         """
         """
-        conn = self.db.connect()
+        self.db.connect()
         redirect_url = self.context.absolute_url() + '/single_view?item=' + self.form.item_id.data
         if button == 'Speichern':
             insert = "DELETE FROM synonyms WHERE substance_id = %s;" % self.form.item_id.data

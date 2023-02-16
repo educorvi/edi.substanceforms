@@ -26,7 +26,7 @@ class UpdateFormView(WTFormView):
 
     def submit(self, button):
         if button == 'Speichern' and self.validate():
-            conn = self.db.connect()
+            self.db.connect()
             insert = ''
             conn.execute(insert)
             conn.close()

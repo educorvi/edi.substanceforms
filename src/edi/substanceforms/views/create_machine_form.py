@@ -29,7 +29,7 @@ class CreateFormView(WTFormView):
         return self.index()
 
     def renderForm(self):
-        conn = self.db.connect()
+        self.db.connect()
         select = "SELECT manufacturer_id, title FROM manufacturer;"
         manus = conn.execute(select)
         conn.close()
@@ -38,16 +38,16 @@ class CreateFormView(WTFormView):
         return self.formTemplate()
 
     def submit(self, button):
-        conn = self.db.connect()
+        self.db.connect()
         redirect_url = self.context.aq_parent.absolute_url()
         if button == 'Speichern':
-            insert = """INSERT INTO printing_machine VALUES (DEFAULT, '%s', '%s', '%s', 
-                        %s, %s);""" % (self.form.title.data, 
+            insert = """INSERT INTO printing_machine VALUES (DEFAULT, '%s', '%s', '%s',
+                        %s, %s);""" % (self.form.title.data,
                                        self.form.description.data,
                                        self.context.aq_parent.get_webcode(),
                                        check_value(self.form.image.data),
                                        check_value(self.form.manufacturer_id.data))
-            conn.execute(insert)  
+            conn.execute(insert)
             conn.close()
             message=u'Die Maschine wurde erfolgreich gespeichert.'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
@@ -55,4 +55,4 @@ class CreateFormView(WTFormView):
 
         elif button == 'Abbrechen':
             return self.request.response.redirect(redirect_url)
-   
+
