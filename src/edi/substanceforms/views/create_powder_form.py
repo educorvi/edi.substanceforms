@@ -60,7 +60,7 @@ class CreateFormView(WTFormView):
     def renderForm(self):
         self.db.connect()
         command = "SELECT manufacturer_id, title FROM manufacturer ORDER BY title;"
-        erg = conn.execute(command)
+        erg = self.db.execute(command)
         manus = [(result[0], result[1] + ' ID:' + str(result[0])) for result in erg]
         self.form.manufacturer_id.choices = manus
         self.form.process()
@@ -100,7 +100,7 @@ class CreateFormView(WTFormView):
                                                        check_value(image_url),
                                                        check_value(self.form.manufacturer_id.data.split('ID:')[-1]),
                                                        check_value(self.form.status))
-            conn.execute(insert)
+            self.db.execute(insert)
             conn.close()
             message = u'Das Wasch- und Reinigungsmittel wurde erfolgreich gespeichert.'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
@@ -128,7 +128,7 @@ class UpdateFormView(CreateFormView):
                                                     self.context.tablename,
                                                     self.itemid)
         self.db.connect()
-        self.result = conn.execute(getter)
+        self.result = self.db.execute(getter)
         conn.close()
         return self.index()
 
@@ -165,7 +165,7 @@ class UpdateFormView(CreateFormView):
                                                         check_value(self.form.checked_emissions.data),
                                                         check_value(date_checked),
                                                         self.form.item_id.data)
-            conn.execute(command)
+            self.db.execute(command)
             message = u'Der Druckbestäubungspuder wurde erfolgreich aktualisiert.'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
             conn.close()
@@ -202,7 +202,7 @@ class DeleteFormView(CreateFormView):
         redirect_url = self.context.aq_parent.absolute_url()
         if button == 'Speichern' and self.form.sure.data is True: #and self.validate():
             command = "DELETE FROM spray_powder WHERE spray_powder_id = %s" % (self.form.item_id.data)
-            conn.execute(command)
+            self.db.execute(command)
             message = u'Das Druckbestäubungspuder wurde erfolgreich gelöscht'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
             conn.close()

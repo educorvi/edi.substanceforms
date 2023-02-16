@@ -42,7 +42,7 @@ class CreateIngredientForm(WTFormView):
         itemid = self.request.get('itemid')
         select = "SELECT DISTINCT substance.title FROM substance, recipes, substance_mixture WHERE recipes.mixture_id = %s AND substance.substance_id = recipes.substance_id" % itemid
         self.db.connect()
-        result = conn.execute(select)
+        result = self.db.execute(select)
         conn.close()
         for i in result:
             newresult.append(i[0])
@@ -76,7 +76,7 @@ class CreateIngredientForm(WTFormView):
                                                         self.form.concentration_min.data,
                                                         self.form.concentration_max.data,
                                                         )
-            conn.execute(insert)
+            self.db.execute(insert)
             conn.close()
             message = u'Der Bestandteil wurde erfolgreich hinzugefügt.'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)

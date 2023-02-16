@@ -12,17 +12,17 @@ class Gefahrstoff(BrowserView):
         gemischid = self.request.get('gemischid')
         if gemischid.startswith('https://'):
             select = "SELECT mixture_id FROM oldlinks WHERE link = '%s'" % gemischid
-            mixture_id = conn.execute(select)
+            mixture_id = self.db.execute(select)
         else:
             mixture_id = gemischid.split('.')[-1]
 
         mixture_id = mixture_id[0][0]
         data1select = "SELECT * FROM substance_mixture WHERE substance_mixture_id = %s" % mixture_id
-        data1 = conn.execute(data1select)
+        data1 = self.db.execute(data1select)
         data2select = "SELECT * FROM manufacturer WHERE manufacturer_id = %s" % data1[0][25]
-        data2 = conn.execute(data2select)
+        data2 = self.db.execute(data2select)
         data3select = "SELECT * FROM recipes WHERE mixture_id = %s" % mixture_id
-        data3 = conn.execute(data3select)
+        data3 = self.db.execute(data3select)
 
         gefahrstoffdata = {}
 
@@ -36,7 +36,7 @@ class Gefahrstoff(BrowserView):
         for inhalt in data3:
             inhaltsstoff = {}
             select = "SELECT * FROM substance WHERE substance_id = %s" % inhalt[1]
-            reinstoff = conn.execute(select)
+            reinstoff = self.db.execute(select)
             inhaltsstoff['cas'] = reinstoff[0][4]
             inhaltsstoff['gefahrstoff'] = reinstoff[0][1]
             inhaltsstoff['anteil_min'] = inhalt[3]
@@ -45,7 +45,7 @@ class Gefahrstoff(BrowserView):
             inhaltsstoffe.append(inhaltsstoff)
 
         productclassselect = "SELECT class_name FROM productclasses WHERE class_id = %s" % data1[0][27]
-        productclass = conn.execute(productclassselect)
+        productclass = self.db.execute(productclassselect)
         productclass = productclass[0][0]
 
         produktkategorien = {

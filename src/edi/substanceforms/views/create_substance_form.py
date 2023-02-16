@@ -105,7 +105,7 @@ class CreateFormView(WTFormView):
                                                            check_value(self.form.status),
                                                                    )
 
-                conn.execute(insert)
+                self.db.execute(insert)
                 conn.close()
                 message = u'Der Reinstoff wurde erfolgreich gespeichert.'
                 ploneapi.portal.show_message(message=message, type='info', request=self.request)
@@ -132,7 +132,7 @@ class CreateFormView(WTFormView):
                                                                                  check_value(self.form.status),
                                                                                  )
 
-            conn.execute(insert)
+            self.db.execute(insert)
             conn.close()
             message = u'Der Reinstoff wurde erfolgreich gespeichert.'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
@@ -159,7 +159,7 @@ class UpdateFormView(CreateFormView):
                                                     self.context.tablename,
                                                     self.itemid)
         self.db.connect()
-        self.result = conn.execute(getter)
+        self.result = self.db.execute(getter)
         conn.close()
         return self.index()
 
@@ -197,7 +197,7 @@ class UpdateFormView(CreateFormView):
                                                         self.form.mol.data,
                                                         self.form.gestislink.data,
                                                         self.form.item_id.data)
-            conn.execute(command)
+            self.db.execute(command)
             message = u'Der Reinstoff wurde erfolgreich aktualisiert.'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
             conn.close()
@@ -233,7 +233,7 @@ class DeleteFormView(CreateFormView):
         redirect_url = self.context.aq_parent.absolute_url()
         if button == 'Speichern' and self.form.sure.data is True: #and self.validate():
             command = "DELETE FROM substance WHERE substance_id = %s" % (self.form.item_id.data)
-            conn.execute(command)
+            self.db.execute(command)
             message = u'Der Reinstoff wurde erfolgreich gelöscht'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
             conn.close()
@@ -274,7 +274,7 @@ class SynonymFormView(CreateFormView):
         if button == 'Speichern':
             insert = "INSERT INTO synonyms VALUES (DEFAULT, %s, '%s');" % (self.form.item_id.data,
                                                                self.form.synonym_name.data)
-            conn.execute(insert)
+            self.db.execute(insert)
             message = u'Das Synonym wurde erfolgreich angelegt'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
             conn.close()
@@ -309,7 +309,7 @@ class DeleteSynonymsFormView(CreateFormView):
         redirect_url = self.context.absolute_url() + '/single_view?item=' + self.form.item_id.data
         if button == 'Speichern':
             insert = "DELETE FROM synonyms WHERE substance_id = %s;" % self.form.item_id.data
-            conn.execute(insert)
+            self.db.execute(insert)
             message = u'Die Synonyme wurden erfolgreich gelöscht'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
             conn.close()

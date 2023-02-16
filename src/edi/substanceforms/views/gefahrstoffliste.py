@@ -10,11 +10,11 @@ class Gefahrstoffliste(BrowserView):
         self.db.connect()
         mixtures = []
         select = "SELECT substance_mixture_id, title FROM substance_mixture;"
-        gemische = conn.execute(select)
+        gemische = self.db.execute(select)
         for gemisch in gemische:
             mixture_entry = {}
             selectoldid = "SELECT link FROM oldlinks WHERE mixture_id = %s" % gemisch[0]
-            oldid = conn.execute(selectoldid)
+            oldid = self.db.execute(selectoldid)
             if oldid:
                 mixture_entry['@id'] = oldid[0][0]
             else:

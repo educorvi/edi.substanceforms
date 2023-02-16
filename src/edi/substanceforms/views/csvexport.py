@@ -21,7 +21,7 @@ class Csvmixture(BrowserView):
     def create_mixture_file(self):
         self.db.connect()
         mixtureselect = "SELECT * FROM substance_mixture"
-        mixtures = conn.execute(mixtureselect)
+        mixtures = self.db.execute(mixtureselect)
 
         with open('/tmp/mixtures.csv', 'w', newline='') as csvfile:
             writer = csv.writer(csvfile, delimiter=';', quotechar='"')
@@ -57,7 +57,7 @@ class Csvmixture(BrowserView):
                 productclass = i[27]
 
                 if manufacturer_id:
-                    manufacturer = (conn.execute("SELECT title FROM manufacturer WHERE manufacturer_id = %s" % manufacturer_id))[0][0]
+                    manufacturer = (self.db.execute("SELECT title FROM manufacturer WHERE manufacturer_id = %s" % manufacturer_id))[0][0]
                 else:
                     manufacturer = 'keine Angabe'
                 newbranch = self.get_attr_translation('branch', branch)
@@ -66,7 +66,7 @@ class Csvmixture(BrowserView):
                 newchecked_emissions = self.get_attr_translation('boolvocab', str(checked_emissions))
                 newvalues_range = self.get_attr_translation('boolvocab', str(values_range))
                 if productclass:
-                    newproductclass = (conn.execute("SELECT class_name FROM productclasses WHERE class_id = %s" % productclass))[0][0]
+                    newproductclass = (self.db.execute("SELECT class_name FROM productclasses WHERE class_id = %s" % productclass))[0][0]
                 else:
                     newproductclass = 'keine Angabe'
 
@@ -82,11 +82,11 @@ class Csvmixture(BrowserView):
 
                 applicationareas = []
                 select = "SELECT area_id from areapairs WHERE mixture_id = %s" % id
-                areaids = conn.execute(select)
+                areaids = self.db.execute(select)
 
                 for arid in areaids:
                     select = "SELECT application_area_name from application_areas WHERE application_area_id = %s" % arid
-                    area_title = conn.execute(select)
+                    area_title = self.db.execute(select)
                     applicationareas.append(area_title)
 
                 newapplicationareas = list()
@@ -98,11 +98,11 @@ class Csvmixture(BrowserView):
 
                 usecases = []
                 select = "SELECT usecase_id from usecasepairs WHERE mixture_id = %s" % id
-                usecaseids = conn.execute(select)
+                usecaseids = self.db.execute(select)
 
                 for ucid in usecaseids:
                     select = "SELECT usecase_name from usecases WHERE usecase_id = %s" % ucid
-                    usecase_title = conn.execute(select)
+                    usecase_title = self.db.execute(select)
                     usecases.append(usecase_title)
 
                 newusecases = list()
@@ -190,7 +190,7 @@ class CsvmixtureNew(BrowserView):
     def create_mixture_file(self):
         self.db.connect()
         mixtureselect = "SELECT * FROM substance_mixture"
-        mixtures = conn.execute(mixtureselect)
+        mixtures = self.db.execute(mixtureselect)
 
         with open('/tmp/mixturesnew.csv', 'w', newline='') as csvfile:
             writer = csv.writer(csvfile, delimiter=';', quotechar='"')
@@ -227,7 +227,7 @@ class CsvmixtureNew(BrowserView):
                 productclass = i[27]
 
                 if manufacturer_id:
-                    manufacturer = (conn.execute("SELECT title FROM manufacturer WHERE manufacturer_id = %s" % manufacturer_id))[0][0]
+                    manufacturer = (self.db.execute("SELECT title FROM manufacturer WHERE manufacturer_id = %s" % manufacturer_id))[0][0]
                 else:
                     manufacturer = 'keine Angabe'
                 newbranch = self.get_attr_translation('branch', branch)
@@ -236,7 +236,7 @@ class CsvmixtureNew(BrowserView):
                 newchecked_emissions = self.get_attr_translation('boolvocab', str(checked_emissions))
                 newvalues_range = self.get_attr_translation('boolvocab', str(values_range))
                 if productclass:
-                    newproductclass = (conn.execute("SELECT class_name FROM productclasses WHERE class_id = %s" % productclass))[0][0]
+                    newproductclass = (self.db.execute("SELECT class_name FROM productclasses WHERE class_id = %s" % productclass))[0][0]
                 else:
                     newproductclass = 'keine Angabe'
 
@@ -252,11 +252,11 @@ class CsvmixtureNew(BrowserView):
 
                 applicationareas = []
                 select = "SELECT area_id from areapairs WHERE mixture_id = %s" % id
-                areaids = conn.execute(select)
+                areaids = self.db.execute(select)
 
                 for arid in areaids:
                     select = "SELECT application_area_name from application_areas WHERE application_area_id = %s" % arid
-                    area_title = conn.execute(select)
+                    area_title = self.db.execute(select)
                     applicationareas.append(area_title)
 
                 newapplicationareas = list()
@@ -268,11 +268,11 @@ class CsvmixtureNew(BrowserView):
 
                 usecases = []
                 select = "SELECT usecase_id from usecasepairs WHERE mixture_id = %s" % id
-                usecaseids = conn.execute(select)
+                usecaseids = self.db.execute(select)
 
                 for ucid in usecaseids:
                     select = "SELECT usecase_name from usecases WHERE usecase_id = %s" % ucid
-                    usecase_title = conn.execute(select)
+                    usecase_title = self.db.execute(select)
                     usecases.append(usecase_title)
 
                 newusecases = list()
@@ -283,7 +283,7 @@ class CsvmixtureNew(BrowserView):
                     newusecases = "keine Angabe"
 
                 zusammensetzungsselect = "SELECT * FROM recipes WHERE mixture_id = %s" % id
-                newentries = conn.execute(zusammensetzungsselect)
+                newentries = self.db.execute(zusammensetzungsselect)
 
                 entrylist = "keine Angabe"
                 if newentries:
@@ -291,9 +291,9 @@ class CsvmixtureNew(BrowserView):
                     for entry in newentries:
                         singleentry = list()
                         substanceselect = "SELECT title FROM substance WHERE substance_id = %s" % entry[1]
-                        substance = conn.execute(substanceselect)
+                        substance = self.db.execute(substanceselect)
                         casselect = "SELECT casnr FROM substance WHERE substance_id = %s" % entry[1]
-                        cas = conn.execute(casselect)
+                        cas = self.db.execute(casselect)
                         concentration_min = entry[3]
                         concentration_max = entry[4]
                         singleentry.append(substance)
@@ -349,7 +349,7 @@ class Csvpowder(BrowserView):
     def create_powder_file(self):
         self.db.connect()
         powderselect = "SELECT * FROM spray_powder;"
-        powders = conn.execute(powderselect)
+        powders = self.db.execute(powderselect)
 
         with open('/tmp/powders.csv', 'w', newline='') as powdercsv:
             powderwriter = csv.writer(powdercsv, delimiter=';', quotechar='"')
@@ -371,7 +371,7 @@ class Csvpowder(BrowserView):
                 powderstatus = i[12]
 
                 if powdermanufacturerid:
-                    powdermanufacturer = (conn.execute("SELECT title FROM manufacturer WHERE manufacturer_id = %s" % powdermanufacturerid))[0][0]
+                    powdermanufacturer = (self.db.execute("SELECT title FROM manufacturer WHERE manufacturer_id = %s" % powdermanufacturerid))[0][0]
                 else:
                     powdermanufacturer = 'keine Angabe'
                 newpowdercheckedemissions = self.get_attr_translation('boolvocab', str(powdercheckedemissions))

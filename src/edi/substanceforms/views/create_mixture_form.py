@@ -97,7 +97,7 @@ class CreateFormView(WTFormView):
     def renderForm(self):
         self.db.connect()
         select = "SELECT manufacturer_id, title FROM manufacturer ORDER BY title;"
-        erg = conn.execute(select)
+        erg = self.db.execute(select)
         conn.close()
         if erg:
             manus = [(result[0], result[1] + ' ID:' + str(result[0])) for result in erg]
@@ -162,20 +162,20 @@ class CreateFormView(WTFormView):
             areaids = list()
             for i in self.form.application_areas.data:
                 selectcommand = "SELECT substance_mixture_id FROM substance_mixture ORDER BY substance_mixture_id DESC LIMIT 1"
-                selectedid = conn.execute(selectcommand)
+                selectedid = self.db.execute(selectcommand)
                 areaids.append([int(i), (int(selectedid[0][0]))+1])
             caseids = list()
             for i in self.form.usecases.data:
                 selectcommand = "SELECT substance_mixture_id FROM substance_mixture ORDER BY substance_mixture_id DESC LIMIT 1"
-                selectedid = conn.execute(selectcommand)
+                selectedid = self.db.execute(selectcommand)
                 caseids.append([int(i), (int(selectedid[0][0])) + 1])
-            conn.execute(insert)
+            self.db.execute(insert)
             for i in areaids:
                 insertcommand = "INSERT INTO areapairs (area_id, mixture_id) VALUES (%s, %s)" % (i[0], i[1])
-                conn.execute(insertcommand)
+                self.db.execute(insertcommand)
             for i in caseids:
                 insertcommand = "INSERT INTO usecasepairs (usecase_id, mixture_id) VALUES (%s, %s)" % (i[0], i[1])
-                conn.execute(insertcommand)
+                self.db.execute(insertcommand)
             message = u'Das Wasch- und Reinigungsmittel wurde erfolgreich gespeichert.'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
             conn.close()
@@ -209,9 +209,9 @@ class UpdateFormView(CreateFormView):
         relationalgetter = "SELECT application_areas.application_area_name FROM application_areas, areapairs WHERE areapairs.mixture_id = %s and areapairs.area_id = application_areas.application_area_id ;" % self.itemid
         relationalgetter2 = "SELECT usecases.usecase_name FROM usecases, usecasepairs WHERE usecasepairs.mixture_id = %s and usecasepairs.usecase_id = usecases.usecase_id ;" % self.itemid
         self.db.connect()
-        self.result = conn.execute(getter)
-        self.relational = conn.execute(relationalgetter)
-        self.relational2 = conn.execute(relationalgetter2)
+        self.result = self.db.execute(getter)
+        self.relational = self.db.execute(relationalgetter)
+        self.relational2 = self.db.execute(relationalgetter2)
         conn.close()
         return self.index()
 
@@ -275,19 +275,19 @@ class UpdateFormView(CreateFormView):
                                                         check_value(date_checked),
                                                         check_value(self.form.item_id.data))
 
-            conn.execute(command)
+            self.db.execute(command)
             deletecommand = "DELETE FROM areapairs WHERE mixture_id = %s" % self.form.item_id.data
-            conn.execute(deletecommand)
+            self.db.execute(deletecommand)
             for i in self.form.application_areas.data:
                 insertcommand = "INSERT INTO areapairs (area_id, mixture_id) VALUES (%s, %s)" % (int(i), self.form.item_id.data)
-                conn.execute(insertcommand)
+                self.db.execute(insertcommand)
 
             deletecommand2 = "DELETE FROM usecasepairs WHERE mixture_id = %s" % self.form.item_id.data
-            conn.execute(deletecommand2)
+            self.db.execute(deletecommand2)
             for i in self.form.usecases.data:
                 insertcommand2 = "INSERT INTO usecasepairs (usecase_id, mixture_id) VALUES (%s, %s)" % (
                 int(i), self.form.item_id.data)
-                conn.execute(insertcommand2)
+                self.db.execute(insertcommand2)
 
             message = u'Das Gefahrstoffgemisch wurde erfolgreich aktualisiert.'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
@@ -325,11 +325,11 @@ class DeleteFormView(CreateFormView):
         redirect_url = self.context.aq_parent.absolute_url()
         if button == 'Speichern' and self.form.sure.data is True: #and self.validate():
             command = "DELETE FROM substance_mixture WHERE substance_mixture_id = %s" % (self.form.item_id.data)
-            conn.execute(command)
+            self.db.execute(command)
             deletecommand = "DELETE FROM areapairs WHERE mixture_id = %s" % self.form.item_id.data
-            conn.execute(deletecommand)
+            self.db.execute(deletecommand)
             deletecommand2 = "DELETE FROM usecasepairs WHERE mixture_id = %s" % self.form.item_id.data
-            conn.execute(deletecommand2)
+            self.db.execute(deletecommand2)
             message = u'Das Gefahrstoffgemisch wurde erfolgreich gelöscht'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
             conn.close()
@@ -363,7 +363,7 @@ class DeleteIngredientsFormView(CreateFormView):
         newresult = list()
         itemid = self.request.get('itemid')
         select = "SELECT DISTINCT substance.substance_id, substance.title FROM substance, recipes, substance_mixture WHERE recipes.mixture_id = %s AND substance.substance_id = recipes.substance_id" % itemid
-        result = conn.execute(select)
+        result = self.db.execute(select)
         for i in result:
             newresult.append(i)
         conn.close()
@@ -389,7 +389,7 @@ class DeleteIngredientsFormView(CreateFormView):
             if self.form.ingres.data:
                 for i in self.form.ingres.data:
                     command = "DELETE FROM recipes WHERE mixture_id = %s AND substance_id = %s" % (self.form.item_id.data, i)
-                    conn.execute(command)
+                    self.db.execute(command)
                 message = u'Die Bestandteile wurden erfolgreich gelöscht'
                 ploneapi.portal.show_message(message=message, type='info', request=self.request)
                 conn.close()
@@ -420,7 +420,7 @@ class UpdateManufacturerFormView(CreateFormView):
     def renderForm(self):
         self.db.connect()
         insert = "SELECT manufacturer_id, title FROM manufacturer ORDER BY title;"
-        erg = conn.execute(insert)
+        erg = self.db.execute(insert)
         manus = [(result[0], result[1] + ' ID:' + str(result[0])) for result in erg]
         self.form.manufacturer_id.choices = manus
         self.form.item_id.default = self.itemid
@@ -436,7 +436,7 @@ class UpdateManufacturerFormView(CreateFormView):
         if button == 'Speichern':
             command = """UPDATE substance_mixture SET manufacturer_id=%s WHERE substance_mixture_id = %s;""" % (check_value(self.form.manufacturer_id.data.split('ID:')[-1]),
                                                                                                                 self.form.item_id.data)
-            conn.execute(command)
+            self.db.execute(command)
             message = u'Das Gefahrstoffgemisch wurde erfolgreich aktualisiert.'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
             conn.close()

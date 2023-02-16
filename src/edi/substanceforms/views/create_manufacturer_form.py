@@ -48,7 +48,7 @@ class CreateFormView(WTFormView):
                                                                                                    self.context.aq_parent.get_webcode(),
                                                                                                    check_value(self.form.homepage.data),
                                                                                                    check_value(self.form.status))
-            conn.execute(insert)
+            self.db.execute(insert)
             conn.close()
             message=u'Der Hersteller wurde erfolgreich gespeichert.'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
@@ -76,7 +76,7 @@ class UpdateFormView(CreateFormView):
                                                     self.context.tablename,
                                                     self.itemid)
         self.db.connect()
-        self.result = conn.execute(getter)
+        self.result = self.db.execute(getter)
         conn.close()
         return self.index()
 
@@ -99,7 +99,7 @@ class UpdateFormView(CreateFormView):
                                                         self.form.description.data,
                                                         self.form.homepage.data,
                                                         self.form.item_id.data)
-            conn.execute(command)
+            self.db.execute(command)
             conn.close()
             message = u'Der Hersteller wurde erfolgreich aktualisiert.'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
@@ -136,7 +136,7 @@ class DeleteFormView(CreateFormView):
         redirect_url = self.context.aq_parent.absolute_url()
         if button == 'Speichern' and self.form.sure.data is True: #and self.validate():
             command = "DELETE FROM manufacturer WHERE manufacturer_id = %s" % (self.form.item_id.data)
-            conn.execute(command)
+            self.db.execute(command)
             conn.close()
             message = u'Der Hersteller wurde erfolgreich gelöscht'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
