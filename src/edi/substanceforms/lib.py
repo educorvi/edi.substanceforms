@@ -28,4 +28,4 @@ class DBConnect(object):
         return results
 
     def close(self):
-        self.conn.close()
+        self.db.close()

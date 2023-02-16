@@ -49,7 +49,7 @@ class CreateFormView(WTFormView):
                                                                                                    check_value(self.form.homepage.data),
                                                                                                    check_value(self.form.status))
             self.db.execute(insert)
-            conn.close()
+            self.db.close()
             message=u'Der Hersteller wurde erfolgreich gespeichert.'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
             return self.request.response.redirect(redirect_url)
@@ -77,7 +77,7 @@ class UpdateFormView(CreateFormView):
                                                     self.itemid)
         self.db.connect()
         self.result = self.db.execute(getter)
-        conn.close()
+        self.db.close()
         return self.index()
 
     def renderForm(self):
@@ -100,7 +100,7 @@ class UpdateFormView(CreateFormView):
                                                         self.form.homepage.data,
                                                         self.form.item_id.data)
             self.db.execute(command)
-            conn.close()
+            self.db.close()
             message = u'Der Hersteller wurde erfolgreich aktualisiert.'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
             return self.request.response.redirect(redirect_url)
@@ -137,7 +137,7 @@ class DeleteFormView(CreateFormView):
         if button == 'Speichern' and self.form.sure.data is True: #and self.validate():
             command = "DELETE FROM manufacturer WHERE manufacturer_id = %s" % (self.form.item_id.data)
             self.db.execute(command)
-            conn.close()
+            self.db.close()
             message = u'Der Hersteller wurde erfolgreich gelöscht'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
             return self.request.response.redirect(redirect_url)

@@ -62,7 +62,7 @@ class Datenbank(Container):
 
         conn = psycopg2.connect(host=host, user=username, dbname=dbname, password=password)
         cur = conn.cursor()
-        select = """SELECT tablename from pg_catalog.pg_tables WHERE schemaname != 'pg_catalog' 
+        select = """SELECT tablename from pg_catalog.pg_tables WHERE schemaname != 'pg_catalog'
                     AND schemaname != 'information_schema';"""
         cur.execute(select)
         tables = cur.fetchall()
@@ -80,9 +80,9 @@ class Datenbank(Container):
             cur.close()
             if erg:
                 return False
-        conn.close()    
+        self.db.close()
         return True
-                
+
     def get_webcode(self, webcode=False):
         while not webcode:
             random_number = random.randint(100000, 999999)

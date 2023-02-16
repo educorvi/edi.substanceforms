@@ -29,4 +29,4 @@ class UpdateFormView(WTFormView):
             self.db.connect()
             insert = ''
             self.db.execute(insert)
-            conn.close()
+            self.db.close()

@@ -76,5 +76,5 @@ class Gefahrstoff(BrowserView):
         gefahrstoffdata['@id'] = gemischid
         gefahrstoffdata['produktklasse'] = productclass
 
-        conn.close()
+        self.db.close()
         return jsonlib.write(gefahrstoffdata)

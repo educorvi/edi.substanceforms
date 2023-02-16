@@ -27,7 +27,7 @@ def possibleTables(context):
     cur.execute(select)
     tables = cur.fetchall()
     cur.close()
-    conn.close()
+    self.db.close()
 
     terms = []
     for i in tables:
@@ -50,7 +50,7 @@ def possibleColumns(context):
         cur.execute(select)
         tables = cur.fetchall()
         cur.close()
-        conn.close()
+        self.db.close()
 
         terms = []
         newtables = list()
@@ -94,7 +94,7 @@ def mixturetypes(context):
         cur.execute(select)
         tables = cur.fetchall()
         cur.close()
-        conn.close()
+        self.db.close()
 
         terms = []
         for i in tables:

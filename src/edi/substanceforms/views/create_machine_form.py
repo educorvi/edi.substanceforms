@@ -32,7 +32,7 @@ class CreateFormView(WTFormView):
         self.db.connect()
         select = "SELECT manufacturer_id, title FROM manufacturer;"
         manus = self.db.execute(select)
-        conn.close()
+        self.db.close()
         self.form.manufacturer_id.choices = manus
         self.form.process()
         return self.formTemplate()
@@ -48,7 +48,7 @@ class CreateFormView(WTFormView):
                                        check_value(self.form.image.data),
                                        check_value(self.form.manufacturer_id.data))
             self.db.execute(insert)
-            conn.close()
+            self.db.close()
             message=u'Die Maschine wurde erfolgreich gespeichert.'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
             return self.request.response.redirect(redirect_url)

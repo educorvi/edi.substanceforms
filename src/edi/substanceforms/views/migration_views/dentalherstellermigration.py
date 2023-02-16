@@ -88,7 +88,7 @@ class Migrationview(BrowserView):
                     erg = False
                 if erg:
                     return False
-            conn.close()
+            self.db.close()
             return True
 
         def get_webcode(self, webcode=False):

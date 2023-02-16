@@ -106,7 +106,7 @@ class CreateFormView(WTFormView):
                                                                    )
 
                 self.db.execute(insert)
-                conn.close()
+                self.db.close()
                 message = u'Der Reinstoff wurde erfolgreich gespeichert.'
                 ploneapi.portal.show_message(message=message, type='info', request=self.request)
                 return self.request.response.redirect(redirect_url)
@@ -133,7 +133,7 @@ class CreateFormView(WTFormView):
                                                                                  )
 
             self.db.execute(insert)
-            conn.close()
+            self.db.close()
             message = u'Der Reinstoff wurde erfolgreich gespeichert.'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
             return self.request.response.redirect(redirect_url)
@@ -160,7 +160,7 @@ class UpdateFormView(CreateFormView):
                                                     self.itemid)
         self.db.connect()
         self.result = self.db.execute(getter)
-        conn.close()
+        self.db.close()
         return self.index()
 
     def renderForm(self):
@@ -200,7 +200,7 @@ class UpdateFormView(CreateFormView):
             self.db.execute(command)
             message = u'Der Reinstoff wurde erfolgreich aktualisiert.'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
-            conn.close()
+            self.db.close()
             return self.request.response.redirect(redirect_url)
         elif button == 'Abbrechen':
             return self.request.response.redirect(redirect_url)
@@ -236,7 +236,7 @@ class DeleteFormView(CreateFormView):
             self.db.execute(command)
             message = u'Der Reinstoff wurde erfolgreich gelöscht'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
-            conn.close()
+            self.db.close()
             return self.request.response.redirect(redirect_url)
 
         elif button == 'Speichern' and self.form.sure.data is False:
@@ -277,7 +277,7 @@ class SynonymFormView(CreateFormView):
             self.db.execute(insert)
             message = u'Das Synonym wurde erfolgreich angelegt'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
-            conn.close()
+            self.db.close()
             return self.request.response.redirect(redirect_url)
         elif button == 'Abbrechen':
             return self.request.response.redirect(redirect_url)
@@ -312,7 +312,7 @@ class DeleteSynonymsFormView(CreateFormView):
             self.db.execute(insert)
             message = u'Die Synonyme wurden erfolgreich gelöscht'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
-            conn.close()
+            self.db.close()
             return self.request.response.redirect(redirect_url)
 
         elif button == 'Abbrechen':

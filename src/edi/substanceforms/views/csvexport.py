@@ -162,7 +162,7 @@ class Csvmixture(BrowserView):
                          evap_150, evap_160, evap_170, evap_180, ueg, response, newskincategory, newchecked_emissions,
                          date_checked, flashpoint, newvalues_range, newclassifications, newindicators, comments, manufacturer,
                          status, newproductclass, zusammensetzung, None, None])
-        conn.close()
+        self.db.close()
         return None
 
     def get_attr_translation(self, attribute, value):
@@ -380,7 +380,7 @@ class Csvpowder(BrowserView):
                     [powderid, powdertitle, powderdescription, powderwebcode, powderproductclass, powderstartingmaterial,
                      powdermedian, powdervolumeshare, newpowdercheckedemissions, powderdatechecked, powdermanufacturer,
                      powderstatus])
-        conn.close()
+        self.db.close()
         return None
 
     def get_attr_translation(self, attribute, value):

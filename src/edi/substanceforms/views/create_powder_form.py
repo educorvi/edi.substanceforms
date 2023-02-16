@@ -64,7 +64,7 @@ class CreateFormView(WTFormView):
         manus = [(result[0], result[1] + ' ID:' + str(result[0])) for result in erg]
         self.form.manufacturer_id.choices = manus
         self.form.process()
-        conn.close()
+        self.db.close()
         return self.formTemplate()
 
     def create_image(self, image, title):
@@ -101,7 +101,7 @@ class CreateFormView(WTFormView):
                                                        check_value(self.form.manufacturer_id.data.split('ID:')[-1]),
                                                        check_value(self.form.status))
             self.db.execute(insert)
-            conn.close()
+            self.db.close()
             message = u'Das Wasch- und Reinigungsmittel wurde erfolgreich gespeichert.'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
             return self.request.response.redirect(redirect_url)
@@ -129,7 +129,7 @@ class UpdateFormView(CreateFormView):
                                                     self.itemid)
         self.db.connect()
         self.result = self.db.execute(getter)
-        conn.close()
+        self.db.close()
         return self.index()
 
     def renderForm(self):
@@ -168,7 +168,7 @@ class UpdateFormView(CreateFormView):
             self.db.execute(command)
             message = u'Der Druckbestäubungspuder wurde erfolgreich aktualisiert.'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
-            conn.close()
+            self.db.close()
             return self.request.response.redirect(redirect_url)
 
         elif button == 'Abbrechen':
@@ -205,7 +205,7 @@ class DeleteFormView(CreateFormView):
             self.db.execute(command)
             message = u'Das Druckbestäubungspuder wurde erfolgreich gelöscht'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
-            conn.close()
+            self.db.close()
             return self.request.response.redirect(redirect_url)
         elif button == 'Speichern' and self.form.sure.data is False:
             message = u'Das Druckbestäubungspuder wurde nicht gelöscht, da das Bestätigungsfeld nicht ausgewählt war.'

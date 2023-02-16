@@ -21,5 +21,5 @@ class Gefahrstoffliste(BrowserView):
                 mixture_entry['@id'] = "bgetem.substance_mixture."+str(gemisch[0])  #Namespace für die potenzielle Abfrage mehrerer Quellen
             mixture_entry['title'] = gemisch[1]
             mixtures.append(mixture_entry)
-        conn.close()
+        self.db.close()
         return jsonlib.write(mixtures)

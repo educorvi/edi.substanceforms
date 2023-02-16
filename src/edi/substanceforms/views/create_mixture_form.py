@@ -98,7 +98,7 @@ class CreateFormView(WTFormView):
         self.db.connect()
         select = "SELECT manufacturer_id, title FROM manufacturer ORDER BY title;"
         erg = self.db.execute(select)
-        conn.close()
+        self.db.close()
         if erg:
             manus = [(result[0], result[1] + ' ID:' + str(result[0])) for result in erg]
         else:
@@ -178,7 +178,7 @@ class CreateFormView(WTFormView):
                 self.db.execute(insertcommand)
             message = u'Das Wasch- und Reinigungsmittel wurde erfolgreich gespeichert.'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
-            conn.close()
+            self.db.close()
             return self.request.response.redirect(redirect_url)
 
         elif button == 'Abbrechen':
@@ -212,7 +212,7 @@ class UpdateFormView(CreateFormView):
         self.result = self.db.execute(getter)
         self.relational = self.db.execute(relationalgetter)
         self.relational2 = self.db.execute(relationalgetter2)
-        conn.close()
+        self.db.close()
         return self.index()
 
     def renderForm(self):
@@ -291,7 +291,7 @@ class UpdateFormView(CreateFormView):
 
             message = u'Das Gefahrstoffgemisch wurde erfolgreich aktualisiert.'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
-            conn.close()
+            self.db.close()
             return self.request.response.redirect(redirect_url)
 
         elif button == 'Abbrechen':
@@ -332,7 +332,7 @@ class DeleteFormView(CreateFormView):
             self.db.execute(deletecommand2)
             message = u'Das Gefahrstoffgemisch wurde erfolgreich gelöscht'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
-            conn.close()
+            self.db.close()
             return self.request.response.redirect(redirect_url)
 
         elif button == 'Speichern' and self.form.sure.data is False:
@@ -366,7 +366,7 @@ class DeleteIngredientsFormView(CreateFormView):
         result = self.db.execute(select)
         for i in result:
             newresult.append(i)
-        conn.close()
+        self.db.close()
         return newresult
 
     def renderForm(self):
@@ -392,7 +392,7 @@ class DeleteIngredientsFormView(CreateFormView):
                     self.db.execute(command)
                 message = u'Die Bestandteile wurden erfolgreich gelöscht'
                 ploneapi.portal.show_message(message=message, type='info', request=self.request)
-                conn.close()
+                self.db.close()
                 return self.request.response.redirect(redirect_url)
             else:
                 message = u'Die Bestandteile wurden nicht gelöscht, da das Bestätigungsfeld nicht ausgewählt war.'
@@ -425,7 +425,7 @@ class UpdateManufacturerFormView(CreateFormView):
         self.form.manufacturer_id.choices = manus
         self.form.item_id.default = self.itemid
         self.form.process()
-        conn.close()
+        self.db.close()
         return self.formTemplate()
 
     def submit(self, button):
@@ -439,7 +439,7 @@ class UpdateManufacturerFormView(CreateFormView):
             self.db.execute(command)
             message = u'Das Gefahrstoffgemisch wurde erfolgreich aktualisiert.'
             ploneapi.portal.show_message(message=message, type='info', request=self.request)
-            conn.close()
+            self.db.close()
             return self.request.response.redirect(redirect_url)
 
         elif button == 'Abbrechen':
