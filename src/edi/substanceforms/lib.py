@@ -15,6 +15,10 @@ class DBConnect(object):
 
     def execute(self, command):
         results = False
+        conn = psycopg2.connect(host=self.host,
+                                dbname=self.db,
+                                user=self.user,
+                                password=self.password)
         cur = conn.cursor()
         cur.execute(command)
         method = command.split(" ")[0]
@@ -25,6 +29,7 @@ class DBConnect(object):
         elif method == "DELETE":
             results = self.conn.commit()
         cur.close()
+        conn.close()
         return results
 
     def close(self):
