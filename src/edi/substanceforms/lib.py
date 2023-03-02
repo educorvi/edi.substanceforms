@@ -25,9 +25,9 @@ class DBConnect(object):
         if method == "SELECT":
             results = cur.fetchall()
         elif method in ["INSERT", "UPDATE"]:
-            results = self.conn.commit()
+            results = conn.commit()
         elif method == "DELETE":
-            results = self.conn.commit()
+            results = conn.commit()
         cur.close()
         conn.close()
         return results
