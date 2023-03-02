@@ -15,7 +15,7 @@ class DBConnect(object):
 
     def execute(self, command):
         results = False
-        connect()
+        self.connect()
         cur = self.conn.cursor()
         cur.execute(command)
         method = command.split(" ")[0]
