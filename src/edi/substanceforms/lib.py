@@ -33,4 +33,4 @@ class DBConnect(object):
         return results
 
     def close(self):
-        self.conn.close()
+        conn.close()
