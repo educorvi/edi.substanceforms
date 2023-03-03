@@ -7,7 +7,7 @@ from plone.namedfile import NamedBlobImage
 from wtforms import RadioField, SelectMultipleField
 from wtforms import validators
 from collective.wtforms.views import WTFormView
-from edi.substanceforms.helpers import check_value, list_handler, reverse_list_handler, new_list_handler, get_vocabulary, new_list_handler2, new_list_handler3
+from edi.substanceforms.helpers import check_value, umlaut_handler, list_handler, reverse_list_handler, new_list_handler, get_vocabulary, new_list_handler2, new_list_handler3
 from edi.substanceforms.vocabularies import substance_types, hskategorie, produktkategorien, produktklassen, branchen
 from edi.substanceforms.vocabularies import classifications, usecases, application_areas, substance_types_new, produktklassenid
 from plone import api as ploneapi
@@ -256,16 +256,12 @@ class UpdateFormView(CreateFormView):
             print(self.form.title.data)
             print(check_value(self.form.title.data))
 
-            title = self.form.title.data
-            newtitle = re.sub(r"(?i)(?:ue|u[eë]|ü|oe|o[eö]|ö|ae|a[eä]|ä)", lambda x: {"ue": "ü", "uë": "ü", "ü": "ü", "oe": "ö", "oë": "ö", "ö": "ö", "ae": "ä", "aë": "ä", "ä": "ä"}[x.group()], title)
-
-
             command = """UPDATE substance_mixture SET title=%s, description=%s, branch=%s, substance_type=%s,
                          evaporation_lane_150=%s, evaporation_lane_160=%s, evaporation_lane_170=%s, evaporation_lane_180=%s,
                          ueg=%s, response=%s, skin_category=%s, checked_emissions=%s,
                          flashpoint=%s, values_range=%s, comments=%s, productclass=%s, date_checked=%s
                          WHERE substance_mixture_id = %s;""" % \
-                                                        (check_value(newtitle),
+                                                        (umlaut_handler(check_value(self.form.title.data)),
                                                         check_value(self.form.description.data),
                                                         check_value(self.form.branch.data),
                                                         check_value(self.form.substance_type.data),

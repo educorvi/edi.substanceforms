@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from edi.substanceforms.vocabularies import vocabularies
+import re
 
 def check_value(value):
     if not value:
@@ -9,6 +10,12 @@ def check_value(value):
     if value == 'None':
         return 'NULL'
     return "'%s'" % value
+
+def umlaut_handler(value):
+    newvalue = re.sub(r"(?i)(?:ue|u[eë]|ü|oe|o[eö]|ö|ae|a[eä]|ä)",
+           lambda x: {"ue": "ü", "uë": "ü", "ü": "ü", "oe": "ö", "oë": "ö", "ö": "ö", "ae": "ä", "aë": "ä", "ä": "ä"}[
+               x.group()], value)
+    return newvalue
 
 def list_handler(liste):
     result = '@'.join(liste)
