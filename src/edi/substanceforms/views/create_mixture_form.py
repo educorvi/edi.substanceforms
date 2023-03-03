@@ -252,6 +252,7 @@ class UpdateFormView(CreateFormView):
                 date_checked = ''
 
             #bufixing
+            print(self.form.title.data)
             print(check_value(self.form.title.data))
 
             command = """UPDATE substance_mixture SET title=%s, description=%s, branch=%s, substance_type=%s,
