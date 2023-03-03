@@ -251,12 +251,15 @@ class UpdateFormView(CreateFormView):
             else:
                 date_checked = ''
 
+            #bufixing
+            check_value(self.form.title.data)
+
             command = """UPDATE substance_mixture SET title=%s, description=%s, branch=%s, substance_type=%s,
                          evaporation_lane_150=%s, evaporation_lane_160=%s, evaporation_lane_170=%s, evaporation_lane_180=%s,
                          ueg=%s, response=%s, skin_category=%s, checked_emissions=%s,
                          flashpoint=%s, values_range=%s, comments=%s, productclass=%s, date_checked=%s
                          WHERE substance_mixture_id = %s;""" % \
-                                                        (str(self.form.title.data),
+                                                        (check_value(self.form.title.data),
                                                         check_value(self.form.description.data),
                                                         check_value(self.form.branch.data),
                                                         check_value(self.form.substance_type.data),
