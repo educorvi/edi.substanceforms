@@ -7,7 +7,7 @@ import datetime
 from wtforms import Form, StringField, FileField
 from wtforms import validators
 from collective.wtforms.views import WTFormView
-from edi.substanceforms.helpers import check_value
+from edi.substanceforms.helpers import check_value, umlaut_handler
 from plone import api as ploneapi
 import requests
 import psycopg2

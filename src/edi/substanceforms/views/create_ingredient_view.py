@@ -4,7 +4,7 @@ from wtforms import Form, FloatField, SelectField, HiddenField, SelectMultipleFi
 from plone.namedfile import NamedBlobImage
 from wtforms import validators
 from collective.wtforms.views import WTFormView
-from edi.substanceforms.helpers import check_value, list_handler
+from edi.substanceforms.helpers import check_value, list_handler, umlaut_handler
 from edi.substanceforms.vocabularies import substance_types, hskategorie, produktkategorien, produktklassen, branchen
 from edi.substanceforms.vocabularies import classifications, usecases, application_areas
 from plone import api as ploneapi

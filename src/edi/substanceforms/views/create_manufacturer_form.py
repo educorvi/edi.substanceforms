@@ -2,7 +2,7 @@
 from wtforms import Form, StringField, FileField, HiddenField, BooleanField
 from wtforms import validators
 from collective.wtforms.views import WTFormView
-from edi.substanceforms.helpers import check_value
+from edi.substanceforms.helpers import check_value, umlaut_handler
 from plone import api as ploneapi
 from edi.substanceforms.lib import DBConnect
 

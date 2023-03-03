@@ -3,7 +3,7 @@ import transaction
 from wtforms import Form, StringField, IntegerField, FileField, BooleanField, HiddenField, RadioField
 from wtforms import validators
 from collective.wtforms.views import WTFormView
-from edi.substanceforms.helpers import check_value
+from edi.substanceforms.helpers import check_value, umlaut_handler
 from edi.substanceforms.vocabularies import hskategorie, branchen
 from plone.namedfile import NamedBlobImage
 from edi.substanceforms.lib import DBConnect

@@ -262,7 +262,7 @@ class UpdateFormView(CreateFormView):
                          flashpoint=%s, values_range=%s, comments=%s, productclass=%s, date_checked=%s
                          WHERE substance_mixture_id = %s;""" % \
                                                         (umlaut_handler(check_value(self.form.title.data)),
-                                                        check_value(self.form.description.data),
+                                                        umlaut_handler(check_value(self.form.description.data)),
                                                         check_value(self.form.branch.data),
                                                         check_value(self.form.substance_type.data),
                                                         check_value(self.form.evaporation_lane_150.data),

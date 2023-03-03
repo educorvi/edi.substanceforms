@@ -3,7 +3,7 @@ import transaction
 from wtforms import Form, StringField, SelectField, FileField, FloatField, BooleanField, HiddenField, RadioField, DateField
 from wtforms import validators
 from collective.wtforms.views import WTFormView
-from edi.substanceforms.helpers import check_value
+from edi.substanceforms.helpers import check_value, umlaut_handler
 from edi.substanceforms.vocabularies import hskategorie, branchen, product_class
 from plone.namedfile import NamedBlobImage
 from edi.substanceforms.views.create_mixture_form import MultiCheckboxField
