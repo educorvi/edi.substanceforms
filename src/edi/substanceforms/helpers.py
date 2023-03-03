@@ -47,7 +47,7 @@ def umlaut_handler(value):
     # Join the words back into a string
     newvalue = " ".join(words)
 
-    print(newvalue)
+    return newvalue
 
 def list_handler(liste):
     result = '@'.join(liste)
