@@ -256,7 +256,7 @@ class UpdateFormView(CreateFormView):
                          ueg=%s, response=%s, skin_category=%s, checked_emissions=%s,
                          flashpoint=%s, values_range=%s, comments=%s, productclass=%s, date_checked=%s
                          WHERE substance_mixture_id = %s;""" % \
-                                                        (self.form.title.data,
+                                                        (str(self.form.title.data),
                                                         check_value(self.form.description.data),
                                                         check_value(self.form.branch.data),
                                                         check_value(self.form.substance_type.data),
