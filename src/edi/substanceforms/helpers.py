@@ -12,12 +12,7 @@ def check_value(value):
     return "'%s'" % value
 
 def umlaut_handler(value):
-    newvalue = re.sub(
-        r"(?i)(?=[^aeiouäëöüAEIOUÄËÖÜ]*([aeiouäëöüAEIOUÄËÖÜ][aeiouäëöüAEIOUÄËÖÜ][aeiouyäöüAEIOUY]))(?:(?<=\b|[^\wüÜöÖäÄa-zA-Z])[uo][eë]|[uoëü]|[äa][eë]|[ÄA][Ee]|[äaööüüß][eë]|[AEIOUYaeiouyäöüÜÖÄ][Ee]|[AEIOUYaeiouyäöüÜÖÄ])[aëeö]?",
-        lambda x:
-        {"ue": "ü", "uë": "ü", "ü": "ü", "UE": "Ü", "UË": "Ü", "Ü": "Ü", "oe": "ö", "oë": "ö", "ö": "ö", "OE": "Ö",
-         "OË": "Ö", "Ö": "Ö", "ae": "ä", "aë": "ä", "ä": "ä", "AE": "Ä", "Ae": "Ä", "aë": "ä", "Ae": "Ä", "ä": "ä"}[
-            x.group()], value)
+    newvalue = re.sub(r"(?i)(?=[^aeiouäëöüAEIOUÄËÖÜ]*([aeiouäëöüAEIOUÄËÖÜ][aeiouäëöüAEIOUÄËÖÜ][aeiouyäöüAEIOUY]))(?:(?<=\b|[^\wüÜöÖäÄa-zA-Z])[uo][eë]|[uoëü]|[äa][eë]|[ÄA][Ee]|[äaööüüß][eë]|[AEIOUYaeiouyäöüÜÖÄ][Ee]|[AEIOUYaeiouyäöüÜÖÄ])[aëeö]?", lambda x: {"ue": "ü", "uë": "ü", "ü": "ü", "UE": "Ü", "UË": "Ü", "Ü": "Ü", "oe": "ö", "oë": "ö", "ö": "ö", "OE": "Ö", "OË": "Ö", "Ö": "Ö", "ae": "ä", "aë": "ä", "ä": "ä", "AE": "Ä", "Ae": "Ä", "aë": "ä", "Ae": "Ä", "ä": "ä"}[x.group()], value)
     return newvalue
 
 def list_handler(liste):
