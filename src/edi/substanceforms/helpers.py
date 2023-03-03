@@ -12,8 +12,42 @@ def check_value(value):
     return "'%s'" % value
 
 def umlaut_handler(value):
-    newvalue = re.sub(r"(?i)(?=[^aeiouäëöüAEIOUÄËÖÜ]*([aeiouäëöüAEIOUÄËÖÜ][aeiouäëöüAEIOUÄËÖÜ][aeiouyäöüAEIOUY]))(?:(?<=\b|[^\wüÜöÖäÄa-zA-Z])[uo][eë]|[uoëü]|[äa][eë]|[ÄA][Ee]|[äaööüüß][eë]|[AEIOUYaeiouyäöüÜÖÄ][Ee]|[AEIOUYaeiouyäöüÜÖÄ])[aëeö]?", lambda x: {"ue": "ü", "uë": "ü", "ü": "ü", "UE": "Ü", "UË": "Ü", "Ü": "Ü", "oe": "ö", "oë": "ö", "ö": "ö", "OE": "Ö", "OË": "Ö", "Ö": "Ö", "ae": "ä", "aë": "ä", "ä": "ä", "AE": "Ä", "Ae": "Ä", "aë": "ä", "Ae": "Ä", "ä": "ä"}[x.group()], value)
-    return newvalue
+    replacements = {
+        "ue": "ü",
+        "uë": "ü",
+        "ü": "ü",
+        "UE": "Ü",
+        "UË": "Ü",
+        "Ü": "Ü",
+        "oe": "ö",
+        "oë": "ö",
+        "ö": "ö",
+        "OE": "Ö",
+        "OË": "Ö",
+        "Ö": "Ö",
+        "ae": "ä",
+        "aë": "ä",
+        "ä": "ä",
+        "AE": "Ä",
+        "Ae": "Ä",
+        "aë": "ä",
+        "Ae": "Ä",
+        "Ä": "Ä"
+    }
+
+    # Split the text into words
+    words = value.split()
+
+    # Replace the appropriate sequences in each word
+    for i, word in enumerate(words):
+        for seq, replacement in replacements.items():
+            if seq in word:
+                words[i] = word.replace(seq, replacement)
+
+    # Join the words back into a string
+    newvalue = " ".join(words)
+
+    print(newvalue)
 
 def list_handler(liste):
     result = '@'.join(liste)
