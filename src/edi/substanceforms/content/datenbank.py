@@ -80,7 +80,7 @@ class Datenbank(Container):
             cur.close()
             if erg:
                 return False
-        self.db.close()
+        conn.close()
         return True
 
     def get_webcode(self, webcode=False):
