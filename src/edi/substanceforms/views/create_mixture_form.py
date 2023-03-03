@@ -12,6 +12,7 @@ from edi.substanceforms.vocabularies import substance_types, hskategorie, produk
 from edi.substanceforms.vocabularies import classifications, usecases, application_areas, substance_types_new, produktklassenid
 from plone import api as ploneapi
 from edi.substanceforms.lib import DBConnect
+import re
 
 class MultiCheckboxField(SelectMultipleField):
     widget = ListWidget(prefix_label=False)
@@ -255,12 +256,16 @@ class UpdateFormView(CreateFormView):
             print(self.form.title.data)
             print(check_value(self.form.title.data))
 
+            title = self.form.title.data
+            newtitle = re.sub(r"(?i)(?:ue|u[eë]|ü|oe|o[eö]|ö|ae|a[eä]|ä)", lambda x: {"ue": "ü", "uë": "ü", "ü": "ü", "oe": "ö", "oë": "ö", "ö": "ö", "ae": "ä", "aë": "ä", "ä": "ä"}[x.group()], title)
+
+
             command = """UPDATE substance_mixture SET title=%s, description=%s, branch=%s, substance_type=%s,
                          evaporation_lane_150=%s, evaporation_lane_160=%s, evaporation_lane_170=%s, evaporation_lane_180=%s,
                          ueg=%s, response=%s, skin_category=%s, checked_emissions=%s,
                          flashpoint=%s, values_range=%s, comments=%s, productclass=%s, date_checked=%s
                          WHERE substance_mixture_id = %s;""" % \
-                                                        (check_value(self.form.title.data),
+                                                        (check_value(newtitle),
                                                         check_value(self.form.description.data),
                                                         check_value(self.form.branch.data),
                                                         check_value(self.form.substance_type.data),
