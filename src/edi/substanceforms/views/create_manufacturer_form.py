@@ -43,8 +43,8 @@ class CreateFormView(WTFormView):
         self.db.connect()
         redirect_url = self.context.aq_parent.absolute_url()
         if button == 'Speichern' and self.validate():
-            insert = """INSERT INTO manufacturer VALUES (DEFAULT, '%s', '%s', '%s', %s, %s);""" % (self.form.title.data,
-                                                                                                   self.form.description.data,
+            insert = """INSERT INTO manufacturer VALUES (DEFAULT, '%s', '%s', '%s', %s, %s);""" % (umlaut_handler(check_value(self.form.title.data)),
+                                                                                                   umlaut_handler(check_value(self.form.description.data)),
                                                                                                    self.context.aq_parent.get_webcode(),
                                                                                                    check_value(self.form.homepage.data),
                                                                                                    check_value(self.form.status))
@@ -95,8 +95,8 @@ class UpdateFormView(CreateFormView):
         redirect_url = self.context.absolute_url() + '/single_view?item=' + self.form.item_id.data
         if button == 'Speichern': #and self.validate():
             command = """UPDATE manufacturer SET title='%s', description='%s', homepage='%s'
-                         WHERE manufacturer_id = %s;""" % (self.form.title.data,
-                                                        self.form.description.data,
+                         WHERE manufacturer_id = %s;""" % (umlaut_handler(check_value(self.form.title.data)),
+                                                        umlaut_handler(check_value(self.form.description.data)),
                                                         self.form.homepage.data,
                                                         self.form.item_id.data)
             self.db.execute(command)

@@ -140,8 +140,8 @@ class CreateFormView(WTFormView):
                                                         VALUES ('%s', '%s', '%s', %s, '%s',
                                                         %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
                                                         %s, %s, %s);""" \
-                                                        % (self.form.title.data,
-                                                        self.form.description.data,
+                                                        % (umlaut_handler(check_value(self.form.title.data)),
+                                                        umlaut_handler(check_value(self.form.description.data)),
                                                         self.context.aq_parent.get_webcode(),
                                                         check_value(self.form.branch.data),
                                                         self.form.substance_type.data,
@@ -251,10 +251,6 @@ class UpdateFormView(CreateFormView):
                 date_checked = self.form.date_checked.data.strftime("%Y-%m-%d")
             else:
                 date_checked = ''
-
-            #bufixing
-            print(self.form.title.data)
-            print(check_value(self.form.title.data))
 
             command = """UPDATE substance_mixture SET title=%s, description=%s, branch=%s, substance_type=%s,
                          evaporation_lane_150=%s, evaporation_lane_160=%s, evaporation_lane_170=%s, evaporation_lane_180=%s,
