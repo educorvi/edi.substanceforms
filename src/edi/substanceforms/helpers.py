@@ -12,9 +12,7 @@ def check_value(value):
     return "'%s'" % value
 
 def umlaut_handler(value):
-    newvalue = re.sub(r"(?i)(?:ue|u[eë]|ü|oe|o[eö]|ö|ae|a[eä]|ä)",
-           lambda x: {"ue": "ü", "uë": "ü", "ü": "ü", "oe": "ö", "oë": "ö", "ö": "ö", "ae": "ä", "aë": "ä", "ä": "ä"}[
-               x.group()], value)
+    newvalue = re.sub(r"(?i)(?:ue|u[eë]|ü|oe|o[eö]|ö|ae|a[eä]|ä|A[EÄ]|a[eä]|A[eä])", lambda x: {"ue": "ü", "uë": "ü", "ü": "ü", "oe": "ö", "oë": "ö", "ö": "ö", "ae": "ä", "aë": "ä", "ä": "ä", "AE": "Ä", "Ae": "Ä", "aë": "ä", "Ae": "Ä", "ä": "ä"}[x.group()], value)
     return newvalue
 
 def list_handler(liste):
