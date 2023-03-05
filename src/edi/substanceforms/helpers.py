@@ -22,6 +22,7 @@ def int_checker(value):
         return '0.0'
     if value == '0':
         return '0'
+    return "'%s'" % value
 
 def umlaut_handler(value):
     replacements = {
