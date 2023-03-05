@@ -383,9 +383,9 @@ class SingleView(BrowserView):
         title = "Medianwert [µm]"
         fieldindex = possibleColumns(self.context).getTerm('median_value').token
         value = self.article[int(fieldindex)]
-        if value:
-            return {'title': title, 'value': value}
-        return {}
+        if value is None:
+            return {}
+        return {'title': title, 'value': value}
 
     def edit_url(self):
         if self.context.tablename == 'substance_mixture':
