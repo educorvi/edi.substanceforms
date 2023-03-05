@@ -3,14 +3,6 @@ from edi.substanceforms.vocabularies import vocabularies
 import re
 
 def check_value(value):
-    if value == '0':
-        return '0'
-    if value == '0.0':
-        return '0.0'
-    if value == 0:
-        return '0'
-    if value == 0.0:
-        return '0.0'
     if not value:
         return 'NULL'
     if isinstance(value, list):
@@ -18,6 +10,9 @@ def check_value(value):
     if value == 'None':
         return 'NULL'
     return "'%s'" % value
+
+def int_checker(value):
+    import pdb; pdb.set_trace()
 
 def umlaut_handler(value):
     replacements = {
