@@ -12,7 +12,10 @@ def check_value(value):
     return "'%s'" % value
 
 def int_checker(value):
-    import pdb; pdb.set_trace()
+    if not value:
+        return 'NULL'
+    if value == 0.0:
+        return '0.0'
 
 def umlaut_handler(value):
     replacements = {
