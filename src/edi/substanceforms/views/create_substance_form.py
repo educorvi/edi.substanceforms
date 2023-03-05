@@ -91,8 +91,8 @@ class CreateFormView(WTFormView):
         if button == 'Speichern' and self.form.casnr.data:
             if workingcas == True:
                 insert = """INSERT INTO substance (title, description, webcode, casnr, egnr, concentration, skin_category, branch, formula, mol, link, status)
-                VALUES ('%s', '%s', '%s', %s, %s, %s, %s, %s, %s, %s, %s, %s);""" % (umlaut_handler(check_value(self.form.title.data)),
-                                                           umlaut_handler(check_value(self.form.description.data)),
+                VALUES ('%s', '%s', '%s', %s, %s, %s, %s, %s, %s, %s, %s, %s);""" % (umlaut_handler(self.form.title.data),
+                                                           umlaut_handler(self.form.description.data),
                                                            self.context.aq_parent.get_webcode(),
                                                            check_value(self.form.casnr.data).strip(),
                                                            check_value(self.form.egnr.data),
@@ -118,8 +118,8 @@ class CreateFormView(WTFormView):
 
         elif button == 'Speichern':
             insert = """INSERT INTO substance (title, description, webcode, casnr, egnr, concentration, skin_category, branch, formula, mol, link, status)
-            VALUES ('%s', '%s', '%s', %s, %s, %s, %s, %s, %s, %s, %s, %s);""" % (umlaut_handler(check_value(self.form.title.data)),
-                                                                                 umlaut_handler(check_value(self.form.description.data)),
+            VALUES ('%s', '%s', '%s', %s, %s, %s, %s, %s, %s, %s, %s, %s);""" % (umlaut_handler(self.form.title.data),
+                                                                                 umlaut_handler(self.form.description.data),
                                                                                  self.context.aq_parent.get_webcode(),
                                                                                  check_value(self.form.casnr.data).strip(),
                                                                                  check_value(self.form.egnr.data),
@@ -186,8 +186,8 @@ class UpdateFormView(CreateFormView):
         if button == 'Speichern': #and self.validate():
             command = """UPDATE substance SET title='%s', description='%s', casnr=%s, egnr=%s, concentration=%s,
                          skin_category='%s', branch='%s', formula='%s', mol='%s', link='%s'
-                         WHERE substance_id = %s;""" % (umlaut_handler(check_value(self.form.title.data)),
-                                                        umlaut_handler(check_value(self.form.description.data)),
+                         WHERE substance_id = %s;""" % (umlaut_handler(self.form.title.data),
+                                                        umlaut_handler(self.form.description.data),
                                                         check_value(self.form.casnr.data),
                                                         check_value(self.form.egnr.data),
                                                         check_value(self.form.concentration.data),

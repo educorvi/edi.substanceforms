@@ -88,8 +88,8 @@ class CreateFormView(WTFormView):
             else:
                 date_checked = ''
             insert = """INSERT INTO spray_powder VALUES (DEFAULT, '%s', '%s', '%s',
-                        %s, %s, %s, %s, %s, %s, %s, %s, %s);""" % (umlaut_handler(check_value(self.form.title.data)),
-                                                       umlaut_handler(check_value(self.form.description.data)),
+                        %s, %s, %s, %s, %s, %s, %s, %s, %s);""" % (umlaut_handler(self.form.title.data),
+                                                       umlaut_handler(self.form.description.data),
                                                        self.context.aq_parent.get_webcode(),
                                                        check_value(self.form.product_class.data),
                                                        check_value(self.form.starting_material.data),
@@ -156,8 +156,8 @@ class UpdateFormView(CreateFormView):
                 date_checked = ''
             command = """UPDATE spray_powder SET title='%s', description='%s', product_class='%s', starting_material='%s',
                          median_value=%s, volume_share=%s, checked_emissions=%s, date_checked=%s
-                         WHERE spray_powder_id = %s;""" % (umlaut_handler(check_value(self.form.title.data)),
-                                                        umlaut_handler(check_value(self.form.description.data)),
+                         WHERE spray_powder_id = %s;""" % (umlaut_handler(self.form.title.data),
+                                                        umlaut_handler(self.form.description.data),
                                                         self.form.product_class.data,
                                                         self.form.starting_material.data,
                                                         check_value(self.form.median_value.data),

@@ -140,8 +140,8 @@ class CreateFormView(WTFormView):
                                                         VALUES ('%s', '%s', '%s', %s, '%s',
                                                         %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
                                                         %s, %s, %s);""" \
-                                                        % (umlaut_handler(check_value(self.form.title.data)),
-                                                        umlaut_handler(check_value(self.form.description.data)),
+                                                        % (umlaut_handler(self.form.title.data),
+                                                        umlaut_handler(self.form.description.data),
                                                         self.context.aq_parent.get_webcode(),
                                                         check_value(self.form.branch.data),
                                                         self.form.substance_type.data,
