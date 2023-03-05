@@ -375,9 +375,9 @@ class SingleView(BrowserView):
         title = "Volumenanteil < 10 µm [Vol.-%]"
         fieldindex = possibleColumns(self.context).getTerm('volume_share').token
         value = self.article[int(fieldindex)]
-        if value:
-            return {'title': title, 'value': value}
-        return {}
+        if value is None:
+            return {}
+        return {'title': title, 'value': value}
 
     def median_value(self):
         title = "Medianwert [µm]"
