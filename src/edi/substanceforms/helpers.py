@@ -12,10 +12,16 @@ def check_value(value):
     return "'%s'" % value
 
 def int_checker(value):
-    if not value:
+    if value is None:
         return 'NULL'
     if value == 0.0:
         return '0.0'
+    if value == 0:
+        return '0'
+    if value == '0.0':
+        return '0.0'
+    if value == '0':
+        return '0'
 
 def umlaut_handler(value):
     replacements = {
