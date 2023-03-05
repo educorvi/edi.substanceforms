@@ -7,6 +7,10 @@ def check_value(value):
         return '0'
     if value == '0.0':
         return '0.0'
+    if value == 0:
+        return '0'
+    if value == 0.0:
+        return '0.0'
     if not value:
         return 'NULL'
     if isinstance(value, list):
