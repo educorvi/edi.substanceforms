@@ -3,7 +3,7 @@ import transaction
 from wtforms import Form, StringField, SelectField, FileField, FloatField, BooleanField, HiddenField, RadioField, DateField
 from wtforms import validators
 from collective.wtforms.views import WTFormView
-from edi.substanceforms.helpers import check_value, umlaut_handler
+from edi.substanceforms.helpers import check_value, umlaut_handler, int_checker
 from edi.substanceforms.vocabularies import hskategorie, branchen, product_class
 from plone.namedfile import NamedBlobImage
 from edi.substanceforms.views.create_mixture_form import MultiCheckboxField
@@ -94,7 +94,7 @@ class CreateFormView(WTFormView):
                                                        check_value(self.form.product_class.data),
                                                        umlaut_handler(check_value(self.form.starting_material.data)),
                                                        check_value(self.form.median_value.data),
-                                                       check_value(self.form.volume_share.data),
+                                                       int_checker(self.form.volume_share.data),
                                                        check_value(self.form.checked_emissions.data),
                                                        check_value(date_checked),
                                                        check_value(image_url),
@@ -161,7 +161,7 @@ class UpdateFormView(CreateFormView):
                                                         self.form.product_class.data,
                                                         umlaut_handler(self.form.starting_material.data),
                                                         check_value(self.form.median_value.data),
-                                                        check_value(self.form.volume_share.data),
+                                                        int_checker(self.form.volume_share.data),
                                                         check_value(self.form.checked_emissions.data),
                                                         check_value(date_checked),
                                                         self.form.item_id.data)
