@@ -7,7 +7,7 @@ from plone.namedfile import NamedBlobImage
 from wtforms import RadioField, SelectMultipleField
 from wtforms import validators
 from collective.wtforms.views import WTFormView
-from edi.substanceforms.helpers import check_value, umlaut_handler, list_handler, reverse_list_handler, new_list_handler, get_vocabulary, new_list_handler2, new_list_handler3
+from edi.substanceforms.helpers import check_value, list_handler, reverse_list_handler, new_list_handler, get_vocabulary, new_list_handler2, new_list_handler3
 from edi.substanceforms.vocabularies import substance_types, hskategorie, produktkategorien, produktklassen, branchen
 from edi.substanceforms.vocabularies import classifications, usecases, application_areas, substance_types_new, produktklassenid
 from plone import api as ploneapi
@@ -140,8 +140,8 @@ class CreateFormView(WTFormView):
                                                         VALUES ('%s', '%s', '%s', %s, '%s',
                                                         %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
                                                         %s, %s, %s);""" \
-                                                        % (umlaut_handler(self.form.title.data),
-                                                        umlaut_handler(self.form.description.data),
+                                                        % (self.form.title.data,
+                                                        self.form.description.data,
                                                         self.context.aq_parent.get_webcode(),
                                                         check_value(self.form.branch.data),
                                                         self.form.substance_type.data,
@@ -257,8 +257,8 @@ class UpdateFormView(CreateFormView):
                          ueg=%s, response=%s, skin_category=%s, checked_emissions=%s,
                          flashpoint=%s, values_range=%s, comments=%s, productclass=%s, date_checked=%s
                          WHERE substance_mixture_id = %s;""" % \
-                                                        (umlaut_handler(check_value(self.form.title.data)),
-                                                        umlaut_handler(check_value(self.form.description.data)),
+                                                        (check_value(self.form.title.data),
+                                                        check_value(self.form.description.data),
                                                         check_value(self.form.branch.data),
                                                         check_value(self.form.substance_type.data),
                                                         check_value(self.form.evaporation_lane_150.data),

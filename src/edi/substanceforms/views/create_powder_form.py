@@ -3,7 +3,7 @@ import transaction
 from wtforms import Form, StringField, SelectField, FileField, FloatField, BooleanField, HiddenField, RadioField, DateField
 from wtforms import validators
 from collective.wtforms.views import WTFormView
-from edi.substanceforms.helpers import check_value, umlaut_handler, int_checker
+from edi.substanceforms.helpers import check_value, int_checker
 from edi.substanceforms.vocabularies import hskategorie, branchen, product_class
 from plone.namedfile import NamedBlobImage
 from edi.substanceforms.views.create_mixture_form import MultiCheckboxField
@@ -88,11 +88,11 @@ class CreateFormView(WTFormView):
             else:
                 date_checked = ''
             insert = """INSERT INTO spray_powder VALUES (DEFAULT, '%s', '%s', '%s',
-                        %s, %s, %s, %s, %s, %s, %s, %s, %s);""" % (umlaut_handler(self.form.title.data),
-                                                       umlaut_handler(self.form.description.data),
+                        %s, %s, %s, %s, %s, %s, %s, %s, %s);""" % (self.form.title.data,
+                                                       self.form.description.data,
                                                        self.context.aq_parent.get_webcode(),
                                                        check_value(self.form.product_class.data),
-                                                       umlaut_handler(check_value(self.form.starting_material.data)),
+                                                       check_value(self.form.starting_material.data),
                                                        int_checker(self.form.median_value.data),
                                                        int_checker(self.form.volume_share.data),
                                                        check_value(self.form.checked_emissions.data),
@@ -156,10 +156,10 @@ class UpdateFormView(CreateFormView):
                 date_checked = ''
             command = """UPDATE spray_powder SET title='%s', description='%s', product_class='%s', starting_material='%s',
                          median_value=%s, volume_share=%s, checked_emissions=%s, date_checked=%s
-                         WHERE spray_powder_id = %s;""" % (umlaut_handler(self.form.title.data),
-                                                        umlaut_handler(self.form.description.data),
+                         WHERE spray_powder_id = %s;""" % (self.form.title.data,
+                                                        self.form.description.data,
                                                         self.form.product_class.data,
-                                                        umlaut_handler(self.form.starting_material.data),
+                                                        self.form.starting_material.data,
                                                         int_checker(self.form.median_value.data),
                                                         int_checker(self.form.volume_share.data),
                                                         check_value(self.form.checked_emissions.data),

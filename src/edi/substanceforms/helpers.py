@@ -24,30 +24,6 @@ def int_checker(value):
         return '0'
     return "'%s'" % value
 
-def umlaut_handler(value):
-    replacements = {
-        "ue": "ü",
-        "uë": "ü",
-        "ü": "ü",
-        "UE": "Ü",
-        "UË": "Ü",
-        "Ü": "Ü",
-        "oe": "ö",
-        "oë": "ö",
-        "ö": "ö",
-        "OE": "Ö",
-        "OË": "Ö",
-        "Ö": "Ö",
-        "ae": "ä",
-        "aë": "ä",
-        "ä": "ä",
-        "AE": "Ä",
-        "Ae": "Ä",
-        "aë": "ä",
-        "Ae": "Ä",
-        "Ä": "Ä"
-    }
-
     # Split the text into words
     words = value.split()
 
