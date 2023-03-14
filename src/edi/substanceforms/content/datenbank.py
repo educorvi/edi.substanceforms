@@ -3,7 +3,7 @@ from plone.app.textfield import RichText
 from plone.dexterity.content import Container
 from plone.supermodel import model
 from zope import schema
-from zope.interface import implementer
+from zope.interface import implementer, Invalid, invariant
 import random
 from datetime import datetime
 import psycopg2
@@ -47,6 +47,15 @@ class IDatenbank(model.Schema):
             title = u"Text nach der Auflistung der Datenbanktabellen",
             required = False
             )
+
+    @invariant
+    def check_dbpassword(data):
+        try:
+            conn = psycopg2.connect(host=data.host, user=data.username, dbname=data.database, password=data.password)
+            conn.close()
+        except:
+            raise Invalid('Es konnte keine Verbindung zur Datenbank hergestellt werden. Bitte prüfen Sie die Zugangsdaten.')
+
 
 
 @implementer(IDatenbank)
