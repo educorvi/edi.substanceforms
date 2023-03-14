@@ -252,9 +252,9 @@ class SingleView(BrowserView):
         title = "Untere Explosionsgrenze (UEG) [g/m³]"
         fieldindex = possibleColumns(self.context).getTerm('ueg').token
         value = self.article[int(fieldindex)]
-        if value is None:
-            return {}
-        return {'title': title, 'value': value}
+        if value:
+            return {'title': title, 'value': value}
+        return {}
 
     def response(self):
         title = "Responsefaktor"
