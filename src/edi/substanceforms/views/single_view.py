@@ -189,33 +189,35 @@ class SingleView(BrowserView):
         title = "Verdampfungsfaktor Fv (Bahntemperatur 150 °C)"
         fieldindex = possibleColumns(self.context).getTerm('evaporation_lane_150').token
         value = self.article[int(fieldindex)]
-        if value:
-            return {'title': title, 'value': value}
-        return {}
+        if value is None:
+            return {}
+        return {'title': title, 'value': value}
+
+
 
     def evaporation_lane_160(self):
         title = "Verdampfungsfaktor Fv (Bahntemperatur 160 °C)"
         fieldindex = possibleColumns(self.context).getTerm('evaporation_lane_160').token
         value = self.article[int(fieldindex)]
-        if value:
-            return {'title': title, 'value': value}
-        return {}
+        if value is None:
+            return {}
+        return {'title': title, 'value': value}
 
     def evaporation_lane_170(self):
         title = "Verdampfungsfaktor Fv (Bahntemperatur 170 °C)"
         fieldindex = possibleColumns(self.context).getTerm('evaporation_lane_170').token
         value = self.article[int(fieldindex)]
-        if value:
-            return {'title': title, 'value': value}
-        return {}
+        if value is None:
+            return {}
+        return {'title': title, 'value': value}
 
     def evaporation_lane_180(self):
         title = "Verdampfungsfaktor Fv (Bahntemperatur 180 °C)"
         fieldindex = possibleColumns(self.context).getTerm('evaporation_lane_180').token
         value = self.article[int(fieldindex)]
-        if value:
-            return {'title': title, 'value': value}
-        return {}
+        if value is None:
+            return {}
+        return {'title': title, 'value': value}
 
     def date_checked(self):
         title = "Prüfdatum"
@@ -250,9 +252,9 @@ class SingleView(BrowserView):
         title = "Untere Explosionsgrenze (UEG) [g/m³]"
         fieldindex = possibleColumns(self.context).getTerm('ueg').token
         value = self.article[int(fieldindex)]
-        if value:
-            return {'title': title, 'value': value}
-        return {}
+        if value is None:
+            return {}
+        return {'title': title, 'value': value}
 
     def response(self):
         title = "Responsefaktor"
