@@ -18,10 +18,6 @@ def int_checker(value):
         return '0.0'
     if value == 0:
         return '0'
-    if value == '0.0':
-        return '0.0'
-    if value == '0':
-        return '0'
     return "'%s'" % value
 
     # Split the text into words
