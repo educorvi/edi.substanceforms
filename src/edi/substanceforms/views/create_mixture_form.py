@@ -7,7 +7,7 @@ from plone.namedfile import NamedBlobImage
 from wtforms import RadioField, SelectMultipleField
 from wtforms import validators
 from collective.wtforms.views import WTFormView
-from edi.substanceforms.helpers import check_value, list_handler, reverse_list_handler, new_list_handler, get_vocabulary, new_list_handler2, new_list_handler3
+from edi.substanceforms.helpers import check_value, int_checker, list_handler, reverse_list_handler, new_list_handler, get_vocabulary, new_list_handler2, new_list_handler3
 from edi.substanceforms.vocabularies import substance_types, hskategorie, produktkategorien, produktklassen, branchen
 from edi.substanceforms.vocabularies import classifications, usecases, application_areas, substance_types_new, produktklassenid
 from plone import api as ploneapi
@@ -145,11 +145,11 @@ class CreateFormView(WTFormView):
                                                         self.context.aq_parent.get_webcode(),
                                                         check_value(self.form.branch.data),
                                                         self.form.substance_type.data,
-                                                        check_value(self.form.evaporation_lane_150.data),
-                                                        check_value(self.form.evaporation_lane_160.data),
-                                                        check_value(self.form.evaporation_lane_170.data),
-                                                        check_value(self.form.evaporation_lane_180.data),
-                                                        check_value(self.form.ueg.data),
+                                                        int_checker(self.form.evaporation_lane_150.data),
+                                                        int_checker(self.form.evaporation_lane_160.data),
+                                                        int_checker(self.form.evaporation_lane_170.data),
+                                                        int_checker(self.form.evaporation_lane_180.data),
+                                                        int_checker(self.form.ueg.data),
                                                         check_value(self.form.response.data),
                                                         check_value(self.form.skin_category.data),
                                                         self.form.checked_emissions.data,
@@ -261,11 +261,11 @@ class UpdateFormView(CreateFormView):
                                                         check_value(self.form.description.data),
                                                         check_value(self.form.branch.data),
                                                         check_value(self.form.substance_type.data),
-                                                        check_value(self.form.evaporation_lane_150.data),
-                                                        check_value(self.form.evaporation_lane_160.data),
-                                                        check_value(self.form.evaporation_lane_170.data),
-                                                        check_value(self.form.evaporation_lane_180.data),
-                                                        check_value(self.form.ueg.data),
+                                                        int_checker(self.form.evaporation_lane_150.data),
+                                                        int_checker(self.form.evaporation_lane_160.data),
+                                                        int_checker(self.form.evaporation_lane_170.data),
+                                                        int_checker(self.form.evaporation_lane_180.data),
+                                                        int_checker(self.form.ueg.data),
                                                         check_value(self.form.response.data),
                                                         check_value(self.form.skin_category.data),
                                                         check_value(self.form.checked_emissions.data),
