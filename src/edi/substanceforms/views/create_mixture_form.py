@@ -160,17 +160,18 @@ class CreateFormView(WTFormView):
                                                         check_value(image_url),
                                                         check_value(self.form.manufacturer_id.data.split('ID:')[-1]),
                                                         check_value(self.form.status))
+            self.db.execute(insert)
             areaids = list()
             for i in self.form.application_areas.data:
                 selectcommand = "SELECT substance_mixture_id FROM substance_mixture ORDER BY substance_mixture_id DESC LIMIT 1"
                 selectedid = self.db.execute(selectcommand)
-                areaids.append([int(i), (int(selectedid[0][0]))+1])
+                areaids.append([int(i), (int(selectedid[0][0]))])
             caseids = list()
             for i in self.form.usecases.data:
                 selectcommand = "SELECT substance_mixture_id FROM substance_mixture ORDER BY substance_mixture_id DESC LIMIT 1"
                 selectedid = self.db.execute(selectcommand)
-                caseids.append([int(i), (int(selectedid[0][0])) + 1])
-            self.db.execute(insert)
+                caseids.append([int(i), (int(selectedid[0][0]))])
+            #self.db.execute(insert)
             for i in areaids:
                 insertcommand = "INSERT INTO areapairs (area_id, mixture_id) VALUES (%s, %s)" % (i[0], i[1])
                 self.db.execute(insertcommand)
