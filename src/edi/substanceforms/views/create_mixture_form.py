@@ -136,10 +136,10 @@ class CreateFormView(WTFormView):
                                                         evaporation_lane_150, evaporation_lane_160,
                                                         evaporation_lane_170, evaporation_lane_180, ueg, response,
                                                         skin_category, checked_emissions, date_checked, flashpoint,
-                                                        values_range, comments, image_url, manufacturer_id, status)
+                                                        values_range, comments, image_url, manufacturer_id, status, productclass)
                                                         VALUES ('%s', '%s', '%s', %s, '%s',
                                                         %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
-                                                        %s, %s, %s);""" \
+                                                        %s, %s, %s, %s);""" \
                                                         % (self.form.title.data,
                                                         self.form.description.data,
                                                         self.context.aq_parent.get_webcode(),
@@ -159,7 +159,8 @@ class CreateFormView(WTFormView):
                                                         check_value(self.form.comments.data),
                                                         check_value(image_url),
                                                         check_value(self.form.manufacturer_id.data.split('ID:')[-1]),
-                                                        check_value(self.form.status))
+                                                        check_value(self.form.status),
+                                                        check_value(self.form.productclass))
             self.db.execute(insert)
             areaids = list()
             for i in self.form.application_areas.data:
