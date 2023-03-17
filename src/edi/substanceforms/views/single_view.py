@@ -435,6 +435,8 @@ class SingleView(BrowserView):
 
     def get_image_url(self):
         tablename = self.context.tablename
+        if tablename == 'manufacturer':
+            return False
         select = "SELECT image_url from %s WHERE %s_id = %s" % (tablename, tablename, self.itemid)
         self.db.connect()
         erg = self.db.execute(select)
