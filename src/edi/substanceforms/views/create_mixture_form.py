@@ -160,7 +160,7 @@ class CreateFormView(WTFormView):
                                                         check_value(image_url),
                                                         check_value(self.form.manufacturer_id.data.split('ID:')[-1]),
                                                         check_value(self.form.status),
-                                                        check_value(self.form.productclass))
+                                                        check_value(self.form.productclass.data))
             self.db.execute(insert)
             areaids = list()
             for i in self.form.application_areas.data:
