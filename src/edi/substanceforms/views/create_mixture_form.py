@@ -122,7 +122,8 @@ class CreateFormView(WTFormView):
         image_url = ''
         if self.form.image_url.data.filename:
             image_url = self.create_image(self.form.image_url, self.form.title.data)
-        redirect_url = self.context.aq_parent.absolute_url()
+        #redirect_url = self.context.aq_parent.absolute_url()
+        redirect_url = self.context.absolute_url()
         if button == 'Speichern':
             if not self.form.skin_category.data:
                 message = u'Bitte füllen Sie das Feld "Hautschutz-Kategorie" aus'
