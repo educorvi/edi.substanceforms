@@ -41,7 +41,7 @@ class CreateFormView(WTFormView):
 
     def submit(self, button):
         self.db.connect()
-        redirect_url = self.context.aq_parent.absolute_url()
+        redirect_url = self.context.absolute_url()
         if button == 'Speichern' and self.validate():
             insert = """INSERT INTO manufacturer VALUES (DEFAULT, '%s', '%s', '%s', %s, %s);""" % (self.form.title.data,
                                                                                                    self.form.description.data,
@@ -133,7 +133,7 @@ class DeleteFormView(CreateFormView):
         """
         """
         self.db.connect()
-        redirect_url = self.context.aq_parent.absolute_url()
+        redirect_url = self.context.absolute_url()
         if button == 'Speichern' and self.form.sure.data is True: #and self.validate():
             command = "DELETE FROM manufacturer WHERE manufacturer_id = %s" % (self.form.item_id.data)
             self.db.execute(command)

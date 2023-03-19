@@ -199,7 +199,7 @@ class DeleteFormView(CreateFormView):
         """
         """
         self.db.connect()
-        redirect_url = self.context.aq_parent.absolute_url()
+        redirect_url = self.context.absolute_url()
         if button == 'Speichern' and self.form.sure.data is True: #and self.validate():
             command = "DELETE FROM spray_powder WHERE spray_powder_id = %s" % (self.form.item_id.data)
             self.db.execute(command)

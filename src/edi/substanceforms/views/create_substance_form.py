@@ -182,7 +182,7 @@ class UpdateFormView(CreateFormView):
         """
         """
         self.db.connect()
-        redirect_url = self.context.aq_parent.absolute_url()
+        redirect_url = self.context.absolute_url()
         if button == 'Speichern': #and self.validate():
             command = """UPDATE substance SET title='%s', description='%s', casnr=%s, egnr=%s, concentration=%s,
                          skin_category='%s', branch='%s', formula='%s', mol='%s', link='%s'
@@ -230,7 +230,7 @@ class DeleteFormView(CreateFormView):
         """
         """
         self.db.connect()
-        redirect_url = self.context.aq_parent.absolute_url()
+        redirect_url = self.context.absolute_url()
         if button == 'Speichern' and self.form.sure.data is True: #and self.validate():
             command = "DELETE FROM substance WHERE substance_id = %s" % (self.form.item_id.data)
             self.db.execute(command)
