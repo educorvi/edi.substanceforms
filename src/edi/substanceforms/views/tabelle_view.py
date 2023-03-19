@@ -150,7 +150,7 @@ class TabelleFormView(WTFormView):
             self.db.close()
 
         elif button == 'Abbrechen':
-            url = self.context.absolute_url()
+            url = self.context.aq_parent.absolute_url()
             return self.request.response.redirect(url)
 
 class HerstellerForm (BaseForm):
@@ -197,7 +197,7 @@ class HerstellerFormView(TabelleFormView):
             self.db.close()
 
         elif button == 'Abbrechen':
-            url = self.context.absolute_url()
+            url = self.context.aq_parent.absolute_url()
             return self.request.response.redirect(url)
 
 
@@ -308,7 +308,7 @@ class SubstancemixtureFormView(TabelleFormView):
             self.db.close()
 
         elif button == 'Abbrechen':
-            url = self.context.absolute_url()
+            url = self.context.aq_parent.absolute_url()
             return self.request.response.redirect(url)
 
 
@@ -343,5 +343,5 @@ class SpraypowderFormView(TabelleFormView):
             self.db.close()
 
         elif button == 'Abbrechen':
-            url = self.context.absolute_url()
+            url = self.context.aq_parent.absolute_url()
             return self.request.response.redirect(url)
