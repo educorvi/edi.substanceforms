@@ -249,7 +249,7 @@ class UpdateManufacturerFormView(CreateFormView):
         self.db.connect()
         redirect_url = self.context.absolute_url() + '/single_view?item=' + self.form.item_id.data
         if button == 'Speichern':
-            command = """UPDATE spray_powder SET manufacturer_id=%s WHERE manufacturer_id = %s;""" % (check_value(self.form.manufacturer_id.data.split('ID:')[-1]),
+            command = """UPDATE spray_powder SET manufacturer_id=%s WHERE spray_powder_id = %s;""" % (check_value(self.form.manufacturer_id.data.split('ID:')[-1]),
                                                                                                                 self.form.item_id.data)
             self.db.execute(command)
             message = u'Der Druckbestäubungspuder wurde erfolgreich aktualisiert.'
