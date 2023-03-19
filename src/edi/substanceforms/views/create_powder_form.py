@@ -41,6 +41,10 @@ class DeleteForm(Form):
     sure = BooleanField("Druckbestäubungspuder löschen", render_kw={'class': 'form-check-input'})
     item_id = HiddenField()
 
+class UpdateManufacturerForm(Form):
+    manufacturer_id = SelectField(u"Hersteller des Druckbestäubungspuders", [validators.required()], render_kw={'class': 'form-control edi-select'})
+    item_id = HiddenField()
+
 
 class CreateFormView(WTFormView):
     formClass = CreateForm
