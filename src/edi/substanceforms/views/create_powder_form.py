@@ -212,3 +212,46 @@ class DeleteFormView(CreateFormView):
             ploneapi.portal.show_message(message=message, type='error', request=self.request)
         elif button == 'Abbrechen':
             return self.request.response.redirect(redirect_url)
+
+class UpdateManufacturerFormView(CreateFormView):
+    formClass = UpdateManufacturerForm
+
+    def __call__(self):
+        dbdata = self.context.aq_parent
+        self.db = DBConnect(host=dbdata.host, db=dbdata.database, user=dbdata.username, password=dbdata.password)
+        if self.submitted:
+            button = self.hasButtonSubmitted()
+            if button:
+                result = self.submit(button)
+                if result:
+                    return result
+        self.itemid = self.request.get('itemid')
+        return self.index()
+
+    def renderForm(self):
+        self.db.connect()
+        insert = "SELECT manufacturer_id, title FROM manufacturer ORDER BY title;"
+        erg = self.db.execute(insert)
+        manus = [(result[0], result[1] + ' ID:' + str(result[0])) for result in erg]
+        self.form.manufacturer_id.choices = manus
+        self.form.item_id.default = self.itemid
+        self.form.process()
+        self.db.close()
+        return self.formTemplate()
+
+    def submit(self, button):
+        """
+        """
+        self.db.connect()
+        redirect_url = self.context.absolute_url() + '/single_view?item=' + self.form.item_id.data
+        if button == 'Speichern':
+            command = """UPDATE spray_powder SET manufacturer_id=%s WHERE manufacturer_id = %s;""" % (check_value(self.form.manufacturer_id.data.split('ID:')[-1]),
+                                                                                                                self.form.item_id.data)
+            self.db.execute(command)
+            message = u'Der Druckbestäubungspuder wurde erfolgreich aktualisiert.'
+            ploneapi.portal.show_message(message=message, type='info', request=self.request)
+            self.db.close()
+            return self.request.response.redirect(redirect_url)
+
+        elif button == 'Abbrechen':
+            return self.request.response.redirect(redirect_url)
