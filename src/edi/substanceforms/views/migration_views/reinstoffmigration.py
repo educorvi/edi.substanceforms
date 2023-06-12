@@ -13,8 +13,6 @@ import requests
 import psycopg2
 import csv
 
-authtuple = ('admin', 'Bg2011eteM')
-
 class Migrationview(BrowserView):
 
     def __call__(self):
@@ -41,29 +39,40 @@ class Migrationview(BrowserView):
             token = getAuthToken()
             headers = {
                 'Accept': 'application/json',
+                'Authorization': 'Bearer %s' % token,
             }
-            results = requests.get(searchurl, headers=headers, params=query, auth=authtuple)
+            results = requests.get(searchurl, headers=headers, params=query)
             return results.json().get('items')
 
         def getItemData(entry):
             token = getAuthToken()
             headers = {
                 'Accept': 'application/json',
+                'Authorization': 'Bearer %s' % token,
             }
-            results = requests.get(entry.get('@id'), headers=headers, auth=authtuple)
+            results = requests.get(entry.get('@id'), headers=headers)
             return results.json()
 
-        def getProduktdatenblatt():
+        def possibleGefahrstoffe():
+            terms = []
             payload = {'portal_type': 'nva.chemiedp.produktdatenblatt',
                        'b_size': 500,
                        'sort_on': 'sortable_title',
                        'metadata_fields': 'UID'}
             entries = getCatalogData(payload)
-            newentries = list()
             for i in entries:
-                data = getItemData(i)
-                newentries.append(data)
-                print("Fetched PRODUCT_DATASHEET: " + i.get('title'))
+                print(i)
+
+        def getReinstoffe():
+            newentries = list()
+            number = 0
+            with open('/home/plone_buildout/plone52/src/edi.substanceforms/src/edi/substanceforms/views/dnel-neu2.csv', newline='') as csvfile:
+                test = csv.reader(csvfile, delimiter=';', quotechar='"')
+                for row in test:
+                    entry = '@'.join(row)
+                    newentries.append(entry)
+                    print("Fetched SUBSTANCE NUMBER "+str(number))
+                    number = number + 1
             return newentries
 
         def check_webcode(self, generated_webcode):
@@ -88,11 +97,9 @@ class Migrationview(BrowserView):
                     cur.execute(select)
                     erg = cur.fetchall()
                     cur.close()
-                else:
-                    erg = False
                 if erg:
                     return False
-            conn.close()
+            self.db.close()
             return True
 
         def get_webcode(self, webcode=False):
@@ -110,70 +117,46 @@ class Migrationview(BrowserView):
         password = self.password
         database = self.dbname
 
-        erg6 = getProduktdatenblatt()
+        erg1 = getReinstoffe()
         conn = psycopg2.connect(host=hostname, user=username, password=password, dbname=database)
 
-        classesvocab = ['Waschmittel auf Pflanzenölbasis', 'UV-Waschmittel', 'Waschmittel auf Kohlenwasserstoffbasis',
-                        'Waschmittel auf Basis von Testbenzin', 'Waschmittel auf wässriger Basis/Emulsionen',
-                        ]
+        zahl = 0
+        for i in erg1:
+            ergebnis = i.split('@')
+            reinstoff_title = ergebnis[0]
+            reinstoff_uid = get_webcode(self)
+            reinstoff_casnr = ergebnis[3]
+            reinstoff_egnr = ergebnis[4]
+            reinstoff_lokal = ergebnis[5]
+            reinstoff_systemisch = ergebnis[6]
+            reinstoff_hinweise = ergebnis[10]
+            reinstoff_link_id = ergebnis[11]
+            reinstoff_link_available= ergebnis[12]
+            reinstoff_skin = 'id_wechselnd'
+            reinstoff_branche = 'alle_branchen'
+            reinstoff_published = 'published'
 
-        usecasetranslate = {'buchdruck': 'Buchdruck', 'flexodruck': 'Flexodruck', 'siebdruck': 'Siebdruck',
-                        'farbreiniger_alle_druckverfahren': 'Farbreiniger alle Druckverfahren',
-                        'offsetdruck': 'Offsetdruck', 'waschanlage': 'Waschanlage', 'tiefdruck': 'Tiefdruck',
-                        'klebstoffreiniger': 'Klebstoffreiniger', 'uv-offsetdruck': 'UV-Druck',
-                        'klischeereiniger': 'Klischeereiniger', 'bodenreiniger': 'Bodenreiniger',
-                        'entfetter': 'Entfetter', 'reflektorreiniger': 'Reflektorreiniger'}
+            if reinstoff_link_available == "zum Stoff":
+                reinstoff_link = "https://gestis.dguv.de/data?name="+str(reinstoff_link_id)
+                cur = conn.cursor()
 
-        running = 0
-        import pdb; pdb.set_trace()
-        if running == 1:
-            for i in classesvocab:
+                cur.execute(
+                    "INSERT INTO substance (title, webcode, casnr, egnr, skin_category, branch, dnel_lokal, dnel_systemisch, comments, link, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",
+                    (reinstoff_title, reinstoff_uid, reinstoff_casnr, reinstoff_egnr, reinstoff_skin, reinstoff_branche, reinstoff_lokal,
+                     reinstoff_systemisch, reinstoff_hinweise, reinstoff_link, reinstoff_published))
+            else:
                 cur = conn.cursor()
                 cur.execute(
-                    "INSERT INTO productclasses (class_name) VALUES ('%s');" % i)
-                conn.commit()
-                cur.close()
-                print("Added %s to productclasses" % i)
+                    "INSERT INTO substance (title, webcode, casnr, egnr, skin_category, branch, dnel_lokal, dnel_systemisch, comments, link, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, NULL, %s);",
+                    (reinstoff_title, reinstoff_uid, reinstoff_casnr, reinstoff_egnr, reinstoff_skin,
+                     reinstoff_branche, reinstoff_lokal,
+                     reinstoff_systemisch, reinstoff_hinweise, reinstoff_published))
+            conn.commit()
+            cur.close()
 
+            print('Successfully migrated SUBSTANCE '+str(zahl)+' '+reinstoff_title)
+            zahl = zahl + 1
 
-        for i in erg6:
-            datenblatt_title = i.get('title')
-            datenblatt_product_class = i.get('produktklasse')
-
-            if datenblatt_product_class == 'Waschmittel auf Basis Testbenzin':
-                datenblatt_product_class = 'Waschmittel auf Basis von Testbenzin'
-            elif datenblatt_product_class == 'Reinigungsoele auf Pflanzenoelbasis':
-                datenblatt_product_class = 'Waschmittel auf Pflanzenölbasis'
-            elif datenblatt_product_class == 'Wasch- und Reinigungsmittel auf waessriger Basis/Emulsionen':
-                datenblatt_product_class = 'Waschmittel auf wässriger Basis/Emulsionen'
-
-            if datenblatt_product_class:
-                try:
-                    cur = conn.cursor()
-                    cur.execute("SELECT class_id FROM productclasses WHERE class_name = '%s';" % datenblatt_product_class)
-                    resultid = cur.fetchall()
-                    toinsertid = resultid[0][0]
-                    #import pdb; pdb.set_trace()
-                    cur.close()
-
-                    cur = conn.cursor()
-                    cur.execute("SELECT substance_mixture_id FROM substance_mixture WHERE title = '%s';" % datenblatt_title)
-                    resultid2 = cur.fetchall()
-                    selectedid = resultid2[0][0]
-                    cur.close()
-
-                    cur = conn.cursor()
-                    cur.execute("UPDATE substance_mixture SET productclass = %s WHERE substance_mixture_id = %s;" % (toinsertid, selectedid))
-                    conn.commit()
-                    cur.close()
-                except:
-                    print(datenblatt_title)
-                    pass
-
-            else:
-                print("Fehler")
-
-        print('Successfully migrated PRODUCT_DATASHEET')
         print('CHEERS! DATA MIGRATION SUCCESSFULLY COMPLETED :)')
 
         return template

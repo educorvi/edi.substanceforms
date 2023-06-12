@@ -7,150 +7,17 @@
   -*- extra stuff goes here -*-
 
   <browser:page
-    name="csvmixture"
-    for="*"
-    class=".csvexport.Csvmixture"
+    name="datenbank-view"
+    for="edi.substanceforms.content.datenbank.IDatenbank"
+    class=".datenbank_view.DatenbankView"
+    template="datenbank_view.pt"
     permission="zope2.View"
-    />
-
-
-  <browser:page
-    name="csvmixturenewsubstance"
-    for="*"
-    class=".csvexport.CsvmixtureNew"
-    permission="zope2.View"
-    />
-
-  <browser:page
-    name="csvpowder"
-    for="*"
-    class=".csvexport.Csvpowder"
-    permission="zope2.View"
-    />
-
-  <browser:page
-    name="gefahrstoff"
-    for="*"
-    class=".gefahrstoff.Gefahrstoff"
-    permission="zope2.View"
-    />
-
-  <browser:page
-    name="gefahrstoffliste"
-    for="*"
-    class=".gefahrstoffliste.Gefahrstoffliste"
-    permission="zope2.View"
-    />
-
-  <browser:page
-    name="migrationview"
-    for="*"
-    class=".migrationview.Migrationview"
-    permission="cmf.ModifyPortalContent"
-    />
-
-  <browser:page
-    name="herstellermigration"
-    for="*"
-    class=".herstellermigration.Migrationview"
-    permission="cmf.ModifyPortalContent"
-    />
-
-  <browser:page
-    name="mixturemigration"
-    for="*"
-    class=".mixturemigration.Migrationview"
-    permission="cmf.ModifyPortalContent"
-    />
-
-   <browser:page
-    name="dentalmigration"
-    for="*"
-    class=".dentalmigration.Migrationview"
-    permission="cmf.ModifyPortalContent"
-    />
-
-   <browser:page
-    name="textilmigration"
-    for="*"
-    class=".textilmigration.Migrationview"
-    permission="cmf.ModifyPortalContent"
-    />
-
-   <browser:page
-    name="dentalherstellermigration"
-    for="*"
-    class=".dentalherstellermigration.Migrationview"
-    permission="cmf.ModifyPortalContent"
-    />
-
-  <browser:page
-    name="textilherstellermigration"
-    for="*"
-    class=".textilherstellermigration.Migrationview"
-    permission="cmf.ModifyPortalContent"
-    />
-
-  <browser:page
-    name="oldlinkmigration"
-    for="*"
-    class=".oldlinkmigration.Migrationview"
-    permission="cmf.ModifyPortalContent"
-    />
-
-  <browser:page
-    name="oldlinkdentalmigration"
-    for="*"
-    class=".oldlinkdentalmigration.Migrationview"
-    permission="cmf.ModifyPortalContent"
-    />
-
-  <browser:page
-    name="oldlinktextilmigration"
-    for="*"
-    class=".oldlinktextilmigration.Migrationview"
-    permission="cmf.ModifyPortalContent"
-    />
-
-  <browser:page
-    name="productclassupdater"
-    for="*"
-    class=".productclassupdater.Migrationview"
-    permission="cmf.ModifyPortalContent"
-    />
-
-  <browser:page
-    name="powdermigration"
-    for="*"
-    class=".powdermigration.Migrationview"
-    permission="cmf.ModifyPortalContent"
-    />
-
-  <browser:page
-    name="reinstoffmigration"
-    for="*"
-    class=".reinstoffmigration.Migrationview"
-    permission="cmf.ModifyPortalContent"
-    />
-
-  <browser:page
-    name="reinstoffmigration-new"
-    for="*"
-    class=".reinstoffmigration_new.Migrationview"
-    permission="cmf.ModifyPortalContent"
     />
 
   <browser:page
     name="selector-view"
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".selector_view.SelectorView"
-    permission="zope2.View"
-    />
-
-  <browser:page
-    name="single_view"
-    for="edi.substanceforms.content.tabelle.ITabelle"
-    class=".single_view.SingleView"
     permission="zope2.View"
     />
 
@@ -162,43 +29,11 @@
     permission="zope2.View"
     />
 
-    <browser:page
-    name="manufacturer-form-view"
-    for="edi.substanceforms.content.tabelle.ITabelle"
-    class=".tabelle_view.HerstellerFormView"
-    template="tabelle_view.pt"
-    permission="zope2.View"
-    />
-
-    <browser:page
-    name="substance-form-view"
-    for="edi.substanceforms.content.tabelle.ITabelle"
-    class=".tabelle_view.SubstanceFormView"
-    template="tabelle_view.pt"
-    permission="zope2.View"
-    />
-
-    <browser:page
-    name="substance_mixture-form-view"
-    for="edi.substanceforms.content.tabelle.ITabelle"
-    class=".tabelle_view.SubstancemixtureFormView"
-    template="tabelle_view.pt"
-    permission="zope2.View"
-    />
-
-    <browser:page
-    name="spray_powder-form-view"
-    for="edi.substanceforms.content.tabelle.ITabelle"
-    class=".tabelle_view.SpraypowderFormView"
-    template="tabelle_view.pt"
-    permission="zope2.View"
-    />
-
   <browser:page
-    name="datenbank-view"
-    for="edi.substanceforms.content.datenbank.IDatenbank"
-    class=".datenbank_view.DatenbankView"
-    template="datenbank_view.pt"
+    name="single_view"
+    for="edi.substanceforms.content.tabelle.ITabelle"
+    class=".single_view.SingleView"
+    template="single_view.pt"
     permission="zope2.View"
     />
 
@@ -210,12 +45,52 @@
     permission="cmf.ModifyPortalContent"
     />
 
+
+  <!-- ++++ Manufacturer (Hersteller) ++++ -->
+
+  <browser:page
+    name="manufacturer-form-view"
+    for="edi.substanceforms.content.tabelle.ITabelle"
+    class=".tabelle_view.HerstellerFormView"
+    template="tabelle_view.pt"
+    permission="zope2.View"
+    />
+
   <browser:page
     name="create-manufacturer-form"
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".create_manufacturer_form.CreateFormView"
     template = "create_view.pt"
     permission="cmf.ModifyPortalContent"
+    />
+
+  <browser:page
+    name="update-manufacturer-form"
+    for="edi.substanceforms.content.tabelle.ITabelle"
+    class=".create_manufacturer_form.UpdateFormView"
+    template = "update_manufacturer_template.pt"
+    permission="cmf.ModifyPortalContent"
+    />
+
+  <browser:page
+    name="delete-manufacturer-form"
+    for="edi.substanceforms.content.tabelle.ITabelle"
+    class=".create_manufacturer_form.DeleteFormView"
+    template = "delete_view.pt"
+    permission="cmf.ModifyPortalContent"
+    />
+
+  <!-- ++++ /Manufacturer (Hersteller) ++++ -->
+
+
+  <!-- ++++ Substance (Reinstoff) ++++ -->
+
+  <browser:page
+    name="substance-form-view"
+    for="edi.substanceforms.content.tabelle.ITabelle"
+    class=".tabelle_view.SubstanceFormView"
+    template="tabelle_view.pt"
+    permission="zope2.View"
     />
 
   <browser:page
@@ -242,35 +117,32 @@
     permission="cmf.ModifyPortalContent"
     />
 
+  <!-- ++++ /Substance (Reinstoff) ++++ -->
+
+
+  <!-- ++++ Mixture (Gefahrstoffgemisch) ++++ -->
+
   <browser:page
-    name="add-synonym-form"
+    name="substance_mixture-form-view"
     for="edi.substanceforms.content.tabelle.ITabelle"
-    class=".create_substance_form.SynonymFormView"
+    class=".tabelle_view.SubstancemixtureFormView"
+    template="tabelle_view.pt"
+    permission="zope2.View"
+    />
+
+  <browser:page
+    name="create-substance_mixture-form"
+    for="edi.substanceforms.content.tabelle.ITabelle"
+    class=".create_mixture_form.CreateFormView"
     template = "create_view.pt"
     permission="cmf.ModifyPortalContent"
     />
 
   <browser:page
-    name="delete-synonyms-form"
+    name="create-ingredient-form"
     for="edi.substanceforms.content.tabelle.ITabelle"
-    class=".create_substance_form.DeleteSynonymsFormView"
-    template = "create_view.pt"
-    permission="cmf.ModifyPortalContent"
-    />
-
-  <browser:page
-    name="update-manufacturer-form"
-    for="edi.substanceforms.content.tabelle.ITabelle"
-    class=".create_manufacturer_form.UpdateFormView"
-    template = "update_manufacturer_template.pt"
-    permission="cmf.ModifyPortalContent"
-    />
-
-  <browser:page
-    name="delete-manufacturer-form"
-    for="edi.substanceforms.content.tabelle.ITabelle"
-    class=".create_manufacturer_form.DeleteFormView"
-    template = "delete_view.pt"
+    class=".create_ingredient_view.CreateIngredientForm"
+    template = "create_ingredient_template.pt"
     permission="cmf.ModifyPortalContent"
     />
 
@@ -278,6 +150,22 @@
     name="update-mixture-form"
     for="edi.substanceforms.content.tabelle.ITabelle"
     class=".create_mixture_form.UpdateFormView"
+    template = "update_view_template.pt"
+    permission="cmf.ModifyPortalContent"
+    />
+
+  <browser:page
+    name="update-mixture-manufacturer-form"
+    for="edi.substanceforms.content.tabelle.ITabelle"
+    class=".create_mixture_form.UpdateManufacturerFormView"
+    template = "update_view_template.pt"
+    permission="cmf.ModifyPortalContent"
+    />
+
+  <browser:page
+    name="update-powder-manufacturer-form"
+    for="edi.substanceforms.content.tabelle.ITabelle"
+    class=".create_powder_form.UpdateManufacturerFormView"
     template = "update_view_template.pt"
     permission="cmf.ModifyPortalContent"
     />
@@ -298,11 +186,24 @@
     permission="cmf.ModifyPortalContent"
     />
 
+  <!-- ++++ Mixture (Gefahrstoffgemisch) ++++ -->
+
+
+  <!-- ++++ Spraypowder (Druckbestäubungspuder) ++++ -->
+
   <browser:page
-    name="update-mixture-manufacturer-form"
+    name="spray_powder-form-view"
     for="edi.substanceforms.content.tabelle.ITabelle"
-    class=".create_mixture_form.UpdateManufacturerFormView"
-    template = "update_view_template.pt"
+    class=".tabelle_view.SpraypowderFormView"
+    template="tabelle_view.pt"
+    permission="zope2.View"
+    />
+
+  <browser:page
+    name="create-spray_powder-form"
+    for="edi.substanceforms.content.tabelle.ITabelle"
+    class=".create_powder_form.CreateFormView"
+    template = "create_view.pt"
     permission="cmf.ModifyPortalContent"
     />
 
@@ -322,28 +223,175 @@
     permission="cmf.ModifyPortalContent"
     />
 
+  <!-- ++++ /Spraypowder (Druckbestäubungspuder) ++++ -->
+
+
+  <!-- ++++ Synonym ++++ -->
+
   <browser:page
-    name="create-substance_mixture-form"
+    name="add-synonym-form"
     for="edi.substanceforms.content.tabelle.ITabelle"
-    class=".create_mixture_form.CreateFormView"
+    class=".create_substance_form.SynonymFormView"
     template = "create_view.pt"
     permission="cmf.ModifyPortalContent"
     />
 
   <browser:page
-    name="create-ingredient-form"
+    name="delete-synonyms-form"
     for="edi.substanceforms.content.tabelle.ITabelle"
-    class=".create_ingredient_view.CreateIngredientForm"
-    template = "create_ingredient_template.pt"
+    class=".create_substance_form.DeleteSynonymsFormView"
+    template = "create_view.pt"
+    permission="cmf.ModifyPortalContent"
+    />
+
+  <!-- ++++ /Synonym ++++ -->
+
+
+  <!-- ++++ CSV-Export-Views ++++ -->
+
+  <browser:page
+    name="csvmixture"
+    for="*"
+    class=".csvexport.Csvmixture"
+    permission="zope2.View"
+    />
+
+  <browser:page
+    name="csvmixturenewsubstance"
+    for="*"
+    class=".csvexport.CsvmixtureNew"
+    permission="zope2.View"
+    />
+
+  <browser:page
+    name="csvpowder"
+    for="*"
+    class=".csvexport.Csvpowder"
+    permission="zope2.View"
+    />
+
+  <!-- ++++ /CSV-Export-Views ++++ -->
+
+
+  <!-- ++++ API-Views für Präventionsportale +++ -->
+
+  <browser:page
+    name="gefahrstoff"
+    for="*"
+    class=".gefahrstoff.Gefahrstoff"
+    permission="zope2.View"
+    />
+
+  <browser:page
+    name="gefahrstoffliste"
+    for="*"
+    class=".gefahrstoffliste.Gefahrstoffliste"
+    permission="zope2.View"
+    />
+
+  <!-- ++++ /API-Views für Präventionsportale +++ -->
+
+
+  <!-- ++++ Migration-Views ++++ -->
+
+  <browser:page
+    name="productclassupdater"
+    for="*"
+    class=".migration_views.productclassupdater.Migrationview"
     permission="cmf.ModifyPortalContent"
     />
 
   <browser:page
-    name="create-spray_powder-form"
-    for="edi.substanceforms.content.tabelle.ITabelle"
-    class=".create_powder_form.CreateFormView"
-    template = "create_view.pt"
+    name="migrationview"
+    for="*"
+    class=".migration_views.migrationview.Migrationview"
     permission="cmf.ModifyPortalContent"
     />
+
+  <browser:page
+    name="herstellermigration"
+    for="*"
+    class=".migration_views.herstellermigration.Migrationview"
+    permission="cmf.ModifyPortalContent"
+    />
+
+  <browser:page
+    name="mixturemigration"
+    for="*"
+    class=".migration_views.mixturemigration.Migrationview"
+    permission="cmf.ModifyPortalContent"
+    />
+
+   <browser:page
+    name="dentalmigration"
+    for="*"
+    class=".migration_views.dentalmigration.Migrationview"
+    permission="cmf.ModifyPortalContent"
+    />
+
+   <browser:page
+    name="textilmigration"
+    for="*"
+    class=".migration_views.textilmigration.Migrationview"
+    permission="cmf.ModifyPortalContent"
+    />
+
+   <browser:page
+    name="dentalherstellermigration"
+    for="*"
+    class=".migration_views.dentalherstellermigration.Migrationview"
+    permission="cmf.ModifyPortalContent"
+    />
+
+  <browser:page
+    name="textilherstellermigration"
+    for="*"
+    class=".migration_views.textilherstellermigration.Migrationview"
+    permission="cmf.ModifyPortalContent"
+    />
+
+  <browser:page
+    name="oldlinkmigration"
+    for="*"
+    class=".migration_views.oldlinkmigration.Migrationview"
+    permission="cmf.ModifyPortalContent"
+    />
+
+  <browser:page
+    name="oldlinkdentalmigration"
+    for="*"
+    class=".migration_views.oldlinkdentalmigration.Migrationview"
+    permission="cmf.ModifyPortalContent"
+    />
+
+  <browser:page
+    name="oldlinktextilmigration"
+    for="*"
+    class=".migration_views.oldlinktextilmigration.Migrationview"
+    permission="cmf.ModifyPortalContent"
+    />
+
+  <browser:page
+    name="powdermigration"
+    for="*"
+    class=".migration_views.powdermigration.Migrationview"
+    permission="cmf.ModifyPortalContent"
+    />
+
+  <browser:page
+    name="reinstoffmigration"
+    for="*"
+    class=".migration_views.reinstoffmigration.Migrationview"
+    permission="cmf.ModifyPortalContent"
+    />
+
+  <browser:page
+    name="reinstoffmigration-new"
+    for="*"
+    class=".migration_views.reinstoffmigration_new.Migrationview"
+    permission="cmf.ModifyPortalContent"
+    />
+
+  <!-- ++++ /Migration-Views ++++ -->
 
 </configure>

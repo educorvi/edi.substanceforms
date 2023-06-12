@@ -3,7 +3,7 @@ from plone.app.textfield import RichText
 from plone.dexterity.content import Container
 from plone.supermodel import model
 from zope import schema
-from zope.interface import implementer
+from zope.interface import implementer, Invalid, invariant
 import random
 from datetime import datetime
 import psycopg2
@@ -48,6 +48,15 @@ class IDatenbank(model.Schema):
             required = False
             )
 
+    @invariant
+    def check_dbpassword(data):
+        try:
+            conn = psycopg2.connect(host=data.host, user=data.username, dbname=data.database, password=data.password)
+            conn.close()
+        except:
+            raise Invalid('Es konnte keine Verbindung zur Datenbank hergestellt werden. Bitte prüfen Sie die Zugangsdaten.')
+
+
 
 @implementer(IDatenbank)
 class Datenbank(Container):
@@ -62,7 +71,7 @@ class Datenbank(Container):
 
         conn = psycopg2.connect(host=host, user=username, dbname=dbname, password=password)
         cur = conn.cursor()
-        select = """SELECT tablename from pg_catalog.pg_tables WHERE schemaname != 'pg_catalog' 
+        select = """SELECT tablename from pg_catalog.pg_tables WHERE schemaname != 'pg_catalog'
                     AND schemaname != 'information_schema';"""
         cur.execute(select)
         tables = cur.fetchall()
@@ -80,9 +89,9 @@ class Datenbank(Container):
             cur.close()
             if erg:
                 return False
-        conn.close()    
+        conn.close()
         return True
-                
+
     def get_webcode(self, webcode=False):
         while not webcode:
             random_number = random.randint(100000, 999999)

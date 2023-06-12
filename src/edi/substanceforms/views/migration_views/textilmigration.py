@@ -59,7 +59,7 @@ class Migrationview(BrowserView):
                 data = getItemData(i)
                 newentries.append(data)
                 # import pdb; pdb.set_trace()
-                print("Fetched TEXTILE " + i.get('title'))
+                print("Fetched TEXTILE: " + i.get('title'))
             return newentries
 
         def check_webcode(self, generated_webcode):
@@ -88,7 +88,7 @@ class Migrationview(BrowserView):
                     erg = False
                 if erg:
                     return False
-            conn.close()
+            self.db.close()
             return True
 
         def get_webcode(self, webcode=False):
@@ -111,8 +111,17 @@ class Migrationview(BrowserView):
         conn = psycopg2.connect(host=hostname, user=username, password=password, dbname=database)
 
         for i in erg:
-            textil_hersteller = i.get('hersteller')
+            textil_title = i.get('title')
+            textil_desc = i.get('description')
             textil_uid = get_webcode(self)
+            textil_skin_category = i.get('hskategorie')
+            textil_review_state = i.get('review_state')
+
+
+            if textil_review_state == 'published':
+                textil_published = 'published'
+            else:
+                textil_published = 'private'
 
             if i.get('hersteller'):
                 textil_manufacturer_name = i.get('hersteller')
@@ -122,19 +131,24 @@ class Migrationview(BrowserView):
                 textil_manufacturer_id = cur.fetchall()
                 cur.close()
 
+                cur = conn.cursor()
+                # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
+                cur.execute(
+                    "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, skin_category, manufacturer_id, status) VALUES (%s, %s, %s, 'textil_und_mode', 'textil', %s, %s, %s);",
+                    (textil_title, textil_desc, textil_uid, textil_skin_category,
+                     textil_manufacturer_id[0], textil_published))
+                conn.commit()
+                # print(etikett_title)  # correct
+                cur.close()
+
+                print(textil_title)
+            else:
+                print("Dumm gelaufen")
 
 
-                if textil_manufacturer_id:
-                    print("VORHANDEN: "+textil_hersteller)
-                else:
-                    print(textil_hersteller)
-                    cur = conn.cursor()
-                    cur.execute("INSERT INTO manufacturer (title, webcode) VALUES ('%s', '%s');" % (textil_hersteller, textil_uid))
-                    conn.commit()
-                    cur.close()
 
 
-        print('Successfully migrated MANUFACTURER_TEXTIL')
+        print('Successfully migrated TEXTILE')
 
 
         print('CHEERS! DATA MIGRATION SUCCESSFULLY COMPLETED :)')

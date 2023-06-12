@@ -8,18 +8,11 @@ from zope.schema.vocabulary import SimpleTerm
 from zope.schema.vocabulary import SimpleVocabulary
 from edi.substanceforms.vocabularies import vocabularies
 from jinja2 import Template
-from edi.substanceforms.lib import DBConnect
 from edi.substanceforms.helpers import get_vocabulary
-
-
 
 terms = [SimpleTerm(value = i, token = i, title = i) for i in vocabularies]
 
 vocabvocab = SimpleVocabulary(terms)
-
-
-# from edi.substanceforms import _
-
 
 class IPreselect(model.Schema):
     """ Marker interface and Dexterity Python Schema for Preselect
@@ -37,7 +30,6 @@ class IPreselect(model.Schema):
         vocabulary=vocabvocab,
         required=False
     )
-
 
 @implementer(IPreselect)
 class Preselect(Item):

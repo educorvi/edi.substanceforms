@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from edi.substanceforms.vocabularies import vocabularies
+import re
 
 def check_value(value):
     if not value:
@@ -9,6 +10,29 @@ def check_value(value):
     if value == 'None':
         return 'NULL'
     return "'%s'" % value
+
+def int_checker(value):
+    if value is None:
+        return 'NULL'
+    if value == 0.0:
+        return '0.0'
+    if value == 0:
+        return '0'
+    return "'%s'" % value
+
+    # Split the text into words
+    words = value.split()
+
+    # Replace the appropriate sequences in each word
+    for i, word in enumerate(words):
+        for seq, replacement in replacements.items():
+            if seq in word:
+                words[i] = word.replace(seq, replacement)
+
+    # Join the words back into a string
+    newvalue = " ".join(words)
+
+    return newvalue
 
 def list_handler(liste):
     result = '@'.join(liste)

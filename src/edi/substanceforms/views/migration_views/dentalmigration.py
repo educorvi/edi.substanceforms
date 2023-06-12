@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from Products.Five.browser import BrowserView
-import requests
 import random
 import datetime
 from wtforms import Form, StringField, FileField
@@ -10,8 +9,11 @@ from collective.wtforms.views import WTFormView
 from edi.substanceforms.helpers import check_value
 from plone import api as ploneapi
 import requests
+from requests.auth import HTTPBasicAuth
 import psycopg2
 import csv
+
+authtuple = ('admin', 'Bg2011eteM')
 
 class Migrationview(BrowserView):
 
@@ -21,58 +23,43 @@ class Migrationview(BrowserView):
                   Migration erfolgreich
                 </li>'''
 
-        login = {'login': 'restaccess', 'password': 'H9jCg768'}
-        authurl = u'http://emissionsarme-produkte.bgetem.de/@login'
-        searchurl = u'http://emissionsarme-produkte.bgetem.de/@search'
+        login = {'login': 'admin2', 'password': 'H9jCg768'}
+        authurl = u'http://praevention-bgetem.bg-kooperation.de/@login'
+        searchurl = u'http://praevention-bgetem.bg-kooperation.de/@search'
 
         self.host = self.context.aq_parent.host
         self.dbname = self.context.aq_parent.database
         self.username = self.context.aq_parent.username
         self.password = self.context.aq_parent.password
 
-        def getAuthToken():
-            headers = {'Accept': 'application/json'}
-            token = requests.post(authurl, headers=headers, json=login)
-            return token.json().get('token')
 
         def getCatalogData(query):
-            token = getAuthToken()
             headers = {
                 'Accept': 'application/json',
-                'Authorization': 'Bearer %s' % token,
             }
-            results = requests.get(searchurl, headers=headers, params=query)
+            results = requests.get(searchurl, headers=headers, params=query, auth=HTTPBasicAuth('bgetem', 'rhein'))
             return results.json().get('items')
 
         def getItemData(entry):
-            token = getAuthToken()
             headers = {
                 'Accept': 'application/json',
-                'Authorization': 'Bearer %s' % token,
             }
-            results = requests.get(entry.get('@id'), headers=headers)
+            results = requests.get(entry.get('@id'), headers=headers, auth=HTTPBasicAuth('bgetem', 'rhein'))
             return results.json()
 
-        def possibleGefahrstoffe():
-            terms = []
-            payload = {'portal_type': 'nva.chemiedp.produktdatenblatt',
+        def getDental():
+            payload = {'portal_type': 'Gefahrstoff',
                        'b_size': 500,
+                       'path': '/praevention/datenbanken/gefahrstoffe/dentaltechnik',
                        'sort_on': 'sortable_title',
                        'metadata_fields': 'UID'}
             entries = getCatalogData(payload)
-            for i in entries:
-                print(i)
-
-        def getReinstoffe():
             newentries = list()
-            number = 0
-            with open('/home/plone_buildout/plone52/src/edi.substanceforms/src/edi/substanceforms/views/zvg-cas-list-d.csv', newline='') as csvfile:
-                test = csv.reader(csvfile, delimiter=';', quotechar='"')
-                for row in test:
-                    entry = '@'.join(row)
-                    newentries.append(entry)
-                    print("Fetched SUBSTANCE NUMBER "+str(number))
-                    number = number + 1
+            for i in entries:
+                data = getItemData(i)
+                newentries.append(data)
+                # import pdb; pdb.set_trace()
+                print("Fetched DENTAL: " + i.get('title'))
             return newentries
 
         def check_webcode(self, generated_webcode):
@@ -90,7 +77,6 @@ class Migrationview(BrowserView):
             cur.close()
 
             for i in tables:
-                erg = False
                 table = i[0]
                 if table == 'manufacturer' or table == 'substance' or table == 'substance_mixture' or table == 'spray_powder':
                     cur = conn.cursor()
@@ -98,9 +84,11 @@ class Migrationview(BrowserView):
                     cur.execute(select)
                     erg = cur.fetchall()
                     cur.close()
+                else:
+                    erg = False
                 if erg:
                     return False
-            conn.close()
+            self.db.close()
             return True
 
         def get_webcode(self, webcode=False):
@@ -118,37 +106,52 @@ class Migrationview(BrowserView):
         password = self.password
         database = self.dbname
 
-        erg1 = getReinstoffe()
+        erg = getDental()
+
         conn = psycopg2.connect(host=hostname, user=username, password=password, dbname=database)
 
-        zahl = 0
-        for i in erg1:
-            ergebnis = i.split('@')
-            reinstoff_title = ergebnis[6]
-            reinstoff_uid = get_webcode(self)
-            reinstoff_casnr = ergebnis[1]
-            reinstoff_egnr = ergebnis[2]
-            reinstoff_formel = ergebnis[7]
-            reinstoff_molmasse = ergebnis[8]
-            #reinstoff_link_id = ergebnis[11]
-            #reinstoff_link_available= ergebnis[12]
-            reinstoff_link = ergebnis[9]
-            reinstoff_skin = 'id_wechselnd'
-            reinstoff_branche = 'alle_branchen'
-            reinstoff_published = 'published'
+        for i in erg:
+            dental_title = i.get('title')
+            dental_desc = i.get('description')
+            dental_uid = get_webcode(self)
+            dental_skin_category = i.get('hskategorie')
+            dental_review_state = i.get('review_state')
 
-            if ergebnis[6] != 'Name':
+
+            if dental_review_state == 'published':
+                dental_published = 'published'
+            else:
+                dental_published = 'private'
+
+            if i.get('hersteller'):
+                dental_manufacturer_name = i.get('hersteller')
                 cur = conn.cursor()
                 cur.execute(
-                    "INSERT INTO substance (title, webcode, casnr, egnr, skin_category, branch, formula, mol, link, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",
-                    (reinstoff_title, reinstoff_uid, reinstoff_casnr, reinstoff_egnr, reinstoff_skin,
-                     reinstoff_branche, reinstoff_formel, reinstoff_molmasse, reinstoff_link, reinstoff_published))
-                conn.commit()
+                    "SELECT manufacturer_id FROM manufacturer WHERE title = '{0}';".format(dental_manufacturer_name))
+                dental_manufacturer_id = cur.fetchall()
                 cur.close()
 
-            print('Successfully migrated SUBSTANCE '+str(zahl)+' '+reinstoff_title)
-            zahl = zahl + 1
+                cur = conn.cursor()
+                # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
+                cur.execute(
+                    "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, skin_category, manufacturer_id, status) VALUES (%s, %s, %s, 'dentaltechnik', 'dental', %s, %s, %s);",
+                    (dental_title, dental_desc, dental_uid, dental_skin_category,
+                     dental_manufacturer_id[0], dental_published))
+                conn.commit()
+                # print(etikett_title)  # correct
+                cur.close()
+
+                print(dental_title)
+            else:
+                print("Dumm gelaufen")
+
+
+
+
+        print('Successfully migrated DENTAL')
+
 
         print('CHEERS! DATA MIGRATION SUCCESSFULLY COMPLETED :)')
+
 
         return template

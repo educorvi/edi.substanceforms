@@ -6,12 +6,16 @@ class DBConnect(object):
         self.db=db
         self.user=user
         self.password=password
+
+    def connect(self):
         self.conn = psycopg2.connect(host=self.host,
-                                     dbname=self.db,
-                                     user=self.user,
-                                     password=self.password)
+                                    dbname=self.db,
+                                    user=self.user,
+                                    password=self.password)
+
     def execute(self, command):
         results = False
+        self.connect()
         cur = self.conn.cursor()
         cur.execute(command)
         method = command.split(" ")[0]

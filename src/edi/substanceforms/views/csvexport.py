@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 from Products.Five.browser import BrowserView
 from edi.substanceforms.lib import DBConnect
 from edi.substanceforms.helpers import get_vocabulary
@@ -8,6 +7,8 @@ import csv
 class Csvmixture(BrowserView):
 
     def __call__(self):
+        self.db = DBConnect(host=self.context.host, db=self.context.database, user=self.context.username,
+                            password=self.context.password)
         self.create_mixture_file()
         file = open('/tmp/mixtures.csv', 'rb')
         file.seek(0)
@@ -18,21 +19,18 @@ class Csvmixture(BrowserView):
         return file.read()
 
     def create_mixture_file(self):
-        self.db = DBConnect(host=self.context.host, db=self.context.database, user=self.context.username,
-                            password=self.context.password)
-
+        self.db.connect()
         mixtureselect = "SELECT * FROM substance_mixture"
         mixtures = self.db.execute(mixtureselect)
 
         with open('/tmp/mixtures.csv', 'w', newline='') as csvfile:
             writer = csv.writer(csvfile, delimiter=';', quotechar='"')
             writer.writerow(['ID', 'Titel', 'Beschreibung', 'Webcode', 'Branche', 'Typ des Gefahrstoffgemischs',
-                                 'application_areas', 'usecases', 'Verdampfungsfaktor 150', 'Verdampfungsfaktor 160', 'Verdampfungsfaktor 170',
-                                 'Verdampfungsfaktor 180', 'UEG', 'Responsefaktor', 'Hautschutzmittelkategorie',
-                                 'Emissionsgeprüft', 'Prüfdatum', 'Flammpunkt', 'Wertebereich', 'Klassifikationen',
-                                 'Indikatoren', 'Kommentare', 'Hersteller', 'Status', 'Produktklasse', 'Zusammensetung', 'CAS-Nummer Bestandteil', 'Konzentration Bestandteil'])
-
-
+                                 'application_areas', 'usecases', 'Verdampfungsfaktor 150', 'Verdampfungsfaktor 160',
+                                 'Verdampfungsfaktor 170', 'Verdampfungsfaktor 180', 'UEG', 'Responsefaktor',
+                                 'Hautschutzmittelkategorie', 'Emissionsgeprüft', 'Prüfdatum', 'Flammpunkt', 'Wertebereich',
+                                 'Klassifikationen', 'Indikatoren', 'Kommentare', 'Hersteller', 'Status', 'Produktklasse',
+                                  'Zusammensetung', 'CAS-Nummer Bestandteil', 'Konzentration Bestandteil'])
             for i in mixtures:
                 id = i[0]
                 title = i[1]
@@ -140,44 +138,31 @@ class Csvmixture(BrowserView):
 
                 if isinstance(zusammensetzung, list):
                     newzusammensetzung = zusammensetzung[0].split('@')
-                    try:
-                        if len(newzusammensetzung) == 1:
-                            writer.writerow([id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas, newusecases, evap_150, evap_160, evap_170, evap_180,
-                                            ueg, response, newskincategory, newchecked_emissions, date_checked, flashpoint, newvalues_range,
-                                            newclassifications, newindicators, comments, manufacturer, status, newproductclass, newzusammensetzung[0], None, None])
-                        elif len(newzusammensetzung) == 2:
-                            writer.writerow([id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas, newusecases, evap_150, evap_160, evap_170, evap_180,
-                                            ueg, response, newskincategory, newchecked_emissions, date_checked, flashpoint, newvalues_range,
-                                            newclassifications, newindicators, comments, manufacturer, status, newproductclass, newzusammensetzung[0], newzusammensetzung[1], None])
-                        else:
-                            writer.writerow([id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas, newusecases, evap_150, evap_160, evap_170, evap_180,
-                                            ueg, response, newskincategory, newchecked_emissions, date_checked, flashpoint, newvalues_range,
-                                            newclassifications, newindicators, comments, manufacturer, status, newproductclass, newzusammensetzung[0], newzusammensetzung[1], newzusammensetzung[2]])
-                    except:
-                        import pdb; pdb.set_trace()
-                    if len(zusammensetzung) > 1:
-                        zusammensetzung.pop(0)
-                        for i in zusammensetzung:
-                            newzusammensetzung = i.split('@')
-                            if len(newzusammensetzung) == 1:
-                                writer.writerow([None, None, None, None, None, None, None, None, None, None, None, None, None,
-                                                 None, None, None, None, None, None, None, None, None, None, None, None, newzusammensetzung[0], None, None])
-                            elif len(newzusammensetzung) == 2:
-                                writer.writerow(
-                                    [None, None, None, None, None, None, None, None, None, None, None, None, None,
-                                     None, None, None, None, None, None, None, None, None, None, None, None, newzusammensetzung[0], newzusammensetzung[1], None])
-                            else:
-                                writer.writerow(
-                                    [None, None, None, None, None, None, None, None, None, None, None, None, None,
-                                     None, None, None, None, None, None, None, None, None, None, None, None, newzusammensetzung[0], newzusammensetzung[1], newzusammensetzung[2]])
+                    if len(newzusammensetzung) == 1:
+                        writer.writerow([id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas,
+                                        newusecases, evap_150, evap_160, evap_170, evap_180, ueg, response, newskincategory,
+                                        newchecked_emissions, date_checked, flashpoint, newvalues_range, newclassifications,
+                                        newindicators, comments, manufacturer, status, newproductclass, newzusammensetzung[0],
+                                        None, None])
+                    elif len(newzusammensetzung) == 2:
+                        writer.writerow([id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas,
+                                        newusecases, evap_150, evap_160, evap_170, evap_180, ueg, response, newskincategory,
+                                        newchecked_emissions, date_checked, flashpoint, newvalues_range, newclassifications,
+                                        newindicators, comments, manufacturer, status, newproductclass, newzusammensetzung[0],
+                                        newzusammensetzung[1], None])
+                    else:
+                        writer.writerow([id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas,
+                                         newusecases, evap_150, evap_160, evap_170, evap_180, ueg, response, newskincategory,
+                                         newchecked_emissions, date_checked, flashpoint, newvalues_range, newclassifications,
+                                         newindicators, comments, manufacturer, status, newproductclass, newzusammensetzung[0],
+                                         newzusammensetzung[1], newzusammensetzung[2]])
                 else:
                     writer.writerow(
                         [id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas, newusecases,
                          evap_150, evap_160, evap_170, evap_180, ueg, response, newskincategory, newchecked_emissions,
                          date_checked, flashpoint, newvalues_range, newclassifications, newindicators, comments, manufacturer,
                          status, newproductclass, zusammensetzung, None, None])
-
-
+        self.db.close()
         return None
 
     def get_attr_translation(self, attribute, value):
@@ -191,6 +176,8 @@ class Csvmixture(BrowserView):
 class CsvmixtureNew(BrowserView):
 
     def __call__(self):
+        self.db = DBConnect(host=self.context.host, db=self.context.database, user=self.context.username,
+                            password=self.context.password)
         self.create_mixture_file()
         file = open('/tmp/mixturesnew.csv', 'rb')
         file.seek(0)
@@ -201,21 +188,19 @@ class CsvmixtureNew(BrowserView):
         return file.read()
 
     def create_mixture_file(self):
-        self.db = DBConnect(host=self.context.host, db=self.context.database, user=self.context.username,
-                            password=self.context.password)
-
+        self.db.connect()
         mixtureselect = "SELECT * FROM substance_mixture"
         mixtures = self.db.execute(mixtureselect)
 
         with open('/tmp/mixturesnew.csv', 'w', newline='') as csvfile:
             writer = csv.writer(csvfile, delimiter=';', quotechar='"')
             writer.writerow(['ID', 'Titel', 'Beschreibung', 'Webcode', 'Branche', 'Typ des Gefahrstoffgemischs',
-                                 'application_areas', 'usecases', 'Verdampfungsfaktor 150', 'Verdampfungsfaktor 160', 'Verdampfungsfaktor 170',
-                                 'Verdampfungsfaktor 180', 'UEG', 'Responsefaktor', 'Hautschutzmittelkategorie',
-                                 'Emissionsgeprüft', 'Prüfdatum', 'Flammpunkt', 'Wertebereich', 'Klassifikationen',
-                                 'Indikatoren', 'Kommentare', 'Hersteller', 'Status', 'Produktklasse', 'Zusammensetung', 'CAS-Nummer Bestandteil', 'Konzentration Bestandteil (min)', 'Konzentration Bestandteil (max)'])
-
-
+                                 'application_areas', 'usecases', 'Verdampfungsfaktor 150', 'Verdampfungsfaktor 160',
+                                 'Verdampfungsfaktor 170', 'Verdampfungsfaktor 180', 'UEG', 'Responsefaktor',
+                                 'Hautschutzmittelkategorie', 'Emissionsgeprüft', 'Prüfdatum', 'Flammpunkt', 'Wertebereich',
+                                 'Klassifikationen', 'Indikatoren', 'Kommentare', 'Hersteller', 'Status', 'Produktklasse',
+                                 'Zusammensetung', 'CAS-Nummer Bestandteil', 'Konzentration Bestandteil (min)',
+                                 'Konzentration Bestandteil (max)'])
             for i in mixtures:
                 id = i[0]
                 title = i[1]
@@ -317,14 +302,12 @@ class CsvmixtureNew(BrowserView):
                         singleentry.append(concentration_max)
                         entrylist.append(singleentry)
 
-
                 if isinstance(entrylist, list) and len(entrylist) >= 1:
                     writer.writerow(
                         [id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas,
-                         newusecases, evap_150, evap_160, evap_170, evap_180,
-                         ueg, response, newskincategory, newchecked_emissions, date_checked, flashpoint,
-                         newvalues_range,
-                         newclassifications, newindicators, comments, manufacturer, status, newproductclass,
+                         newusecases, evap_150, evap_160, evap_170, evap_180, ueg, response, newskincategory,
+                         newchecked_emissions, date_checked, flashpoint, newvalues_range, newclassifications,
+                         newindicators, comments, manufacturer, status, newproductclass,
                          entrylist[0][0][0][0], entrylist[0][1][0][0], entrylist[0][2], entrylist[0][3]])
                     if len(entrylist) > 1:
                         entrylist.pop(0)
@@ -336,22 +319,10 @@ class CsvmixtureNew(BrowserView):
                 else:
                     writer.writerow(
                         [id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas,
-                         newusecases, evap_150, evap_160, evap_170, evap_180,
-                         ueg, response, newskincategory, newchecked_emissions, date_checked, flashpoint,
-                         newvalues_range,
+                         newusecases, evap_150, evap_160, evap_170, evap_180, ueg, response, newskincategory,
+                         newchecked_emissions, date_checked, flashpoint, newvalues_range,
                          newclassifications, newindicators, comments, manufacturer, status, newproductclass,
                          entrylist, None, None, None])
-                """
-                if isinstance(entrylist, list) and len(entrylist) >= 1:
-                    for entry in entrylist:
-                        writer.writerow(
-                            [id, title, description, webcode, newbranch, newsubstancetype, newapplicationareas,
-                             newusecases, evap_150, evap_160, evap_170, evap_180,
-                             ueg, response, newskincategory, newchecked_emissions, date_checked, flashpoint,
-                             newvalues_range,
-                             newclassifications, newindicators, comments, manufacturer, status, newproductclass,
-                             entry[0][0][0], entry[1][0][0], entry[2], entry[3]])
-                """
 
 
     def get_attr_translation(self, attribute, value):
@@ -364,6 +335,8 @@ class CsvmixtureNew(BrowserView):
 class Csvpowder(BrowserView):
 
     def __call__(self):
+        self.db = DBConnect(host=self.context.host, db=self.context.database, user=self.context.username,
+                            password=self.context.password)
         self.create_powder_file()
         file = open('/tmp/powders.csv', 'rb')
         file.seek(0)
@@ -374,17 +347,15 @@ class Csvpowder(BrowserView):
         return file.read()
 
     def create_powder_file(self):
-        self.db = DBConnect(host=self.context.host, db=self.context.database, user=self.context.username,
-                            password=self.context.password)
-
+        self.db.connect()
         powderselect = "SELECT * FROM spray_powder;"
         powders = self.db.execute(powderselect)
 
         with open('/tmp/powders.csv', 'w', newline='') as powdercsv:
             powderwriter = csv.writer(powdercsv, delimiter=';', quotechar='"')
-            powderwriter.writerow(['ID', 'Titel', 'Beschreibung', 'Webcode', 'Produktklasse', 'Ausgangsmaterial', 'Medianwert',
-                             'Volumenanteil', 'Emissionsgeprüft', 'Prüfdatum', 'Hersteller', 'Status'])
-
+            powderwriter.writerow(['ID', 'Titel', 'Beschreibung', 'Webcode', 'Produktklasse', 'Ausgangsmaterial',
+                                   'Medianwert', 'Volumenanteil', 'Emissionsgeprüft', 'Prüfdatum', 'Hersteller',
+                                   'Status'])
             for i in powders:
                 powderid = i[0]
                 powdertitle = i[1]
@@ -409,8 +380,7 @@ class Csvpowder(BrowserView):
                     [powderid, powdertitle, powderdescription, powderwebcode, powderproductclass, powderstartingmaterial,
                      powdermedian, powdervolumeshare, newpowdercheckedemissions, powderdatechecked, powdermanufacturer,
                      powderstatus])
-
-
+        self.db.close()
         return None
 
     def get_attr_translation(self, attribute, value):

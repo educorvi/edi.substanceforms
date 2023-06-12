@@ -1,16 +1,15 @@
 # -*- coding: utf-8 -*-
-
 from Products.Five.browser import BrowserView
 import jsonlib
 from edi.substanceforms.lib import DBConnect
 
 
 class Gefahrstoff(BrowserView):
+
     def __call__(self):
         self.db = DBConnect(host=self.context.host, db=self.context.database, user=self.context.username, password=self.context.password)
-
+        self.db.connect()
         gemischid = self.request.get('gemischid')
-        #gemischid = "https://emissionsarme-produkte.bgetem.de/datenbank-chemie-dp/wasch-und-reinigungsmittel-fuer-den-etikettendruck/biolon-xi-fluessig"
         if gemischid.startswith('https://'):
             select = "SELECT mixture_id FROM oldlinks WHERE link = '%s'" % gemischid
             mixture_id = self.db.execute(select)
@@ -18,7 +17,6 @@ class Gefahrstoff(BrowserView):
             mixture_id = gemischid.split('.')[-1]
 
         mixture_id = mixture_id[0][0]
-
         data1select = "SELECT * FROM substance_mixture WHERE substance_mixture_id = %s" % mixture_id
         data1 = self.db.execute(data1select)
         data2select = "SELECT * FROM manufacturer WHERE manufacturer_id = %s" % data1[0][25]
@@ -47,11 +45,8 @@ class Gefahrstoff(BrowserView):
             inhaltsstoffe.append(inhaltsstoff)
 
         productclassselect = "SELECT class_name FROM productclasses WHERE class_id = %s" % data1[0][27]
-        try:
-            productclass = self.db.execute(productclassselect)
-            productclass = productclass[0][0]
-        except:
-            productclass = None
+        productclass = self.db.execute(productclassselect)
+        productclass = productclass[0][0]
 
         produktkategorien = {
             "label": "Reinigungsmittel im Etikettendruck",
@@ -81,4 +76,5 @@ class Gefahrstoff(BrowserView):
         gefahrstoffdata['@id'] = gemischid
         gefahrstoffdata['produktklasse'] = productclass
 
+        self.db.close()
         return jsonlib.write(gefahrstoffdata)

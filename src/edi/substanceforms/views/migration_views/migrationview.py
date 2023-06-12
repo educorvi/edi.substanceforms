@@ -13,7 +13,6 @@ import requests
 import psycopg2
 import csv
 
-
 class Migrationview(BrowserView):
 
     def __call__(self):
@@ -22,7 +21,7 @@ class Migrationview(BrowserView):
                   Migration erfolgreich
                 </li>'''
 
-        login = {'login': 'admin', 'password': 'Bg2011eteM'}
+        login = {'login': 'restaccess', 'password': 'H9jCg768'}
         authurl = u'http://emissionsarme-produkte.bgetem.de/@login'
         searchurl = u'http://emissionsarme-produkte.bgetem.de/@search'
 
@@ -42,8 +41,7 @@ class Migrationview(BrowserView):
                 'Accept': 'application/json',
                 'Authorization': 'Bearer %s' % token,
             }
-            headers = {'Accept': 'application/json'}
-            results = requests.get(searchurl, headers=headers, auth=('admin', 'Bg2011eteM'), params=query)
+            results = requests.get(searchurl, headers=headers, params=query)
             return results.json().get('items')
 
         def getItemData(entry):
@@ -52,8 +50,7 @@ class Migrationview(BrowserView):
                 'Accept': 'application/json',
                 'Authorization': 'Bearer %s' % token,
             }
-            headers = {'Accept': 'application/json'}
-            results = requests.get(entry.get('@id'), auth=('admin', 'Bg2011eteM'), headers=headers)
+            results = requests.get(entry.get('@id'), headers=headers)
             return results.json()
 
         def possibleGefahrstoffe():
@@ -82,13 +79,12 @@ class Migrationview(BrowserView):
         def getReinstoffe():
             newentries = list()
             number = 0
-            with open('/home/plone_buildout/plone52/src/edi.substanceforms/src/edi/substanceforms/views/dnel-neu2.csv',
-                      newline='') as csvfile:
+            with open('/home/plone_buildout/plone52/src/edi.substanceforms/src/edi/substanceforms/views/dnel-neu2.csv', newline='') as csvfile:
                 test = csv.reader(csvfile, delimiter=';', quotechar='"')
                 for row in test:
                     entry = '@'.join(row)
                     newentries.append(entry)
-                    print("Fetched SUBSTANCE NUMBER " + str(number))
+                    print("Fetched SUBSTANCE NUMBER "+str(number))
                     number = number + 1
             return newentries
 
@@ -115,6 +111,7 @@ class Migrationview(BrowserView):
             for i in entries:
                 data = getItemData(i)
                 newentries.append(data)
+                # import pdb; pdb.set_trace()
                 print("Fetched DETERGENT_LABEL: " + i.get('title'))
             return newentries
 
@@ -164,17 +161,26 @@ class Migrationview(BrowserView):
             password = self.password
 
             conn = psycopg2.connect(host=host, user=username, dbname=dbname, password=password)
+            cur = conn.cursor()
+            select = """SELECT tablename from pg_catalog.pg_tables WHERE schemaname != 'pg_catalog'
+                        AND schemaname != 'information_schema';"""
+            cur.execute(select)
+            tables = cur.fetchall()
+            cur.close()
 
-            for i in ['substance', 'substance_mixture', 'manufacturer', 'spray_powder']:
-                table = i
-                cur = conn.cursor()
-                select = "SELECT webcode from %s WHERE webcode = '%s'" % (table, generated_webcode)
-                cur.execute(select)
-                erg = cur.fetchall()
-                cur.close()
+            for i in tables:
+                table = i[0]
+                if table != 'synonyms' and table != 'recipes':
+                    cur = conn.cursor()
+                    select = "SELECT webcode from %s WHERE webcode = '%s'" % (table, generated_webcode)
+                    cur.execute(select)
+                    erg = cur.fetchall()
+                    cur.close()
+                else:
+                    erg = False
                 if erg:
                     return False
-            conn.close()
+            self.db.close()
             return True
 
         def get_webcode(self, webcode=False):
@@ -215,18 +221,15 @@ class Migrationview(BrowserView):
                 hersteller_published = 'private'
 
             cur = conn.cursor()
-            try:
-                cur.execute(
-                    "INSERT INTO manufacturer (title, description, webcode, homepage, status) VALUES (%s, %s, %s, %s, %s);",
-                    (hersteller_title, hersteller_desc, hersteller_uid, hersteller_homepage, hersteller_published))
-                conn.commit()
-            except:
-                import pdb;
-                pdb.set_trace()
+            # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
+            cur.execute("INSERT INTO manufacturer (title, description, webcode, homepage, status) VALUES (%s, %s, %s, %s, %s);",
+                        (hersteller_title, hersteller_desc, hersteller_uid, hersteller_homepage, hersteller_published))
+            conn.commit()
             # print(hersteller_title)# correct
             cur.close()
 
         print('Successfully migrated MANUFACTURER')
+
         zahl = 0
         for i in erg1:
             ergebnis = i.split('@')
@@ -238,19 +241,18 @@ class Migrationview(BrowserView):
             reinstoff_systemisch = ergebnis[6]
             reinstoff_hinweise = ergebnis[10]
             reinstoff_link_id = ergebnis[11]
-            reinstoff_link_available = ergebnis[12]
+            reinstoff_link_available= ergebnis[12]
             reinstoff_skin = 'id_wechselnd'
             reinstoff_branche = 'alle_branchen'
             reinstoff_published = 'published'
 
             if reinstoff_link_available == "zum Stoff":
-                reinstoff_link = "https://gestis.dguv.de/data?name=" + str(reinstoff_link_id)
+                reinstoff_link = "https://gestis.dguv.de/data?name="+str(reinstoff_link_id)
                 cur = conn.cursor()
 
                 cur.execute(
                     "INSERT INTO substance (title, webcode, casnr, egnr, skin_category, branch, dnel_lokal, dnel_systemisch, comments, link, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",
-                    (reinstoff_title, reinstoff_uid, reinstoff_casnr, reinstoff_egnr, reinstoff_skin, reinstoff_branche,
-                     reinstoff_lokal,
+                    (reinstoff_title, reinstoff_uid, reinstoff_casnr, reinstoff_egnr, reinstoff_skin, reinstoff_branche, reinstoff_lokal,
                      reinstoff_systemisch, reinstoff_hinweise, reinstoff_link, reinstoff_published))
             else:
                 cur = conn.cursor()
@@ -262,7 +264,7 @@ class Migrationview(BrowserView):
             conn.commit()
             cur.close()
 
-            print('Successfully migrated SUBSTANCE ' + str(zahl) + ' ' + reinstoff_title)
+            print('Successfully migrated SUBSTANCE '+str(zahl)+' '+reinstoff_title)
             zahl = zahl + 1
 
         for i in erg3:
@@ -311,8 +313,7 @@ class Migrationview(BrowserView):
             etikett_values_range = i.get('wertebereich')
             etikett_classifications = i.get('einstufungen')
             etikett_usecases = i.get('verwendungszweck')
-            if i.get('hersteller'):
-                etikett_manufacturer_name = i.get('hersteller')['title']
+            etikett_manufacturer_name = i.get('hersteller')['title']
             etikett_review_state = i.get('review_state')
 
             if etikett_review_state == 'published':
@@ -320,24 +321,21 @@ class Migrationview(BrowserView):
             else:
                 etikett_published = 'private'
 
-            if i.get('hersteller'):
-                cur = conn.cursor()
-                cur.execute(
-                    "SELECT manufacturer_id FROM manufacturer WHERE title = '{0}';".format(etikett_manufacturer_name))
-                etikett_manufacturer_id = cur.fetchall()
-                cur.close()
+            cur = conn.cursor()
+            cur.execute(
+                "SELECT manufacturer_id FROM manufacturer WHERE title = '{0}';".format(etikett_manufacturer_name))
+            etikett_manufacturer_id = cur.fetchall()
+            cur.close()
 
-                if etikett_manufacturer_id:
-                    cur = conn.cursor()
-                    cur.execute(
-                        "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, usecases, manufacturer_id, status) VALUES (%s, %s, %s, 'druck_und_papier', 'label', NULL, %s, %s, %s, %s, %s, %s, %s);",
-                        (etikett_title, etikett_desc, etikett_uid, etikett_skin_category,
-                         etikett_checked_emissions, etikett_flashpoint, etikett_values_range,
-                         etikett_usecases, etikett_manufacturer_id[0], etikett_published))
-                    conn.commit()
-                    cur.close()
-            else:
-                print('Fehler bei %s' % i.get('title'))
+            cur = conn.cursor()
+            # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
+            cur.execute(
+                "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, usecases, manufacturer_id, status) VALUES (%s, %s, %s, 'druck_und_papier', 'label', NULL, %s, %s, %s, %s, %s, %s, %s);",
+                (etikett_title, etikett_desc, etikett_uid, etikett_skin_category, etikett_checked_emissions,
+                 etikett_flashpoint, etikett_values_range, etikett_usecases, etikett_manufacturer_id[0], etikett_published))
+            conn.commit()
+            # print(etikett_title)  # correct
+            cur.close()
 
         print('Successfully migrated DETERGENT_LABELS')
 
@@ -388,6 +386,7 @@ class Migrationview(BrowserView):
                 # print(manuell_title)  # correct
                 cur.close()
 
+
         print('Successfully migrated DETERGENT_MANUAL')
 
         for i in erg6:
@@ -410,21 +409,24 @@ class Migrationview(BrowserView):
             else:
                 datenblatt_published = 'private'
 
-            if not datenblatt_skin_category:
+            if datenblatt_skin_category:
+                pass
+            else:
                 datenblatt_skin_category = ''
 
-            datenblatt_substancetype = 'offset'
-            if datenblatt_product_category:
-                if datenblatt_product_category[0] == 'UV-Druck':
-                    datenblatt_substancetype = 'uv'
+            if datenblatt_product_category[0] == 'UV-Druck':
+                datenblatt_substancetype = 'uv'
+            else:
+                datenblatt_substancetype = 'offset'
 
+            # import pdb; pdb.set_trace()
             cur = conn.cursor()
             # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
             cur.execute(
-                "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, comments, status) VALUES (%s, %s, %s, 'druck_und_papier', %s, NULL, %s, %s, %s, %s, %s, %s);",
+                "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, skin_category, checked_emissions, flashpoint, values_range, comments, offset_print_manner, status) VALUES (%s, %s, %s, 'druck_und_papier', %s, NULL, %s, %s, %s, %s, %s, %s, %s);",
                 (datenblatt_title, datenblatt_desc, datenblatt_uid, datenblatt_substancetype, datenblatt_skin_category,
                  datenblatt_checked_emissions, datenblatt_flashpoint, datenblatt_values_range,
-                 str(datenblatt_comments), datenblatt_published))
+                 str(datenblatt_comments),offsetprintmanner, datenblatt_published))
             conn.commit()
             # print(datenblatt_title)  # correct
             cur.close()
@@ -449,6 +451,7 @@ class Migrationview(BrowserView):
             heatset_evap_170 = heatset_verdampfung[0].get('bahn_170')
             heatset_evap_180 = heatset_verdampfung[0].get('bahn_180')
 
+
             if heatset_review_state == 'published':
                 heatset_published = 'published'
             else:
@@ -460,17 +463,18 @@ class Migrationview(BrowserView):
                 heatset_skin_category = ''
 
             cur = conn.cursor()
+            # import pdb; pdb.set_trace()
             # cur.execute("INSERT INTO manufacturer (title, description, webcode) VALUES (%s, %s, %s)") % (hersteller_title, hersteller_desc, hersteller_uid)
             cur.execute(
                 "INSERT INTO substance_mixture (title, description, webcode, branch, substance_type, image_url, ueg, response, skin_category, date_checked, checked_emissions, evaporation_lane_150, evaporation_lane_160, evaporation_lane_170, evaporation_lane_180, status) VALUES (%s, %s, %s, 'druck_und_papier', 'heatset', NULL, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",
                 (heatset_title, heatset_desc, heatset_uid, heatset_ueg, heatset_response, heatset_skin_category,
-                 heatset_date_checked, heatset_checked_emissions, heatset_evap_150, heatset_evap_160, heatset_evap_170,
-                 heatset_evap_180, heatset_published))
+                 heatset_date_checked, heatset_checked_emissions, heatset_evap_150, heatset_evap_160, heatset_evap_170, heatset_evap_180, heatset_published))
             conn.commit()
             # print(heatset_title)  # correct
             cur.close()
 
         print('Successfully migrated DETERGENT_HEATSET')
         print('CHEERS! DATA MIGRATION SUCCESSFULLY COMPLETED :)')
+
 
         return template
