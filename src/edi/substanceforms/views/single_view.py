@@ -463,8 +463,10 @@ class SingleView(BrowserView):
         self.db.connect()
         import pdb; pdb.set_trace()
         manufacturer = self.db.execute(select)
-        self.db.close()
+        if manufacturer is None:
+            result = "Kein Hersteller ausgewählt"
         result = manufacturer[0][0]
+        self.db.close()
         return result
 
     def translate_synonyms(self, synonyms):
