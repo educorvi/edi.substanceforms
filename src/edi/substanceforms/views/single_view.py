@@ -461,11 +461,11 @@ class SingleView(BrowserView):
     def get_manufacturer(self, manu):
         select = "SELECT title from manufacturer WHERE manufacturer_id = %s" %manu
         self.db.connect()
-        import pdb; pdb.set_trace()
-        manufacturer = self.db.execute(select)
-        if manufacturer is None:
+        try:
+            manufacturer = self.db.execute(select)
+            result = manufacturer[0][0]
+        except:
             result = "Kein Hersteller ausgewählt"
-        result = manufacturer[0][0]
         self.db.close()
         return result
 
