@@ -461,6 +461,7 @@ class SingleView(BrowserView):
     def get_manufacturer(self, manu):
         select = "SELECT title from manufacturer WHERE manufacturer_id = %s" %manu
         self.db.connect()
+        import pdb; pdb.set_trace()
         manufacturer = self.db.execute(select)
         self.db.close()
         result = manufacturer[0][0]
