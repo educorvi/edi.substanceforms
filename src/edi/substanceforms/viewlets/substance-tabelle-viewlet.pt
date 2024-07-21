@@ -1,3 +1,5 @@
-<div class="days_to_conf">
-    ${view/message}
+<div>
+    <script tal:attributes="src view/get_searchscript"></script>
+    <script tal:attributes="src view/get_hiddenscript"></script>
+    <script async tal:attributes="src view/get_tablescript"></script>
 </div>
