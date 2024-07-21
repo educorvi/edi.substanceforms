@@ -8,7 +8,7 @@
 
   <browser:page
     name="custom-redirect-view"
-    for="Products.CMFCore.interfaces.IFolderish"
+    for="edi.substanceforms.content.datenbank.IDatenbank"
     class=".custom_redirect_view.CustomRedirectView"
     permission="zope2.View"
     />

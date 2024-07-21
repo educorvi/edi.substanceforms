@@ -6,4 +6,14 @@
 
   -*- extra stuff goes here -*-
 
+  <browser:viewlet
+     name="substance-tabelle-viewlet"
+     for="plone.app.contenttypes.interfaces.IDocument"
+     manager="plone.app.layout.viewlets.interfaces.IAboveContentTitle"
+     layer="edi.substanceforms.interfaces.IEdiSubstanceformsLayer"
+     class=".substance_tabelle_viewlet.SubstanceTabelleViewlet"
+     template="substance-tabelle-viewlet.pt"
+     permission="zope2.View"
+     />
+
 </configure>

@@ -292,6 +292,8 @@ class SubstancemixtureFormView(TabelleFormView):
                 self.ergs = self.show_all()
 
         elif button == 'Suche':
+            if not self.form.manu.data:
+                return self.request.response.redirect(self.context.absolute_url())
 
             searchkey = self.context.tablename + '_id'
             searchtable = self.context.tablename
