@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from Products.Five.browser import BrowserView
-import jsonlib
+import json
 from edi.substanceforms.lib import DBConnect
 
 class Gefahrstoffliste(BrowserView):
@@ -22,4 +22,4 @@ class Gefahrstoffliste(BrowserView):
             mixture_entry['title'] = gemisch[1]
             mixtures.append(mixture_entry)
         self.db.close()
-        return jsonlib.write(mixtures)
+        return json.dump(mixtures)

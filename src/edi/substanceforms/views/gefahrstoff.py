@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from Products.Five.browser import BrowserView
-import jsonlib
+import json
 from edi.substanceforms.lib import DBConnect
 
 
@@ -77,4 +77,4 @@ class Gefahrstoff(BrowserView):
         gefahrstoffdata['produktklasse'] = productclass
 
         self.db.close()
-        return jsonlib.write(gefahrstoffdata)
+        return json.dump(gefahrstoffdata)
