@@ -6,15 +6,4 @@
 
   -*- extra stuff goes here -*-
 
-  <browser:viewlet
-     name="custom-viewlet"
-     for="plone.app.contenttypes.interfaces.IDocument"
-     manager="plone.app.layout.viewlets.interfaces.IAboveContentTitle"
-     layer="edi.substanceforms.interfaces.IEdiSubstanceformsLayer"
-     class=".custom_viewlet.CustomViewlet"
-     template="custom-viewlet.pt"
-     permission="zope2.View"
-     />
-
-
 </configure>
