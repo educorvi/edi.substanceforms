@@ -38,7 +38,7 @@
               <div class="table-responsive">
                 <table id="sortTable" class="table table-striped table-bordered"
                      cellspacing="0" width="100%" style="max-width:100%;">
-                  <thead>
+                  <thead tal:condition="not:context/tablehead|nothing">
 
                     <tr>
                       <th>Titel</th>
@@ -47,6 +47,9 @@
                     </tr>
 
                   </thead>
+
+                  <thead tal:condition="context/tablehead|nothing" tal:replace="structure context/tablehead"/>
+
                   <tbody>
                     <tr tal:repeat="item view/ergs">
                       <td>

@@ -122,6 +122,12 @@ class ITabelle(model.Schema):
         required=False
     )
 
+    tablehead = schema.Text(
+        title=u"Tabellenkopf manuell festlegen",
+        description=u"Hier kann HTML-Text eingefügt werden um einen Tabellenkopf manuell zu definieren",
+        required=False
+    )
+
     columns = schema.List(
             title = u"Darstellung Einzelansicht",
             description = u"Datenbankspalten auswählen, die in der Einzelansicht berücksichtigt werden sollen",
